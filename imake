@@ -1,0 +1,10 @@
+#!/bin/sh
+
+set -e
+
+echo "imake-wrapper: running imake $* in directory `pwd`"
+/usr/bin/X11/imake "$@"
+if [ -f "$IMAKEAPPEND" ]; then
+  cat "$IMAKEAPPEND" >> Makefile
+fi
+exit 0
