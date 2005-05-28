@@ -247,8 +247,14 @@ typedef struct {
 } Xv_generic_struct;
 
 typedef enum {
+/* Alpha compatibility, mbuck@debian.org */
+#if defined(__alpha)
+    XV_INIT_ARGS             = XV_ATTR(ATTR_OPAQUE_PAIR,       	4),
+    XV_INIT_ARGC_PTR_ARGV    = XV_ATTR(ATTR_OPAQUE_PAIR,       	7),  /* -S- */
+#else
     XV_INIT_ARGS             = XV_ATTR(ATTR_INT_PAIR,         	4),
     XV_INIT_ARGC_PTR_ARGV    = XV_ATTR(ATTR_INT_PAIR,         	7),  /* -S- */
+#endif
     XV_USAGE_PROC       = XV_ATTR(ATTR_FUNCTION_PTR,     	9),  /* -S- */
     XV_ERROR_PROC       = XV_ATTR(ATTR_FUNCTION_PTR,    	12),
     XV_X_ERROR_PROC	= XV_ATTR(ATTR_FUNCTION_PTR,    	15)

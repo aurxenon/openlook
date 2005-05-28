@@ -20,7 +20,7 @@ unsigned short drop_icon[] = {
 #include "./drop.icon"
 };
 
-#if defined(__linux) && !defined(NBBY)
+#if defined(__linux__) && !defined(NBBY)
 #define NBBY 8
 #endif
 

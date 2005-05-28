@@ -15,6 +15,7 @@ static char     sccsid[] = "@(#)es_mem.c 20.25 93/06/28";
  */
 
 #include <sys/types.h>
+#include <string.h>
 #include <xview/pkg.h>
 #include <xview/attrol.h>
 #include <xview_private/primal.h>
@@ -35,8 +36,6 @@ typedef struct es_mem_text {
 }               Es_mem_text;
 typedef Es_mem_text *Es_mem_data;
 #define	ABS_TO_REP(esh)	(Es_mem_data)esh->data
-
-extern CHAR    *STRNCPY();
 
 Pkg_private Es_handle es_mem_create();
 static Es_status es_mem_commit();

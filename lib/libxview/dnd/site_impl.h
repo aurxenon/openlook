@@ -81,4 +81,4 @@ Pkg_private Xv_opaque	dnd_site_set_avlist();
 Pkg_private Xv_opaque	dnd_site_get_attr();
 Pkg_private int		dnd_site_destroy();
 
-#endif ~xview_site_impl_DEFINED
+#endif /* ~xview_site_impl_DEFINED */

@@ -15,6 +15,19 @@
 #ifndef	NTFY_DEFINED
 #define	NTFY_DEFINED
 
+#if defined(__linux__) && defined(__GLIBC__)
+/* sigisemptyset gets prototyped in /usr/include/signal.h iff __USE_GNU is
+ * defined. So we only prototype it ourselves if __USE_GNU isn't defined.
+ * I'd prefer a cleaner solution, but I can't think of one at the moment :-(
+ *
+ * martin.buck@bigfoot.com
+ */
+#ifndef __USE_GNU
+#include <signal.h>
+extern int sigisemptyset(const sigset_t *);
+#endif
+#endif
+
 #include <sys/types.h>
 #include <xview_private/ultrix_cpt.h>
 #include <sys/time.h>
@@ -124,8 +137,13 @@ typedef struct ntfy_condition {
 		int	fd;		/* NTFY_INPUT, NTFY_OUTPUT,
 					   NTFY_EXCEPTION */
 		int	signal;		/* NTFY_*_SIGNAL */
+/* Alpha compatibility, mbuck@debian.org */
+#if defined(__alpha)
+		unsigned long an_u_int;
+#else
 		u_int	an_u_int;	/* Generic unsigned int used for
 					   instance matching */
+#endif
 		Notify_event event;	/* NTFY_*_EVENT */
 		Destroy_status status;	/* NTFY_DESTROY */
 		struct	ntfy_itimer *ntfy_itimer;
@@ -149,9 +167,9 @@ typedef struct ntfy_condition {
  */
 typedef	struct ntfy_wait3_data {
 	int	pid;			/* Process waiting for */
-#if !defined(SVR4) && !defined(__linux)
+#if !defined(SVR4) && !defined(__linux__)
 	union	wait status;		/* Return value from wait3 */
-#else SVR4
+#else /* SVR4 */
 	int 	status;		/* Return value from wait3 */
 #endif
 	struct	rusage rusage;		/* Return value from wait3 */
@@ -184,11 +202,16 @@ extern	int ntfy_nodes_avail;	/* count of nodes available without having
 extern	sigset_t ntfy_sigs_delayed;/* Bit mask of signals received while in
 				      critical section */
 
+#if defined(__linux__) && defined(__GLIBC__)
+/* martin.buck@bigfoot.com */
+#define sigisempty(s) sigisemptyset(s)
+#else
 #ifdef SVR4
 #define sigisempty(s)   (!(((s)->__sigbits[0]) | ((s)->__sigbits[1])   \
                         | ((s)->__sigbits[2]) | ((s)->__sigbits[3])))
 #else
 #define sigisempty(s)   (!(*(s)))
+#endif
 #endif
 
 /*
@@ -466,9 +489,9 @@ as well as asynchronous signal conditions).
 #ifdef	NTFY_DEBUG
 #define	ntfy_set_errno(err)	ntfy_set_errno_debug((err))
 void	ntfy_set_errno_debug();
-#else	NTFY_DEBUG
+#else	/* NTFY_DEBUG */
 #define	ntfy_set_errno(err)	notify_errno = err
-#endif	NTFY_DEBUG
+#endif	/* NTFY_DEBUG */
 /*
  * Ntfy_set_warning is for setting notify_errno when you don't usually want
  * to generate a message; the caller may be using the call in a valid manner
@@ -479,21 +502,21 @@ void	ntfy_set_errno_debug();
 #ifdef	NTFY_DEBUG
 #define	ntfy_set_warning(err) ntfy_set_warning_debug((err))
 void	ntfy_set_warning_debug();
-#else	NTFY_DEBUG
+#else	/* NTFY_DEBUG */
 #define	ntfy_set_warning(err) notify_errno = err
-#endif	NTFY_DEBUG
+#endif	/* NTFY_DEBUG */
 
 #ifdef	NTFY_DEBUG
 #define	ntfy_assert(bool, code)  if (!(bool)) ntfy_assert_debug(code)
 void	ntfy_assert_debug();
-#else	NTFY_DEBUG
+#else	/* NTFY_DEBUG */
 #define	ntfy_assert(bool, code)	{}
-#endif	NTFY_DEBUG
+#endif	/* NTFY_DEBUG */
 
 void	ntfy_fatal_error();
 
 #define	pkg_private	extern
 #define	pkg_private_data
 
-#endif	NTFY_DEFINED
+#endif	/* NTFY_DEFINED */
 

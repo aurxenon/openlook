@@ -64,4 +64,4 @@ xv_withdraw_window(dpy, win, scrn)
 		(XEvent *)&evt));
 }
 
-#endif PRE_R4_ICCCM
+#endif /* PRE_R4_ICCCM */

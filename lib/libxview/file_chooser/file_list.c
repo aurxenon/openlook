@@ -426,7 +426,12 @@ file_list_get( public, status, attr, valist )
     case FILE_LIST_ROW_TYPE:
 	return xv_get( FILE_LIST_PUBLIC(private),
 		      PANEL_LIST_EXTENSION_DATA, 
+/* Alpha compatibility, mbuck@debian.org */
+#if 1
+		      va_arg(valist, int *)
+#else
 		      va_arg(valist, int)
+#endif
 		      );
 
     case FILE_LIST_DIRECTORY:
@@ -521,7 +526,7 @@ file_list_destroy ( public, status )
     if (status == DESTROY_CLEANUP) {
 	xv_free_ref( private->directory );
 	xv_free_ref( private->regex_pattern );
-#ifdef __linux
+#ifdef __linux__
 	if (private->regex_compile != NULL && private->regex_compile->allocated)
 		xv_free_ref( private->regex_compile->buffer);
 #endif
@@ -1142,7 +1147,7 @@ flist_update_list( private, rows, num_rows )
 
 /****************************************************************************/
 
-#ifndef __linux
+#ifndef __linux__
 /*
  * Front end to regexp(3).
  *
@@ -1213,7 +1218,7 @@ flist_match_regex( s, private )
     return step(s, private->regex_compile);
 }
 
-#else /* __linux */
+#else /* __linux__ */
 
 /* Linux does not have regexp.h or compile()/step(). Use regex.h and
  * re_compile_pattern()/re_match() instead. */
@@ -1244,7 +1249,7 @@ flist_match_regex( s, private )
         return 0;
     return (re_match(private->regex_compile, s, strlen(s), 0, NULL) != -1);
 }
-#endif /* __linux */
+#endif /* __linux__ */
 /****************************************************************************/
 
 

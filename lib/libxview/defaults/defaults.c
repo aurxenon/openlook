@@ -24,7 +24,12 @@ static char     sccsid[] = "@(#)defaults.c 20.33 93/06/28";
 #include <xview/server.h>
 #endif
 #include <xview/xv_error.h>
+/* mbuck@debian.org */
+#if 1
+#include <X11/Xlibint.h>
+#else
 #include <X11/Xlib.h>
+#endif
 #include <X11/Xatom.h>
 #include <X11/Xresource.h>
 #include <xview_private/i18n_impl.h>

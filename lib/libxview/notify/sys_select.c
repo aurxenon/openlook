@@ -15,19 +15,19 @@ static char     sccsid[] = "@(#)sys_select.c 20.17 93/06/28 Copyr 1985 Sun Micro
  */
 
 #ifndef SVR4
-#ifndef __linux
+#ifndef __linux__
 #include <syscall.h>
 #else
 #include "linux_select.h"
 #endif
-#else SVR4
+#else /* SVR4 */
 #include <values.h>
 #include <sys/time.h>
 #include <sys/types.h>
 #include <sys/syscall.h>
 #include <sys/poll.h>
 #include <sys/select.h>
-#endif SVR4
+#endif /* SVR4 */
 #include <xview_private/ntfy.h>	/* For ntfy_assert */
 #include <errno.h>		/* For debugging */
 #include <stdio.h>		/* For debugging */
@@ -41,25 +41,25 @@ extern          errno;
 pkg_private int
 #ifndef SVR4
 notify_select(nfds, readfds, writefds, exceptfds, tv)
-#else SVR4
+#else /* SVR4 */
 notify_select(nfds, in0, out0, ex0, tv)
-#endif SVR4
+#endif /* SVR4 */
 #ifndef SVR4
-#ifndef __linux
+#ifndef __linux__
     int             nfds, *readfds, *writefds, *exceptfds;
 #else
     int             nfds;
     fd_set *readfds, *writefds, *exceptfds;
-#endif /* __linux */
-#else SVR4
+#endif /* __linux__ */
+#else /* SVR4 */
     int nfds;
     fd_set *in0, *out0, *ex0;
-#endif SVR4
+#endif /* SVR4 */
     struct timeval *tv;
 {
 
 #ifndef SVR4
-#ifndef __linux
+#ifndef __linux__
     nfds = syscall(SYS_select, nfds, readfds, writefds, exceptfds, tv);
     ntfy_assert(!(nfds == 0 && tv == (struct timeval *) 0 &&
 		  *readfds == 0 && *writefds == 0 && *exceptfds == 0), 39
@@ -72,7 +72,7 @@ notify_select(nfds, in0, out0, ex0, tv)
 		/* SYS_select returned when no stimuli */);
 #endif
     return (nfds);
-#else SVR4
+#else /* SVR4 */
     /* register declarations ordered by expected frequency of use */
     register long *in, *out, *ex;
     register u_long m;	/* bit mask */
@@ -241,5 +241,5 @@ done:
     ntfy_assert(!(nfds == 0 && tv == (struct timeval *) 0), 40
 	    /* select returned when no stimuli */);
     return (rv);
-#endif SVR4
+#endif /* SVR4 */
 }

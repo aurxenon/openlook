@@ -43,4 +43,4 @@
 #define seln_report_event(seln_client, event)	\
 		selection_report_event(xv_default_server, seln_client, event)
 
-#endif ~xview_selection_compat_DEFINED
+#endif /* ~xview_selection_compat_DEFINED */

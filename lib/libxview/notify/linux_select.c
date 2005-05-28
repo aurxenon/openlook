@@ -1,11 +1,27 @@
+#ifdef __linux__
+
+
 /* Function for calling the select(2) system call in linux.
  * Linux doesn't have a syscall() function, this replaces it
  * for select(), fcntl() and read().
  * Kudos to Rick Sladkey (jrs@world.std.com) for suggesting
  * this method. */
 
-#include <sys/time.h>
+/* GNU libc uses weak symbols for system calls and puts two underscores
+ * before the names of the `real' symbols. So we can provide our own
+ * versions of the system calls but still call the original versions
+ * without having to mess around with the syscall-macros. This simplifies
+ * things quite a bit. It might have worked with libc5 as well, but it
+ * looks like nobody noticed it back then...
+ *
+ * martin.buck@bigfoot.com
+ */
 
+#include <sys/time.h>
+#include <sys/types.h>
+#include <unistd.h>
+                     
+#ifndef __GLIBC__
 /* #define __LIBRARY__ */
 #include <syscall.h>
 /* #undef __LIBRARY__ */
@@ -13,6 +29,21 @@
 #ifdef DEBUG
 #include <stdio.h>
 #endif
+#endif
+
+#ifdef __GLIBC__
+
+int linux_select(int width, fd_set *readfds, fd_set *writefds,
+                 fd_set *exceptfds, struct timeval *timeout) {
+  static struct timeval tout_copy;
+
+  if (timeout != NULL) {
+    tout_copy = *timeout;
+  }
+  return __select(width, readfds, writefds, exceptfds, timeout ? &tout_copy : NULL);
+}
+
+#else /* __GLIBC__ */
 
 #define SYS_sys_select SYS_select
 #define SYS_sys_fcntl  SYS_fcntl
@@ -61,3 +92,6 @@ _syscall3(int, sys_fcntl, int, fildes, int, cmd, int, arg);
 /* Replacement for syscall(SYS_read,...) */
 _syscall3(int, sys_read, int, fildes, char *, buf, off_t, cnt);
 
+#endif /* !__GLIBC__ */
+
+#endif

@@ -24,7 +24,7 @@ char           *
 xv_getlogindir()
 {
     extern char    *getlogin(), *getenv();
-#ifndef __linux
+#ifndef __linux__
     extern struct passwd *getpwnam(), *getpwuid();
 #endif
     struct passwd  *passwdent;

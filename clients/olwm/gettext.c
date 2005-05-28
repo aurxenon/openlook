@@ -11,7 +11,7 @@
 
 #include "gettext.h"
 
-#if defined(__linux) && !defined(LC_MESSAGES)
+#if defined(__linux__) && !defined(LC_MESSAGES)
 #define LC_MESSAGES LC_RESPONSE
 #endif
 
@@ -19,12 +19,16 @@
 #define bzero(a,b) memset(a,0,b)
 #endif
 
+#if !defined(__linux__) || !defined(__GLIBC__)
 char *malloc(), *strdup();
-char * dgettext();
+#endif
+char * dgettext(char *, char *);
 char *_gettext();
 char *in_path();
 char *fgets(), *getenv();
+#if !defined(__linux__) || !defined(__GLIBC__)
 caddr_t mmap(), calloc();
+#endif
 
 static struct domain_binding *firstbind=0, *lastbind=0;
 

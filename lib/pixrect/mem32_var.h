@@ -13,7 +13,7 @@
 #include	<sunwindow/cms.h>	/* colormapseg */
 #else
 #include <sys/cms.h>
-#endif SVR4
+#endif /* SVR4 */
 
 #define         MEM32_8BIT_CMAPSIZE     256
 

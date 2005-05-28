@@ -16,8 +16,11 @@ static char     sccsid[] = "@(#)ndis_d_pri.c 20.16 93/06/28 Copyr 1985 Sun Micro
 #include <xview_private/ntfy.h>
 #include <xview_private/ndis.h>
 #include <signal.h>
-#if defined(__linux) && !defined(NBBY)
+#ifdef __linux__
+#include <sys/param.h> /* for howmany(), NBBY */
+#ifndef NBBY
 #define NBBY 8
+#endif
 #endif
 
 typedef enum notify_error (*Notify_error_func) ();

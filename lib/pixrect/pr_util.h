@@ -66,11 +66,11 @@
 		op;							\
 	};								\
 	asm("dbra	d6,label");
-#else mc68000
+#else /* mc68000 */
 #define	rop_slowloop(n, op) \
 	{ register int _loop = (n); \
 		while (--_loop >= 0) { op; } }
-#endif mc68000
+#endif /* mc68000 */
 
 #ifdef mc68010
 #define cases8(n, op)							\
@@ -88,9 +88,9 @@
 			cases8(0, op); \
 			case 0:	break; \
 		} }
-#else mc68010
+#else /* mc68010 */
 #define	rop_fastloop	rop_slowloop
-#endif mc68010
+#endif /* mc68010 */
 
 /*
  * Alloctype(datatype) allocates a datatype structure using calloc
@@ -133,6 +133,6 @@ struct pr_devdata {
 
 #ifndef KERNEL
 Pixrect *pr_makefromfd();
-#endif !KERNEL
+#endif /* !KERNEL */
 
-#endif pr_util_DEFINED
+#endif /* pr_util_DEFINED */

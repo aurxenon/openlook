@@ -11,6 +11,7 @@ static char     sccsid[] = "@(#)font.c 20.119 93/06/28";
  */
 
 #include <sys/types.h>
+#include <string.h>
 #include <pixrect/pixrect.h>
 #include <pixrect/pixfont.h>
 #include <X11/Xlib.h>
@@ -33,7 +34,6 @@ static char     sccsid[] = "@(#)font.c 20.119 93/06/28";
 
 extern Pixfont *xv_pf_sys;
 extern char    *defaults_get_string();
-extern char    *strcpy();
 extern Xv_opaque xv_default_server;
 extern Display *xv_default_display;
 
@@ -3462,7 +3462,7 @@ Font_locale_info	*linfo;
     linfo->default_xlarge_font = 
 	strdup("-b&h-lucida-medium-r-*-*-*-190-*-*-*-*-*-*");
 }
-#endif OW_I18N
+#endif /* OW_I18N */
 
 /*
  * font_convert_style - checks if given style name is 'known'

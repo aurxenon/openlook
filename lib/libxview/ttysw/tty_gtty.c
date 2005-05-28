@@ -34,7 +34,7 @@ static  char sccsid[] = "@(#)tty_gtty.c 20.29 93/06/28 Copyr 1983 Sun Micro";
  */
 #ifdef	XV_USE_TERMIOS
 
-#if defined(__linux) && !defined(CINTR)
+#if defined(__linux__) && !defined(CINTR)
 /* The following values have been obtained from /usr/include/linux/tty.h.
  * They represent the default tty modes on linux.
 	intr=^C		quit=^|		erase=del	kill=^U
@@ -61,15 +61,27 @@ static  char sccsid[] = "@(#)tty_gtty.c 20.29 93/06/28 Copyr 1983 Sun Micro";
 #define CWERASE 027
 #define CLNEXT 026
 #define CEOL2 0
-#endif /* __linux && !CINTR */
+#endif /* __linux__ && !CINTR */
 
-#ifdef __linux
+#ifdef __linux__
+/* martin.buck@bigfoot.com */
+#ifndef CSWTC
+#define CSWTC 0
+#endif
+#ifndef CEOL2
+#define CEOL2 0
+#endif
+
 static struct termios   default_modes = {
 	ICRNL|IXON,	  		  	/* input modes */
 	OPOST|ONLCR,			    	/* output modes */
 	B38400|CS8|CREAD,   		 	/* control modes */
 	ISIG|ICANON|ECHO|ECHOCTL|ECHOKE, 	/* local modes */
 
+#if 1
+/* martin.buck@bigfoot.com */
+        0,					/* line discipline */
+#endif
 	CINTR, CQUIT, CERASE, CKILL,
 	CEOF, CTIME, CMIN, CSWTC,
 	CSTART, CSTOP, CSUSP, CEOL,
@@ -77,7 +89,7 @@ static struct termios   default_modes = {
 	CEOL2
 };
 	
-#else /* __linux */
+#else /* __linux__ */
 static struct termios	default_modes = {
 	BRKINT|ICRNL|IXON|IGNPAR|IMAXBEL,	    	/* input modes */
 	OPOST|ONLCR,				    	/* output modes */
@@ -101,7 +113,7 @@ static struct termios	default_modes = {
 	CWERASE,	/* VWERASE */
 	CLNEXT,		/* VLNEXT */
 };
-#endif /* __linux */
+#endif /* __linux__ */
 
 #else	/* XV_USE_TERMIOS */
 
@@ -267,7 +279,7 @@ we_getptyparms(tp)
     struct termios	*tp;
 {
     char	str[WE_TTYPARMSLEN];
-#ifndef __linux
+#ifndef __linux__
     short	temps[16];
 #else
     short	temps[17];
@@ -278,7 +290,7 @@ we_getptyparms(tp)
     else {
 	register int i;
 
-#ifndef __linux
+#ifndef __linux__
 	if (sscanf(str,
 		"%ld,%ld,%ld,%ld,%hd,%hd,%hd,%hd,%hd,%hd,%hd,%hd,%hd,%hd,%hd,%hd,%hd,%hd,%hd,%hd",
 		&tp->c_iflag, &tp->c_oflag, &tp->c_cflag, &tp->c_lflag,
@@ -296,7 +308,7 @@ we_getptyparms(tp)
 	(void) putenv(WE_TTYPARMS_E);
 	return (0);
     }
-#else /* __linux */
+#else /* __linux__ */
 	if (sscanf(str,
 		"%ld,%ld,%ld,%ld,%hd,%hd,%hd,%hd,%hd,%hd,%hd,%hd,%hd,%hd,%hd,%hd,%hd,%hd,%hd,%hd,%hd",
 		&tp->c_iflag, &tp->c_oflag, &tp->c_cflag, &tp->c_lflag,
@@ -314,7 +326,7 @@ we_getptyparms(tp)
 	(void) putenv(WE_TTYPARMS_E);
 	return (0);
     }
-#endif /* __linux */
+#endif /* __linux__ */
 }
 
 #else	/* XV_USE_TERMIOS */

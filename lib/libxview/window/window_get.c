@@ -960,4 +960,4 @@ xv_window_create_ic(win_public, im, xid, style)
          
     return(xic);
 }
-#endif OW_I18N
+#endif /* OW_I18N */

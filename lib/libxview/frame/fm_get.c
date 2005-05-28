@@ -369,8 +369,14 @@ frame_get_attr(frame_public, status, attr, valist)
 	return((Xv_opaque)status_get(frame, compose_led));
 
       case FRAME_MIN_SIZE: {
+/* Alpha compatibility, mbuck@debian.org */
+#if 1
+	 int *width = (int *)va_arg(valist, int *),
+	     *height = (int *)va_arg(valist, int *),
+#else
 	 int *width = (int *)va_arg(valist, int),
 	     *height = (int *)va_arg(valist, int),
+#endif
 	      footer_height = 0;
 
          if (status_get(frame, show_footer) && frame->footer &&
@@ -388,8 +394,13 @@ frame_get_attr(frame_public, status, attr, valist)
       }
 
       case FRAME_MAX_SIZE: {
+#if 1
+	 int *width = (int *)va_arg(valist, int *),
+	     *height = (int *)va_arg(valist, int *),
+#else
 	 int *width = (int *)va_arg(valist, int),
 	     *height = (int *)va_arg(valist, int),
+#endif
 	      footer_height = 0;
 
          if (status_get(frame, show_footer) && frame->footer &&

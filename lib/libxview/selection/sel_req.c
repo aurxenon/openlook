@@ -17,9 +17,9 @@ static char     sccsid[] = "@(#)sel_req.c 1.43 93/06/29";
 #include <xview/notify.h>
 #include <sys/time.h>
 
-#if defined(SVR4) || defined(__linux)
+#if defined(SVR4) || defined(__linux__)
 #include <stdlib.h> 
-#endif SVR4
+#endif /* SVR4 */
 
 
 #define ITIMER_NULL  ((struct itimercal *)0)

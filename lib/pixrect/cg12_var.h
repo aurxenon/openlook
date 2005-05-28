@@ -13,17 +13,17 @@
 #include <sun/fbio.h>
 #else
 #include <sys/fbio.h>
-#endif SVR4
+#endif /* SVR4 */
 #include <pixrect/pixrect.h>
 #ifndef SVR4
 #include <sbusdev/cg12reg.h>
-#endif SVR4
+#endif /* SVR4 */
 #include <pixrect/memvar.h>
 #ifndef SVR4
 #include <sunwindow/cms.h>		/* colormapseg */
 #else
 #include <sys/cms.h>
-#endif SVR4
+#endif /* SVR4 */
 
 #define	CG12_NFBS		6	/* number of frame buffers in a CG12 */
 

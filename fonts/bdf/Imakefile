@@ -1,8 +1,8 @@
 #include <XView.tmpl>
 
-/**/##########################################################################
-/**/# @(#)Imakefile	1.6 28 Jun 1993 SMI
-/**/# Imakefile for fonts/bdf directory.
+XCOMM ##########################################################################
+XCOMM # @(#)Imakefile	1.6 28 Jun 1993 SMI
+XCOMM # Imakefile for fonts/bdf directory.
 
 #define IHaveSubdirs
 #define PassCDebugFlags 'CDEBUGFLAGS=$(CDEBUGFLAGS)'

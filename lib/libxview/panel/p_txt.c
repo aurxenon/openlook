@@ -5863,7 +5863,7 @@ paint_value_and_interm(ip, interm_str, interm_attr)
 #ifdef	INTERM_SCROLL
     int				 value_right_len;
     int				 value_right_display_len;
-#endif	INTERM_SCROLL
+#endif	/* INTERM_SCROLL */
 
     /* Get the column position from current caret position */
     caret_offset = dp->saved_caret_offset;
@@ -5907,7 +5907,7 @@ paint_value_and_interm(ip, interm_str, interm_attr)
    	real_display_len-=dp->scroll_btn_width;
 	temp_last_char = 1;
     }
-#endif	INTERM_SCROLL
+#endif	/* INTERM_SCROLL */
 
 
     if (interm_display_len + dp->saved_caret_offset < 
@@ -5985,7 +5985,7 @@ paint_value_and_interm(ip, interm_str, interm_attr)
 		real_display_len-=dp->scroll_btn_width;
 		temp_first_char = 1;
 	     }
-#endif	INTERM_SCROLL
+#endif	/* INTERM_SCROLL */
 	
 	    display_length = real_display_len - interm_display_len;
 				
@@ -6049,7 +6049,7 @@ paint_value_and_interm(ip, interm_str, interm_attr)
     if ((dp->first_char) || (temp_first_char))
 #else
     if (dp->first_char)
-#endif	INTERM_SCROLL
+#endif	/* INTERM_SCROLL */
             draw_scroll_btn(ip, OLGX_SCROLL_BACKWARD);
 
 
@@ -6062,7 +6062,7 @@ paint_value_and_interm(ip, interm_str, interm_attr)
     if ((dp->first_char) || (temp_first_char))
 #else
     if (dp->first_char)
-#endif	INTERM_SCROLL
+#endif	/* INTERM_SCROLL */
 	x += dp->scroll_btn_width;
     if (dp->mask_wc == '\0') { /* not masked */
 	if (str_left) {
@@ -6116,7 +6116,7 @@ paint_value_and_interm(ip, interm_str, interm_attr)
     if ((dp->first_char) || (temp_first_char))
 #else
     if (dp->first_char)
-#endif	INTERM_SCROLL
+#endif	/* INTERM_SCROLL */
 	dp->caret_offset = x - ip->value_rect.r_left - dp->scroll_btn_width;
     else
    	dp->caret_offset = x - ip->value_rect.r_left;;
@@ -6167,7 +6167,7 @@ paint_value_and_interm(ip, interm_str, interm_attr)
     if ((dp->last_char < (wslen(dp->value_wc) - 1))  || (temp_last_char))
 #else
     if (dp->last_char < (wslen(dp->value_wc) - 1))
-#endif	INTERM_SCROLL
+#endif	/* INTERM_SCROLL */
             draw_scroll_btn(ip, OLGX_SCROLL_FORWARD);
 
 

@@ -310,4 +310,4 @@ struct cg2fb {
 
 #define	cg2_touch(a)	((a)=0)
 
-#endif	cg2reg_DEFINED
+#endif /* 	cg2reg_DEFINED */

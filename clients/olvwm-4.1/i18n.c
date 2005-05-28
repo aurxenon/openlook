@@ -209,6 +209,6 @@ register unsigned char	*s;
 		s++;
 	}
 }
-#endif DEBUG
+#endif /* DEBUG */
 
-#endif OW_I18N_L4
+#endif /* OW_I18N_L4 */

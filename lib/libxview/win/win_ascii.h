@@ -1872,4 +1872,4 @@ unsigned char		win_ascii_sem[] = {
 };
 
 
-#endif win_ascii_data_DEFINED
+#endif /* win_ascii_data_DEFINED */

@@ -14,7 +14,7 @@
 
 #define MAX_NBR_MAPPINGS 6
 
-#if defined(__linux) && !defined(NULL)
+#if defined(__linux__) && !defined(NULL)
 #define NULL 0
 #endif
 

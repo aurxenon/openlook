@@ -15,7 +15,7 @@
 #include <sun/fbio.h>
 #else
 #include <sys/fbio.h>
-#endif SVR4
+#endif /* SVR4 */
 #include <pixrect/cg2var.h>
 #include <pixrect/cg9var.h>
 
@@ -106,10 +106,10 @@ int gp1_batchrop();
 int gp1_stencil();
 int gp1_polypoint();
 
-#endif !KERNEL
+#endif /* !KERNEL */
 
 #define GP1IO_SATTR _IOW(G, 101, struct fbgattr)
 #define GP1IO_SCMAP _IO(G, 102)
 #define GP_SHMEMSIZE	5
 
-#endif	gp1var_DEFINED
+#endif /* 	gp1var_DEFINED */

@@ -22,7 +22,7 @@ static char *sccsid = "@(#)l10n_props.c 1.6 91/09/14";
 #define bcopy(a,b,c) memmove(b,a,c)
 #endif
 
-#if defined linux && !defined LC_MESSAGES
+#if defined __linux__ && !defined LC_MESSAGES
 #define LC_MESSAGES LC_RESPONSE
 #endif
 
@@ -101,7 +101,7 @@ l10n_config_list_t	l10n_config_initial_specific_setting[] = {
 #define	SS_CATEGORY		4
 {0}
 };
-#endif OW_I18N
+#endif /* OW_I18N */
 
 l10n_config_sss_t		*l10n_config_sss = NULL;
 static l10n_config_sss_t	*l10n_config_sss_cur = NULL;

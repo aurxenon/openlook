@@ -33,4 +33,4 @@
 #define PR_DBL_NONE	5
     /* can only be returned by pr_dbl_get with PR_DBL_WRITE attribute. */
 
-#endif pr_dblbuf_DEFINED
+#endif /* pr_dblbuf_DEFINED */

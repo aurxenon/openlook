@@ -56,7 +56,22 @@ static int ndet_compar( key1, key2 )
    tmp = key2a >> 16;
    tmp1 = key2a << 21;
    key2a = tmp1 | ((key2a << 5) & 0x001f0000) | tmp;
+#if 1
+   /* OUCH, trying to store the result of the subtraction of two unsigned
+    * ints (which potentially can use the whole range of an unsigned int, due
+    * to the bit-shifting above) in a signed int is not a very clever idea.
+    * But we only have to return *any* positive value if key1a is greater than
+    * key2a, 0 if they're equal or *any* negatve value if key1a is less than
+    * key2a; the actual difference doesn't matter. So let's use a simple
+    * comparison.
+    * <mbuck@debian.org>
+    */
+   return  (key1a < key2a) ? -1 :
+          ((key1a > key2a) ?  1 :
+                              0);
+#else
    return key1a - key2a;
+#endif
 }
 #endif /* HAVE_TSEARCH */
 

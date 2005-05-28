@@ -380,5 +380,5 @@ worry about safety himself, e.g., asynchronously signals and
 immediate client events.
 */
 
-#endif	NDET_DEFINED
+#endif	/* NDET_DEFINED */
 

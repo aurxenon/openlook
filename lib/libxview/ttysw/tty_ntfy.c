@@ -44,6 +44,15 @@ static char     sccsid[] = "@(#)tty_ntfy.c 20.45 93/06/28";
 #include <xview_private/term_impl.h>
 #include <xview_private/ultrix_cpt.h>
 
+#if defined(__linux__) && defined(__GLIBC__)
+/* martin.buck@bigfoot.com */
+#if __GLIBC__ == 2 && __GLIBC_MINOR__ == 0
+#include <ioctls.h>
+#else
+#include <sys/ioctl.h>
+#endif
+#endif
+
 #define PTY_OFFSET	(int) &(((Ttysw_folio)0)->ttysw_pty)
 
 extern void     textsw_display();
@@ -171,7 +180,7 @@ ttysw_sigwinch(ttysw)
      * SIGWINCHes on resize.
      */
     /* Notify process group that terminal has changed. */
-#ifdef __linux
+#ifdef __linux__
     /* Under Linux, we can use this ioctl only on the master pty,
      * otherwise we'll get ENOTTY. It seems to return the right process
      * group nevertheless.
@@ -187,7 +196,7 @@ ttysw_sigwinch(ttysw)
      * Only killpg when pgrp is not tool's.  This is the case of haven't
      * completed ttysw_fork yet (or even tried to do it yet).
      */
-#ifndef __linux
+#ifndef __linux__
     if (getpgrp(0) != pgrp)
 #else
     if (getpgrp() != pgrp)
@@ -216,7 +225,7 @@ ttysw_sendsig(ttysw, textsw, sig)
 	return;
     }
     /* Send the signal to the process group of the controlling tty */
-#ifdef __linux
+#ifdef __linux__
     /* See the comment in ttysw_sigwinch */
     if (ioctl(ttysw->ttysw_pty, TIOCGPGRP, &control_pg) >= 0) {
 #else

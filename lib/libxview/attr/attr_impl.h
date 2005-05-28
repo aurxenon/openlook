@@ -45,4 +45,4 @@ extern Attr_avlist	attr_copy_avlist();
 extern int		attr_count_avlist();
 extern Attr_avlist	attr_copy_valist();
 
-#endif _attr_impl_h_already_included
+#endif /* _attr_impl_h_already_included */

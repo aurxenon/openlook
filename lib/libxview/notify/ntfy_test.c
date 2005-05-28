@@ -598,9 +598,9 @@ nt_wait3_func(client, pid, status, rusage)
     int             pid;
 #ifndef SVR4
     union wait     *status;
-#else SVR4
+#else /* SVR4 */
     int     *status;
-#endif SVR4
+#endif /* SVR4 */
     struct rusage  *rusage;
 {
     CONDITION      *cond;

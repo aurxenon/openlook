@@ -723,7 +723,7 @@ olgx_draw_text(info, win, string, x, y, max_width, state)
     else
       XwcDrawString(info->dpy, win, info->textfontset,
       		    info->gc_rec[OLGX_TEXTGC]->gc, x, y, string, len);
-#else OW_I18N
+#else /* OW_I18N */
       XDrawString(info->dpy, win, info->gc_rec[OLGX_TEXTGC_REV]->gc, x, y, 
                   string, len);
     else
@@ -975,4 +975,4 @@ olgx_draw_numscroll_button(info, win, x, y, state)
 			  TextScrollButton_Width(info) - 2,
 			  NumScrollButton_Height(info));
 }
-#endif SVR4
+#endif /* SVR4 */

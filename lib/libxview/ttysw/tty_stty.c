@@ -122,7 +122,7 @@ we_setptyparms(tp)
      * often have a value of \0.
      */
     strcpy( str, WE_TTYPARMS_E );
-#ifndef __linux
+#ifndef __linux__
     (void) sprintf(str + strlen( str ),
 		"%ld,%ld,%ld,%ld,%hd,%hd,%hd,%hd,%hd,%hd,%hd,%hd,%hd,%hd,%hd,%hd,%hd,%hd,%hd,%hd",
 		tp->c_iflag, tp->c_oflag, tp->c_cflag, tp->c_lflag,
@@ -130,7 +130,7 @@ we_setptyparms(tp)
 		tp->c_cc[4],  tp->c_cc[5],  tp->c_cc[6],  tp->c_cc[7],
 		tp->c_cc[8],  tp->c_cc[9],  tp->c_cc[10], tp->c_cc[11],
 		tp->c_cc[12], tp->c_cc[13], tp->c_cc[14], tp->c_cc[15]);
-#else /* __linux */
+#else /* __linux__ */
     (void) sprintf(str + strlen( str ),
 		"%ld,%ld,%ld,%ld,%hd,%hd,%hd,%hd,%hd,%hd,%hd,%hd,%hd,%hd,%hd,%hd,%hd,%hd,%hd,%hd,%hd",
 		tp->c_iflag, tp->c_oflag, tp->c_cflag, tp->c_lflag,

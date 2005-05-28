@@ -12,7 +12,7 @@
 #include <sys/dir.h>
 #else
 #include <dirent.h>
-#endif SVR4
+#endif /* SVR4 */
 
 #include <sys/param.h>
 #include <sys/stat.h>
@@ -54,4 +54,4 @@ struct list_head {
     struct list_head	*next_list;
 };
 
-#endif XGETTEXT_H_DEFINED
+#endif /* XGETTEXT_H_DEFINED */

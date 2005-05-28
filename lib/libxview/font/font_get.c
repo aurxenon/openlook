@@ -43,7 +43,10 @@ font_get_attr(font_public, status, attr, args)
     XFontStruct		*x_font_info = (XFontStruct *)font->x_font_info;
     Xv_opaque       v;
     int             attr_is_char_width = 0;
+/* Alpha compatibility, mbuck@debian.org */
+#if 0
     Attr_avlist     avlist = (Attr_avlist) args;
+#endif
 
 #ifdef OW_I18N
     if (font->type == FONT_TYPE_TEXT)  {
@@ -138,8 +141,14 @@ font_get_attr(font_public, status, attr, args)
 	}
 
       case FONT_STRING_DIMS:{
+/* Alpha compatibility, mbuck@debian.org */
+#if 1
+	    char           *string = (char *) va_arg(args, char *);
+	    Font_string_dims *size = (Font_string_dims *) va_arg(args, Font_string_dims *);
+#else
 	    char           *string = (char *) avlist[0];
 	    Font_string_dims *size = (Font_string_dims *) avlist[1];
+#endif
 	    struct pr_size  my_pf_size;
 	    if (string) {
 		my_pf_size = xv_pf_textwidth(strlen(string), font_public, string);
@@ -264,8 +273,14 @@ font_get_attr(font_public, status, attr, args)
 
 #ifdef OW_I18N
       case FONT_STRING_DIMS_WC:{
+/* Alpha compatibility, mbuck@debian.org */
+#if 1
+            wchar_t             *ws = (wchar_t *) va_arg(args, wchar_t *);
+            Font_string_dims    *size = (Font_string_dims *) va_arg(args, Font_string_dims *);
+#else
             wchar_t             *ws = (wchar_t *) avlist[0];
             Font_string_dims    *size = (Font_string_dims *) avlist[1];
+#endif
             struct pr_size      my_pf_size;
 
             if (ws) {

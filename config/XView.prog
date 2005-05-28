@@ -1,4 +1,4 @@
-/**/# @(#)XView.prog	1.6 28 Jun 1993 SMI
+XCOMM # @(#)XView.prog	1.6 28 Jun 1993 SMI
 
 PopulateSCCSTree(h,$(ALLFILES))
 

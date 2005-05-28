@@ -22,6 +22,7 @@
 #include  <stdio.h>
 #include  <pwd.h>
 #include  <math.h>
+#include  <time.h>
 #include  <xview/xview.h>
 #include  <xview/panel.h>
 #include  <xview/canvas.h>
@@ -866,7 +867,12 @@ static void
 paint_date (c) 
 	Clock c;
 {
+/* Alpha compatibility, mbuck@debian.org */
+#if 0
 	int now;
+#else
+	time_t now;
+#endif
 	struct tm *tm;
 	char buf[25];
 	Frame f;
@@ -910,7 +916,13 @@ static void
 paint_second_hand (c) 
 	Clock c; 
 {
+/* Alpha compatibility, mbuck@debian.org */
+#if 0
 	int x, y, diameter, radius, now, fromrim, angle, height, width;
+#else
+	int x, y, diameter, radius, fromrim, angle, height, width;
+	time_t now;
+#endif
 	struct tm *tm;
 	ClockDisplay d;
 	Pixwin *pw;
@@ -954,7 +966,12 @@ paint_second_hand (c)
 	
 static Notify_value
 timer_expired (me, which) 
+/* Alpha compatibility, mbuck@debian.org */
+#if 0
 	Notify_value	me;
+#else
+	Frame		me;
+#endif
 	int		which;
 {
 	int		closed;
@@ -993,7 +1010,13 @@ analog_repaint (canvas, pw, area)
 	Pixwin * pw;
 	Rectlist *area;
 {
+/* Alpha compatibility, mbuck@debian.org */
+#if 0
 	int w, h, x, y, prw, prh, now;
+#else
+	int w, h, x, y, prw, prh;
+	time_t now;
+#endif
 	struct tm *tm;
 	Clock c;
 
@@ -1048,7 +1071,13 @@ static Notify_value
 icon_timer_expired (me, which)
 {
 	static int	mins, hours;
+/* Alpha compatibility, mbuck@debian.org */
+#if 0
 	int		now, w, h;
+#else
+	int		w, h;
+	time_t		now;
+#endif
 	struct		tm *tm;
 	Font_string_dims size;
 	Clock		c;
@@ -1077,11 +1106,22 @@ icon_timer_expired (me, which)
 
 static Notify_value
 analog_timer_expired (me, which)
+/* Alpha compatibility, mbuck@debian.org */
+#if 0
 	Notify_value	me;
+#else
+	Frame		me;
+#endif
 	int		which;
 {
 	static int	mins, hours;
+/* Alpha compatibility, mbuck@debian.org */
+#if 0
 	int		now, x, y, w, h, prw, prh;
+#else
+	int		x, y, w, h, prw, prh;
+	time_t		now;
+#endif
 	struct		tm *tm;
 	Clock		c;
 
@@ -1154,7 +1194,13 @@ dig_repaint (canvas, pw, area)
 	Pixwin *	pw;
 	Rectlist	*area;
 {
+/* Alpha compatibility, mbuck@debian.org */
+#if 0
 	int		i, now, y_coord, fontHeight, fontWidth;
+#else
+	int		i, y_coord, fontHeight, fontWidth;
+	time_t		now;
+#endif
 	struct tm	*tm;
 	Clock		c;
 	ClockDisplay		d;
@@ -1207,11 +1253,21 @@ dig_repaint (canvas, pw, area)
 
 static Notify_value
 dig_timer_expired (me, which, invalidate)
+/* Alpha compatibility, mbuck@debian.org */
+#if 0
 	Notify_value	me;
+#else
+	Frame		me;
+#endif
 	int		which, invalidate;
 {
 	static int	mins, hours;
+/* Alpha compatibility, mbuck@debian.org */
+#if 0
 	int		now;
+#else
+	time_t		now;
+#endif
 	struct		tm *tm;
 	Clock		c;
 
@@ -1526,7 +1582,7 @@ init_options (c)
 	window_fit (o-> frame);
 #ifndef NO_LIB_DESKSET
 	ds_position_popup(c->frame, o->frame, DS_POPUP_LOR);
-#endif NO_LIB_DESKSET
+#endif /* NO_LIB_DESKSET */
 }
 
 static void
@@ -1662,7 +1718,12 @@ init_gray_patch()
 init_clck (argc, argv)
 	int  argc; char **argv;
 {
+/* Alpha compatibility, mbuck@debian.org */
+#if 0
 	int now;
+#else
+	time_t now;
+#endif
 	struct tm *tm;
 	Menu_item       tmp_item;
 	char    **argscanner = argv;

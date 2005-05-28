@@ -90,7 +90,7 @@ GetUserDefaults(dpy)
 #ifdef SVR4
 	    if (sysinfo(SI_HOSTNAME, hostname, sizeof(hostname)) != -1) {
 #else
-#ifdef __linux
+#ifdef __linux__
 	    if (0 == gethostname(hostname, sizeof(hostname))) {
 #else
 	    if (0 == gethostname(hostname, sizeof(hostname), &namelen)) {

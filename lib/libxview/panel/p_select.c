@@ -604,7 +604,7 @@ panel_default_handle_event(client_object, event)
 	    if (event_is_up(event))
 		panel->current = NULL;
 	} else
-#endif NO_BINARY_COMPATIBILITY
+#endif /* NO_BINARY_COMPATIBILITY */
 	    (void) panel_accept_menu(client_object, event);
 	break;
 

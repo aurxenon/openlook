@@ -23,7 +23,7 @@ static char     sccsid[] = "@(#)ndetitimer.c 20.17 93/06/28 Copyr 1985 Sun Micro
 #include <xview_private/nint.h>	/* For nint_get_func */
 #ifdef SVR4 
 #include <stdlib.h> 
-#endif SVR4
+#endif /* SVR4 */
 
 extern struct itimerval NOTIFY_NO_ITIMER;
 extern struct itimerval NOTIFY_POLLING_ITIMER;

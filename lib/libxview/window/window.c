@@ -16,7 +16,7 @@ static char     sccsid[] = "@(#)window.c 20.156 93/06/28";
 
 #ifdef SVR4
 #include <sys/types.h>
-#endif SVR4
+#endif /* SVR4 */
 
 #include <stdio.h>
 #include <sys/file.h>

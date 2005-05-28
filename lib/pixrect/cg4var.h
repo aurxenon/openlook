@@ -54,6 +54,6 @@ int	cg4_destroy();
 Pixrect *cg4_region();
 int	cg4_getcolormap();
 int	cg4_getattributes();
-#endif !KERNEL
+#endif /* !KERNEL */
 
-#endif	!cg4var_DEFINED
+#endif /* 	!cg4var_DEFINED */

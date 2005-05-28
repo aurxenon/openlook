@@ -1,5 +1,5 @@
-/**/# @(#)Imakefile	1.8 28 Jun 1993 SMI
-/**/# Imakefile for util
+XCOMM # @(#)Imakefile	1.8 28 Jun 1993 SMI
+XCOMM # Imakefile for util
 
 #include <XView.tmpl>
 

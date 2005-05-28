@@ -1,8 +1,8 @@
 #include <XView.tmpl>
 
-/**/##########################################################################
-/**/# @(#)Imakefile 1.4 89/07/27 SMI
-/**/# Imakefile for XView libraries.
+XCOMM ##########################################################################
+XCOMM # @(#)Imakefile 1.4 89/07/27 SMI
+XCOMM # Imakefile for XView libraries.
 
 #define IHaveSubdirs YES
 #define PassCDebugFlags 'CDEBUGFLAGS=$(CDEBUGFLAGS)'

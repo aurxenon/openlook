@@ -91,4 +91,4 @@ xv_sl_remove();
 	for (_this = (_type)_head, _next = XV_SL_SAFE_NEXT(_this);	\
 	     _this; _this = (_type)_next, _next = XV_SL_SAFE_NEXT(_this))
 
-#endif _xv_list_h_already_included
+#endif /* _xv_list_h_already_included */

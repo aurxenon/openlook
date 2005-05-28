@@ -17,7 +17,7 @@ static char     sccsid[] = "@(#)sel_util.c 1.29 93/06/28";
 #include <xview/server.h>
 #ifdef SVR4 
 #include <stdlib.h> 
-#endif SVR4
+#endif /* SVR4 */
 
 static void tvdiff();
 static void FreeMultiProp();
@@ -188,7 +188,7 @@ Window    xid;
 	list->integer = (Atom) xv_get( server, SERVER_ATOM, "INTEGER" );
 #ifdef OW_I18N
 	list->ctext = (Atom) xv_get( server, SERVER_ATOM, "COMPOUND_TEXT" );
-#endif OW_I18N
+#endif /* OW_I18N */
 	(void)XSaveContext( dpy, DefaultRootWindow(dpy), targetCtx, 
 			   (caddr_t)list );
     }

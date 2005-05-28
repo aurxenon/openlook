@@ -181,7 +181,12 @@ typedef struct textsw_view_object {
 	struct textsw_object		 *folio;
 	struct textsw_view_object	 *next;
 	Textsw_view			  public_self;
+/* Alpha compatibility, mbuck@debian.org */
+#if defined(__alpha)
+	Xv_window			  window_fd;
+#else
 	int				  window_fd;
+#endif
 	Rect				  rect;
 	Ev_handle			  e_view;
 	Scrollbar			  scrollbar;

@@ -1,6 +1,6 @@
-/**/###########################################################################
-/**/# @(#)XView.rules	1.8 12 May 1993 SMI
-/**/# XView.rules for XView release 3.0.  Imake rules needed by distribution.
+XCOMM ###########################################################################
+XCOMM # @(#)XView.rules	1.8 12 May 1993 SMI
+XCOMM # XView.rules for XView release 3.0.  Imake rules needed by distribution.
 
 /*
  ***********************************************************************

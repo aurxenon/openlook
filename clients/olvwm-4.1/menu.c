@@ -5,7 +5,7 @@
  */
 
 #ifdef IDENT
-#ident	"@(#)menu.c	1.6 olvwm version 07 Jan 1994"
+#ident	"@(#)menu.c	1.8 olvwm version 03/02/00"
 #endif
 
 /*
@@ -1282,7 +1282,7 @@ calcmenusize(menuInfo, winInfo, menu)
 		offset = BUTT_IMGVSPACE;
 		menuInfo->hasImages = True;
 		break;
-#endif OLGX_LABEL_IS_COMB
+#endif /* OLGX_LABEL_IS_COMB */
 	}
 	menu->maxLabWidth = MAX(menu->maxLabWidth, labelWidth);
 	menu->maxLabHeight = MAX(menu->maxLabHeight, labelHeight);
@@ -1433,7 +1433,7 @@ calcmenusize(menuInfo, winInfo, menu)
 		    case ImageLabel:
 #ifdef OLGX_LABEL_IS_COMB
 		    case ComboLabel:
-#endif OLGX_LABEL_IS_COMB
+#endif /* OLGX_LABEL_IS_COMB */
 			tempheight += pb->label[pb->which].pixlabel->height +
 				      BUTT_IMGVSPACE * 2;
 			break;
@@ -3159,7 +3159,11 @@ drawCommonButton(dpy, menuInfo, idx, fDefault, fInverse)
     else if (pb->label[pb->which].kind == ComboLabel) {
 	label = &combLabel;
 	combLabel.pixlabel = *(pb->label[pb->which].pixlabel);
+#ifdef OW_I18N_L4
+	combLabel.strlabel = GetText(pb->label[pb->which].string);
+#else
 	combLabel.strlabel = pb->label[pb->which].string;
+#endif
 	state |= OLGX_LABEL_IS_COMB;
     }
 #endif
@@ -3167,6 +3171,7 @@ drawCommonButton(dpy, menuInfo, idx, fDefault, fInverse)
 	label = pb->label[pb->which].pixlabel;
 	state |= OLGX_LABEL_IS_PIXMAP;
     }
+    else return;	/* kind == NoKind, e.g. a separator */
 
 #if defined(SVR4) || defined(XVIEW32)
     if (menuInfo->hasAccelerators) {

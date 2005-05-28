@@ -45,7 +45,7 @@
 #include "error.h"
 #include "dsdm.h"
 
-#if defined(__linux) && !defined(MAXPID)
+#if defined(__linux__) && !defined(MAXPID)
 #define MAXPID 32767
 #endif
 
@@ -619,7 +619,7 @@ ExitOLWM()
 static void
 handleChildSignal()
 {
-#ifdef __linux
+#ifdef __linux__
 /* Reinitialize signal catcher */
 	signal(SIGCHLD, handleChildSignal);
 #endif

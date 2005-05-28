@@ -49,5 +49,5 @@ extern caddr_t /* payload pointer */ hashfn_delete();
 extern caddr_t /* key pointer */ hashfn_first_key();
 extern caddr_t /* key pointer */ hashfn_next_key();
 
-#endif hashfn_c
-#endif hashfn_h
+#endif /* hashfn_c */
+#endif /* hashfn_h */

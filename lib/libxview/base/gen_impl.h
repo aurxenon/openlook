@@ -39,4 +39,4 @@ typedef	struct	{
     char		*instance_name;
 } Generic_info;
 
-#endif _gen_impl_h_already_included
+#endif /* _gen_impl_h_already_included */

@@ -43,7 +43,7 @@ typedef struct pixfont {
 
 #define	prs_ttext(prpos, op, pf, str) \
 	pr_ttext((prpos).pr, (prpos).pos.x, (prpos).pos.y, pf, str)
-#endif lint
+#endif /* lint */
 
 Pixfont	*pf_open();
 Pixfont	*pf_open_private();
@@ -53,4 +53,4 @@ struct	pr_size pf_textwidth();
 
 #define	PIXFONT	Pixfont
 
-#endif	pixfont_DEFINED
+#endif	/* pixfont_DEFINED */

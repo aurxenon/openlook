@@ -18,21 +18,21 @@
 
 #include <stdio.h>
 #include <sys/types.h>
+#include <sys/signal.h>  /* sigset_t */
 #include <sys/wait.h>
 #include <sys/time.h>
 #include <sys/resource.h>
 #include <xview/base.h>
-#ifndef __linux
-#ifdef SYSV_WAIT
-#include <sys/rusage.h>
-#endif 
-#ifdef SYSV_UCONTEXT
-#include <sys/ucontext.h>
-#endif 
-#else /* __linux */
-#include <sys/signal.h>  /* sigset_t */
-typedef int ucontext_t;
+#ifndef __linux__
+# ifdef SYSV_WAIT
+#  include <sys/rusage.h>
+# endif 
 #endif
+#ifdef SYSV_UCONTEXT
+# include <sys/ucontext.h>
+#else
+typedef int ucontext_t;
+#endif 
 
 /*
  ***********************************************************************

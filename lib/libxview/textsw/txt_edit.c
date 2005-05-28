@@ -28,7 +28,7 @@ static char     sccsid[] = "@(#)txt_edit.c 20.58 93/06/28";
 #define UPDATE_SCROLLBAR(_delta, _old_length)\
 	((THRESHOLD * _delta) >= _old_length)
 
-#ifndef __linux
+#ifndef __linux__
 Xv_private_data char *xv_shell_prompt;
 #else
 /* Global already defined in server/server.c */

@@ -16,6 +16,10 @@ static char     sccsid[] = "@(#)ttyselect.c 20.47 93/06/29";
 #include <sys/types.h>
 #include <sys/file.h>
 #include <sys/time.h>
+#ifndef XVIEW_USE_INSECURE_TMPFILES
+/* martin.buck@bigfoot.com */
+#include <dirent.h>
+#endif
 
 #include <pixrect/pixrect.h>
 #include <pixrect/pixfont.h>
@@ -102,7 +106,12 @@ static struct ttyselection *ttysel_ttysel;	/* stash for ttysel_write  */
 
 static struct timeval maxinterval = {0, 400000};	/* XXX - for now */
 
+#ifdef XVIEW_USE_INSECURE_TMPFILES
+/* martin.buck@bigfoot.com */
 static char    *ttysel_filename = "/tmp/ttyselection";
+#else
+static char    ttysel_filename[MAXNAMLEN];
+#endif
 
 /* static */ int
 ttysw_is_seln_nonzero(ttysw, rank)
@@ -1258,6 +1267,12 @@ ttysel_function(ttysw, buffer)
 	    if (!ttysel->sel_made) {
 		return;
 	    }
+#ifndef XVIEW_USE_INSECURE_TMPFILES
+	    /* martin.buck@bigfoot.com */
+	    if (!ttysel_filename[0]) {
+		sprintf(ttysel_filename, "%s/.ttyselection", xv_getlogindir());
+	    }
+#endif
 	    if ((held_file = fopen(ttysel_filename, "w")) == (FILE *) NULL) {
 		return;
 	    }

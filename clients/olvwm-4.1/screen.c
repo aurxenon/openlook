@@ -5,7 +5,7 @@
  */
 
 #ifdef IDENT
-#ident	"@(#)screen.c	1.7 olvwm version 09 Feb 1994"
+#ident	"@(#)screen.c	1.8 olvwm version 04/28/99"
 #endif
 
 /*

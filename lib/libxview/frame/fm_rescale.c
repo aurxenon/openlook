@@ -43,7 +43,7 @@ frame_rescale_subwindows(frame_public, scale)
      */
     window_default_event_func(frame_public, (Event *) 0, scale, (Notify_event_type) 0);
     window_calculate_new_size(frame_public, frame_public, &frame_height, &frame_width);
-#ifndef __linux
+#ifndef __linux__
     xv_set(frame_public, WIN_RECT, 0); /* This looks like a XView bug to me */
 #endif
 

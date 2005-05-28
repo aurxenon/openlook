@@ -203,7 +203,12 @@ btn_begin_preview(item_public, event)
 	if (pin_is_default) {
 	    image.im_type = PIT_STRING;
 	    image_string(&image) = NULL;
+/* Alpha compatibility, mbuck@debian.org */
+#if 1
+	    label = (char *)"";
+#else
 	    label = "";
+#endif
 	} else if (!(image_string(&image) = (char *) xv_get(default_menu_item,
 		MENU_STRING))) {
 	    olgx_state |= OLGX_LABEL_IS_PIXMAP;

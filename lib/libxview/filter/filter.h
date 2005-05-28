@@ -38,4 +38,4 @@ EXTERN_FUNCTION (struct filter_rec **xv_parse_filter_table, (STREAM *in, char *f
 
 EXTERN_FUNCTION (void 	xv_free_filter_table, (struct filter_rec **table));
 
-#endif ~xview_filter_DEFINED
+#endif /* ~xview_filter_DEFINED */

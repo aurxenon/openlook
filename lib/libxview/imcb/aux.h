@@ -85,4 +85,4 @@ typedef	struct _aux_info {
 	int				f_height;
 }  AuxInfo;
 
-#endif		~aux_DEFINED
+#endif		/* ~aux_DEFINED */

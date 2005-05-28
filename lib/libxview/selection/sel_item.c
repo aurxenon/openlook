@@ -14,7 +14,7 @@ static char     sccsid[] = "@(#)sel_item.c 1.11 91/04/18";
 #include <xview_private/sel_impl.h>
 #ifdef SVR4 
 #include <stdlib.h> 
-#endif SVR4
+#endif /* SVR4 */
 
 Pkg_private char *xv_sel_atom_to_str(/* display, atom */);
 Pkg_private Atom xv_sel_str_to_atom(/* display, string */);

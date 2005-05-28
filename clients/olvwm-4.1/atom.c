@@ -73,11 +73,11 @@ Atom	AtomSunOLWinAttr5;
 Atom	AtomDecorIconName;
 Atom	AtomSunReReadMenuFile;
 #ifdef OW_I18N_L4
-Atom	AtomCompoundText;
 Atom	AtomDecorIMStatus;
 Atom	AtomLeftIMStatus;
 Atom	AtomRightIMStatus;
 #endif
+Atom	AtomCompoundText;
 
 /***************************************************************************
 * Global functions
@@ -153,9 +153,7 @@ Display	*dpy;
 	AtomTargets = XInternAtom(dpy,"TARGETS",False);
 	AtomTimestamp = XInternAtom(dpy,"TIMESTAMP",False);
 	AtomUser = XInternAtom(dpy,"USER",False);
-#ifdef OW_I18N_L4
 	AtomCompoundText = XInternAtom(dpy, "COMPOUND_TEXT" , False);
-#endif
 
 	/* SunView environment */
 	AtomSunViewEnv = XInternAtom(dpy,"_SUN_SUNVIEW_ENV",False);

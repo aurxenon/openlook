@@ -23,7 +23,7 @@ static char     sccsid[] = "@(#)window_set.c 20.148 93/06/28";
 #include <xview/defaults.h>
 #ifdef SVR4 
 #include <stdlib.h> 
-#endif SVR4
+#endif /* SVR4 */
 
 /*
  * Extern

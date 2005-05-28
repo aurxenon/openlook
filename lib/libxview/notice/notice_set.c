@@ -22,7 +22,6 @@ static char     sccsid[] = "@(#)notice_set.c 1.21 93/06/28";
 #include <xview/win_input.h>
 #include <xview/cms.h>
 
-extern char		*strchr();
 Pkg_private Xv_opaque	notice_generic_set();
 #ifdef  OW_I18N
 static CHAR     **notice_string_set();

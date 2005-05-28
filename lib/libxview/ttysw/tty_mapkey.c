@@ -12,7 +12,7 @@ static char     sccsid[] = "@(#)tty_mapkey.c 20.41 93/06/28";
 
 #include <stdio.h>
 #include <ctype.h>
-#ifdef SVR4
+#if defined SVR4 || defined __linux__ 
 #include <string.h>
 #endif
 #include <sys/types.h>
@@ -34,7 +34,6 @@ static char     sccsid[] = "@(#)tty_mapkey.c 20.41 93/06/28";
 
 extern Notify_error win_post_event();
 extern char    *getenv();
-extern char    *strcpy();
 extern char    *strcat();
 
 /* static routines	 */
@@ -508,7 +507,7 @@ ttysw_remove_caps(label, label_ptr)
  * have more time.
  */
 
-#if defined(i386) && !defined(__linux)
+#if defined(i386) && !defined(__linux__)
 static void
 ttysw_arrow_keys_to_string(xv_id, str)
     unsigned        xv_id;

@@ -76,7 +76,7 @@ olwm_usleep(usec)
 	setitimer(ITIMER_REAL, &old, (struct itimerval *)0);
 	return 0;
 
-#else SYSV
+#else /* SYSV */
 
 	return usleep(usec);
 

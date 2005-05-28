@@ -61,4 +61,4 @@ struct memropc {
 #define	mrc_lmask(x)	(0xffff0000 >> (x))
 #define	mrc_rmask(x)	(0x7fff >> (x))
 
-#endif	memreg_DEFINED
+#endif /* 	memreg_DEFINED */

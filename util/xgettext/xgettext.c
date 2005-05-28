@@ -193,7 +193,7 @@ get_arguments(argc, argv, envp)
 	
 	switch (*cp) {
 
-	case NULL:
+	case 0:
             readstd++;
             break;
 

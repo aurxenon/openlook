@@ -109,9 +109,8 @@ ntfy_new_enum_conditions(cnd_list, enum_func, context)
     NTFY_ENUM_DATA  context;
 {
 #if 1
-    /* See comment below */
-    /* martin-2.buck@student.uni-ulm.de */
-    NTFY_CNDTBL *orig_cnd_list = cnd_list;
+    /* See comment below.  mbuck@debian.org */
+    NTFY_CNDTBL    *last_cnd_list = cnd_list;
 #endif
     if (!cnd_list)
 	return (NTFY_ENUM_NEXT);
@@ -134,25 +133,36 @@ ntfy_new_enum_conditions(cnd_list, enum_func, context)
 	    }
 	}
 #if 1
-	/* The call to enum_func above might result in a call to
+	/* The call to enum_func below might result in a call to
 	 * ndet_itimer_change which might call ndet_itimer_expired which in
-	 * turn might call notify_set_itimer_func. This however can change
-	 * our cnd_list. A comment in ndet_itimer_expired says that
-	 * ntfy_new_enum_conditions is designed to survive this, which, of
-	 * course, it is not. So before dereferencing any further cnd_list
-	 * entries, we first check if the original cnd_list we got passed
-	 * is still valid.
+	 * turn might call notify_set_itimer_func. This however could remove
+	 * the current condition from our cnd_list, which would make our
+	 * cnd_list pointer invalid. A comment in ndet_itimer_expired says
+	 * that ntfy_new_enum_conditions is designed to survive this, which,
+	 * of course, it is not.
+	 * So, to find the next condition in the list, we have to check
+	 * whether the previous condition's next pointer still points to the
+	 * current condition. If it doesn't, this means that the current
+	 * condition was removed and we have to use the previous condition's
+	 * next pointer to find the next condition. If it didn't change, we
+	 * can simply use the current condition's next pointer.
+	 *
 	 * Oh, BTW: I've got absolutely no idea what's going on here, but I
 	 * hope this is a suitable fix. At least it prevents fullscreen-
 	 * programs like vi from causing cmdtool to dump core.
 	 *
-	 * martin-2.buck@student.uni-ulm.de
+	 * mbuck@debian.org
 	 */
-	if (!orig_cnd_list->next) {
-	    break;
+
+	if (cnd_list != last_cnd_list->next) {
+	    cnd_list = last_cnd_list->next;
+	} else {
+	    last_cnd_list = cnd_list;
+	    cnd_list = cnd_list->next;
 	}
-#endif
+#else
 	cnd_list = cnd_list->next;
+#endif
     }
     return (NTFY_ENUM_NEXT);
 }
@@ -172,6 +182,10 @@ ntfy_new_paranoid_enum_conditions(cnd_list, enum_func, context)
     NTFY_ENUM_FUNC  enum_func;
     NTFY_ENUM_DATA  context;
 {
+#if 1
+    /* See comment above.  mbuck@debian.org */
+    NTFY_CNDTBL    *last_cnd_list = cnd_list;
+#endif
     extern NTFY_CLIENT *ntfy_enum_client;
     extern NTFY_CLIENT *ntfy_enum_client_next;
     NTFY_ENUM       return_code = NTFY_ENUM_NEXT;
@@ -213,7 +227,17 @@ ntfy_new_paranoid_enum_conditions(cnd_list, enum_func, context)
 	    if (ntfy_enum_client == NTFY_CLIENT_NULL)
 		goto BreakOut;
 	}
+#if 1
+	/* See comment above.  mbuck@debian.org */
+	if (cnd_list != last_cnd_list->next) {
+	    cnd_list = last_cnd_list->next;
+	} else {
+	    last_cnd_list = cnd_list;
+	    cnd_list = cnd_list->next;
+	}
+#else
 	cnd_list = cnd_list->next;
+#endif
     }
 BreakOut:
     {

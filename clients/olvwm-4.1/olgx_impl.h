@@ -114,7 +114,7 @@ void               hsv_to_xcolor();
 void               xcolor_to_hsv();
 void               olgx_hsv_to_3D();
 
-#endif	!OL_PRIVATE_DEFINED
+#endif	/* !OL_PRIVATE_DEFINED */
 
 
 

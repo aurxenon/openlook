@@ -5,7 +5,7 @@
  */
 
 #ifdef IDENT
-#ident "@(#)moveresize.c	1.7 olvwm version 09 Feb 1994"
+#ident "@(#)moveresize.c	1.8 olvwm version 01/13/98"
 #endif
 
 /*
@@ -1067,6 +1067,7 @@ moveDone(mstuff)
     XUngrabPointer(mstuff->dpy, CurrentTime);
     XUngrabKeyboard(mstuff->dpy, CurrentTime);
 
+    XFlush(mstuff->dpy);
     /*
      * If we moved the outline (not the whole window) cause the window to be
      * raised at the same time it is moved.  Raise just the frame the user

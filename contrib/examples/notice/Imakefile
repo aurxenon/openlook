@@ -1,8 +1,8 @@
 #include <XView.tmpl>
 
-/**/##########################################################################
-/**/# @(#)Imakefile 1.7 90/08/02 SMI
-/**/# Imakefile for examples/notice
+XCOMM ##########################################################################
+XCOMM # @(#)Imakefile 1.7 90/08/02 SMI
+XCOMM # Imakefile for examples/notice
 
 #define InstallSrcs YES
 LOCATION = examples/notice

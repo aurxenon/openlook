@@ -17,7 +17,12 @@ static char     sccsid[] = "@(#)win_input.c 20.208 93/06/28";
 #include <stdio.h>
 #include <errno.h>
 #include <sys/time.h>
+/* mbuck@debian.org */
+#if 1
+#include <X11/Xlibint.h>	/* required by Xutil.h */
+#else
 #include <X11/Xlib.h>		/* required by Xutil.h */
+#endif
 #include <X11/keysym.h>
 #include <X11/Xatom.h>
 #include <X11/Xutil.h>
@@ -77,7 +82,7 @@ Xv_private int  win_handle_window_accel();
 Xv_private int  win_handle_menu_accel();
 /* ACC_XVIEW */
 
-#ifndef __linux
+#ifndef __linux__
 FILE           *fopen(), *fexp;
 #endif
 
@@ -2333,8 +2338,13 @@ chording(display, bEvent, timeout)
     /* XView does a passive grab on the SELECT button! */
     window_x_allow_events(display);
 
+#if 1 /* mbuck@debian.org */
+    return BlockForEvent(display, &xevent, timeout * 1000, GetButtonEvent,
+			 (char *) bEvent);
+#else
     return BlockForEvent(display, xevent, timeout * 1000, GetButtonEvent,
 			 (char *) bEvent);
+#endif
 }
 
 

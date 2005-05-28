@@ -20,6 +20,7 @@ static char     sccsid[] = "@(#)tty_init.c 20.71 93/06/28";
 #include <sys/file.h>
 #include <errno.h>
 #include <signal.h>
+#include <string.h>
 
 #include <xview_private/portable.h>	/* for XV* defines and termios */
 
@@ -42,6 +43,15 @@ static char     sccsid[] = "@(#)tty_init.c 20.71 93/06/28";
 #include <pwd.h>
 #include <ctype.h>
 #include <fcntl.h>
+
+#if defined(__linux__) && defined(__GLIBC__)
+/* martin.buck@bigfoot.com */
+#if __GLIBC__ == 2 && __GLIBC_MINOR__ == 0 
+#include <ioctls.h>
+#else
+#include <sys/ioctl.h>
+#endif
+#endif
 
 #include <pixrect/pixrect.h>
 #include <pixrect/pr_util.h>
@@ -80,8 +90,6 @@ static char     sccsid[] = "@(#)tty_init.c 20.71 93/06/28";
 #endif
 
 
-extern char    *strncpy();
-extern char    *strcpy();
 extern long     lseek();
 char           *textsw_checkpoint_undo();
 
@@ -434,7 +442,7 @@ ttysw_add_FNDELAY(fd)
     if ((fdflags = fcntl(fd, F_GETFL, 0)) == -1)
 #endif
 	return (-1);
-#if !defined(__linux) || defined(FNDELAY)
+#if !defined(__linux__) || defined(FNDELAY)
     fdflags |= FNDELAY;
 #else
     fdflags |= O_NONBLOCK;
@@ -462,11 +470,11 @@ ttysw_fork_it(ttysw0, argv, wfd)
     char	    appname[20];
     char	    *p;
     unsigned        ttysw_error_sleep = 1;
-#if !defined(SVR4) && !defined(__linux)
+#if !defined(SVR4) && !defined(__linux__)
     struct sigvec   vec, ovec;
 #else
     struct sigaction	vec, ovec;
-#ifndef __linux
+#ifndef __linux__
     extern char *ptsname();
 #endif
 
@@ -493,7 +501,7 @@ ttysw_fork_it(ttysw0, argv, wfd)
     }
 
     /* Set up the child characteristics */
-#if !defined(SVR4) && !defined(__linux)  	/* SunOS4.x code */
+#if !defined(SVR4) && !defined(__linux__)  	/* SunOS4.x code */
     vec.sv_handler = SIG_DFL;
     vec.sv_mask = vec.sv_onstack = 0;
     sigvec(SIGWINCH, &vec, 0);
@@ -529,7 +537,7 @@ ttysw_fork_it(ttysw0, argv, wfd)
     vec.sa_flags = SA_RESTART;
     sigaction(SIGTTOU, &vec, &ovec);
 
-#ifndef __linux
+#ifndef __linux__
     if (unlockpt(ttysw->ttysw_pty) == -1)
         perror("unlockpt (2)");
     if ((ttysw->ttysw_tty = open(ptsname(ttysw->ttysw_pty),O_RDWR))<0)
@@ -576,7 +584,7 @@ ttysw_fork_it(ttysw0, argv, wfd)
 	    offset++;
     }
 
-#if defined(SVR4) || defined(__linux)
+#if defined(SVR4) || defined(__linux__)
 #ifdef BSD_TTY_COMPAT
 /*
  * ttcompat seems to leave things in a funny state and assumes
@@ -899,7 +907,7 @@ gotpty:
 
   ok:
 
-#endif SB_NO_DROPS
+#endif /* SB_NO_DROPS */
 
 
     if (ioctl(pty, I_PUSH, "pckt") == -1) { /* must use getmsg for read */
@@ -972,7 +980,7 @@ gotpty:
  */
 
 #ifndef SVR4
-#ifndef __linux
+#ifndef __linux__
 /*
  * Make entry in /etc/utmp for ttyfd. Note: this is dubious usage of
  * /etc/utmp but many programs (e.g. sccs) look there when determining who is
@@ -1056,7 +1064,7 @@ updateutmp(username, ttyslotuse, ttyfd)
     }
     return (ttyslotuse);
 }
-#else /* __linux */
+#else /* __linux__ */
 /* Linux version of updateutmp uses the getutXX functions, we don't
  * need no ttyslot() or direct writing to /etc/utmp */
 int
@@ -1118,6 +1126,6 @@ updateutmp(username, ttyslotuse, ttyfd)
     endutent();
     return 1;        /* Return dummy value for ttyslot number */
 }
-#endif /* __linux */
-#endif SVR4
+#endif /* __linux__ */
+#endif /* SVR4 */
 

@@ -65,6 +65,11 @@ static char     sccsid[] = "@(#)tty_main.c 20.93 93/06/28";
 #endif /* FULL_R5 */    
 #endif
 
+#if defined(__linux__) && defined(__GLIBC__)
+/* martin.buck@bigfoot.com */
+#include <sys/ioctl.h>
+#endif
+
 #ifdef OW_I18N
 /*
  * If there are committed chars and pre_edit chars returned by XIM,
@@ -901,7 +906,7 @@ ttysw_pty_input(ttysw, pty)
     if (cc > 0) {
 	int_ucntl = (unsigned) ucntl;
 
-#ifdef __linux
+#ifdef __linux__
 	/* Under Linux, int_ucntl doesn't get set when enabling/disabling
 	 * ECHO mode. So we always have to read the current tty settings :-(
 	 * martin-2.buck@student.uni-ulm.de
@@ -921,7 +926,7 @@ ttysw_pty_input(ttysw, pty)
             (void)tcgetattr(ttysw->ttysw_tty, &ttysw->termios);
 #endif
 	    ttysw_getp(TTY_VIEW_HANDLE_FROM_TTY_FOLIO(ttysw));	/* jcb for nng */
-#ifdef __linux
+#ifdef __linux__
 	}
 	if (int_ucntl == 0)
 #else
@@ -1532,7 +1537,7 @@ xv_tty_new_size(ttysw, cols, lines)
      * Otherwise, we use the winsize struct  and TIOCSWINSZ ioctl.
      */
     struct winsize  ws;
-#if !defined(SVR4) && !defined(__linux)
+#if !defined(SVR4) && !defined(__linux__)
     struct sigvec vec, ovec;
 
     vec.sv_handler = SIG_IGN;
@@ -1545,7 +1550,7 @@ xv_tty_new_size(ttysw, cols, lines)
     if ((ioctl(ttysw->ttysw_tty, TIOCSWINSZ, &ws)) == -1)
 	perror(XV_MSG("ttysw-TIOCSWINSZ"));
 
-#if !defined(SVR4) && !defined(__linux)
+#if !defined(SVR4) && !defined(__linux__)
     (void) sigvec(SIGTTOU, &ovec, 0);
 #endif
 #endif /* sun */
@@ -1645,7 +1650,7 @@ Pkg_private void
 ttysw_flush_input(ttysw)
     Ttysw_folio     ttysw;
 {
-#if !defined(SVR4) && !defined(__linux)
+#if !defined(SVR4) && !defined(__linux__)
     struct sigvec   vec, ovec;	/* Sys V compatibility */
     int flushf = 0;
 
@@ -1676,7 +1681,7 @@ ttysw_flush_input(ttysw)
 #   endif /* XV_USE_TERMIOS */
 	perror(XV_MSG("TIOCFLUSH"));
 
-#if !defined(SVR4) && !defined(__linux)
+#if !defined(SVR4) && !defined(__linux__)
     (void) sigvec(SIGTTOU, &ovec, (struct sigvec *) 0);
 #else
     sigaction(SIGTTOU, &ovec, (struct sigaction *) 0);

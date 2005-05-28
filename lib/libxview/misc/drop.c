@@ -11,7 +11,7 @@
 #include <xview_private/portable.h>
 #ifdef SVR4 
 #include <stdlib.h> 
-#endif SVR4
+#endif /* SVR4 */
 
 #define DD_FAILED  -1
 

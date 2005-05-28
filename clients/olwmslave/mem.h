@@ -16,4 +16,4 @@ extern void MemFree();		/* free frontend */
 #define MemNewString(s) (strcpy(MemAlloc(strlen(s)+1),s))
 #ifdef OW_I18N_L4
 #define MemNewWString(s) (wscpy(MemAlloc((wslen(s)+1) * sizeof(wchar_t)),s))
-#endif OW_I18N_L4
+#endif /* OW_I18N_L4 */

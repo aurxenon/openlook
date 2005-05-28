@@ -22,7 +22,7 @@ static char     sccsid[] = "@(#)ndisdispch.c 20.22 93/06/28 Copyr 1985 Sun Micro
 #include <signal.h>
 #ifdef SVR4
 #include <unistd.h>
-#endif SVR4
+#endif /* SVR4 */
 
 /* performance: global cache of getdtablesize() */
 int             dtablesize_cache = 0;
@@ -32,7 +32,7 @@ int             dtablesize_cache = 0;
 #else
 #define GETDTABLESIZE() \
  (dtablesize_cache?dtablesize_cache:(dtablesize_cache=getdtablesize()))
-#endif SVR4
+#endif /* SVR4 */
 
 pkg_private_data u_int ndis_flags = 0;
 pkg_private_data NTFY_CLIENT *ndis_clients = 0;

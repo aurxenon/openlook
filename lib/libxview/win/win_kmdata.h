@@ -48,7 +48,7 @@ const unsigned int		win_keymap[] = {
 #else    
         /* BUG: Only in R4. */
         XK_Scroll_Lock,                 		/* XK_Scroll_Lock */
-#endif XK_Scroll_Lock
+#endif /* XK_Scroll_Lock */
 	NULL, NULL, NULL, NULL, NULL, NULL,
 
 	XK_Escape,
@@ -211,4 +211,4 @@ const unsigned int		win_keymap[] = {
 };
 
 
-#endif win_keymap_data_DEFINED
+#endif /* win_keymap_data_DEFINED */

@@ -80,7 +80,7 @@ execCommand(winInfo,cmd)
 	return 1;
     } else if (pid == 0) {
 	/* child */
-#if defined(SYSV) || defined(__linux)
+#if defined(SYSV) || defined(__linux__)
 	setpgrp();
 #else
 	setpgrp(0, getpid());
@@ -238,7 +238,7 @@ PshFunc(dpy, winInfo, menuInfo, idx)
 		close( pshPipe[1] );
 		close( 1 );		/* close stdout */
 		dup( 2 );		/* make olwm stderr = psh stdout */
-#if defined(SYSV) || defined(__linux)
+#if defined(SYSV) || defined(__linux__)
 		setpgrp();
 #else
 		setpgrp(0, getpid());

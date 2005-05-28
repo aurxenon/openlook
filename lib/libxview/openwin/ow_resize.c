@@ -215,13 +215,13 @@ openwin_adjust_view_rect(owin, view, view_rect)
     /* clear borders if painted */
     if (STATUS(owin, show_borders))
 	openwin_paint_border(OPENWIN_PUBLIC(owin), view, FALSE);
-#endif SELECTABLE_VIEWS
+#endif /* SELECTABLE_VIEWS */
     xv_set(view->view, WIN_RECT, view_rect, 0);
 #ifdef SELECTABLE_VIEWS
     /* repaint borders is shown */
     if (STATUS(owin, show_borders))
 	openwin_paint_border(OPENWIN_PUBLIC(owin), view, TRUE);
-#endif SELECTABLE_VIEWS
+#endif /* SELECTABLE_VIEWS */
 
     if (vsb != NULL) {
 	xv_set(vsb,
@@ -285,9 +285,9 @@ openwin_adjust_view_by_margins(owin, view, margin, view_rect)
     } else {
 #ifndef SVR4
 	n_vmargins = n_hmargins = 1;
-#else SVR4
+#else /* SVR4 */
 	n_vmargins = n_hmargins = 2;
-#endif SVR4
+#endif /* SVR4 */
     }
 
     /* get rid of margin if view is on one of the edges, or if there is 

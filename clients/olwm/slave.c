@@ -87,7 +87,7 @@ SlaveStart(argv)
 	case 0:				/* Slave */
 		dup2(input[0],0);
 		dup2(output[1],1);
-#ifndef __linux
+#ifndef __linux__
 		if (getrlimit(RLIMIT_NOFILE,&rlimit) == -1)
 			maxfd = 0;
 		else

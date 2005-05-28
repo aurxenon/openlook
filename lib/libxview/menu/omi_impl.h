@@ -15,9 +15,9 @@
 #ifndef pixrect_DEFINED
 #ifndef _TYPES_
 #include <sys/types.h>
-#endif _TYPES_
+#endif /* _TYPES_ */
 #include <pixrect/pixrect.h>
-#endif pixrect_DEFINED
+#endif /* pixrect_DEFINED */
 #include <xview/font.h>
 #include <xview/svrimage.h>
 #ifdef OW_I18N
@@ -87,4 +87,4 @@ struct image {
 
 #define image_vector(x1,y1,x2,y2) \
 	(xv_vector(window,x1,y1,x2,y2,PIX_SET,0))
-#endif _xview_image_impl_h_already_included
+#endif /* _xview_image_impl_h_already_included */

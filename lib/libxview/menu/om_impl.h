@@ -22,7 +22,7 @@
 #ifdef OW_I18N
 #include <X11/Xlib.h>
 #include <X11/Xresource.h>
-#endif OW_I18N
+#endif /* OW_I18N */
 
 /***** Definitions *****/
 #ifndef TRUE
@@ -198,7 +198,7 @@ typedef struct menu {
 		pin_window_header;
 #else
     char	*pin_window_header;
-#endif OW_I18N
+#endif /* OW_I18N */
     Xv_Window	window;			/* window containing menu items */
     Xv_Window	shadow_window;		/* gray shadow window */
 #ifdef OW_I18N
@@ -300,4 +300,4 @@ typedef struct menu_item {
 }  Xv_menu_item_info;
 
 
-#endif _xview_walkmenu_impl_h_already_included
+#endif /* _xview_walkmenu_impl_h_already_included */

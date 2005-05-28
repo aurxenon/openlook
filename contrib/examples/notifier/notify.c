@@ -15,7 +15,7 @@ char    kbd_msg[128], ptr_msg[128], but_msg[128];
 int	RUN = TRUE;
 XFontStruct *font;
 			/* Time out for select. */
-#ifndef __linux
+#ifndef __linux__
 struct timeval timeout = { 0, 250000 };
 #else
 struct timeval timeout; /* Linux changes timeval in select(), reinit every time */
@@ -99,7 +99,7 @@ char *argv[];
     while (RUN) {
         FD_SET(fd, &readfds);
 
-#ifdef __linux
+#ifdef __linux__
         timeout.tv_sec = 0;
         timeout.tv_usec = 250000;
 #endif

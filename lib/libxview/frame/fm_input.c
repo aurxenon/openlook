@@ -359,6 +359,10 @@ frame_set_focus(sw)
  */
 Xv_private	void
 frame_set_accept_default_focus(frame_public, flag)
+/* Alpha compatibility, mbuck@debian.org */
+#if 1
+    Frame frame_public;
+#endif
 {
     Frame_class_info *frame = FRAME_CLASS_PRIVATE(frame_public);
 

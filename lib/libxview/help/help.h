@@ -14,4 +14,4 @@
  */
 EXTERN_FUNCTION (int xv_help_show, (Xv_Window client_window, char *client_data, Event *client_event));
 
-#endif __xv_help_h
+#endif /* __xv_help_h */

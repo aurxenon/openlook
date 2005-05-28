@@ -251,7 +251,12 @@ generic_set_avlist(object, avlist)
 	    break;
 
 	  case XV_KEY_DATA:
+/* Alpha compatibility, mbuck@debian.org */
+#if defined(__alpha)
+	    key = (unsigned long) avlist[1];
+#else
 	    key = (int) avlist[1];
+#endif
 	    existing_node = node = find_node(object, key, &prev);
 	    if (!node) {
 		node = add_node(object, key);
@@ -278,7 +283,12 @@ generic_set_avlist(object, avlist)
 	  case XV_KEY_DATA_COPY_PROC:
 	  case XV_KEY_DATA_REMOVE:
 	  case XV_KEY_DATA_REMOVE_PROC:
+/* Alpha compatibility, mbuck@debian.org */
+#if defined(__alpha)
+	    key = (unsigned long) avlist[1];
+#else
 	    key = (int) avlist[1];
+#endif
 	    node = find_node(object, key, &prev);
 	    if (node) {
 		switch ((Xv_generic_attr) (*avlist)) {
@@ -453,7 +463,7 @@ generic_get(object, status, attr, args)
       case XV_IM:
         result = NULL;
         break;
-#endif OW_I18N
+#endif /* OW_I18N */
 
       default:
 	if (xv_check_bad_attr(XV_GENERIC_OBJECT, attr) == XV_ERROR) {

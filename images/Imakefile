@@ -1,8 +1,8 @@
 #include <XView.tmpl>
 
-/**/########################################################################
-/**/# @(#)Imakefile	1.5	90/07/17
-/**/# Imakefile for images directory.  XView release 2.0.
+XCOMM ########################################################################
+XCOMM # @(#)Imakefile	1.5	90/07/17
+XCOMM # Imakefile for images directory.  XView release 2.0.
 
 CORE_ICONS = default.icon mglass.icon mglass_mask.icon
 
@@ -99,7 +99,7 @@ SRCS =  \
 
 ALLFILES = $(BITMAPS) $(ICONS) $(PIXRECTS) $(CURSORS) $(IMAGES)
 
-all: $(SRCS)
+all:: $(SRCS)
 
 BuildIncludes($(INCLUDES_SRCS),$(IMAGE_INCDIR),/**/)
 

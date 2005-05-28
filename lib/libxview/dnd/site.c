@@ -18,7 +18,7 @@ static char     sccsid[] = "@(#)site.c 1.13 93/06/28";
 #include <xview_private/windowimpl.h>
 #ifdef SVR4 
 #include <stdlib.h> 
-#endif SVR4
+#endif /* SVR4 */
 
 static     void 	TransCoords();
 Xv_private Xv_Window	win_get_top_level();
@@ -241,13 +241,13 @@ DndDropAreaOps(site, mode, area)
 	      return(XV_ERROR);
 
 	  rect = xv_alloc(Rect);
-#if defined(SVR4) || defined(__linux)
+#if defined(SVR4) || defined(__linux__)
           /* This will probably not work right, but it compiles. */
           /* (rectNode->rect) is of the wrong type. */
           memmove(rect, &(rectNode->rect),  sizeof(Rect));
 #else
 	  bcopy(rectNode->rect, rect, sizeof(Rect));
-#endif SVR4
+#endif /* SVR4 */
 
 	  return((Xv_opaque)rect);
       }

@@ -18,7 +18,7 @@
 #include <pixrect/pr_dblbuf.h>
 #include <pixrect/pr_line.h>
 #include <pixrect/pr_planegroups.h>
-#endif NEWPIXMEM
+#endif /* NEWPIXMEM */
 
 #include <pixrect/pr_util.h>
 
@@ -32,7 +32,7 @@
 #include <pixrect/cg8var.h>
 #include <pixrect/cg9var.h>
 #include <pixrect/cg12_var.h>
-#endif NEWPIXMEM
+#endif /* NEWPIXMEM */
 
 #include <pixrect/memvar.h>
 
@@ -40,9 +40,9 @@
 #include <pixrect/mem32_var.h>
 
 #include <pixrect/pixfont.h>
-#endif NEWPIXMEM
+#endif /* NEWPIXMEM */
 
 #include <rasterfile.h>
 #include <pixrect/pr_io.h>
 
-#endif	pixrect_hs_DEFINED
+#endif /* 	pixrect_hs_DEFINED */

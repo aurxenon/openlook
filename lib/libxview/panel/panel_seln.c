@@ -15,7 +15,7 @@ static char     sccsid[] = "@(#)panel_seln.c 20.30 93/06/28";
 #include <xview/sel_attrs.h>
 #ifdef SVR4 
 #include <stdlib.h> 
-#endif SVR4
+#endif /* SVR4 */
 
 extern void     (*panel_seln_inform_proc) (),
                 (*panel_seln_destroy_proc) ();

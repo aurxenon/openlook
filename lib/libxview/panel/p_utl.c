@@ -169,7 +169,7 @@ panel_make_image(font, dest, type_code, value, bold_desired,
             xv_free(image_string_wc(dest));
     }
 #else
-#ifndef __linux
+#ifndef __linux__
     {
         if (image_string(dest))
             xv_free(image_string(dest));
@@ -197,7 +197,7 @@ panel_make_image(font, dest, type_code, value, bold_desired,
 	    value_str = "";
 	if (!(str = (char *) panel_strsave((u_char *) value_str)))
 	    return (size);
-#ifdef __linux
+#ifdef __linux__
 /* XView bug: This routine sometimes used a value that was already freed,
  * leading to clobbered menu items. The problem is the 
  * 'xv_free(image_string(dest))' above. In some cases the new 'value' 

@@ -28,7 +28,12 @@ frame_layout(frame_public, child, op, d1, d2, d3, d4, d5)
     Frame		frame_public;
     register Xv_Window	child;
     Window_layout_op	op;
+/* Alpha compatibility, mbuck@debian.org, FIXME: I don't understand this */
+#if defined(__alpha)
+    unsigned long       d1, d2, d3, d4, d5;
+#else
     int             	d1, d2, d3, d4, d5;
+#endif
 {
     register Frame_class_info *frame = NULL;
     int			is_subframe;

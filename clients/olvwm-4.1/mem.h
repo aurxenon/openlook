@@ -39,7 +39,7 @@ extern int AcctTag;
 #else
 #define MemNew(t) ((t *)MemAlloc((unsigned int)sizeof(t)))
 #define MemNewString(s) (strcpy((char *)MemAlloc(strlen(s)+1),s))
-#endif MEMDEBUG
+#endif /* MEMDEBUG */
 
 #ifdef OW_I18N_L4
 
@@ -49,6 +49,6 @@ extern int AcctTag;
 
 #define MemNewText(s)	MemNewString((char *)s)
 
-#endif OW_I18N_L4
+#endif /* OW_I18N_L4 */
 
-#endif _OLWM_MEM_H
+#endif /* _OLWM_MEM_H */

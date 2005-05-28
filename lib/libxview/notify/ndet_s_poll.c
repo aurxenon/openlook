@@ -28,4 +28,4 @@ notify_set_fd_func(nclient, func, poll_fd)
 {
     return (ndet_set_fd_func(nclient, func, poll_fd, NTFY_FD));
 }
-#endif POLL
+#endif /* POLL */

@@ -18,11 +18,11 @@ static char     sccsid[] = "@(#)frame_cmd.h 1.39 93/06/28";
 
 /* standard includes */
 #ifndef FILE
-#if !defined(SVR4) && !defined(__linux)
+#if !defined(SVR4) && !defined(__linux__)
 #undef NULL
-#endif SVR4
+#endif /* SVR4 */
 #include <stdio.h>
-#endif FILE
+#endif /* FILE */
 #include <sys/time.h>
 #include <xview/notify.h>
 #include <xview/rect.h>

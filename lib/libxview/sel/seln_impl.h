@@ -11,11 +11,11 @@
 
 #include <errno.h>
 #ifndef FILE
-#if !defined(SVR4) && !defined(__linux)
+#if !defined(SVR4) && !defined(__linux__)
 #undef NULL
-#endif SVR4
+#endif /* SVR4 */
 #include <stdio.h>
-#endif FILE
+#endif /* FILE */
 #include <sys/time.h>
 #include <sys/types.h>
 #include <netdb.h>
@@ -97,7 +97,7 @@ typedef struct {
     Time		timestamp;
     unsigned char	format;
 } Seln_agent_context;
-#endif OW_I18N
+#endif /* OW_I18N */
 
 typedef struct {
     long		offset;
@@ -203,7 +203,7 @@ typedef struct {
 							selection.first_wc
 #define LAST_WC(selection)	"_SUN_SELN_LAST_WC", SELN_REQ_LAST_WC, \
 							selection.last_wc
-#endif OW_I18N
+#endif /* OW_I18N */
 
 #define IS_READONLY(selection)	"_SUN_SELN_IS_READONLY", SELN_REQ_IS_READONLY, \
 							   selection.is_readonly

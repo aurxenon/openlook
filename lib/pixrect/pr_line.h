@@ -47,7 +47,7 @@ typedef
 	int width;
     } Pr_brush;
 
-#endif pr_line_h_DEFINED 
+#endif /* pr_line_h_DEFINED */
 
 
 

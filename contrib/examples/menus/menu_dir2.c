@@ -14,7 +14,12 @@
 #include <xview/canvas.h>
 #include <sys/stat.h>
 #include <dirent.h>
+#if defined(__linux__) && defined(__GLIBC__)
+/* martin.buck@bigfoot.com */
+#include <dirent.h>
+#else
 #include <sys/dirent.h>
+#endif
 #include <X11/Xos.h>
 #ifndef MAXPATHLEN
 #include <sys/param.h>

@@ -29,7 +29,7 @@ Xv_public char xv_iso_select;
 /*
  * Table containing valid values for OpenWindows.KeyboardCommands resource
  */
-#ifndef __linux
+#ifndef __linux__
 Xv_private_data Defaults_pairs xv_kbd_cmds_value_pairs[4];
 #else
 /* Global already defined and initialized in server/server.c */

@@ -5,7 +5,7 @@
  */
 
 #ifdef IDENT
-#ident	"@(#)evbind.c	1.6 olvwm version 09 Feb 1994"
+#ident	"@(#)evbind.c	1.7 olvwm version 01/13/98"
 #endif
 
 /*
@@ -139,7 +139,7 @@ establishModBindings(dpy, newDB)
  */
 
 typedef struct {
-    int state;
+    unsigned int state;
     int button;
     SemanticAction action;
 } MouseBinding;

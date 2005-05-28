@@ -502,7 +502,7 @@ ev_make_visible(view, position, lower_context, auto_scroll_by, delta)
                delta, position, line_seq[top_of_lc].pos,
                view->line_table.last_plus_one, lower_context, auto_scroll_by);
 #endif
-#ifndef __linux
+#ifndef __linux__
 	delta = MIN(delta, position - line_seq[top_of_lc].pos);
 #endif
 	if (delta < 50 * view->line_table.last_plus_one

@@ -55,14 +55,14 @@ int _ZERO_;	/* "constant in conditional context" workaround */
 #define	_ONE_	(!_ZERO_)
 int _loop;	/* "_loop redefinition hides earlier one" */
 
-#else lint
+#else /* lint */
 
 #define	IFLINT	IFFALSE
 
 #define	_ZERO_ 0
 #define	_ONE_ 1
 
-#endif lint
+#endif /* lint */
 
 /*
  * portability aids
@@ -77,7 +77,7 @@ typedef	short	LOOP_T;		/* loop variable (for dbra loops) */
 
 #define	LOOP_DECR(var)	(--(var) != -1)
 
-#else mc68000
+#else /* mc68000 */
 
 #define IF68000	IFFALSE
 
@@ -87,7 +87,7 @@ typedef	int	LOOP_T;
 
 #define	LOOP_DECR(var)	(--(var) >= 0)
 
-#endif mc68000
+#endif /* mc68000 */
 
 #ifdef sparc
 #define	IFSPARC	IFTRUE
@@ -124,13 +124,13 @@ typedef	int	LOOP_T;
 #if defined(sun) && !defined(SUNOS)
 #ifdef _sys_types_h
 #define	SUNOS	41
-#else _sys_types_h
+#else /* _sys_types_h */
 #ifdef NFDBITS
 #define	SUNOS	40
-#else NFDBITS
+#else /* NFDBITS */
 #define	SUNOS	35
-#endif NFDBITS
-#endif _sys_types_h
+#endif /* NFDBITS */
+#endif /* _sys_types_h */
 #endif
 
 #if SUNOS >= 40
@@ -188,4 +188,4 @@ typedef	int	LOOP_T;
 typedef	short	MPR_T;		/* type used for memory pixrect data */
 typedef	u_short	UMPR_T;		/* unsigned equivalent of MPR_T */
 
-#endif	pr_impl_util_DEFINED
+#endif /* 	pr_impl_util_DEFINED */

@@ -59,13 +59,13 @@ typedef struct {			/* new _OL_WIN_ATTR format */
 /* value for pushpin_initial_state */
 #ifndef WMPushpinIsOut
 #define WMPushpinIsOut	0
-#endif WMPushpinIsOut
+#endif /* WMPushpinIsOut */
 #ifndef WMPushpinIsIn
 #define WMPushpinIsIn	1
-#endif WMPushpinIsIn
+#endif /* WMPushpinIsIn */
 
 /* value for WM_WINDOW_BUSY property */
 #define WMWindowNotBusy	0
 #define WMWindowIsBusy	1
 
-#endif _wmgr_decor_h_already_included
+#endif /* _wmgr_decor_h_already_included */

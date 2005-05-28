@@ -55,7 +55,7 @@ openwin_set(owin_public, avlist)
     Xv_Window       view;
 #ifdef SELECTABLE_VIEWS
     Openwin_view_info *viewinfo;
-#endif SELECTABLE_VIEWS
+#endif /* SELECTABLE_VIEWS */
     Xv_opaque       result = XV_OK;
 
 
@@ -144,7 +144,7 @@ openwin_set(owin_public, avlist)
 	    else
 	      openwin_viewdata_for_view((Xv_Window) avlist[1], &viewinfo);
 	    openwin_select_view(OPENWIN_PUBLIC(owin), viewinfo);
-#endif SELECTABLE_VIEWS
+#endif /* SELECTABLE_VIEWS */
 	    /* This is just a no-op until proper selection is implemented */
 	    ATTR_CONSUME(avlist[0]);
 	    break;

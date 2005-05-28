@@ -16,6 +16,7 @@ static char     sccsid[] = "@(#)cim_change.c 20.19 93/06/28";
 
 #include <xview_private/i18n_impl.h>
 #include <sys/types.h>
+#include <string.h>
 #include <pixrect/pixrect.h>
 #include <xview_private/ttyansi.h>
 #include <xview_private/charimage.h>
@@ -23,8 +24,6 @@ static char     sccsid[] = "@(#)cim_change.c 20.19 93/06/28";
 #include <xview_private/tty_impl.h>
 
 char            boldify;
-
-extern char    *strcpy();
 
 /* static */ void ttysw_roll();
 static void reverse();

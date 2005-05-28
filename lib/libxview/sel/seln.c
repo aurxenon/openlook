@@ -14,6 +14,10 @@ static char     sccsid[] = "@(#)seln.c 20.19 93/06/28";
 #include <sys/file.h>
 #include <stdio.h>
 #include <errno.h>
+#ifndef XVIEW_USE_INSECURE_TMPFILES
+/* martin.buck@bigfoot.com */
+#include <dirent.h>
+#endif
 #include <xview_private/i18n_impl.h>
 #include <xview/xview_xvin.h>
 #include <xview/selection.h>
@@ -133,8 +137,19 @@ selection_filename()
 {
     char           *getenv();
     char           *name;
+#ifndef XVIEW_USE_INSECURE_TMPFILES
+    /* martin.buck@bigfoot.com */
+    static char homename[MAXNAMLEN];
+#endif
 
     if ((name = getenv("SELECTION_FILE")) == NULL)
+#ifdef XVIEW_USE_INSECURE_TMPFILES
 	name = "/tmp/winselection";
+#else
+	if (!homename[0]) {
+	    sprintf(homename, "%s/.winselection", xv_getlogindir());
+	}
+	name = homename;
+#endif
     return (name);
 }

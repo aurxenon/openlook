@@ -1,8 +1,8 @@
 #ifndef XViewCf
 #define XViewCf YES
-/**/###########################################################################
-/**/# @(#)XView.cf	1.10 09 Feb 1992 SMI
-/**/# XView.cf for XView release 3.0.  Specify site preferences here.
+XCOMM ###########################################################################
+XCOMM # @(#)XView.cf	1.10 09 Feb 1992 SMI
+XCOMM # XView.cf for XView release 3.0.  Specify site preferences here.
 
 /*
  *      When anything is changed here, you must remake all the Makefiles
@@ -51,8 +51,8 @@
  * Enable Linux-specific behaviour
  */
 #if defined(LinuxArchitecture) || defined(linux)
-#undef __linux
-#define __linux 1
+#undef __linux__
+#define __linux__ 1
 #endif
 #if defined(i386Architecture) || defined(i386)
 #undef __i386
@@ -112,7 +112,7 @@
  *	the appropriate value.
  */
 #ifndef XVDestDir
-#define XVDestDir /usr/openwin
+#define XVDestDir /usr/X11R6
 #endif
 /*
  *	Command to add object modules to the library.
@@ -202,15 +202,18 @@
  *	building on a SunOS 4.x operating system add the flag -DSUNOS41. 
  */
 /* Add -DX11R6 to use workarounds for acess to xlib private data */
+/* FIXME: Should we add -DFULL_R5 for Linux? I don't know whether this affects
+ * binary compatibility, so we'll do it the safe way and leave it undefined
+ */
 #ifndef LibXViewDefines
 # if PreR4Server
 # define LibXViewDefines -DPRE_R4_ICCCM
 # else
-#  ifdef __linux
+#  ifdef __linux__
 #   ifdef __i386
-#    define LibXViewDefines -I$(OPENWINHOME)/include -DX11R6 -Di386 -DOPENWINHOME_DEFAULT=\"$(OPENWINHOME)\"
+#    define LibXViewDefines -I$(OPENWINHOME)/include -DX11R6 -Di386 -DNO_CAST_VATOAV
 #   else
-#    define LibXViewDefines -I$(OPENWINHOME)/include -DX11R6 -DOPENWINHOME_DEFAULT=\"$(OPENWINHOME)\"
+#    define LibXViewDefines -I$(OPENWINHOME)/include -DX11R6 -DNO_CAST_VATOAV
 #   endif
 #  else
 #   define LibXViewDefines -DFULL_R5 -I$(OPENWINHOME)/include -DSUNOS41 -DX11R6
@@ -286,7 +289,7 @@
  *	to YES.
  */
 #ifndef RedefineTextExtrasMenu
-#define RedefineTextExtrasMenu YES
+#define RedefineTextExtrasMenu NO
 #endif
 /*
  *	DEC 3100 Config options

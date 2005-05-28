@@ -16,12 +16,17 @@ static char     sccsid[] = "@(#)xv_error.c 1.36 93/06/28";
 #include <xview_private/i18n_impl.h>
 #include <xview_private/portable.h>
 
+#if defined(__linux__) && defined(__GLIBC__)
+/* martin.buck@bigfoot.com */
+#include <errno.h>
+#else
 /* Unix system error variables */
 extern int      sys_nerr;
 extern char    *sys_errlist[];
 extern int      errno;
+#endif
 
-#ifndef __linux
+#ifndef __linux__
 /* Global already defined in xv_init.c */
 Xv_private_data char *xv_app_name;
 #else

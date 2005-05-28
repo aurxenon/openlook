@@ -53,13 +53,13 @@
  * the macro SUNOS41. This has to be fixed later to accomodate non-SUNOS41 and
  * non-SVR4 systems.
  */
-#if !defined(SUNOS41) && !defined(__linux)
+#if !defined(SUNOS41) && !defined(__linux__)
 #define XV_OS_SVR4
 #define XV_USE_TTCOMPAT
 #define SYSV_WAIT 
 #define SYSV_UCONTEXT 
 #define XV_USE_XVFCNTL 
-#elif defined(__linux)
+#elif defined(__linux__)
 #define XV_OS_SVR4
 #undef XV_USE_TTCOMPAT
 #define SYSV_UCONTEXT 

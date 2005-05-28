@@ -63,8 +63,8 @@ extern Atom AtomRightFooter;
 extern Atom AtomDecorIMStatus;
 extern Atom AtomLeftIMStatus;
 extern Atom AtomRightIMStatus;
-extern Atom AtomCompoundText;
 #endif
+extern Atom AtomCompoundText;
 
 /***************************************************************************
  * 	GetWindowProperty
@@ -147,8 +147,9 @@ propGetTextProp(dpy,win,property,text)
 	}
 		
 #else
-	if (textProp.encoding == XA_STRING &&
-	    textProp.format   == 8) {
+	if ((textProp.encoding == XA_STRING ||
+		textProp.encoding == AtomCompoundText) &&
+	    	textProp.format   == 8) {
 		*text = MemNewText(textProp.value);
 		ret = True;
 	} else {

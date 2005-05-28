@@ -1,6 +1,6 @@
-/**/##########################################################################
-/**/# @(#)XView.lib	1.3 07 Jan 1992 SMI
-/**/# XView.lib for XView release 3.0.  Common commands for all library builds.
+XCOMM ##########################################################################
+XCOMM # @(#)XView.lib	1.3 07 Jan 1992 SMI
+XCOMM # XView.lib for XView release 3.0.  Common commands for all library builds.
 
 #ifdef BandAidCompiler
 #include BandAidCompiler

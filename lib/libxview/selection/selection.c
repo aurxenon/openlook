@@ -10,12 +10,12 @@ static char     sccsid[] = "@(#)selection.c 1.11 93/06/28";
  *	file for terms of the license.
  */
 
-#ifdef __linux
+#ifdef __linux__
 /* Kludge to prevent multiple variables with same name */
 #define __DEFINE_SEL_IMPL_VARS
 #endif
 #include <xview_private/sel_impl.h>
-#ifdef __linux
+#ifdef __linux__
 #undef __DEFINE_SEL_IMPL_VARS
 #endif
 #include <xview/window.h>

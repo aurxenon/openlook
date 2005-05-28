@@ -21,23 +21,23 @@ static char     sccsid[] = "@(#)ndet_fcntl.c 20.13 93/06/28 Copyr 1985 Sun Micro
 #include <fcntl.h>
 #ifdef SVR4
 #include <sys/file.h>
-#endif SVR4
-#ifdef __linux
+#endif /* SVR4 */
+#ifdef __linux__
 #include <stdarg.h>
 #endif
 
 int
-#ifndef __linux
+#ifndef __linux__
 #ifdef SVR4
 xv_fcntl(fd, cmd, arg)
 #else
 fcntl(fd, cmd, arg)
-#endif SVR4
+#endif /* SVR4 */
     int             fd, cmd, arg;
 {
     fd_set          bit;
     int             res;
-#else /* __linux */
+#else /* __linux__ */
 /* fcntl() is declared using variable args in linux */
 fcntl(int fd, int cmd, ...) {
     fd_set          bit;
@@ -48,7 +48,7 @@ fcntl(int fd, int cmd, ...) {
     va_start(args, cmd);
     arg = va_arg(args, int);
     va_end(args);
-#endif /* __linux */
+#endif /* __linux__ */
 
     /* Set fd bit */
     FD_ZERO(&bit);
@@ -74,7 +74,7 @@ fcntl(int fd, int cmd, ...) {
 	if (cmd == F_GETFL)
 	    arg = res;
 	NTFY_BEGIN_CRITICAL;
-#if defined(__linux) && !defined(FNDELAY)
+#if defined(__linux__) && !defined(FNDELAY)
 	if (arg & O_NONBLOCK)
 	    FD_SET(fd, &ndet_fndelay_mask);
 #else
@@ -87,7 +87,7 @@ fcntl(int fd, int cmd, ...) {
 #endif
 	else
 	    FD_CLR(fd, &ndet_fndelay_mask);
-#if !defined(__linux) || defined(FASYNC)
+#if !defined(__linux__) || defined(FASYNC)
 	if (arg & FASYNC)
 	    FD_SET(fd, &ndet_fndelay_mask);
 	else
@@ -96,7 +96,7 @@ fcntl(int fd, int cmd, ...) {
 	/* Make sure that are catching async related signals now */
 	if (ntfy_fd_anyset(&ndet_fasync_mask)) {
 	    ndet_enable_sig(SIGIO);
-#ifndef __linux
+#ifndef __linux__
 	    ndet_enable_sig(SIGURG);
 #endif
 	}

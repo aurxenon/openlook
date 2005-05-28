@@ -19,14 +19,14 @@ static char     sccsid[] = "@(#)ndet_loop.c 20.36 93/06/28 Copyr 1985 Sun Micro"
 #include <xview_private/ndet.h>
 #include <xview_private/nint.h>
 #include <xview_private/ndis.h>	/* For ndis_dispatch */
-#ifndef __linux
+#ifndef __linux__
 #ifndef SVR4
 #include <syscall.h>
-#else SVR4
+#else /* SVR4 */
 #include <sys/syscall.h>
 #include <sys/poll.h>
-#endif SVR4
-#else /* __linux */
+#endif /* SVR4 */
+#else /* __linux__ */
 #include "linux_select.h"
 #endif
 #include <fcntl.h>
@@ -35,7 +35,7 @@ static char     sccsid[] = "@(#)ndet_loop.c 20.36 93/06/28 Copyr 1985 Sun Micro"
 #ifdef SVR4
 #include <sys/user.h>
 #include <sys/ucontext.h>
-#endif SVR4
+#endif /* SVR4 */
 #include <stdio.h>		/* For temp debugging */
 #include <rpc/rpc.h>
 
@@ -59,7 +59,7 @@ extern NTFY_CNDTBL *ntfy_cndtbl[NTFY_LAST_CND];
 
 /* NOTE! This assumes NSIG is 32. Not very portable */
 /* ndet_prev_sigvec needs to start off at all zeros */
-#if !defined(SVR4) && !defined(__linux)
+#if !defined(SVR4) && !defined(__linux__)
 pkg_private_data struct sigvec ndet_prev_sigvec[NSIG] = {
     {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0},
     {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0},
@@ -70,9 +70,9 @@ pkg_private_data struct sigvec ndet_prev_sigvec[NSIG] = {
     {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0},
     {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0},
 };
-#else SVR4
+#else /* SVR4 */
 pkg_private_data struct sigaction ndet_prev_sigvec[NSIG];
-#endif SVR4
+#endif /* SVR4 */
 
 #ifdef vax			/* vax signal handlers return ints */
 pkg_private int ndet_signal_catcher();
@@ -80,20 +80,20 @@ pkg_private int ndet_signal_catcher();
 pkg_private void ndet_signal_catcher();
 #endif
 
-#if !defined(SVR4) && !defined(__linux)
+#if !defined(SVR4) && !defined(__linux__)
 pkg_private_data struct sigvec ndet_sigvec = {ndet_signal_catcher, 0, 0};
 static int      ndet_signal_code;
 static struct sigcontext *ndet_signal_context;
-#else SVR4
+#else /* SVR4 */
 pkg_private_data struct sigaction ndet_sigvec =
-#ifndef __linux
+#ifndef __linux__
 	{SA_RESTART, {ndet_signal_catcher}, {0}, {0,0}};
 #else
 	{ndet_signal_catcher,0,SA_RESTART,NULL}; /* handler,mask,flags,restorer */
 #endif
 	static int      ndet_signal_code;
 	static ucontext_t *ndet_signal_context;
-#endif SVR4
+#endif /* SVR4 */
 
 static void     ndet_update_itimer();
 static void     ndet_send_async_sigs();
@@ -233,7 +233,7 @@ notify_start()
 	     * select, not ON THE WAY into select).
 	     */
 #ifndef SVR4
-#ifndef __linux
+#ifndef __linux__
 	    nfds = syscall(SYS_select,
 			   FD_SETSIZE, &ibits, &obits, &ebits,
 		 (sigisempty(&ndet_sigs_received)) ? timer : &ndet_polling_tv);
@@ -241,10 +241,10 @@ notify_start()
 	    nfds = linux_select(FD_SETSIZE, &ibits, &obits, &ebits,
 		 (sigisempty(&ndet_sigs_received)) ? timer : &ndet_polling_tv);
 #endif
-#else SVR4
+#else /* SVR4 */
 	    nfds = notify_select(FD_SETSIZE, &ibits, &obits, &ebits,
 		(sigisempty(&ndet_sigs_received)) ? timer : &ndet_polling_tv);
-#endif SVR4
+#endif /* SVR4 */
 	    errno_remember = errno;
 	    /* See if select returned unconventionally */
 	    if (nfds == -1) {
@@ -414,7 +414,7 @@ ndet_fig_fd_change()
     FD_ZERO(&ndet_obits);
     FD_ZERO(&ndet_ebits);
     sigdelset( &ndet_sigs_auto, SIGIO );
-#ifndef __linux
+#ifndef __linux__
     sigdelset( &ndet_sigs_auto, SIGURG );
 #endif
     /* Recompute all bits */
@@ -426,7 +426,7 @@ ndet_fig_fd_change()
 				    ndet_fd_change, NTFY_ENUM_DATA_NULL);
     /* Toggle notifier auto signal catching if situation changed */
     ndet_toggle_auto(&sigs_tmp, SIGIO);
-#ifndef __linux
+#ifndef __linux__
     ndet_toggle_auto(&sigs_tmp, SIGURG);
 #endif
 }
@@ -732,15 +732,15 @@ ndet_fig_sig_change()
 		/*
 		 * Don't catch this signal, currently we are
 		 */
-#if !defined(SVR4) && !defined(__linux)
+#if !defined(SVR4) && !defined(__linux__)
 		n = sigvec(sig, &ndet_prev_sigvec[sig],
 			   (struct sigvec *) 0);	/* SYSTEM CALL */
 		ntfy_assert(n == 0, 6 /* Unexpected error: sigvec */);
-#else SVR4
+#else /* SVR4 */
                 n = sigaction(sig, &ndet_prev_sigvec[sig],
 			(struct sigaction *) 0);     /* SYSTEM CALL */
 		ntfy_assert(n == 0, 7 /* Unexpected error: sigaction */);
-#endif SVR4
+#endif /* SVR4 */
 	    } else
 		ntfy_set_errno(NOTIFY_INTERNAL_ERROR);
 	}
@@ -760,15 +760,15 @@ ndet_enable_sig(sig)
 	int             n;
 
 	/* Arrange to catch this signal, currently we are not */
-#if !defined(SVR4) && !defined(__linux)
+#if !defined(SVR4) && !defined(__linux__)
 	n = sigvec(sig, &ndet_sigvec, &ndet_prev_sigvec[sig]);
 	/* SYSTEM CALL */
 	ntfy_assert(n == 0, 8 /* Unexpected error: sigvec */);
-#else SVR4
+#else /* SVR4 */
         n = sigaction(sig, &ndet_sigvec, &ndet_prev_sigvec[sig]);
 	/* SYSTEM CALL */
 	ntfy_assert(n == 0, 9 /* Unexpected error: sigaction */);
-#endif SVR4
+#endif /* SVR4 */
 	sigaddset( &ndet_sigs_managing, sig );
     }
 }
@@ -785,14 +785,14 @@ pkg_private void		/* Should be static but there might be
 ndet_signal_catcher(sig, code, scp)
     int             sig;
     int             code;
-#if !defined(SVR4) && !defined(__linux)
+#if !defined(SVR4) && !defined(__linux__)
     struct sigcontext *scp;
-#else SVR4
+#else /* SVR4 */
     ucontext_t *scp;
-#endif SVR4
+#endif /* SVR4 */
 {
 
-#if defined(SVR4) || defined(__linux)
+#if defined(SVR4) || defined(__linux__)
     void        (*old_handler) () = ndet_prev_sigvec[sig].sa_handler;
 #else
     void        (*old_handler) () = ndet_prev_sigvec[sig].sv_handler;
@@ -1048,11 +1048,11 @@ notify_get_signal_code()
     return (ndet_signal_code);
 }
 
-#if !defined(SVR4) && !defined(__linux)
+#if !defined(SVR4) && !defined(__linux__)
 extern struct sigcontext *
-#else SVR4
+#else /* SVR4 */
 extern ucontext_t *
-#endif SVR4
+#endif /* SVR4 */
 notify_get_signal_context()
 {
     /* Could put check to see if in interrupt (should be) */

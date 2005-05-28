@@ -26,7 +26,7 @@
 #include  <locale.h>
 
 /* Linux: gcc 2.4.x does not have LC_MESSAGES, but it has LC_RESPONSE instead */
-#if defined(__linux) && !defined(LC_MESSAGES) && defined(LC_RESPONSE)
+#if defined(__linux__) && !defined(LC_MESSAGES) && defined(LC_RESPONSE)
 #define LC_MESSAGES LC_RESPONSE
 #endif
 

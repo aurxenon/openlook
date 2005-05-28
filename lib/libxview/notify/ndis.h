@@ -125,5 +125,5 @@ void	ndis_flush_condition();		/* Flush condition from dispatcher q
 					    int use_data) */
 void	ndis_flush_wait3();		/* Flush all conditions for pid
 					   (Notify_client client, int pid) */
-#endif	NDIS_DEFINED
+#endif	/* NDIS_DEFINED */
 

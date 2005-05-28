@@ -16,6 +16,7 @@ static char     sccsid[] = "@(#)ttytl.c 20.42 93/06/28";
  */
 
 #include <stdio.h>
+#include <string.h>
 #ifdef SVR4
 #include <sys/types.h>
 #endif
@@ -34,8 +35,6 @@ static char     sccsid[] = "@(#)ttytl.c 20.42 93/06/28";
 #include <xview_private/tty_impl.h>
 #include <xview_private/term_impl.h>
 #include <xview_private/charscreen.h>
-
-extern char    *strncpy();
 
 
 /* BUG ALERT: This entire procedure should be rewritten! */

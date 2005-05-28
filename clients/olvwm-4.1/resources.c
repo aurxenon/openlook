@@ -5,7 +5,7 @@
  */
 
 #ifdef IDENT
-#ident "@(#)resources.c	1.7 olvwm version 09 Feb 1994"
+#ident "@(#)resources.c	1.9 olvwm version 03/02/00"
 #endif
 
 /*
@@ -424,7 +424,7 @@ ResourceItem MainItemTable[] = {
 {   "keepTransientsAbove",	"KeepTransientsAbove",	"False",
     &(GRV.KeepTransientsAbove),	cvtBoolean,		NULL,
     0L },
-{   "transientsSaveUnder",	"TransientsSaveUnder",	"True",
+{   "transientsSaveUnder",	"TransientsSaveUnder",	"False",
     &(GRV.TransientsSaveUnder),	cvtBoolean,		NULL,
     0L },
 {   "transientsTitled",		"TransientsTitled",	"True",
@@ -563,7 +563,7 @@ ResourceItem MainItemTable[] = {
     0L },
 {   "virtualIconic",		"VirtualIconic", 	"False",
     &(GRV.VirtualIconic),	cvtBoolean,		NULL,
-    RI_IMMUTABLE },
+    0L },
 {   "virtualSticky",		"VirtualSticky", 	"",
     &(GRV.StickyList),		cvtStringList,		NULL,
     0L },
@@ -620,13 +620,13 @@ ResourceItem MainItemTable[] = {
     0L },
 {   "autoShowRootMenu",		"AutoShowRootMenu", 	"False",
     &(GRV.AutoShowRootMenu),	cvtBoolean,		NULL,
-    RI_IMMUTABLE },
+    0L },
 {   "autoRootMenuX",		"AutoRootMenuX", 	"0",
     &(GRV.AutoRootMenuX),	cvtInteger,		NULL,
-    RI_IMMUTABLE },
+    0L },
 {   "autoRootMenuY",		"AutoRootMenuY", 	"0",
     &(GRV.AutoRootMenuY),	cvtInteger,		NULL,
-    RI_IMMUTABLE },
+    0L },
 {   "inputFocusColor",		"InputFocusColor", 	NULL,
     &(GRV.InputFocusColor),	cvtString,		updInputFocusColor,
     0L },
@@ -1135,8 +1135,22 @@ cvtFont(dpy, item, string, addr)
     
     info = XLoadQueryFont(dpy, string);
 
+#if 0
     if (info == NULL)
 	return False;
+#else
+    if (info == NULL) {
+       /* ++roman: Unfortunately olvwm crashes if it has NULL pointers to
+        * fonts :-( So try to load a default font if the requested failed. */
+       fprintf( stderr, "failed to load font `%s' -- using `fixed' instead\n",
+                string );
+       info = XLoadQueryFont(dpy, "fixed" );
+       if (!info) {
+           fprintf( stderr, "failed to load `fixed' too -- expect a crash\n" );
+           return False;
+       }
+    }
+#endif
 
     *dest = info;
     return True;

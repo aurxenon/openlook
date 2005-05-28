@@ -930,7 +930,7 @@ Client *cli;
 			   OLGX_NORMAL | TextOLGX);
 	}
 }
-#endif OW_I18N_L4
+#endif /* OW_I18N_L4 */
 
 
 /* drawBase2D - draw the outer border of the window (2D mode)
@@ -1737,7 +1737,7 @@ XWindowAttributes *paneattrs;
 	/* set up the status */
 	if (cli->wmDecors->flags & WMDecorationIMStatus)
 		setIMStatusText(dpy,w,panewin);
-#endif OW_I18N_L4
+#endif /* OW_I18N_L4 */
 
         /* Determine which menu should come up when menus are requested
          * for this frame. */

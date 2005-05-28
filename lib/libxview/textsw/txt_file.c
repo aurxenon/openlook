@@ -18,10 +18,14 @@ static char     sccsid[] = "@(#)txt_file.c 20.81 93/06/28";
 #include <xview_private/txt_impl.h>
 #include <xview_private/ev_impl.h>
 #include <xview_private/txt_18impl.h>
-#ifdef SVR4
+#if defined(SVR4) || defined(__linux__)
 #include <dirent.h>
 #include <string.h>
 #include <unistd.h>
+#ifdef __linux__
+#include <sys/types.h>
+#include <fcntl.h>
+#endif
 #else
 #include <sys/dir.h>
 #include <sys/file.h>
@@ -43,15 +47,19 @@ static char     sccsid[] = "@(#)txt_file.c 20.81 93/06/28";
 	if ((unsigned)(to_test) != 0) (flags) |= (flag);	\
 	else (flags) &= ~(flag)
 
-extern CHAR    *STRCAT();
-extern CHAR    *STRNCAT();
-#ifdef SVR4
+#if defined(SVR4) || defined(__linux__)
 extern char    *getcwd();
 #else
 extern char    *getwd();
 #endif /* SVR4 */
+
+#if defined(__linux__) && defined(__GLIBC__)
+/* martin.buck@bigfoot.com */
+#include <errno.h>
+#else
 extern int      errno, sys_nerr;
 extern char    *sys_errlist[];
+#endif
 
 Pkg_private int textsw_change_directory();
 Pkg_private void textsw_display(), textsw_display_view_margins();
@@ -76,8 +84,14 @@ textsw_make_temp_name(in_here)
      * crash harder - assuming we ever implement replay.
      */
     in_here[0] = '\0';
+#ifdef XVIEW_USE_INSECURE_TMPFILES
+    /* martin.buck@bigfoot.com */
     (void) SPRINTF(in_here, "%s/Text%d.%d",
 		   "/tmp", getpid(), tmtn_counter++);
+#else
+    (void) SPRINTF(in_here, "%s/.Text%d.%d",
+		   xv_getlogindir(), getpid(), tmtn_counter++);
+#endif
 }
 
 #define ES_BACKUP_FAILED	ES_CLIENT_STATUS(0)
@@ -354,7 +368,7 @@ textsw_full_pathname(name)
     }
 
 #ifdef		OW_I18N
-#ifdef SVR4
+#if defined(SVR4) || defined(__linux__)
     if (getcwd(pathname_mb, MAXPATHLEN) == 0)
 #else
     if (getwd(pathname_mb) == 0)
@@ -364,7 +378,7 @@ textsw_full_pathname(name)
 
 #else		/* OW_I18N */
 
-#ifdef SVR4
+#if defined(SVR4) || defined(__linux__)
     if (getcwd(pathname, MAXPATHLEN) == 0)
 #else
     if (getwd(pathname) == 0)
@@ -925,14 +939,14 @@ textsw_get_from_fd(view, fd, print_error_msg)
 	wc_count = textsw_mbstowcs(buf_ws, buf, &temp_count);
 	if (temp_count != count) {
 	    /* re-read the incomplete mb character */
-#ifdef SVR4
+#if defined(SVR4) || defined(__linux__)
 	    new_pos = lseek(fd, temp_count - count, SEEK_CUR); 
 #else
 	    new_pos = lseek(fd, temp_count - count, L_INCR); 
 #endif
 	    if (new_pos == old_pos) {
 		/* Invalid char, so advance to next byte */
-#ifdef SVR4
+#if defined(SVR4) || defined(__linux__)
 		old_pos = lseek(fd, 1L, SEEK_CUR);
 #else
 		old_pos = lseek(fd, 1L, L_INCR);

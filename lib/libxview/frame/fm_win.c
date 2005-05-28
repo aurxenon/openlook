@@ -12,7 +12,7 @@ static char     sccsid[] = "@(#)fm_win.c 20.31 90/11/08";
 
 #ifdef SVR4
 #include <sys/types.h>
-#endif SVR4
+#endif /* SVR4 */
 #include <sys/file.h>
 #include <X11/Xlib.h>
 #include <xview_private/i18n_impl.h>

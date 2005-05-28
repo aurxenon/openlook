@@ -17,7 +17,7 @@ static char     sccsid[] = "@(#)attr.c 20.24 90/12/04";
 #include <xview_private/attr_impl.h>
 #ifdef SVR4 
 #include <stdlib.h> 
-#endif SVR4
+#endif /* SVR4 */
 
 
 Xv_private FILE *xv_help_find_file();
@@ -91,7 +91,11 @@ Xv_private Attr_avlist copy_va_to_av( valist1, avlist1, attr1 )
    /* These two variables are used instead of the paramters so that the
       position in the lists is maintained after a recursive call. 
    */
+#if (__GLIBC__ > 2) || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 1)
+   __va_copy(valist, valist1);
+#else
    valist = valist1;
+#endif   
    avlist = avlist1;
 
    if( !avlist )

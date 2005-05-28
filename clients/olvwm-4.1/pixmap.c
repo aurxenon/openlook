@@ -4,7 +4,7 @@
  */
 
 #ifdef IDENT
-#ident "@(#)pixmap.c	1.3 olvwm version 09 Feb 1994"
+#ident "@(#)pixmap.c	1.5 olvwm version 03/02/00"
 #endif
 
 /*
@@ -32,8 +32,8 @@
 #define _XtIntrinsic_h
 typedef unsigned long   Pixel;      /* Index into colormap              */
 #endif  /* NO_PIXEL_FIX */
-#include <xpm.h>
-#endif XPM
+#include <X11/xpm.h>
+#endif /* XPM */
 
 #include "i18n.h"
 #include <olgx/olgx.h>
@@ -77,9 +77,10 @@ unsigned ImageSize(image)
     return((unsigned)image->bytes_per_line * image->height);
 }
 
-int readGifFile(dpy, drawable, fn, w, h, pPix, hotx, hoty, colormap,
+int readGifFile(dpy, scrInfo, drawable, fn, w, h, pPix, hotx, hoty, colormap,
 		ncolors, colors)
 Display *dpy;
+ScreenInfo *scrInfo;
 Drawable drawable;
 char *fn;
 unsigned int *w, *h;
@@ -99,6 +100,9 @@ XColor **colors;
       XColor color;
       GC gc;
       XGCValues gc_val;
+      int iw, ih;
+      long pixel;
+      Colormap rootColormap;
 
 
       if (fn && ((fin = fopen (fn, "r")) == NULL))
@@ -115,7 +119,8 @@ XColor **colors;
 
               /* Create the output image */
               out_image = XCreateImage(dpy, DefaultVisual(dpy, screen),
-                               in_image->depth,
+                               /*in_image->depth,*/
+			       scrInfo->depth,
                                in_image->format,
                                in_image->xoffset, NULL,
                                in_image->width, in_image->height,
@@ -125,7 +130,6 @@ XColor **colors;
 				out_image);
               MemFree (in_image->data);
               MemFree (in_image);
-
               if (out_image->depth == 1)
               {
                       if (*ncolors && XAllocColor(dpy, *colormap, &(*colors)[1]))
@@ -142,7 +146,7 @@ XColor **colors;
               {
                       gc_val.background = XGetPixel(out_image, 0, 0);
                       gc_val.foreground = 0;
-              }
+	      }
 
               *pPix = XCreatePixmap (dpy, drawable, out_image->width,
 				out_image->height, out_image->depth);
@@ -188,7 +192,7 @@ int i;
     }
 }
 
-doPseudo(dpy, colormap, ncolors, colors, in_image, out_image)
+doPseudo8(dpy, colormap, ncolors, colors, in_image, out_image)
 Display *dpy;
 Colormap *colormap;
 int ncolors;
@@ -282,6 +286,39 @@ register XImage *in_image, *out_image;
 	    XPutPixel(out_image, x, y, color->pixel);
 	}
     }
+}
+
+doPseudo24(dpy, colormap, ncolors, colors, in_image, out_image)
+Display *dpy;
+Colormap *colormap;
+int ncolors;
+XColor *colors;
+register XImage *in_image, *out_image;
+{
+int iw, ih;
+XColor *color;
+
+    for (iw = 0; iw < in_image->width; iw++) {
+	for (ih = 0; ih < in_image->height; ih++) {
+	    color = &colors[XGetPixel(in_image, iw, ih)];
+	    XPutPixel(out_image, iw, ih,
+			(((color->red) >> 8) << 0) |
+			(((color->green) >> 8) << 8) |
+			(((color->blue) >> 8) << 16));
+	}
+    }
+}
+
+doPseudo(dpy, colormap, ncolors, colors, in_image, out_image)
+Display *dpy;
+Colormap *colormap;
+int ncolors;
+XColor *colors;
+register XImage *in_image, *out_image;
+{
+    if (out_image->depth == 24)
+        doPseudo24(dpy, colormap, ncolors, colors, in_image, out_image);
+    else doPseudo8(dpy, colormap, ncolors, colors, in_image, out_image);
 }
 
 /*
@@ -378,7 +415,7 @@ Bool    half_of_last;
         return False;
     return True;
 }
-#endif SUNICON
+#endif /* SUNICON */
 
 #ifdef NOT
 /*
@@ -448,11 +485,11 @@ int     dummy;
 #endif
     if (strncmp(s, "GIF", 3) == 0)
         return GifFormat;
-    if (s[0] == '#')
-        return XBitmapFormat;
-    if (sscanf(s, "/* Format_version=%d", &dummy) < 1)
-        return BadFormat;
-    return SunIconFormat;
+    if (sscanf(s, "/* Format_version=%d", &dummy) >= 1)
+        return SunIconFormat;
+    /* X Bitmap files can begin with pretty much anything -- if it's not
+     * an xbitmap, then other things will fail gracefully anyway */
+    return XBitmapFormat;
 }      
 
 /*
@@ -630,6 +667,7 @@ XpmAttributes   xpmAttr;
                             &(pixinfo->pixmap),
                             (Pixmap *)0, /* ignore shape mask for now */
                             &xpmAttr)) != PixmapSuccess) {
+			rval = False;
                         goto FAILURE;
                 }
                 pixinfo->width = xpmAttr.width;
@@ -637,7 +675,7 @@ XpmAttributes   xpmAttr;
                 break;
 #endif
             case GifFormat:
-                if (readGifFile(dpy, drawable, filename,
+                if (readGifFile(dpy, scrInfo, drawable, filename,
                         &pixinfo->width, &pixinfo->height, &bitmap,
 			&xhot, &yhot, &scrInfo->colormap,
 			&pixinfo->ncolors, &pixinfo->colors) != BitmapSuccess)

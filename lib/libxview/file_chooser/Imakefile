@@ -6,8 +6,8 @@
 #include <Library.tmpl>
 
 
-/**/###########################################################################
-/**/# @(#)Imakefile 1.10 90/01/11 SMI
+XCOMM ###########################################################################
+XCOMM # @(#)Imakefile 1.10 90/01/11 SMI
 
 #ifndef SubdirHasTextObjs
 #define SubdirHasTextObjs YES

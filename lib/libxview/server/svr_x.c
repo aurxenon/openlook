@@ -28,7 +28,7 @@ static char     sccsid[] = "@(#)svr_x.c 20.57 93/06/28";
 #include <X11/keysym.h>
 
 extern Display *XOpenDisplay();
-#ifndef __linux
+#ifndef __linux__
 Xv_private_data Defaults_pairs xv_kbd_cmds_value_pairs[4];
 #else
 /* Global already defined and initialized in in server/server.c */

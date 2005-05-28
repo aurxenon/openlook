@@ -83,6 +83,6 @@ int	cg2_vector();
 Pixrect *cg2_region();
 int	cg2_getcolormap();
 int	cg2_getattributes();
-#endif !KERNEL
+#endif /* !KERNEL */
 
-#endif	cg2var_DEFINED
+#endif /* 	cg2var_DEFINED */

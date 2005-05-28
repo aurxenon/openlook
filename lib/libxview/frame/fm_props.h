@@ -14,11 +14,11 @@
 
 /* standard includes */
 #ifndef FILE
-#if !defined(SVR4) && !defined(__linux)
+#if !defined(SVR4) && !defined(__linux__)
 #undef NULL
-#endif SVR4
+#endif /* SVR4 */
 #include <stdio.h>
-#endif FILE
+#endif /* FILE */
 #include <sys/time.h>
 #include <xview/notify.h>
 #include <xview/rect.h>
@@ -45,7 +45,7 @@
 #include <pixrect/pixfont.h>
 #include <rasterfile.h>
 #include <pixrect/pr_io.h>
-#endif	pixrect_hs_DEFINED
+#endif	/* pixrect_hs_DEFINED */
 
 #include <xview/win_struct.h>	/* for WL_ links */
 #include <xview/win_input.h>

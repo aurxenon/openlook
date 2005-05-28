@@ -374,7 +374,7 @@
 #define	GP1_GET_I(p, a)	((a) = * (int *) (p), \
 				(p) += sizeof (int) / sizeof *(p))
 
-#else  mc68000
+#else /*  mc68000 */
 
 #define	GP1_PUT_F(p, a)	(((short *) (p))[0] = ((short *)&(a))[0], \
 				((short *) (p))[1] = ((short *) &(a))[1] , \
@@ -392,7 +392,7 @@
 				((short *) &(a))[1] = ((short *) (p))[1], \
 				(p) += sizeof (int) / sizeof *(p))
 
-#endif mc68000
+#endif /* mc68000 */
 
 
 /* The names of these macros have been changed to avoid 
@@ -403,4 +403,4 @@
 #define gp1_pw_offset_X(p) (gp1_d((p)->pw_clipdata->pwcd_prmulti)->cgpr_offset.x)
 #define gp1_pw_offset_Y(p) (gp1_d((p)->pw_clipdata->pwcd_prmulti)->cgpr_offset.y)
 
-#endif	gp1cmds_DEFINED
+#endif /* 	gp1cmds_DEFINED */

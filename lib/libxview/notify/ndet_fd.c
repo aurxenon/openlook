@@ -19,7 +19,7 @@ static char     sccsid[] = "@(#)ndet_fd.c 20.14 93/06/28 Copyr 1985 Sun Micro";
 #include <xview_private/ndet.h>
 #ifdef SVR4
 #include <unistd.h>
-#endif SVR4
+#endif /* SVR4 */
 
 /* performance: global cache of getdtablesize() */
 extern int      dtablesize_cache;
@@ -29,7 +29,7 @@ extern int      dtablesize_cache;
 #else
 #define GETDTABLESIZE() \
     (dtablesize_cache?dtablesize_cache:(dtablesize_cache=getdtablesize()))
-#endif SVR4
+#endif /* SVR4 */
 
 static int      ndet_fd_table_size;	/* Number of descriptor slots
 					 * available */

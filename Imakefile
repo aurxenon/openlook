@@ -1,8 +1,14 @@
 #include <XView.tmpl>
 
-/**/#########################################################################
-/**/# Top level Imakefile for ProductNameAndRelease
-/**/# @(#)Imakefile	1.7 1/7/92 SMI
+XCOMM # Imake.tmpl seems to think it's a good idea to #define clean to cleandir.
+XCOMM # We surely don't, so let's get rid of that nonsense. Fixes Debian Bug
+XCOMM # #123901. <mbuck@debian.org>
+#undef clean
+cleandir::
+
+XCOMM #########################################################################
+XCOMM # Top level Imakefile for ProductNameAndRelease
+XCOMM # @(#)Imakefile	1.7 1/7/92 SMI
 
 CC = cc
 CFLAGS = -O 
@@ -11,8 +17,8 @@ CFLAGS = -O
 #define PassCDebugFlags
 
            WORLDOPTS = 
-/**/# If you want to make only the library, then start the build in the lib
-/**/# subdirectory.  Be sure to do a 'make includes' in images and bitmaps first.
+XCOMM # If you want to make only the library, then start the build in the lib
+XCOMM # subdirectory.  Be sure to do a 'make includes' in images and bitmaps first.
             COREDIRS = lib images bitmaps misc util config
 #if InstallOpenLookFonts 
             FONTSDIR = fonts
@@ -21,13 +27,13 @@ CFLAGS = -O
 #endif
           CLIENTSDIR = clients
           SUBDIRS = $(COREDIRS) $(FONTSDIR) 
-/**/# even if these SUBDIRS are not included in the general rules, be sure to
-/**/# do a make clean in them.
-       CLEAN_SUBDIRS = clients contrib doc fonts bitmaps images lib misc util
+XCOMM # even if these SUBDIRS are not included in the general rules, be sure to
+XCOMM # do a make clean in them.
+       CLEAN_SUBDIRS = clients contrib doc fonts bitmaps images lib misc util config
 
-/**/#
-/**/# Be sure to run "make includes" before "make depend" or "make"
-/**/#
+XCOMM #
+XCOMM # Be sure to run "make includes" before "make depend" or "make"
+XCOMM #
 MakeSubdirs($(SUBDIRS))
 DependSubdirs($(SUBDIRS))
 PopulateSubdirs($(SUBDIRS))
@@ -36,8 +42,8 @@ MakeLintSubdirs(lib,install.ln,install.ln)
 InstallSrcsSubdirs($(SUBDIRS))
 
 #ifdef XVDestDir
-/**/# remove all the symlinks before installing the real files if using the
-/**/# same directory for the includes as for the final install.
+XCOMM # remove all the symlinks before installing the real files if using the
+XCOMM # same directory for the includes as for the final install.
 install::
 	-@if [ $(BUILDINCDIR) = $(XVDESTDIR) ]; then \
 		echo "deleting temporary build directory $(BUILDINCDIR) ..."; \
@@ -84,9 +90,9 @@ World::
 #endif
 	@echo ""
 
-/**/#
-/**/# Rules to build the client programs
-/**/# 
+XCOMM #
+XCOMM # Rules to build the client programs
+XCOMM # 
 Clients::
 	@echo ""
 	@echo "Begin build of XView client programs..."
@@ -126,9 +132,9 @@ Clients::
 	@echo ""
 #endif
 
-/**/#
-/**/# Rules to build contrib
-/**/# 
+XCOMM #
+XCOMM # Rules to build contrib
+XCOMM # 
 Contrib::
 	@echo ""
 	@echo "Begin build of XView contrib programs..."
@@ -145,12 +151,12 @@ Contrib::
 	@date
 	@echo ""
 	@echo "Build of XView contrib complete.  Next step, make SUBDIRS='contrib' install."
-	@echo "Examples will be installed into $(XVDESTDIR)/
+	@echo "Examples will be installed into $(XVDESTDIR)/share/src/xview"
 	@echo ""
 
-/**/#
-/**/# Rule to clean all SUBDIRS
-/**/#
+XCOMM #
+XCOMM # Rule to clean all SUBDIRS
+XCOMM #
 Clean::
 	@echo ""
 	@echo "Cleaning for all SUBDIRS..."

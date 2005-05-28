@@ -103,4 +103,4 @@ typedef enum {
    extern void		 image_destroy();
    extern void		 image_render();
 
-#endif ~xview_image_DEFINED
+#endif /* ~xview_image_DEFINED */

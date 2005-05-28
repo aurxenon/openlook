@@ -44,7 +44,7 @@ dnd_site_init(owner, site_public, avlist)
     status_reset(site, is_window_region);
 #else
     status_reset(site, is_window_region);
-#endif WINDOW_SITES
+#endif /* WINDOW_SITES */
     site->owner = owner;
     site->owner_xid = (Window) xv_get(owner, XV_XID);
     site->region.windows = NULL;
@@ -73,7 +73,7 @@ dnd_site_set_avlist(site_public, avlist)
 	      else
 		  status_reset(site, is_window_region);
 	      break;
-#endif WINDOW_SITES
+#endif /* WINDOW_SITES */
 	  case DROP_SITE_ID:
 	      site->site_id = (long)attrs[1];
 	      status_set(site, site_id_set);
@@ -132,7 +132,7 @@ dnd_site_set_avlist(site_public, avlist)
 #ifdef WINDOW_SITES
 	      if (!status(site, window_set) && status(site, is_window_region))
 		  (void) DndDropAreaOps(site, Dnd_Add_Window, site->owner); 
-#endif WIDNOW_SITES
+#endif /* WIDNOW_SITES */
 	      status_set(site, created);
 	      xv_set(site->owner, WIN_ADD_DROP_ITEM, DND_SITE_PUBLIC(site), 0);
 	  }
@@ -176,7 +176,7 @@ dnd_site_get_attr(site_public, error, attr, args)
 	   else
                value = (Xv_opaque)DND_RECT_SITE;
            break;
-#endif WINDOW_SITES
+#endif /* WINDOW_SITES */
         case DROP_SITE_SIZE:
 	   value = (Xv_opaque)site->site_size;
 	   break;

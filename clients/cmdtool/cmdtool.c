@@ -18,7 +18,7 @@ static  char sccsid[] = "@(#)cmdtool.c 15.61 93/06/28";
 #include <strings.h>
 #else
 #include <string.h>
-#endif SVR4
+#endif /* SVR4 */
 
 #include <sys/types.h>
 #include <xview/attr.h>
@@ -353,7 +353,7 @@ main(argc,argv)
 	tty_pid = (int)xv_get(ttysw, TTY_PID);
 #ifdef DEBUG
 	(void)fprintf(stderr, "child pid = %d\n", tty_pid);
-#endif DEBUG
+#endif /* DEBUG */
 	if (tty_pid == -1) {
 	    strcpy(err_msg, (am_cmdtool) ? MSG("Command") : MSG("Shell"));
 	    strcat(err_msg, MSG(" Tool: Out of swap space.  Cannot continue.\n"));

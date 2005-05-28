@@ -38,7 +38,7 @@ char    *argv[];
     window_fit(frame);
 
     dpy = (Display *)xv_get(frame, XV_DISPLAY);
-#ifndef __linux
+#ifndef __linux__
     font = (Xv_Font)xv_find(frame, FONT, FONT_NAME, "courier", NULL);
 #else
     font = (Xv_Font)xv_find(frame, FONT, FONT_NAME, "fixed", NULL);

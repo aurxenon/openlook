@@ -137,7 +137,7 @@ MemAlloc(sz
 {
     void       *p;
 
-#ifdef __linux
+#ifdef __linux__
     if (!sz)    /* Linux malloc(0) returns NULL, unlike BSD */
       sz = 1;
 #endif

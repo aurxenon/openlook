@@ -105,7 +105,7 @@ openwin_destroy_views(owin)
  * called from anywhere. openwin_check_view() is made redundant at the same
  * time. Is this a xview bug or can these routines be removed altogether??
  * Change static to Pkg_private on linux, for now. */
-#ifndef __linux
+#ifndef __linux__
 static int
 #else
 Pkg_private int
@@ -276,7 +276,7 @@ openwin_split_view(owin, view, direction, pos, view_start)
     /* paint borders if needed */
     if (STATUS(owin, show_borders))
 	openwin_paint_border(OPENWIN_PUBLIC(owin), new_view, TRUE);
-#endif SELECTABLE_VIEWS
+#endif /* SELECTABLE_VIEWS */
 
     if (owin->split_init_proc) {
 	(owin->split_init_proc) (view->view, new_view->view, pos);

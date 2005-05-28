@@ -10,7 +10,7 @@
 #include <sys/types.h>
 #ifndef SVR4
 #include <sundev/tv1reg.h>
-#endif SVR4
+#endif /* SVR4 */
 #include <pixrect/pixrect.h>
 #include <pixrect/memvar.h>
 #include <pixrect/cg4var.h>
@@ -59,6 +59,6 @@ int             tv1_getattributes ();
 #define ROUNDUP(val, gran) (((val) - 1 | (gran) - 1) + 1)
 #endif
 
-#endif	!KERNEL
+#endif /* 	!KERNEL */
 
-#endif tv1var_DEFINED
+#endif /* tv1var_DEFINED */

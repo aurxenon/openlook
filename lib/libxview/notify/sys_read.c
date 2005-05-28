@@ -15,14 +15,14 @@ static char     sccsid[] = "@(#)sys_read.c 20.13 93/06/28 Copyr 1985 Sun Micro";
  */
 
 #ifndef SVR4
-#ifndef __linux
+#ifndef __linux__
 #include <syscall.h>
 #else
 #include "linux_select.h"
 #endif
-#else SVR4
+#else /* SVR4 */
 #include <sys/syscall.h>
-#endif SVR4
+#endif /* SVR4 */
 #include <xview_private/ntfy.h>
 
 pkg_private int
@@ -31,9 +31,13 @@ notify_read(fd, buf, nbytes)
     char           *buf;
     int             nbytes;
 {
-#ifndef __linux
+#ifndef __linux__
     return (syscall(SYS_read, fd, buf, nbytes));
 #else
+#ifdef __GLIBC__
+    return (__read(fd, buf, (off_t)nbytes));
+#else
     return (sys_read(fd, buf, (off_t)nbytes));
+#endif
 #endif
 }

@@ -20,6 +20,10 @@ static char     sccsid[] = "@(#)scrn_get.c 20.54 93/06/28";
 #include <xview/base.h>
 #include <xview/font.h>
 #include <xview/server.h>
+/* mbuck@debian.org */
+#if 1
+#include <X11/Xlibint.h>
+#endif
 
 /* Bitmap used for the inactive GC */
 static unsigned short screen_gray50_bitmap[16] = {   /* 50% gray pattern */

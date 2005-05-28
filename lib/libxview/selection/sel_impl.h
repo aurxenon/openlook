@@ -112,7 +112,7 @@ typedef struct  sel_atom_list {
     Atom         integer;
 #ifdef OW_I18N
     Atom	 ctext;
-#endif OW_I18N
+#endif /* OW_I18N */
 } Sel_atom_list;
 
 
@@ -218,7 +218,7 @@ Xv_private int  xv_seln_handle_req();
 Xv_private void xv_sel_send_old_owner_sel_clear();
 Xv_private void xv_sel_set_compat_data();
 
-#if !defined(__linux) || defined(__DEFINE_SEL_IMPL_VARS)
+#if !defined(__linux__) || defined(__DEFINE_SEL_IMPL_VARS)
 XContext  selCtx;
 XContext  reqCtx;
 XContext  targetCtx;

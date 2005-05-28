@@ -40,7 +40,7 @@
 #include "events.h"
 #include "error.h"
 
-#if defined(__linux) && !defined(LC_MESSAGES)
+#if defined(__linux__) && !defined(LC_MESSAGES)
 #define LC_MESSAGES LC_RESPONSE
 #endif
 

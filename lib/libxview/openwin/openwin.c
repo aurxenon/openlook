@@ -84,7 +84,7 @@ openwin_init(parent, owin_public, avlist)
 #ifdef SELECTABLE_VIEWS
     owin->seln_client =	seln_create(openwin_seln_function, openwin_seln_reply, 
 				    (char *) owin);
-#endif SELECTABLE_VIEWS
+#endif /* SELECTABLE_VIEWS */
     STATUS_SET(owin, auto_clear);
     STATUS_SET(owin, show_borders);
 
@@ -127,7 +127,7 @@ openwin_init(parent, owin_public, avlist)
 	   WIN_NOTIFY_IMMEDIATE_EVENT_PROC, openwin_event,
 #ifdef SELECTABLE_VIEWS
 	   WIN_CONSUME_EVENT, ACTION_SELECT,
-#endif SELECTABLE_VIEWS
+#endif /* SELECTABLE_VIEWS */
 	   /*
 	   WIN_INHERIT_COLORS, TRUE,
 	   */
@@ -173,7 +173,12 @@ openwin_layout(owin_public, child, op, d1, d2, d3, d4, d5)
     Openwin         owin_public;
     Xv_Window       child;
     Window_layout_op op;
+/* Alpha compatibility, mbuck@debian.org, FIXME: I don't understand this */
+#if defined(__alpha)
+    unsigned long   d1, d2, d3, d4, d5;
+#else
     int             d1, d2, d3, d4, d5;
+#endif
 {
     Xv_openwin_info *owin = OPENWIN_PRIVATE(owin_public);
     Openwin_view_info *view;

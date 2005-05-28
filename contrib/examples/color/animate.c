@@ -82,7 +82,7 @@ char	*argv[];
 
     dpy = (Display *)xv_get(frame, XV_DISPLAY);
     _font = (Xv_Font)xv_find(frame, FONT,
-#ifndef __linux
+#ifndef __linux__
 	FONT_NAME,	"icon",
 #else
 	FONT_NAME,	"lucidasanstypewriter-24",

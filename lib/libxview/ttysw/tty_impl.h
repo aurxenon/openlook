@@ -182,7 +182,7 @@ typedef struct ttysubwindow {
     XIMCallback     	done_pecb_struct;
 #ifdef FULL_R5
     XIMStyle	xim_style;
-#endif /* FULL_R5 */    
+#endif /* FULL_R5 */
 #endif
     int			pass_thru_modifiers;  /* Modifiers we don't interpret */
     int			eight_bit_output; /* Print eight bit characters? */
@@ -211,7 +211,7 @@ typedef Ttysw_view_object* 	Ttysw_view_handle;
  */
 #ifdef	XV_USE_TERMIOS
 #define	tty_gettabs(t)		((t)->termios.c_oflag & XTABS)
-#if !defined(__linux) || defined(VDSUSP)
+#if !defined(__linux__) || defined(VDSUSP)
 #define	tty_getdsuspc(t)	((int) ((t)->termios.c_cc[VDSUSP]))
 #else
 #define	tty_getdsuspc(t)	((int) -1)
@@ -463,6 +463,6 @@ int
 ttysw_input(Tty ttysw_public, char *addr, int len);
 
 /* Add string to the input queue. */
-#endif	cplus
+#endif	/* cplus */
 
-#endif _xview_private_ttysw_impl_h_already_included
+#endif /* _xview_private_ttysw_impl_h_already_included */

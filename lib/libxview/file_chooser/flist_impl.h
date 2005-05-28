@@ -9,7 +9,7 @@
 
 #include <sys/param.h>
 #include <dirent.h>
-#ifdef __linux
+#ifdef __linux__
 #include <regex.h>
 #endif
 #include <xview_private/xv_path_util.h>
@@ -25,7 +25,7 @@ typedef struct {
     DIR *		dir_ptr;		/* cached directory pointer */
     char *		previous_dir;		/* last directory displayed */
     char *		regex_pattern; 		/* regular expression */
-#ifndef __linux
+#ifndef __linux__
     char *		regex_compile;		/* compiled form of regex */
 #else
     regex_t *           regex_compile;          /* compiled form of regex */

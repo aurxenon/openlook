@@ -14,7 +14,7 @@
 #include <sunwindow/cms.h>
 #else
 #include <sys/cms.h>
-#endif SVR4
+#endif /* SVR4 */
 
 /* FBIOSATTR device specific array indices, copied from cg4var.h */
 #define	FB_ATTR_CG8_SETOWNER_CMD	0	/* 1 indicates PID is valid */
@@ -90,6 +90,6 @@ int		cg8_get();
 int		cg8_put();
 int		cg8_rop();
 
-#endif	!KERNEL
+#endif /* 	!KERNEL */
 
-#endif cg8var_DEFINED
+#endif /* cg8var_DEFINED */

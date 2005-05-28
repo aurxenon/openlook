@@ -53,4 +53,4 @@ typedef enum {
 
 
 
-#endif	win_keymap_DEFINED
+#endif	/* win_keymap_DEFINED */

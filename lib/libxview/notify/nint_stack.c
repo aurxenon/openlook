@@ -21,7 +21,7 @@ static char     sccsid[] = "@(#)nint_stack.c 20.16 93/06/28 Copyr 1985 Sun Micro
 #include <xview_private/portable.h>
 #ifdef SVR4 
 #include <stdlib.h> 
-#endif SVR4
+#endif /* SVR4 */
 
 pkg_private_data NTFY_CONDITION *nint_stack = 0;
 pkg_private_data int nint_stack_size = 0;
@@ -65,7 +65,12 @@ nint_push_callout(client, cond)
      * jam client->nclient into the data field in order to do some
      * consistency checking later.
      */
+/* Alpha compatibility, mbuck@debian.org */
+#if defined(__alpha)
+    stack_cond->data.an_u_int = (unsigned long) client->nclient;
+#else
     stack_cond->data.an_u_int = (u_int) client->nclient;
+#endif
     stack_cond->next = NTFY_CONDITION_NULL;
     /* Bump stack pointer */
     nint_stack_next++;

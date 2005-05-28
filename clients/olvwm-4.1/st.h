@@ -64,4 +64,4 @@ st_table *st_init_table(), *st_init_table_with_params();
 
 int st_strhash();
 
-#endif ST_INCLUDED
+#endif /* ST_INCLUDED */

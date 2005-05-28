@@ -261,12 +261,12 @@ win_build_xv_map(display, count)
 
 		unshifted_char = *ksym & 0x7f;
 		shifted_char = *(ksym + 1) & 0x7f;
-#else SVR4
+#else /* SVR4 */
                 /* all other keysyms are masked to 8 bits */
 
 		unshifted_char = *ksym;
 		shifted_char = *(ksym + 1);
-#endif SVR4
+#endif /* SVR4 */
 
 #ifdef notdef   /* This test seems obsolete */
 		if (unshifted_char & ASCII_UNSHIFTED_MASK) {

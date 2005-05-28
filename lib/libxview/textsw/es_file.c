@@ -97,7 +97,7 @@ static char     sccsid[] = "@(#)es_file.c 20.49 93/06/28";
 #include <sys/stat.h>
 #include <sys/file.h>
 #include <stdio.h>
-#ifdef __linux
+#ifdef __linux__
 #include <unistd.h>
 #endif
 #include <xview/pkg.h>
@@ -112,8 +112,13 @@ static char     sccsid[] = "@(#)es_file.c 20.49 93/06/28";
 #include <xview_private/txt_18impl.h>
 
 
+#if defined(__linux__) && defined(__GLIBC__)
+/* martin.buck@bigfoot.com */
+#include <errno.h>
+#else
 extern int      errno, sys_nerr;
 extern char    *sys_errlist[];
+#endif
 extern long     lseek();
 
 static void update_read_buf();  /* update the read buf if overlaps write buf */
@@ -341,7 +346,7 @@ es_file_create(name, options, status)
     char            name[MAXNAMLEN];      
     (void) wcstombs(name, name_wc, MAXNAMLEN);
 #endif /* OW_I18N */
-#ifdef __linux
+#ifdef __linux__
     long int maxlinks;
 #endif
 
@@ -379,11 +384,11 @@ es_file_create(name, options, status)
 
 #ifndef BACKUP_AT_HEAD_OF_LINK
     /* (2) Chase the symbolic link if 'name' is one. */
-#ifdef __linux
+#ifdef __linux__
     maxlinks = pathconf(name, _PC_LINK_MAX);
 #endif
     for (temp_name = name, link_count = 0;
-#ifndef __linux
+#ifndef __linux__
 	 (link_count < MAXSYMLINKS) &&
 #else
 	 (link_count < maxlinks) &&
@@ -393,7 +398,7 @@ es_file_create(name, options, status)
 	 temp_name = true_name, link_count++) {
 	true_name[true_name_len] = '\0';
     }
-#ifndef __linux
+#ifndef __linux__
     if (link_count == MAXSYMLINKS) {
 #else
     if (link_count == maxlinks) {

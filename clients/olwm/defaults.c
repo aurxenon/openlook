@@ -57,7 +57,7 @@ GetUserDefaults(dpy)
     char *homedir = getenv("HOME");
     char *envfile = getenv("XENVIRONMENT");
     char hostname[100];
-#ifndef __linux
+#ifndef __linux__
     int namelen;
 #endif
 
@@ -82,7 +82,7 @@ GetUserDefaults(dpy)
 	if (homedir != NULL) {
 	    (void) strcpy(filename, homedir);
 	    (void) strcat(filename, "/.Xdefaults-");
-#ifndef __linux
+#ifndef __linux__
 	    if (0 == gethostname(hostname, sizeof(hostname), &namelen)) {
 #else
 	    if (0 == gethostname(hostname, sizeof(hostname))) {

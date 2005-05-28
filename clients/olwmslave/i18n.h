@@ -24,8 +24,8 @@ extern wchar_t  *mbstowcsdup();
 extern wchar_t  *ctstowcsdup();
 extern char     *ctstombsdup();
 extern char     *wcstoctsdup();
-#endif OW_I18N_L4
+#endif /* OW_I18N_L4 */
 
-#endif i18n_DEFINED
+#endif /* i18n_DEFINED */
 
 

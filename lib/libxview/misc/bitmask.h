@@ -32,6 +32,6 @@ extern unsigned int xv_bitss_get_mask();
 extern int xv_bitss_cmp_mask();
 extern Bitmask * xv_bitss_copy_mask();
 
-#endif bitmask_c
+#endif /* bitmask_c */
 
-#endif bitmask_h
+#endif /* bitmask_h */

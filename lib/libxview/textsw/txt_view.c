@@ -66,7 +66,12 @@ textsw_view_init(parent, textsw_view_public, avlist)
     view_object->private_data = (Xv_opaque) view;
     view->public_self = textsw_view_public;
     view->magic = TEXTSW_VIEW_MAGIC;
+/* Alpha compatibility, mbuck@debian.org */
+#if defined(__alpha)
+    view->window_fd = (Xv_Window) xv_get(textsw_view_public, WIN_FD);
+#else
     view->window_fd = (int) xv_get(textsw_view_public, WIN_FD);
+#endif
     /*
      * Must initialize rect here else code elsewhere (e.g., textsw_resize)
      * that tries to compute incremental changes gets the wrong answer.

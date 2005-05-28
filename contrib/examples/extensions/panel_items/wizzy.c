@@ -41,7 +41,7 @@ static void	wizzy_layout();
 #ifdef WIZZY_CAN_ACCEPT_KBD_FOCUS
 static void	wizzy_accept_kbd_focus();
 static void	wizzy_yield_kbd_focus();
-#endif WIZZY_CAN_ACCEPT_KBD_FOCUS
+#endif /* WIZZY_CAN_ACCEPT_KBD_FOCUS */
 
 /*
  * Panel Operations Vector Table for this item.
@@ -68,7 +68,7 @@ static Panel_ops ops = {
 #else
     NULL,				/* accept_kbd_focus() */
     NULL,				/* yield_kbd_focus() */
-#endif WIZZY_CAN_ACCEPT_KBD_FOCUS
+#endif /* WIZZY_CAN_ACCEPT_KBD_FOCUS */
     NULL				/* extension: reserved for future use */
 };
 
@@ -86,7 +86,7 @@ typedef struct wizzy_info {
     Panel	    panel;	/* Panel this item is owned by */
 #ifdef WIZZY_CAN_ACCEPT_KBD_FOCUS
     int		    has_kbd_focus; /* TRUE or FALSE */
-#endif WIZZY_CAN_ACCEPT_KBD_FOCUS
+#endif /* WIZZY_CAN_ACCEPT_KBD_FOCUS */
 } Wizzy_info;
 
 
@@ -136,7 +136,7 @@ wizzy_init(panel, item, avlist)
 	   PANEL_OPS_VECTOR, &ops,
 #ifdef WIZZY_CAN_ACCEPT_KBD_FOCUS
 	   PANEL_ACCEPT_KEYSTROKE, TRUE,
-#endif WIZZY_CAN_ACCEPT_KBD_FOCUS
+#endif /* WIZZY_CAN_ACCEPT_KBD_FOCUS */
 	   0);
 
     return XV_OK;
@@ -226,7 +226,7 @@ wizzy_destroy(item, status)
 	return XV_OK;
 #ifdef WIZZY_CAN_ACCEPT_KBD_FOCUS
     wizzy_remove(item);
-#endif WIZZY_CAN_ACCEPT_KBD_FOCUS
+#endif /* WIZZY_CAN_ACCEPT_KBD_FOCUS */
     free(dp);
     return XV_OK;
 }
@@ -397,7 +397,7 @@ wizzy_remove(item)
     if (!panel_status->destroying &&
 	xv_get(dp->panel, PANEL_CARET_ITEM) == item)
 	(void) panel_advance_caret(dp->panel);
-#endif WIZZY_CAN_ACCEPT_KBD_FOCUS
+#endif /* WIZZY_CAN_ACCEPT_KBD_FOCUS */
 }
 
 
@@ -415,7 +415,7 @@ wizzy_restore(item)
     /* If no item has the keyboard focus, then give this item the focus */
     if (!xv_get(dp->panel, PANEL_CARET_ITEM))
         xv_set(dp->panel, PANEL_CARET_ITEM, item, 0);
-#endif WIZZY_CAN_ACCEPT_KBD_FOCUS
+#endif /* WIZZY_CAN_ACCEPT_KBD_FOCUS */
 }
 
 
@@ -491,5 +491,5 @@ wizzy_yield_kbd_focus(item)
     focus_win = xv_get(frame, FRAME_FOCUS_WIN);
     xv_set(focus_win, XV_SHOW, FALSE, 0);
 }
-#endif WIZZY_CAN_ACCEPT_KBD_FOCUS
+#endif /* WIZZY_CAN_ACCEPT_KBD_FOCUS */
 

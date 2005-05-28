@@ -18,11 +18,11 @@ static char     sccsid[] = "@(#)fm_impl.h 20.64 93/06/28";
 
 /* standard includes */
 #ifndef FILE
-#if !defined(SVR4) && !defined(__linux)
+#if !defined(SVR4) && !defined(__linux__)
 #undef NULL
-#endif SVR4
+#endif /* SVR4 */
 #include <stdio.h>
-#endif FILE
+#endif /* FILE */
 #include <sys/time.h>
 #ifdef OW_I18N
 #endif /* OW_I18N */

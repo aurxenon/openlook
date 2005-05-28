@@ -5,7 +5,7 @@
 
 %{
 #ifdef IDENT
-#ident  "@(#)olvwmrc.y	1.6 olvwm version 07 Jan 1994"
+#ident  "@(#)olvwmrc.y	1.8 olvwm version 03/02/00"
 #endif
 
 #include <sys/types.h>
@@ -81,6 +81,7 @@ List    *ProgKeyList = NULL;
 List	*WinMenuActionsList = NULL;
 
 static Display	*dpy;
+static unsigned int NumLockMask;
 %}
 
 
@@ -155,6 +156,7 @@ file	:	/* empty */
 	|	file WinMenuProg
 	|	file Assignment
 	|	error CLOSEBRACE
+;
 
 Assignment	:	WORD EQUALS String
 		{
@@ -173,6 +175,7 @@ Assignment	:	WORD EQUALS String
 		        VariableList = ListCons(v, VariableList);
 		    }
 		}
+;
 
 KeyProg	:	KeySpec OPENBRACE Actions CLOSEBRACE
 		{
@@ -191,6 +194,7 @@ KeyProg	:	KeySpec OPENBRACE Actions CLOSEBRACE
 		    AddKeyBinding(p->keycode, p->modmask, d);
 		    ProgKeyList = ListCons($1, ProgKeyList);
 		}
+;
 
 ScreenProg :	ScreenStart List CLOSEBRACE
 		{
@@ -201,6 +205,7 @@ ScreenProg :	ScreenStart List CLOSEBRACE
 		    p->target = $2;
 		    ProgScreenList = ListCons(p, ProgScreenList);
 		}
+;
 
 WinMenuProg :	WINMENU OPENBRACE WinMenuActions CLOSEBRACE
 		{
@@ -212,6 +217,7 @@ WinMenuProg :	WINMENU OPENBRACE WinMenuActions CLOSEBRACE
 		    }
 		    WinMenuActionsList = $3;
 		}
+;
 
 WinMenuActions : /* empty */
 		{ $$ = NULL; }
@@ -224,6 +230,7 @@ WinMenuActions : /* empty */
 		    p->actions = $4;
 		    $$ = ListCons(p, $1);
 		}
+;
 
 Actions :	/* empty */
 		{ $$ = NULL; }
@@ -257,6 +264,7 @@ Actions :	/* empty */
 		{ $$ = ListCons($2, $1); }
 	|	Actions IfElseAction
 		{ $$ = ListCons($2, $1); }
+;
 
 WarpAction :	WARP COLON String
 			{ 
@@ -267,6 +275,7 @@ WarpAction :	WARP COLON String
 			    p->parameter = strdup($3);
 			    $$ = p;
 			}
+;
 	
 CloseAction:	CLOSE COLON List
 			{ 
@@ -277,6 +286,7 @@ CloseAction:	CLOSE COLON List
 			    p->parameter = $3;
 			    $$ = p;
 			}
+;
 	
 QuitAction:	QUIT COLON List
 			{ 
@@ -287,6 +297,7 @@ QuitAction:	QUIT COLON List
 			    p->parameter = $3;
 			    $$ = p;
 			}
+;
 
 OpenAction:	OPEN COLON List
 			{ 
@@ -297,6 +308,7 @@ OpenAction:	OPEN COLON List
 			    p->parameter = $3;
 			    $$ = p;
 			}
+;
 			
 RaiseLowerAction:	RAISELOWER COLON List
 			{ 
@@ -307,6 +319,7 @@ RaiseLowerAction:	RAISELOWER COLON List
 			    p->parameter = $3;
 			    $$ = p;
 			}
+;
 			
 LowerAction:	LOWER COLON List
 			{ 
@@ -317,6 +330,7 @@ LowerAction:	LOWER COLON List
 			    p->parameter = $3;
 			    $$ = p;
 			}
+;
 			
 RaiseAction:	RAISE COLON List
 			{ 
@@ -327,6 +341,7 @@ RaiseAction:	RAISE COLON List
 			    p->parameter = $3;
 			    $$ = p;
 			}
+;
 			
 ExecuteAction:	EXECUTE COLON List
 			{ 
@@ -337,6 +352,7 @@ ExecuteAction:	EXECUTE COLON List
 			    p->parameter = $3;
 			    $$ = p;
 			}
+;
 
 GotoAction:	GOTO COLON String
 			{
@@ -358,7 +374,7 @@ GotoAction:	GOTO COLON String
 			    p->parameter = strdup(s);
 			    $$ = p;
 			}
-
+;
 
 GeometryAction :	GEOMETRY COLON String
 			{ 
@@ -369,6 +385,7 @@ GeometryAction :	GEOMETRY COLON String
 			    p->parameter = strdup($3);
 			    $$ = p;
 			}
+;
 
 RebindAction :	REBIND COLON
 			{ 
@@ -388,6 +405,7 @@ RebindAction :	REBIND COLON
 			    p->parameter = strdup($3);
 			    $$ = p;
 			}
+;
 
 StickAction :	STICK COLON String
 			{ 
@@ -398,6 +416,7 @@ StickAction :	STICK COLON String
 			    p->parameter = strdup($3);
 			    $$ = p;
 			}
+;
 
 SetSizeAction : SETSIZE COLON String
 			{ 
@@ -408,6 +427,7 @@ SetSizeAction : SETSIZE COLON String
 			    p->parameter = strdup($3);
 			    $$ = p;
 			}
+;
 
 FocusAction : FOCUS COLON String
 			{ 
@@ -418,6 +438,7 @@ FocusAction : FOCUS COLON String
 			    p->parameter = strdup($3);
 			    $$ = p;
 			}
+;
 
 IfElseAction: IFELSE COLON String OPENBRACE Actions CLOSEBRACE
 				      OPENBRACE Actions CLOSEBRACE
@@ -436,6 +457,7 @@ IfElseAction: IFELSE COLON String OPENBRACE Actions CLOSEBRACE
 
 			    $$ = p;
 			}
+;
 
 KeySpec : 	Key Modifier
 			{ 
@@ -467,9 +489,11 @@ KeySpec : 	Key Modifier
 			    $$ = p;
 			    free($1);
 			}
+;
 
 Key	:	String
 		{ $$ = strdup($1); }
+;
 
 Modifier :	/* empty */
 			{ $$ = 0; }
@@ -492,6 +516,7 @@ Modifier :	/* empty */
 			    }
 			    $$ |= FindModifierMask(kc);
 			}
+;
 
 List	:	String
 			{ $$ = $1; }
@@ -505,11 +530,13 @@ List	:	String
 			    free($3);
 			    $$ = s;
 			}
+;
 
 ScreenStart :	SCREEN INT OPENBRACE
 		{
 		    $$ = $2;
 		}
+;
 
 String :    WORD
 	    {
@@ -524,6 +551,7 @@ String :    WORD
 		$$ = strexpand(t);
 		free($1);
 	    }
+;
 %%
 /* Programs */
 #define YYDEBUG 1
@@ -712,7 +740,8 @@ matchProgKey(p, ev)
 
 {
     if (p->keycode == ev->xkey.keycode &&
-	(p->modmask == AnyModifier || p->modmask == ev->xkey.state))
+	(p->modmask == AnyModifier ||
+	(p->modmask == (~(NumLockMask|LockMask) & ev->xkey.state))))
 	return p;
     return NULL;
 }
@@ -799,14 +828,26 @@ struct stat statbuf;
 		    extern List *ScreenInfoList;
 		    List *l = ScreenInfoList;
 		    ScreenInfo *scr;
+		    Client *saveClient = NULL;
+		    Window root, child;
+		    int rx, ry, wx, wy;
+		    unsigned int keys;
 
 		    /* allow one warp per screen */
 		    for (scr = ListEnum(&l); scr != NULL; scr = ListEnum(&l)) {
 			findClient_rootid = scr->rootid;
 			c = (Client *) ListApply(ActiveClientList, findClient, t);
-			if (c)
-			    clientWarp(c);
+			if (c) {
+			    if (XQueryPointer(dpy, c->groupid, &root, &child,
+					&rx, &ry, &wx, &wy, &keys)) {
+			        clientWarp(c);
+				break;
+			    }
+			    else saveClient = c;
+			}
 		    }
+		    if (saveClient)
+			clientWarp(saveClient);
 		    findClient_rootid = 0;
 		}
 	    free(s);
@@ -1249,6 +1290,7 @@ InitOlvwmRC(ldpy, path)
 	return;
     olvwmOldBuf = olvwmBuf;
     dpy = ldpy;
+    NumLockMask = FindModifierMask(XKeysymToKeycode(dpy, XK_Num_Lock));
     yyparse();
 #ifdef DEBUG
     DumpProgKeyList();

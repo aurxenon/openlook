@@ -49,6 +49,6 @@
 #define FD_ISSET(n, p)  ((p)->fds_bits[0] & (1 << ((n) % NFDBITS)))
 #define FD_ZERO(p)      ((p)->fds_bits[0] = 0)
 
-#endif OLD_BSD_FDSETS
+#endif /* OLD_BSD_FDSETS */
 
-#endif ~xview_ultrix_compat_DEFINED
+#endif /* ~xview_ultrix_compat_DEFINED */

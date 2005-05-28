@@ -59,4 +59,4 @@ char	*locale;
 
 }
 
-#endif OS_HAS_LOCALE
+#endif /* OS_HAS_LOCALE */

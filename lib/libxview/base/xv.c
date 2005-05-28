@@ -112,7 +112,7 @@ void *xv_calloc( num, size )
  */
 #ifndef XV_OBJECT_SEAL
 #define XV_OBJECT_SEAL		0xF0A58142
-#endif XV_OBJECT_SEAL
+#endif /* XV_OBJECT_SEAL */
 #define XV_EMBEDDING_SEAL	0xF1B69200
 #define XV_EMBEDDING_MASK	0xFFFFFF00
 
@@ -556,7 +556,11 @@ va_dcl
 	case XV_KEY_DATA:
 	case XV_IS_SUBTYPE_OF:
 	    status = XV_OK;
+#if (__GLIBC__ > 2) || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 1)
+	    __va_copy(args, args_save);
+#else
 	    args = args_save;
+#endif	    
 	    result = generic_get(object, &status, (Attr_attribute) attr, args);
 	    va_end(args);
 	    return result;
@@ -575,7 +579,11 @@ va_dcl
 	 * Go to the beginning of the varargs list every time to insure each
          * pkg gets the start of the  varargs.
 	 */
+#if (__GLIBC__ > 2) || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 1)
+	__va_copy(args, args_save);
+#else
         args = args_save;
+#endif	
 
 	/* ask the object to handle the get */
 	result = (*(pkg->get)) (object, &status, (Attr_attribute) attr, args);

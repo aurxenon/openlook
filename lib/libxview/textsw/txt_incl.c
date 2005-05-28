@@ -30,7 +30,7 @@ static char     sccsid[] = "@(#)txt_incl.c 1.35 93/06/28";
 #include <xview/win_screen.h>
 #include <xview/file_chsr.h>
 
-#ifdef SVR4
+#if defined(SVR4) || defined(__linux__)
 #include <unistd.h>
 #include <string.h>
 #endif /* SVR4 */
@@ -108,14 +108,14 @@ do_include_proc(folio, ie)
 
     /* if "cd" is not disabled and the "cd" dir is not the current dir */
 #ifdef OW_I18N
-#ifdef SVR4
+#if defined(SVR4) || defined(__linux__)
     (void) getcwd(curr_dir_mb, MAX_STR_LENGTH);
 #else
     (void) getwd(curr_dir_mb);
 #endif /* SVR4 */
     (void) mbstowcs(curr_dir, curr_dir_mb, MAX_STR_LENGTH);
 #else /* OW_I18N */
-#ifdef SVR4
+#if defined(SVR4) || defined(__linux__)
     (void) getcwd(curr_dir, MAX_STR_LENGTH);
 #else
     (void) getwd(curr_dir);
@@ -272,7 +272,7 @@ create_include_items(panel, view)
     include_string[0] = NULL;
     (void) textsw_get_selection(view, &dummy, &dummy, include_string,
 				MAX_STR_LENGTH);
-#ifdef SVR4
+#if defined(SVR4) || defined(__linux__)
  (void) getcwd(current_dir_include_string, MAX_STR_LENGTH);
 #else
   (void) getwd(current_dir_include_string);
@@ -384,14 +384,14 @@ include_cmd_proc(fc,path,file,client_data)
 
     /* if "cd" is not disabled and the "cd" dir is not the current dir */
 #ifdef OW_I18N
-#ifdef SVR4
+#if defined(SVR4) || defined(__linux__)
     (void) getcwd(curr_dir_mb, MAX_STR_LENGTH);
 #else
     (void) getwd(curr_dir_mb);
 #endif /* SVR4 */
     (void) mbstowcs(curr_dir, curr_dir_mb, MAX_STR_LENGTH);
 #else /* OW_I18N */
-#ifdef SVR4
+#if defined(SVR4) || defined(__linux__)
     (void) getcwd(curr_dir, MAX_STR_LENGTH);
 #else
     (void) getwd(curr_dir);

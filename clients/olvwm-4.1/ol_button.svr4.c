@@ -1793,4 +1793,4 @@ olgx_draw_accel_choice_item(info, win, x, y, width, height,
     }
 }
 
-#endif SVR4
+#endif /* SVR4 */

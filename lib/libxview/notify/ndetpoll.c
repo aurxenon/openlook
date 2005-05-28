@@ -148,4 +148,4 @@ ndet_select_itimer_func(nclient, which)
     return (NOTIFY_DONE);
 }
 
-#endif POLL
+#endif /* POLL */

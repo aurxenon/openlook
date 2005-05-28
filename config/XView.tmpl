@@ -2,10 +2,10 @@
 #define XViewTmpl YES
 
 #include <XView.cf>
-/**/###########################################################################
-/**/# @(#)XView.tmpl	1.15 12 May 1993 SMI
-/**/# XView.tmpl for XView release 3.2.  Template to add additional config
-/**/# rules to those supplied with X Version 11 release 5.
+XCOMM ###########################################################################
+XCOMM # @(#)XView.tmpl	1.15 12 May 1993 SMI
+XCOMM # XView.tmpl for XView release 3.2.  Template to add additional config
+XCOMM # rules to those supplied with X Version 11 release 5.
 
 /***************************************************************************/
 /***************************************************************************/
@@ -95,7 +95,7 @@
 /*
  *      Work around small conflict with Project.tmpl file
  */
-#ifndef __linux
+#ifndef __linux__
 #if UseInstalled
             MKDIRHIER = BourneShell BinDir/mkdirhier
 #endif
@@ -196,6 +196,7 @@
 /*
  *	use the same trick X11R5 does for defining rules for installed libs
  */
+#undef _Use
 #ifdef UseInstalled
 #define _Use(a,b) a
 #else
@@ -412,7 +413,7 @@
  */
 #if SharedLibXView
 # ifndef SharedXViewRev
-#ifdef __linux
+#ifdef __linux__
 #define SharedXViewRev 3.2.4
 #else
 #if SystemV4

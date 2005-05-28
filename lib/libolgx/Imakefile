@@ -6,9 +6,9 @@
 #include <Library.tmpl>
 
 
-/**/########################################################################
-/**/# @(#)Imakefile	1.8 28 Jun 1993 SMI
-/**/# Imakefile for building libxolgx.
+XCOMM ########################################################################
+XCOMM # @(#)Imakefile	1.8 28 Jun 1993 SMI
+XCOMM # Imakefile for building libxolgx.
 
 LIBTARGET = olgx
 SOREV = $(SOOLGXREV)
@@ -45,3 +45,7 @@ ALLFILES = $(SRCS) $(HEADERS) \
 #include <XView.obj>
 
 #include <XView.lib>
+
+#ifdef __linux__
+XVIEW_DEPLIBS = $(LDPRELIBS) $(XLIB) -lc
+#endif

@@ -111,7 +111,7 @@ openwin_get(owin_public, get_status, attr, valist)
 #else 
 	v = (Xv_opaque) NULL;
 	break;
-#endif SELECTABLE_VIEWS
+#endif /* SELECTABLE_VIEWS */
       case OPENWIN_SPLIT_INIT_PROC:
 	v = (Xv_opaque) (owin->split_init_proc);
 	break;

@@ -114,4 +114,4 @@ openwin_select_view(owin_public, view)
     }
 }
 
-#endif SELECTABLE_VIEWS
+#endif /* SELECTABLE_VIEWS */

@@ -44,7 +44,7 @@ static char     sccsid[] = "@(#)csr_change.c 20.51 93/06/28";
 #include <xview/attrol.h>
 #include <xview/server.h>
 #include <xview/font.h>
-#ifndef __linux
+#ifndef __linux__
 Xv_private_data char *xv_shell_prompt;
 #else
 /* Global already defined in server/server.c */
@@ -311,7 +311,7 @@ ttysw_pstring(s, mode, col, row, op)
 		       strlen(s) * chrwidth, 1,
                        (mode & MODE_INVERT) ? PIX_NOT(PIX_SRC) : PIX_SRC);
     }
-#endif  OW_I18N
+#endif  /* OW_I18N */
 
 #ifdef  OW_I18N
 #undef  BUFSIZE

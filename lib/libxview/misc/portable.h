@@ -49,7 +49,7 @@ EXTERN_FUNCTION (Attr_avlist copy_va_to_av, (va_list valist, Attr_avlist avlist,
 #define const
 #endif
 
-#if defined(SVR4) || defined(__linux)
+#if defined(SVR4) || defined(__linux__)
 #define XV_BCOPY(a,b,c) memmove(b,a,c)
 #define XV_BZERO(a,b) memset(a,0,b)
 #define XV_INDEX(a,b) strchr(a,b)
@@ -66,7 +66,7 @@ EXTERN_FUNCTION (Attr_avlist copy_va_to_av, (va_list valist, Attr_avlist avlist,
  * Defines governing tty mode and pty behavior.  (These are relevant to the
  * ttysw code.)
  */
-#ifdef __linux
+#ifdef __linux__
 #define	XV_USE_TERMIOS
 #undef	XV_USE_SVR4_PTYS
 #else
@@ -77,6 +77,6 @@ EXTERN_FUNCTION (Attr_avlist copy_va_to_av, (va_list valist, Attr_avlist avlist,
 #undef	XV_USE_TERMIOS
 #undef	XV_USE_SVR4_PTYS
 #endif	/* SVR4 */
-#endif  /* __linux */
+#endif  /* __linux__ */
 
 #endif /* xview_portable_h_DEFINED */

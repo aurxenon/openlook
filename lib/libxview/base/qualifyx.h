@@ -33,4 +33,4 @@
 #define Visual		XVisual_t
 #define Window		XWindow_t
 
-#endif _view2_private_qualify_x_h_already_included
+#endif /* _view2_private_qualify_x_h_already_included */

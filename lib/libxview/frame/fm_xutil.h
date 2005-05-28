@@ -39,4 +39,4 @@ typedef struct {
 /* frame_xutil.c */
 Xv_private void		frame_setwmhints();
 
-#endif frame_xutil_h_already_included
+#endif /* frame_xutil_h_already_included */

@@ -34,6 +34,10 @@ static char     sccsid[] = "@(#)tty_newtxt.c 1.45 93/06/28";
  */
 
 
+/* mbuck@debian.org */
+#if 1
+#include <X11/Xlibint.h>
+#endif
 #include <xview/window.h>
 #include <xview_private/pw_impl.h>
 #include <pixrect/pixrect.h>

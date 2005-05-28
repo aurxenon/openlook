@@ -579,7 +579,7 @@ AwaitEvents(dpy, timeout)
     if (timeout->tv_sec < 0)
 	return False;
 
-#ifndef __linux
+#ifndef __linux__
     (void) gettimeofday(&starttime, NULL);
 #endif
 
@@ -615,7 +615,7 @@ AwaitEvents(dpy, timeout)
 	 * return an indication of valid data to the caller, yet also return
 	 * a value for the time remaining that is less than or equal to zero.
 	 */
-#ifndef __linux
+#ifndef __linux__
 /* Linux: select does the remaining time calculation for us. */
 	(void) gettimeofday(&curtime, NULL);
 	tvdiff(&starttime, &curtime, &diff1);

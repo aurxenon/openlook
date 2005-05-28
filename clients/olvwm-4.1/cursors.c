@@ -21,7 +21,7 @@
 #include "st.h"
 
 #ifdef IDENT
-#ident "@(#)cursors.c	1.4 olvwm version 07 Jan 1994"
+#ident "@(#)cursors.c	1.5 olvwm version 01/13/98"
 #endif
 
 static st_table	*cursorTable;
@@ -278,7 +278,18 @@ initPointer(dpy, cmap, data, pointer)
 	    if (our_copy[0] == 'X')
 		font_file = "cursor";
 	    else if (our_copy[0] == 'O')
-		font_file = "olcursor";
+#if 0
+		font_file = "-sun-open look cursor-----12-120-75-75-p-455-sunolcursor-1";
+#else
+		/* The width of 455 of the font name above seems to be
+		 * bogus, causing horizontally stretched cursors. Older
+		 * versions of olvwm used "olcursor" as the font name which
+		 * on my system is an alias that uses a width of 160, so let's
+		 * use that instead.
+		 * <mbuck@debian.org>
+		 */
+		font_file = "-sun-open look cursor-----12-120-75-75-p-160-sunolcursor-1";
+#endif
 	    createCursor(dpy, cmap, pointer, cursor_id, font_file, end, ptr);
 	}
 	else {

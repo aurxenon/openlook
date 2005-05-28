@@ -28,7 +28,7 @@ Pkg_private int panel_destroy();
 
 static int      panel_layout();
 
-#ifndef __linux
+#ifndef __linux__
 Xv_private_data Defaults_pairs xv_kbd_cmds_value_pairs[4];
 #else
 extern Defaults_pairs xv_kbd_cmds_value_pairs[4];
@@ -292,7 +292,12 @@ panel_layout(panel_public, child, op, d1, d2, d3, d4, d5)
     Panel           panel_public;
     Xv_Window       child;
     Window_layout_op op;
+/* Alpha compatibility, mbuck@debian.org, FIXME: I don't understand this */
+#if defined(__alpha)
+    unsigned long   d1, d2, d3, d4, d5;
+#else
     int             d1, d2, d3, d4, d5;
+#endif
 {
     Panel_info     *panel = PANEL_PRIVATE(panel_public);
 

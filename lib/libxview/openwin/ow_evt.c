@@ -48,7 +48,7 @@ openwin_event(owin_public, event, arg, type)
 	if (event_is_down(event))
 	    openwin_select(owin_public, event);
 	break;
-#endif SELECTABLE_VIEWS
+#endif /* SELECTABLE_VIEWS */
 
       case ACTION_RESCALE:
  	openwin_rescale(owin_public, (int) arg);
@@ -65,7 +65,7 @@ openwin_event(owin_public, event, arg, type)
 #ifdef SELECTABLE_VIEWS
 	if (STATUS(owin, show_borders))
 	    openwin_paint_borders(owin_public);
-#endif SELECTABLE_VIEWS
+#endif /* SELECTABLE_VIEWS */
 	break;
       default:
 	break;
@@ -133,7 +133,7 @@ openwin_view_event(window_public, event, arg, type)
 #ifdef SELECTABLE_VIEWS
 	    if (view->owin->seln_view != NULL)
 	      openwin_select_view(OPENWIN_PUBLIC(view->owin), NULL);
-#endif SELECTABLE_VIEWS
+#endif /* SELECTABLE_VIEWS */
 	    if (openwin_count_views(view->owin) > 1)
 		xv_destroy_safe(window_public);
 	    return (NOTIFY_DONE);

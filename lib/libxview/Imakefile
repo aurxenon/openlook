@@ -5,9 +5,9 @@
 #endif
 #include <Library.tmpl>
 
-/**/###########################################################################
-/**/# @(#)Imakefile	1.5 24 Mar 1992 SMI
-/**/# makefile rules for Imakefile in libxview library directory.
+XCOMM ###########################################################################
+XCOMM # @(#)Imakefile	1.5 24 Mar 1992 SMI
+XCOMM # makefile rules for Imakefile in libxview library directory.
 
 LIBTARGET = xview
 SOREV = $(SOXVIEWREV)
@@ -35,3 +35,7 @@ PopulateSubdirs($(SUBDIRS))
 MakeLintLibSubdirs($(SUBDIRS))
 
 #include <XView.lib>
+
+#ifdef __linux__
+XVIEW_DEPLIBS = $(LDPRELIBS) $(XLIB) -L../../libolgx -lolgx -lc
+#endif

@@ -79,7 +79,7 @@ textsw_do_search_proc(view, direction, ring_bell_status, wrapping_off, is_global
     if (direction == EV_FIND_DEFAULT)
 	first = last_plus_one;
 
-    STRNCPY(buf, (CHAR *) panel_get(search_panel_items[(int) FIND_STRING_ITEM],
+    (STRNCPY) (buf, (CHAR *) panel_get(search_panel_items[(int) FIND_STRING_ITEM],
 #ifdef OW_I18N
 				PANEL_VALUE_WCS, NULL),
 #else
@@ -175,7 +175,7 @@ do_replace_proc(view)
 
     if (selection_found =
 	textsw_get_selection(view, &first, &last_plus_one, NULL, 0)) {
-	STRNCPY(buf, (CHAR *) panel_get(
+	(STRNCPY) (buf, (CHAR *) panel_get(
 		search_panel_items[(int) REPLACE_STRING_ITEM],
 #ifdef OW_I18N
 		PANEL_VALUE_WCS, NULL),

@@ -143,6 +143,6 @@ register unsigned char	*s;
 		s++;
 	}
 }
-#endif DEBUG
+#endif /* DEBUG */
 
 #endif

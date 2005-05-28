@@ -91,7 +91,7 @@ struct openwin_info_struct {
 #ifdef SELECTABLE_VIEWS
 	Seln_client	seln_client;		/* selection svc client id */
 	Openwin_view_info	*seln_view;	/* selected view, if any */
-#endif SELECTABLE_VIEWS
+#endif /* SELECTABLE_VIEWS */
 	struct {
 	    BOOLEAN_FIELD(auto_clear);
 	    BOOLEAN_FIELD(adjust_vertical);
@@ -153,7 +153,7 @@ extern void	 openwin_seln_function();
 extern Xv_opaque openwin_seln_reply();
 extern void	 openwin_select();
 extern void	 openwin_select_view();
-#endif SELECTABLE_VIEWS
+#endif /* SELECTABLE_VIEWS */
 
 /* openwin_view.c */
 extern	void				openwin_create_initial_view();
@@ -165,4 +165,4 @@ extern	void				openwin_split_view();
 extern	int				openwin_fill_view_gap();
 extern	void				openwin_copy_scrollbar();
 
-#endif	__openwin_impl_h
+#endif	/* __openwin_impl_h */

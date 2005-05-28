@@ -23,7 +23,7 @@ Pkg_private int panel_num_down_button_init();
  */
 #ifndef SVR4
 static short up_button_10_image[] = {
-#else SVR4
+#else /* SVR4 */
 static unsigned short up_button_10_image[] = {
 #endif
 #include <images/up_button_10.pr>
@@ -32,27 +32,27 @@ static mpr_static(up_button_10_pr, 16, 13, 1, up_button_10_image);
 
 #ifndef SVR4
 static short up_button_12_image[] = {
-#else SVR4
+#else /* SVR4 */
 static unsigned short up_button_12_image[] = {
-#endif SVR4
+#endif /* SVR4 */
 #include <images/up_button_12.pr>
 };
 static mpr_static(up_button_12_pr, 16, 15, 1, up_button_12_image);
 
 #ifndef SVR4
 static short up_button_14_image[] = {
-#else SVR4
+#else /* SVR4 */
 static unsigned short up_button_14_image[] = {
-#endif SVR4
+#endif /* SVR4 */
 #include <images/up_button_14.pr>
 };
 static mpr_static(up_button_14_pr, 16, 17, 1, up_button_14_image);
 
 #ifndef SVR4
 static short up_button_19_image[] = {
-#else SVR4
+#else /* SVR4 */
 static unsigned short up_button_19_image[] = {
-#endif SVR4
+#endif /* SVR4 */
 #include <images/up_button_19.pr>
 };
 static mpr_static(up_button_19_pr, 32, 25, 1, up_button_19_image);
@@ -63,36 +63,36 @@ static mpr_static(up_button_19_pr, 32, 25, 1, up_button_19_image);
  */
 #ifndef SVR4
 static short down_button_10_image[] = {
-#else SVR4
+#else /* SVR4 */
 static unsigned short down_button_10_image[] = {
-#endif SVR4
+#endif /* SVR4 */
 #include <images/down_button_10.pr>
 };
 static mpr_static(down_button_10_pr, 16, 13, 1, down_button_10_image);
 
 #ifndef SVR4
 static short down_button_12_image[] = {
-#else SVR4
+#else /* SVR4 */
 static unsigned short down_button_12_image[] = {
-#endif SVR4
+#endif /* SVR4 */
 #include <images/down_button_12.pr>
 };
 static mpr_static(down_button_12_pr, 16, 15, 1, down_button_12_image);
 
 #ifndef SVR4
 static short down_button_14_image[] = {
-#else SVR4
+#else /* SVR4 */
 static unsigned short down_button_14_image[] = {
-#endif SVR4
+#endif /* SVR4 */
 #include <images/down_button_14.pr>
 };
 static mpr_static(down_button_14_pr, 16, 17, 1, down_button_14_image);
 
 #ifndef SVR4
 static short down_button_19_image[] = {
-#else SVR4
+#else /* SVR4 */
 static unsigned short down_button_19_image[] = {
-#endif SVR4
+#endif /* SVR4 */
 #include <images/down_button_19.pr>
 };
 static mpr_static(down_button_19_pr, 32, 25, 1, down_button_19_image);

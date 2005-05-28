@@ -23,7 +23,7 @@ static char     sccsid[] = "@(#)ndet_auto.c 20.21 93/06/28 Copyr 1985 Sun Micro"
 #include <signal.h>
 #ifdef SVR4 
 #include <stdlib.h> 
-#endif SVR4
+#endif /* SVR4 */
 
 extern          errno;
 
@@ -73,7 +73,7 @@ ndet_auto_sig_send(client, condition, context)
 		/* Auto sig is async */);
     /* Sweep all conditions & send notifications (recursive enumeration) */
     switch (condition->data.signal) {
-#ifndef __linux
+#ifndef __linux__
 /* In linux SIGIO == SIGURG */
       case SIGIO:
 #endif
@@ -151,12 +151,12 @@ ndet_auto_sig_send(client, condition, context)
 
 	    enum_send->wait3 = &wd;
 	    /* Look for as many children as have changed state */
-#if !defined(SVR4) && !defined(__linux)
+#if !defined(SVR4) && !defined(__linux__)
 	    while ((wd.pid = wait3(&wd.status, WNOHANG | WUNTRACED,
 				   &wd.rusage)) > 0)
 #else
 	    while ((wd.pid = waitpid(-1, &wd.status, WNOHANG|WUNTRACED)) > 0)
-#endif SVR4
+#endif /* SVR4 */
 		(void) ntfy_enum_conditions(ndet_clients,
 					    ndet_auto_sigchld, context);
 	    break;

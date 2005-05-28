@@ -125,7 +125,7 @@ ttysw_be_ttysw(ttysw_view)
 	/*
 	 * Switch the pty out of remote mode.
 	 */
-#if !defined(__linux) || defined(TIOCREMOTE)
+#if !defined(__linux__) || defined(TIOCREMOTE)
 	if (ioctl(ttysw->ttysw_pty, TIOCREMOTE, &off) < 0)
 	    perror("ioctl: TIOCREMOTE");
 	else
@@ -278,7 +278,7 @@ ttysw_be_termsw(ttysw_view)
      */
     ttysw_getp((Ttysw_view_handle) ttysw_view);
     ttysw->pending_remote = termsw->cooked_echo;
-#if !defined(__linux) || defined(TIOCREMOTE)
+#if !defined(__linux__) || defined(TIOCREMOTE)
     if (ioctl(ttysw->ttysw_pty, TIOCREMOTE, &ttysw->pending_remote) < 0)
 	perror("ioctl: TIOCREMOTE");
     else

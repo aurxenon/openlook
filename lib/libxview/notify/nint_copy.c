@@ -20,7 +20,7 @@ static char     sccsid[] = "@(#)nint_copy.c 20.14 93/06/28 Copyr 1985 Sun Micro"
 #include <xview_private/portable.h>
 #ifdef SVR4 
 #include <stdlib.h> 
-#endif SVR4
+#endif /* SVR4 */
 
 pkg_private     Notify_error
 nint_copy_callout(new_cond, old_cond)

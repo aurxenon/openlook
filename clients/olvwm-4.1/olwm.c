@@ -340,6 +340,24 @@ olvwm: Warning: '%s' is invalid locale for the LC_CTYPE category,\n\
 	ReparentScreens(DefDpy);
 	if (!GRV.FocusFollowsMouse)
 	    ClientFocusTopmost(DefDpy, GetFirstScrInfo(), CurrentTime);
+#if 1
+	/* In FocusFollowsMouse mode, pass focus to the NoFocus window if no
+	 * other window currently has it. Otherwise, we'll miss key events if
+	 * the pointer isn't inside a window on startup.
+	 * Thanks to Jeff King for reporting the bug, debugging it and suggesting the
+	 * following fix.
+	 *
+	 * <mbuck@debian.org>
+	 */
+	else {
+	    Window win;
+	    int revert;
+	    XGetInputFocus(DefDpy, &win, &revert);
+	    if (win == PointerRoot || win == None) {
+		NoFocusTakeFocus(DefDpy, CurrentTime, NULL);
+	    }
+	}
+#endif
 	CreateAutoRootMenu(DefDpy);
 
 	/* Initialize selections. */
@@ -662,9 +680,21 @@ ExitOLWM()
 static void
 handleChildSignal()
 {
+#if 1
+/* Some versions of glibc2 seem to need the extra signal(), some don't.
+ * So let's play safe and always include it under Linux (shouldn't hurt
+ * even if it's not required).
+ *
+ * mbuck@debian.org
+ */
+#if (defined(SYSV) && !defined(SVR4)) || defined(__linux__)
+	signal(SIGCHLD, handleChildSignal);
+#endif
+#else
 #ifdef SYSV
 #ifndef SVR4
 	signal(SIGCHLD, handleChildSignal);
+#endif
 #endif
 #endif
 	deadChildren = True;

@@ -10,11 +10,11 @@
 #define _xv_debug_h_already_included
 
 #ifndef FILE
-#if !defined(SVR4) && !defined(__linux)
+#if !defined(SVR4) && !defined(__linux__)
 #undef NULL
-#endif SVR4
+#endif /* SVR4 */
 #include <stdio.h>
-#endif FILE
+#endif /* FILE */
 #include <xview/pkg.h>		/* needed to get definition of Xv_private */
   /* 
    * Not strictly necessary to include <stdio.h> here, but eliminates
@@ -88,7 +88,7 @@ typedef enum {
  * xv_got_debugger to TRUE from the debugger.
  */
 
-#else _XV_DEBUG
+#else /* _XV_DEBUG */
 
 #define DEBUG_ONLY(x)
 #define AN_ERROR(expr, flag)	(expr)
@@ -97,6 +97,6 @@ typedef enum {
 #define FATAL_ERROR(exit_code)	if (xv_abort_fatal_error) abort() \
 				else exit(exit_code)
 
-#endif _XV_DEBUG
+#endif /* _XV_DEBUG */
 
-#endif _xv_debug_h_already_included
+#endif /* _xv_debug_h_already_included */

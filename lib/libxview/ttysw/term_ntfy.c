@@ -22,7 +22,7 @@ static char     sccsid[] = "@(#)term_ntfy.c 20.60 93/06/28";
 #include <stdio.h>
 #include <ctype.h>
 #include <string.h>
-#ifdef SVR4
+#if defined(SVR4) || defined(__linux__)
 #include <unistd.h>
 #endif
 
@@ -63,7 +63,7 @@ Pkg_private void ttysw_print_debug_string();
 /* performance: global cache of getdtablesize() */
 extern int      dtablesize_cache;
 
-#if defined(SVR4) || defined(__linux)
+#if defined(SVR4) || defined(__linux__)
 #define GETDTABLESIZE() \
 (dtablesize_cache?dtablesize_cache:(dtablesize_cache=(int)sysconf(_SC_OPEN_MAX)))
 #else
@@ -173,7 +173,7 @@ ttysw_text_event(textsw, event, arg, type)
      * again, this is the place to start looking.
      */
     if (ttysw->pending_remote != ttysw->remote) {
-#if !defined(__linux) || defined(TIOCREMOTE)
+#if !defined(__linux__) || defined(TIOCREMOTE)
 	if (ioctl(ttysw->ttysw_pty, TIOCREMOTE, &ttysw->pending_remote) < 0)
 	    perror("ioctl: TIOCREMOTE");
 	else
@@ -202,7 +202,7 @@ ttysw_text_event(textsw, event, arg, type)
 	    /*
 	     * Process pending literal next insertion at end of buffer.
 	     */
-#ifndef __linux
+#ifndef __linux__
 	    if (termsw->literal_next && action <= ASCII_LAST &&
 #else
 	    if (termsw->literal_next && action <= ISO_LAST &&
@@ -280,7 +280,7 @@ ttysw_text_event(textsw, event, arg, type)
 	 *	should get the same treatment.  For a third, whatever tests we
 	 *	make should also apply to the cooked_echo case.
 	 */
-#ifndef __linux
+#ifndef __linux__
 	if (action == tty_getintrc(ttysw)) {
 	        (void) xv_set(textsw, TEXTSW_INSERTION_POINT_I18N,
 			  TEXTSW_INFINITY, 0);
@@ -301,7 +301,7 @@ ttysw_text_event(textsw, event, arg, type)
 					(Notify_event) (event), arg, type);
 	}
     } else if (!termsw->cooked_echo && down_event &&
-#ifndef __linux
+#ifndef __linux__
 		action >= ASCII_FIRST && action <= ASCII_LAST) {
 #else
 		action >= ASCII_FIRST && action <= ISO_LAST) {
@@ -373,7 +373,7 @@ ttysw_text_event(textsw, event, arg, type)
 	* Even if cooked echo is off, we still have to handle
 	* keyboard signals.
 	*/
-#ifndef __linux
+#ifndef __linux__
 	if (!termsw->cooked_echo && !tty_issig(ttysw))
 	    break;
 #else

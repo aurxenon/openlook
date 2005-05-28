@@ -204,4 +204,4 @@ Pkg_private int		notice_jump_cursor;
 Pkg_private int		notice_context_key;
 Pkg_private Defaults_pairs bell_types[];
 
-#endif notice_impl_h_already_defined
+#endif /* notice_impl_h_already_defined */

@@ -7,13 +7,15 @@ static char     sccsid[] = "@(#)gettext.c 50.21 93/06/28";
 #endif
 #endif
 
+#include <string.h>
 #include <xview_private/gettext.h>
 
-char *strdup();
-char * dgettext(), *bindtextdomain();
+char * dgettext(char *, char *), *bindtextdomain();
 char *_gettext();
 char *fgets(), *getenv();
+#if !defined(__linux__) || !defined(__GLIBC__)
 caddr_t mmap();
+#endif
 
 static struct domain_binding *firstbind=0, *lastbind=0;
 
@@ -74,7 +76,7 @@ lookupdefbind(domain_name)
 
 #ifdef OS_HAS_LOCALE
     current_locale = setlocale(LC_MESSAGES, NULL);
-#endif OS_HAS_LOCALE
+#endif /* OS_HAS_LOCALE */
     if (!current_locale)  {
 	current_locale = "C";
     }
@@ -310,7 +312,7 @@ dgettext(domain_name, msg_id)
 
 #ifdef OS_HAS_LOCALE
     current_locale = setlocale(LC_MESSAGES, NULL);
-#endif OS_HAS_LOCALE
+#endif /* OS_HAS_LOCALE */
     if (!current_locale)  {
 	current_locale = "C";
     }
@@ -423,7 +425,7 @@ dgettext(domain_name, msg_id)
 	free(addr);
 	return(msg_id);
     }
-#endif OS_HAS_MMAP
+#endif /* OS_HAS_MMAP */
 
     close(fd);
     messages_so[first_free].mess_file_info = (struct struct_mo_info *) addr;

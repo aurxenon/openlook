@@ -356,7 +356,12 @@ panel_mltxt_set_avlist(item_public, avlist)
 		xv_set ( dp->textsw, TEXTSW_READ_ONLY, FALSE, NULL );
 
 	    textsw_reset(dp->textsw,0,0);
+/* Alpha compatibility, mbuck@debian.org */
+#if defined(__alpha)
+	    xv_set(dp->textsw, TEXTSW_CONTENTS, (unsigned long) avlist[1], 0);
+#else
 	    xv_set(dp->textsw, TEXTSW_CONTENTS, avlist[1], 0);
+#endif
 
 	    if ( dp->read_only )
 		xv_set ( dp->textsw, TEXTSW_READ_ONLY, TRUE, NULL );
@@ -449,7 +454,12 @@ panel_mltxt_get_attr(item_public, status, which_attr, valist)
 	return (Xv_opaque) dp->rows_displayed;
 
       case PANEL_ITEM_NTH_WINDOW:
+/* Alpha compatibility, mbuck@debian.org */
+#if 1
+	switch (va_arg(valist, int)) {
+#else
 	switch (*(int *) valist) {
+#endif
 	  case 0:
 	    return dp->view;
 	  case 1:

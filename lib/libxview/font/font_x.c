@@ -127,8 +127,21 @@ xv_load_x_font(display, name, font_opaque, default_x, default_y,
 	 */
 	*default_x = font->max_bounds.width;
 	*default_y = font->ascent + font->descent;
+#if 0
 	if (font->min_byte1 || font->max_byte1)
 	    ERROR;
+#else
+	/* Why should we reject fonts with more than one row? I guess row 0
+	 * being there is the only thing we depend on; if there are more rows,
+	 * we simply ignore them. With this change, we're able to run on
+	 * X-servers that have unicode fonts (aka iso10646-1 encoding) in their
+	 * font path in front of the iso8859-1 ones.
+	 *
+	 * mbuck@debian.org
+	 */
+	if (font->min_byte1)
+	    ERROR;
+#endif
 	*max_char = MIN(255, font->max_char_or_byte2);	/* pixfont compat */
 	*min_char = MIN(255, font->min_char_or_byte2);	/* pixfont compat */
 	return (font->fid);

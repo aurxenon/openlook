@@ -23,7 +23,7 @@ static char     sccsid[] = "@(#)finger_tbl.c 20.21 93/06/28";
 #include <xview_private/finger_tbl.h>
 #ifdef SVR4 
 #include <stdlib.h> 
-#endif SVR4
+#endif /* SVR4 */
 
 static void
 ft_validate_first_infinity(finger_table)

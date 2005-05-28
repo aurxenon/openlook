@@ -1,3 +1,38 @@
+Version 4.4 fixes:
+    1)  Fixed a colormap problem with VDM background gifs on 24-bit
+	framebuffers
+
+    2)  Fixed a core dump when pressing on the menu separator in a pinned
+	root menu
+
+    3)  Fixed a problem with the warp key
+
+    4)  Changed the default behavior of TransientSaveUnder to False -- this
+	gives better performance, and works around a common bug in X
+	servers
+
+Version 4.3 fixes:
+    1)  Updated for better support on 24-bit framebuffers, especially with
+	TrueColor visuals
+
+Version 4.2 fixes:
+    1)  Fixed problems with windows that have a compound text title
+
+    2)  Fixed problems with the cursor font name
+
+    3)  error.c will now compile under Solaris 2.6
+
+    4)  Fixed misc. compilation warnings.  Some survive in error.c and states.c
+
+    5)  Fixed warp function when two screens have the same program:  warp will
+	now look first on the screen containing the mouse pointer
+
+    6)  Fixed hot key functions when num lock/shift lock might be pressed
+
+    7)  Fixed problem with AutoRootMenu startup
+
+    8)  Fixed problem with VirtualIconic resource
+
 Version 4.1 fixes:
     1)  Fixed compilation problems with /usr/ucb/cc on SunOS 4.1.3
 

@@ -25,6 +25,10 @@ window_layout(parent, child, op, d1, d2, d3, d4, d5)
     Xv_Window       parent;
     register Xv_Window child;
     Window_layout_op op;
+/* Alpha compatibility, mbuck@debian.org */
+#if defined(__alpha)
+    unsigned long *d1, *d2, *d3, *d4, *d5;
+#endif
 {
 
     Rect            rect;

@@ -5,7 +5,7 @@
  */
 
 #ifdef IDENT
-#ident	"@(#)usermenu.c	1.6 olvwm version 07 Jan 1994"
+#ident	"@(#)usermenu.c	1.8 olvwm version 04/28/99"
 #endif
 
 /*
@@ -122,8 +122,8 @@
 #define _XtIntrinsic_h
 typedef unsigned long	Pixel;	    /* Index into colormap		*/
 #endif	/* NO_PIXEL_FIX */
-#include <xpm.h>
-#endif XPM
+#include <X11/xpm.h>
+#endif /* XPM */
 
 #include <assert.h>
 #include <string.h>
@@ -878,7 +878,7 @@ ExpandPath(pin, messages)
 /*
  * Menu Search Path
  */
-#define NUM_SEARCH_PATH	 7
+#define NUM_SEARCH_PATH	 8
 static  char    **menuSearchPath;
 
 /*
@@ -915,6 +915,11 @@ makeMenuSearchPath()
 	/* $HOME/.<menufile> */
 	sprintf(buf, "%s/.%%s", home);
 	menuSearchPath[i++] = MemNewString(buf);
+	
+#ifdef __linux__
+	/* ++roman: /etc/X11/olvwm/<menufile> */
+	menuSearchPath[i++] = MemNewString("/etc/X11/olvwm/%s");
+#endif
 
 #ifdef OW_I18N_L3
 	/* $OPENWINHOME/share/locale/<locale>/olwm/<menufile> */
@@ -1019,7 +1024,7 @@ menuFromFile(file, menu, messages)
     int	 lineno = 1;	/* Needed for recursion */
     int		rval;
 
-    if (++menuRecursionCount > 25) {
+    if (++menuRecursionCount > 1000) {
         fprintf(stderr, GetString("olvwm: maximum menu filedepth exceeded\n"));
         menuRecursionCount = 0;
         return MENU_RECURSION;

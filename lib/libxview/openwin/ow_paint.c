@@ -41,7 +41,7 @@ Pkg_private void openwin_clear_damage();
 Pkg_private void openwin_paint_borders();
 Pkg_private void openwin_hilite_view();
 Pkg_private void openwin_lolite_view();
-#endif SELECTABLE_VIEWS
+#endif /* SELECTABLE_VIEWS */
 
 /******************************************************************/
 
@@ -164,7 +164,7 @@ openwin_lolite_view(owin_public, view)
     xv_vector(owin_public, x + 0, y + 0, x + 0, y + h, PIX_SRC, 0);
     xv_vector(owin_public, x + w, y + 0, x + w, y + h, PIX_SRC, 0);
 }
-#endif SELECTABLE_VIEWS
+#endif /* SELECTABLE_VIEWS */
 
 
 

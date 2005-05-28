@@ -25,6 +25,6 @@ struct pr_devdata {
 #ifndef KERNEL
 Pixrect *pr_makefromfd();
 Pixrect *pr_makefromfd_2();
-#endif !KERNEL
+#endif /* !KERNEL */
 
-#endif	pr_impl_make_DEFINED
+#endif /* 	pr_impl_make_DEFINED */

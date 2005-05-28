@@ -39,7 +39,12 @@ nint_next_callout(nclient, type)
 	stack_cond->func_next > stack_cond->func_count ||
 	stack_cond->func_next + 1 > NTFY_FUNCS_MAX ||
 	stack_cond->type != type ||
+/* Alpha compatibility, mbuck@debian.org */
+#if defined(__alpha)
+	stack_cond->data.an_u_int != (unsigned long) nclient) {
+#else
 	stack_cond->data.an_u_int != (u_int) nclient) {
+#endif
 	ntfy_set_errno(NOTIFY_INVAL);
 	goto Error;
     }

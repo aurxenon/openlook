@@ -1,8 +1,8 @@
 #include <XView.tmpl>
 
-/**/##########################################################################
-/**/# @(#)Imakefile	1.11 28 Jun 1993 SMI
-/**/# Imakefile for clock
+XCOMM ##########################################################################
+XCOMM # @(#)Imakefile	1.11 28 Jun 1993 SMI
+XCOMM # Imakefile for clock
 
 #define HasInfoFiles YES
 

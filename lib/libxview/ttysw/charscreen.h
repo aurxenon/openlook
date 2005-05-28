@@ -23,7 +23,7 @@
  * Character dimensions (fixed width fonts only!)
  * and of screen in pixels.
  */
-#if !defined(__linux) || defined(__DEFINE_CHARSCREEN_VARS)
+#if !defined(__linux__) || defined(__DEFINE_CHARSCREEN_VARS)
 int	chrheight, chrwidth, chrbase;
 int	winheightp, winwidthp;
 int	chrleftmargin;
@@ -36,7 +36,7 @@ struct	pixfont *pixfont;
  * and turn delaypainting off.
  */
 int	delaypainting;
-#else /* __linux && !__DEFINE_CHARSCREEN_VARS */
+#else /* __linux__ && !__DEFINE_CHARSCREEN_VARS */
 extern int	chrheight, chrwidth, chrbase;
 extern int	winheightp, winwidthp;
 extern int	chrleftmargin;

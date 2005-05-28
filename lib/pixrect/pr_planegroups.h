@@ -47,4 +47,4 @@ extern int pr_get_plane_group();
 extern void pr_set_plane_group();
 extern void pr_set_planes();
 
-#endif	pr_planegroups_DEFINED
+#endif /* 	pr_planegroups_DEFINED */

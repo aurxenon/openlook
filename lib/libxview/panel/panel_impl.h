@@ -10,11 +10,11 @@
 #define panel_impl_defined
 
 #ifndef FILE
-#if !defined(SVR4) && !defined(__linux)
+#if !defined(SVR4) && !defined(__linux__)
 #undef NULL
-#endif SVR4
+#endif /* SVR4 */
 #include <stdio.h>
-#endif FILE
+#endif /* FILE */
 #include <sys/types.h>
 #include <X11/Xlib.h>
 #include <xview_private/i18n_impl.h>
@@ -89,7 +89,7 @@ typedef struct panel_info {
 #ifdef OW_I18N
 	Atom		compound_text;
 	Atom		length_chars;
-#endif /*OW_I18N*/
+#endif /* OW_I18N */
     } atom;
     Xv_Font		bold_font;
 #ifdef OW_I18N

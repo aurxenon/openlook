@@ -104,9 +104,9 @@
 /* dimensions for extralarge size scrollbar */
 #ifndef SVR4
 #define SCROLLBAR_XLARGE_THICKNESS		29
-#else SVR4
+#else /* SVR4 */
 #define SCROLLBAR_XLARGE_THICKNESS		27
-#endif SVR4
+#endif /* SVR4 */
 #define	SB_XLARGE_MARGIN			 4
 #define	SB_XLARGE_MARKER_HEIGHT			 9
 #define SB_XLARGE_ELEVATOR_BOX_HEIGHT	 	21
@@ -251,4 +251,4 @@ Pkg_private void scrollbar_split_view_from_menu();
 Pkg_private void scrollbar_join_view_from_menu();
 Pkg_private void scrollbar_init_delay_values();
 
-#endif	__scrollbar_impl_h
+#endif	/* __scrollbar_impl_h */

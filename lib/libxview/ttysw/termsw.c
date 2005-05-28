@@ -127,7 +127,12 @@ termsw_layout(termsw_public, termsw_view_public, op, d1, d2, d3, d4, d5)
     Termsw          termsw_public;
     Xv_Window       termsw_view_public;
     Window_layout_op op;
+/* Alpha compatibility, mbuck@debian.org */
+#if defined(__alpha)
+    unsigned long   d1, d2, d3, d4, d5;
+#else
     int             d1, d2, d3, d4, d5;
+#endif
 {
     Termsw_folio    termsw_folio = TERMSW_PRIVATE(termsw_public);
 
@@ -413,7 +418,7 @@ termsw_folio_init_internal(parent, termsw_folio, avlist)
 
     /* Set the PTY to operate as a "remote terminal". */
     fd = (int) xv_get(termsw_public, TTY_PTY_FD);
-#if !defined(__linux) || defined(TIOCREMOTE)
+#if !defined(__linux__) || defined(TIOCREMOTE)
     (void) ioctl(fd, TIOCREMOTE, &on);
 #endif
     ttysw_folio->remote = ttysw_folio->pending_remote = on;

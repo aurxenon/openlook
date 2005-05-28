@@ -1,7 +1,7 @@
 /* @(#)gettext.h 50.11 93/06/28 SMI */
 
 #define DEFAULT_DOMAIN	"default"
-#ifndef __linux
+#ifndef __linux__
 #define DEFAULT_BINDING "/usr/lib/locale\n"
 #else
 #define DEFAULT_BINDING "/usr/openwin/lib/locale\n"
@@ -17,10 +17,10 @@
 #include <errno.h>
 #ifdef OS_HAS_LOCALE
 #include <locale.h>
-#if defined(__linux) && !defined(LC_MESSAGES) && defined(LC_RESPONSE)
+#if defined(__linux__) && !defined(LC_MESSAGES) && defined(LC_RESPONSE)
 #define LC_MESSAGES LC_RESPONSE
 #endif
-#endif OS_HAS_LOCALE
+#endif /* OS_HAS_LOCALE */
 #include <stdio.h>
 #include <sys/types.h>
 #include <sys/param.h>

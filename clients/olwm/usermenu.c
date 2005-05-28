@@ -719,7 +719,7 @@ expandPath(pin, messages)
 /*
  * Menu Search Path
  */
-#define	NUM_SEARCH_PATH		7
+#define	NUM_SEARCH_PATH		8
 static	char	**menuSearchPath;
 
 /*
@@ -755,6 +755,11 @@ makeMenuSearchPath()
 	/* $HOME/.<menufile> */
 	sprintf(buf, "%s/.%%s", home);
 	menuSearchPath[i++] = MemNewString(buf);
+	
+#ifdef __linux__
+	/* ++roman: /etc/X11/olwm/<menufile> */
+	menuSearchPath[i++] = MemNewString("/etc/X11/olwm/%s");
+#endif
 
 #ifdef OW_I18N_L3
 	/* $OPENWINHOME/share/locale/<locale>/olwm/<menufile> */

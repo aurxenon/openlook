@@ -29,7 +29,10 @@ Notice_attribute	attr;
 va_list			valist;
 {
     Notice_info	*notice = NOTICE_PRIVATE(notice_public);
+/* Alpha compatibility, mbuck@debian.org */
+#if 0
     Attr_avlist     avlist = (Attr_avlist) valist;
+#endif
     Xv_opaque	v = (Xv_opaque)NULL;
 
     switch (attr)  {

@@ -1239,7 +1239,12 @@ panel_list_get_attr(panel_list_public, status, which_attr, valist)
 	return ((Xv_opaque) dp->choose_one);
 
       case PANEL_ITEM_NTH_WINDOW:
+/* Alpha compatibility, mbuck@debian.org */
+#if 1
+	if (va_arg(valist, int) == 0)
+#else
 	if (*(int *) valist == 0)
+#endif
 	    return (Xv_opaque) dp->list_sb;
 	else
 	    return (Xv_opaque) NULL;
@@ -1266,7 +1271,12 @@ panel_list_get_attr(panel_list_public, status, which_attr, valist)
 	return (Xv_opaque) dp->list_sb;
 
       case PANEL_LIST_SELECTED:
+/* Alpha compatibility, mbuck@debian.org */
+#if 1
+	row = va_arg(valist, int);
+#else
 	row = *(int *) valist;
+#endif
 	node = find_or_create_nth_row(dp, row, FALSE);
 	return (node ? (Xv_opaque) node->f.selected : (Xv_opaque) XV_ERROR);
 
@@ -1278,7 +1288,12 @@ panel_list_get_attr(panel_list_public, status, which_attr, valist)
 	return -1;	/* no rows selected */
 	
       case PANEL_LIST_NEXT_SELECTED:
+/* Alpha compatibility, mbuck@debian.org */
+#if 1
+	row = va_arg(valist, int);
+#else
 	row = *(int *) valist;
+#endif
 	node = find_or_create_nth_row(dp, row, FALSE);
 	if (!node)
 	    return -1;	/* specified row doesn't exist */
@@ -1289,7 +1304,12 @@ panel_list_get_attr(panel_list_public, status, which_attr, valist)
 	return -1;	/* no subsequent row selected */
 
       case PANEL_LIST_CLIENT_DATA:
+/* Alpha compatibility, mbuck@debian.org */
+#if 1
+	row = va_arg(valist, int);
+#else
 	row = *(int *) valist;
+#endif
 	node = find_or_create_nth_row(dp, row, FALSE);
 	return (node ? (Xv_opaque) node->client_data : (Xv_opaque) XV_ERROR);
 
@@ -1297,7 +1317,12 @@ panel_list_get_attr(panel_list_public, status, which_attr, valist)
 #ifdef OW_I18N
       case PANEL_LIST_STRING_WCS:
 #endif
+/* Alpha compatibility, mbuck@debian.org */
+#if 1
+	row = va_arg(valist, int);
+#else
 	row = *(int *) valist;
+#endif
 	node = find_or_create_nth_row(dp, row, FALSE);
 #ifdef OW_I18N
 	if (node != NULL)
@@ -1312,7 +1337,12 @@ panel_list_get_attr(panel_list_public, status, which_attr, valist)
 #endif /* OW_I18N */
 
       case PANEL_LIST_GLYPH:
+/* Alpha compatibility, mbuck@debian.org */
+#if 1
+	row = va_arg(valist, int);
+#else
 	row = *(int *) valist;
+#endif
 	node = find_or_create_nth_row(dp, row, FALSE);
 	return (node ? (Xv_opaque) node->glyph : (Xv_opaque) XV_ERROR);
 
@@ -1328,7 +1358,12 @@ panel_list_get_attr(panel_list_public, status, which_attr, valist)
 #endif /* OW_I18N */
 
       case PANEL_LIST_FONT:
+/* Alpha compatibility, mbuck@debian.org */
+#if 1
+	row = va_arg(valist, int);
+#else
 	row = *(int *) valist;
+#endif
 	node = find_or_create_nth_row(dp, row, FALSE);
 	return (node ? (Xv_opaque) node->font : (Xv_opaque) XV_ERROR);
 
@@ -1352,7 +1387,12 @@ panel_list_get_attr(panel_list_public, status, which_attr, valist)
 
 
     case PANEL_LIST_INACTIVE:
+/* Alpha compatibility, mbuck@debian.org */
+#if 1
+	row = va_arg(valist, int);
+#else
 	row = *(int *) valist;
+#endif
 	node = find_or_create_nth_row(dp, row, FALSE);
 	return (node ? (Xv_opaque) node->f.row_inactive : (Xv_opaque) XV_ERROR);
 
@@ -1407,7 +1447,12 @@ panel_list_get_attr(panel_list_public, status, which_attr, valist)
     }
 
     case PANEL_LIST_EXTENSION_DATA:
+/* Alpha compatibility, mbuck@debian.org */
+#if 1
+	row = va_arg(valist, int);
+#else
 	row = *(int *) valist;
+#endif
 	node = find_or_create_nth_row(dp, row, FALSE);
 	return (node ? (Xv_opaque) node->exten_data : (Xv_opaque) XV_ERROR);
 

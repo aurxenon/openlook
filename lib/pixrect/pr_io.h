@@ -52,4 +52,4 @@ extern int pr_load_header();
 extern Pixrect * pr_load_image();
 extern Pixrect * pr_load_std_image();
 
-#endif pr_io_DEFINED
+#endif /* pr_io_DEFINED */

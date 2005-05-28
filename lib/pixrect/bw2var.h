@@ -37,4 +37,4 @@ struct	pixrect *bw2_make();
 int	bw2_destroy();
 #endif
 
-#endif	bw2var_DEFINED
+#endif	/* bw2var_DEFINED */

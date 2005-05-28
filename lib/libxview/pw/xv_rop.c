@@ -301,7 +301,7 @@ xv_rop_mpr_internal(display, d, gc, x, y, width, height, src, xr, yr,
         else
 	    ximage->bitmap_bit_order = MSBFirst;
 #else
-#ifdef ultrix
+#if defined(ultrix) || defined(__alpha)
         ximage->byte_order = LSBFirst;
         ximage->bitmap_bit_order = MSBFirst;
 #else

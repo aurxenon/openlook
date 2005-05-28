@@ -18,7 +18,7 @@ static char     sccsid[] = "@(#)om_public.c 20.146 93/06/28";
 #include <fcntl.h>
 #ifdef SVR4
 #include <stdlib.h>
-#endif SVR4
+#endif /* SVR4 */
 
 #include <pixrect/pixrect.h>
 #include <pixrect/pr_util.h>

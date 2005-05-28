@@ -58,4 +58,4 @@
 #define UFAST IFKERNEL(SLOW,FAST)
 #define UFASTT IFKERNEL(SLOWT,FASTT)
 
-#endif	mem_rop_impl_util_DEFINED
+#endif /* 	mem_rop_impl_util_DEFINED */

@@ -13,13 +13,13 @@
 
 #ifndef SVR4
 #include	<sundev/cg9reg.h>
-#endif SVR4
+#endif /* SVR4 */
 #include	<pixrect/memvar.h>
 #ifndef SVR4
 #include	<sunwindow/cms.h>	/* colormapseg */
 #else
 #include <sys/cms.h>
-#endif SVR4
+#endif /* SVR4 */
 
 /* description of single CG9 frame buffer */
 
@@ -92,6 +92,6 @@ int		cg9_vector();
 int		cg9_get();
 int		cg9_put();
 
-#endif	!KERNEL
+#endif /* 	!KERNEL */
 
-#endif	cg9var_DEFINED
+#endif /* 	cg9var_DEFINED */

@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <dirent.h>
+#include <math.h>
 #include <sys/param.h>
 #include <X11/Xos.h>
 #include <X11/Xlib.h>
@@ -23,14 +24,31 @@
 #include "globals.h"
 #include "win.h"
 #include "menu.h"
-#include "math.h"
 #include "virtual.h"
 #include "patchlevel.h"
 
 #include "vdm.icon"
 #include "vdm.mask"
 
+#if defined(__linux__) && defined(__GLIBC__) && 0
+/* GNU libc doesn't use INIT, so we have to define sp ourselves. We have to
+ * initialize it as well before we call compile(). Maybe this is a bug in
+ * GNU libc, but I couldn't care less...
+ *
+ * NEWS: As of glibc 2.0.5c, GNU libc does use INIT, but it calls the first
+ * argument of compile __instring instead of instring. Sigh. Whoever designed
+ * this regexp API deserves to be shot immediately, if you ask me.
+ *
+ * MORE NEWS: glibc 2.0.6 seems to do this right, so I added a && 0
+ * above to disable my patches. Remove it if you have an older glibc.
+ *
+ * martin.buck@bigfoot.com
+ */
+/*char *sp;*/
+#define INIT   register char *sp = __instring;
+#else
 #define INIT   register char *sp = instring;
+#endif
 #define GETC() (*sp++)
 #define PEEKC()     (*sp)
 #define UNGETC(c)   (--sp)
@@ -1165,6 +1183,23 @@ static XTextProperty	iName = {(unsigned char *) "Desktop",
 		       v->client->scrInfo->vdm->resources->geometry);
     VirtualSetGeometry(v->client->iconwin,
 		       v->client->scrInfo->vdm->resources->iconGeometry);
+#if 1
+/* If a geometry for the virtual desktop icon was specified, treat the icon as
+ * if it was positioned manually. This ensures that it never gets placed
+ * automatically, even if FreeIconSlots is set. Unfortunately,
+ * VirtualSetGeometry() doesn't tell us whether the geometry spec was valid,
+ * so we have to check ourselves...
+ *
+ * <mbuck@debian.org>
+ */
+{
+    int changed, dummy;
+    changed = XParseGeometry(v->client->scrInfo->vdm->resources->iconGeometry, &dummy, &dummy, &dummy, &dummy);
+    if (changed & (XValue | YValue)) {
+	v->client->iconwin->fManuallyPositioned = True;
+    }
+}
+#endif
 
     XFree((char *) sizeHints);
     XFree((char *) wmHints);
@@ -2154,6 +2189,13 @@ char newPattern[256];
 #ifdef REGEXP
     expbuf = regcomp(newPattern);
 #else
+#if defined(__linux__) && defined(__GLIBC__)
+    /* See comment above.
+     *
+     * martin.buck@bigfoot.com
+     */
+/*    sp = newPattern;*/
+#endif
     compile(newPattern, expbuf, &expbuf[256], '\0');
 #endif
 }

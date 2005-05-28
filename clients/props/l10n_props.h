@@ -70,7 +70,7 @@ typedef struct	l10n_config_list {
 	 * format for strftime, not string itself).
 	 */
 	wchar_t			*(*convert_label)();
-#endif OW_I18N
+#endif /* OW_I18N */
 
 	int			default_value;
 

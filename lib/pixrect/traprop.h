@@ -23,4 +23,4 @@ struct pr_trap {
 	int y0, y1;			/* top+bottom boundaries */
 };
 
-#endif traprop_DEFINED
+#endif /* traprop_DEFINED */

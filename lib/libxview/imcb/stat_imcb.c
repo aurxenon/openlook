@@ -130,4 +130,4 @@ _xv_status_done(ic, client_data, cb_data)
 	       NULL);
 #endif /* notdef */
 }
-#endif OW_I18N
+#endif /* OW_I18N */

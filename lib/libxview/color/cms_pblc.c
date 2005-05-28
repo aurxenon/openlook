@@ -316,14 +316,22 @@ cms_get_attr(cms_public, status, attr, args)
 {
     Cms_info		*cms = CMS_PRIVATE(cms_public);
     Xv_opaque		value;
+/* Alpha compatibility, mbuck@debian.org */
+#if 0
     Attr_avlist     	avlist = (Attr_avlist) args;
+#endif
     int			cms_status = 0;
 
     switch (attr) {
       case CMS_PIXEL: {
 	  unsigned long    index;
 	  
+/* Alpha compatibility, mbuck@debian.org */
+#if 1
+	  index = va_arg(args, unsigned long);
+#else
 	  index = (unsigned long)avlist[0];
+#endif
 	  if (index >= cms->size) {
 	      index = cms->size - 1;
 	  } else if (index < 0) {
@@ -398,6 +406,21 @@ cms_get_attr(cms_public, status, attr, args)
 	break;
 	
       case CMS_COLORS:  
+/* Alpha compatibility, mbuck@debian.org */
+#if 1
+	{
+	    Xv_singlecolor *v = va_arg(args, Xv_singlecolor *);
+	
+	    if (cms_get_colors(cms, (unsigned long)0, cms->size, 
+			       v, (XColor *)NULL,
+			       (unsigned char *)NULL, (unsigned char *)NULL,
+			       (unsigned char *)NULL) == XV_OK) {
+		value = (Xv_opaque)v;
+	    } else {
+		value = NULL;
+	    }
+	}
+#else
 	if (cms_get_colors(cms, (unsigned long)0, cms->size, 
 			   (Xv_singlecolor *)avlist[0], (XColor *)NULL,
 			   (unsigned char *)NULL, (unsigned char *)NULL,
@@ -406,9 +429,25 @@ cms_get_attr(cms_public, status, attr, args)
 	} else {
 	    value = NULL;
 	}
+#endif
 	break;
 	
       case CMS_X_COLORS:  
+/* Alpha compatibility, mbuck@debian.org */
+#if 1
+	{
+	    XColor *v = va_arg(args, XColor *);
+	    
+	    if (cms_get_colors(cms, (unsigned long)0, cms->size, 
+			       (Xv_singlecolor *)NULL, v,
+			       (unsigned char *)NULL, (unsigned char *)NULL,
+			       (unsigned char *)NULL) == XV_OK) {
+		value = (Xv_opaque)v;
+	    } else {
+		value = NULL;
+	    }
+	}
+#else
 	if (cms_get_colors(cms, (unsigned long)0, cms->size, 
 			   (Xv_singlecolor *)NULL, (XColor *)avlist[0],
 			   (unsigned char *)NULL, (unsigned char *)NULL,
@@ -417,10 +456,16 @@ cms_get_attr(cms_public, status, attr, args)
 	} else {
 	    value = NULL;
 	}
+#endif
 	break;
 	
       case CMS_CMS_DATA: {
+/* Alpha compatibility, mbuck@debian.org */
+#if 1
+	  Xv_cmsdata	    *cms_data = va_arg(args, Xv_cmsdata *);
+#else
 	  Xv_cmsdata	    *cms_data = (Xv_cmsdata *)avlist[0];
+#endif
 	  
 	  cms_data->type = cms->type;
 	  cms_data->size = cms->size;

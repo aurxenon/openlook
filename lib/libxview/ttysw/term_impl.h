@@ -251,4 +251,4 @@ Pkg_private int		tty_notice_key;
 #define	textsw_delete_i18n		textsw_delete
 #endif /* OW_I18N */
 
-#endif _xview_private_termsw_impl_h_already_included
+#endif /* _xview_private_termsw_impl_h_already_included */

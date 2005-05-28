@@ -127,5 +127,5 @@ extern	void nint_unprotected_pop_callout();	/* () Like
 						   nint_pop_callout exceptdoes
 						   assumes in critical section*/
 
-#endif	NINT_DEFINED
+#endif	/* NINT_DEFINED */
 

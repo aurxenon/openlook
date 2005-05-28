@@ -27,5 +27,5 @@ typedef struct {
 	int             count;
 } Xv_xrectlist;
 
-#endif _view2_private_xv_xlib_h_already_included
+#endif /* _view2_private_xv_xlib_h_already_included */
 

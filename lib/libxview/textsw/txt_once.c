@@ -436,7 +436,12 @@ textsw_layout(textsw, child, op, d1, d2, d3, d4, d5)
     Textsw          textsw;
     Xv_Window       child;
     Window_layout_op op;
+/* Alpha compatibility, mbuck@debian.org */
+#if defined(__alpha)
+    unsigned long   d1, d2, d3, d4, d5;
+#else
     int             d1, d2, d3, d4, d5;
+#endif
 {
     Textsw_folio    folio = TEXTSW_PRIVATE(textsw);
 

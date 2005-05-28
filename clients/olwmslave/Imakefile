@@ -1,12 +1,12 @@
 #include <XView.tmpl>
 
-/**/#########################################################################
-/**/# @(#)Imakefile	1.7 28 Apr 1993 SMI
-/**/# Imakefile for olwmslave release 3.0.
+XCOMM #########################################################################
+XCOMM # @(#)Imakefile	1.7 28 Apr 1993 SMI
+XCOMM # Imakefile for olwmslave release 3.0.
 
 #define HasInfoFiles YES
 
-#ifndef __linux
+#ifndef __linux__
 DEFINES =  $(XVCLIENTDEFINES)
 #else
 DEFINES =  $(XVCLIENTDEFINES) -DOW_I18N_L3

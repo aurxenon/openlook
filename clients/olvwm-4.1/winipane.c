@@ -118,6 +118,39 @@ WinIconPane *winInfo;
 		0, 0, winInfo->core.width, winInfo->core.height,
 		0, 0, (unsigned long)1L);
 #else
+#if 1
+    /* The original code has problems displaying icons for screen depths
+     * != 1 and != 8. The new logic here is: If either the icon pixmap or
+     * the icon window are 1 plane deep, use XCopyPlane() to get a B&W icon.
+     * If the depths of the pixmap and the window are the same (but != 1),
+     * use XCopyArea() to get a color icon. If they don't match, complain.
+     *
+     * <mbuck@debian.org>
+     */
+    if (winInfo->iconDepth == 1) {
+	XCopyPlane(dpy, winInfo->iconPixmap, pane, gc,
+	    0, 0, winInfo->core.width, winInfo->core.height,
+	    0, 0, (unsigned long)1L);
+    } else {
+	XWindowAttributes attr;
+	
+	if (XGetWindowAttributes(dpy, pane, &attr)) {
+	    if (attr.depth == 1) {
+		XCopyPlane(dpy, winInfo->iconPixmap, pane, gc,
+		    0, 0, winInfo->core.width, winInfo->core.height,
+		    0, 0, (unsigned long)1L);
+	    } else if (winInfo->iconDepth == attr.depth) {
+		XCopyArea(dpy, winInfo->iconPixmap, pane, gc,
+		    0, 0, winInfo->core.width, winInfo->core.height,
+		    0, 0);
+	    } else {
+		ErrorWarning(GetString("Unsupported icon pixmap depth"));
+	    }
+	} else {
+	    ErrorWarning(GetString("Huh? Can't get attributes of my icon window."));
+	}
+    }
+#else
     switch(winInfo->iconDepth) {
 	case 8:
 	    XCopyArea(dpy, winInfo->iconPixmap, pane, gc,
@@ -133,6 +166,7 @@ WinIconPane *winInfo;
 	    ErrorWarning(GetString("Unsupported icon pixmap depth"));
 	    break;
     }
+#endif
 #endif
 
     if (winInfo->iconMask != None) {

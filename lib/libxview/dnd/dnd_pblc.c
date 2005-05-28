@@ -19,7 +19,7 @@ static char     sccsid[] = "@(#)dnd_pblc.c 1.17 93/06/28";
 #include <xview_private/portable.h>
 #ifdef SVR4 
 #include <stdlib.h> 
-#endif SVR4
+#endif /* SVR4 */
 
 static void BuildDefaults();
 

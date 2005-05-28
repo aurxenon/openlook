@@ -31,7 +31,7 @@ static char     sccsid[] = "@(#)csr_init.c 20.31 93/06/28";
 #include <xview/window.h>
 #include <xview/font.h>
 #include <xview_private/charimage.h>
-#ifdef __linux
+#ifdef __linux__
 /* charscreen.h defines some variables, and then the header file is included
  * by more than one source file. The linux shlib-tools don't like it.
  * Kludge around it by setting a define here which makes the variable
@@ -39,7 +39,7 @@ static char     sccsid[] = "@(#)csr_init.c 20.31 93/06/28";
 #define __DEFINE_CHARSCREEN_VARS
 #endif
 #include <xview_private/charscreen.h>
-#ifdef __linux
+#ifdef __linux__
 #undef __DEFINE_CHARSCREEN_VARS
 #endif
 #ifdef OW_I18N

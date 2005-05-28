@@ -43,7 +43,7 @@ Attr_attribute  sb_join_view_menu_item_key;
 
 Xv_private void	win_set_no_focus();
 Xv_private Graphics_info	*xv_init_olgx();
-#ifndef __linux
+#ifndef __linux__
 Xv_private_data Defaults_pairs xv_kbd_cmds_value_pairs[4];
 #else
 extern Defaults_pairs xv_kbd_cmds_value_pairs[4];

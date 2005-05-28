@@ -25,7 +25,7 @@ static char *sccsid = "@(#)l10n_read.c 1.6 92/03/10";
 #define	ITEM_SEPARATOR		';'
 
 
-#ifndef __linux
+#ifndef __linux__
 #ifndef ultrix
 extern char	*malloc();
 #endif
@@ -99,7 +99,7 @@ l10n_config_read(locale, file_name, a_list)
 	if ((config_file = fopen(fullpath, "r")) == NULL)
 	{
 		perror(fullpath);
-		goto ret;
+		goto fileerr_ret;
 	}
 
 	/* 
@@ -297,6 +297,7 @@ l10n_config_read(locale, file_name, a_list)
 
 ret:
 	(void) fclose(config_file);
+fileerr_ret:
 
 	return rcode;
 }

@@ -35,14 +35,14 @@
 #ifndef SVR4
 #define IDENTITY(formal)\
 	formal
-#endif SVR4
+#endif /* SVR4 */
 #ifndef SVR4
 #define CONCATENATE(formal1,formal2)\
 	IDENTITY(formal1)formal2
-#else SVR4
+#else /* SVR4 */
 #define CONCATENATE(formal1,formal2)\
         formal1##formal2
-#endif SVR4
+#endif /* SVR4 */
 
 #define	pkg_private	extern
 

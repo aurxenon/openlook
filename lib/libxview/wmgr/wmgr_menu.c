@@ -14,12 +14,12 @@ static char     sccsid[] = "@(#)wmgr_menu.c 20.42 93/06/28";
 #include <stdio.h>
 #include <ctype.h>
 #include <string.h>
-#if defined(sparc) || defined(__linux)
-#if defined(SVR4) || defined(__linux)
+#if defined(sparc) || defined(__linux__)
+#if defined(SVR4) || defined(__linux__)
 #include <unistd.h>
 #else
 #include <vfork.h>
-#endif SVR4
+#endif /* SVR4 */
 #endif
 
 #include <xview/frame.h>

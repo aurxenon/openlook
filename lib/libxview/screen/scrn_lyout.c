@@ -23,6 +23,10 @@ screen_layout(root, child, op, d1, d2, d3, d4, d5)
     register Xv_Window root;
     register Xv_Window child;
     Window_layout_op op;
+/* Alpha compatibility, mbuck@debian.org */
+#if defined(__alpha)
+    unsigned long *d1, *d2, *d3, *d4, *d5;
+#endif
 {
     int             top_level = (int) xv_get(child,
 					     (Attr_attribute)WIN_TOP_LEVEL);

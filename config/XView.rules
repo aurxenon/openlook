@@ -1,6 +1,6 @@
-/**/###########################################################################
-/**/# @(#)XView.rules	1.8 12 May 1993 SMI
-/**/# XView.rules for XView release 3.0.  Imake rules needed by distribution.
+XCOMM ###########################################################################
+XCOMM # @(#)XView.rules	1.8 12 May 1993 SMI
+XCOMM # XView.rules for XView release 3.0.  Imake rules needed by distribution.
 
 /*
  ***********************************************************************
@@ -104,6 +104,17 @@ install:: 								@@\
  * shared library directory for all objects in solist.
  */
 #ifndef SubdirNormalSharedLibraryTarget
+#ifdef __linux__
+#define SubdirNormalSharedLibraryTarget(libname,rev,solist,dir,sub)	@@\
+AllTarget(lib/**/libname.so.rev)					@@\
+									@@\
+lib/**/libname.so.rev::  solist						@@\
+	-@if [ ! -d dir ]; then mkdir dir; else exit 0; fi		@@\
+	@case '${MFLAGS}' in *[i]*) set +e;; esac; \			@@\
+	pwd="`pwd`"; \							@@\
+	for i in solist; do (set -x; $(RM) dir/$$i; $(LN) "$$pwd"/sub/$$i dir/$$i); done
+
+#else /* __linux__ */
 #define SubdirNormalSharedLibraryTarget(libname,rev,solist,dir,sub)	@@\
 AllTarget(lib/**/libname.so.rev)					@@\
 									@@\
@@ -112,6 +123,7 @@ lib/**/libname.so.rev::  solist						@@\
 	@case '${MFLAGS}' in *[i]*) set +e;; esac; \			@@\
 	for i in solist; do (set -x; $(CP) sub/$$i dir; $(CP) sub/$$i .); done
 
+#endif /* !__linux__ */
 #endif /* SubdirNormalSharedLibraryTarget */
 
 /*
@@ -121,9 +133,9 @@ lib/**/libname.so.rev::  solist						@@\
  * unneeded data modules from the ./shared directory.
  */
 #ifndef SubdirNormalSharedLibraryDataTarget
-#ifdef __linux
+#ifdef __linux__
 #define SubdirNormalSharedLibraryDataTarget(libname,rev,salist,dir,sub)
-#else /* __linux */
+#else /* __linux__ */
 #define SubdirNormalSharedLibraryDataTarget(libname,rev,salist,dir,sub)	@@\
 AllTarget(lib/**/libname.sa.rev)					@@\
 									@@\
@@ -133,7 +145,7 @@ lib/**/libname.sa.rev::  salist						@@\
 	for i in salist; do \						@@\
 	(set -x; $(CP) sub/$$i dir; $(CP) shared/$$i $(SHARED_DIR)); done
 
-#endif /* !__linux */
+#endif /* !__linux__ */
 #endif /* SubdirNormalSharedLibraryDataTarget */
 
 
@@ -145,22 +157,24 @@ lib/**/libname.sa.rev::  salist						@@\
  * included in both the .so and the .sa parts of the library.
  */
 #ifndef SubdirBuildNormalSharedLibraryTarget
-#ifdef __linux
+#ifdef __linux__
 
 #define SubdirBuildNormalSharedLibraryTarget(libname,rev,solist,sodir)		@@\
 AllTarget(lib/**/libname.so.rev)					@@\
 									@@\
 lib/**/libname.so.rev:: solist 						@@\
 	$(RM) $@~	@@\
-	(cd sodir; $(CC) -shared -Wl,-soname -Wl,`basename $@ | sed 's/\(\.[0-9]\).*$$/\1/'` -o $@~ ?*.o) @@\
-	$(RM) $@ @@\
+	(cd sodir; $(CC) -shared -Wl,-soname -Wl,`basename $@ | sed 's/\(\.[0-9]\).*$$/\1/'` -o $@~ ?*.o $(XVIEW_DEPLIBS)) @@\
+	$(RM) $@ `basename $@ | sed 's/\(\.[0-9]\).*$$/\1/'` lib/**/libname.so @@\
 	$(MV) sodir/$@~ $@ @@\
+	$(LN) $@ `basename $@ | sed 's/\(\.[0-9]\).*$$/\1/'` @@\
+	$(LN) $@ lib/**/libname.so @@\
 @@\
 @@\
 clean::	@@\
-	$(RM) lib/**/libname.so.rev sodir/?*.o
+	$(RM) lib/**/libname.so.rev `basename lib/**/libname.so.rev | sed 's/\(\.[0-9]\).*$$/\1/'` lib/**/libname.so sodir/?*.o
 
-#else /* __linux */
+#else /* __linux__ */
 
 #define SubdirBuildNormalSharedLibraryTarget(libname,rev,solist,sodir)		@@\
 AllTarget(lib/**/libname.so.rev)					@@\
@@ -177,7 +191,7 @@ lib/**/libname.so.rev:: solist 						@@\
 clean::									@@\
 	$(RM) lib/**/libname.so.rev sodir/?*.o strings*
 
-#endif /* !__linux */
+#endif /* !__linux__ */
 
 #endif /* SubdirBuildNormalSharedLibraryTarget */
 
@@ -190,12 +204,12 @@ clean::									@@\
  * sorting script and a list of objects to sort.
  */
 #ifndef SubdirBuildSortedSharedLibraryTarget
-#ifdef __linux
+#ifdef __linux__
 
 #define SubdirBuildSortedSharedLibraryTarget(libname,rev,solist,sodir,objsort,objlist) \
 		SubdirBuildNormalSharedLibraryTarget(libname,rev,solist,sodir)
 
-#else /* __linux */
+#else /* __linux__ */
 
 #define SubdirBuildSortedSharedLibraryTarget(libname,rev,solist,sodir,objsort,objlist) @@\
 AllTarget(lib/**/libname.so.rev)					@@\
@@ -213,7 +227,7 @@ lib/**/libname.so.rev:: solist 						@@\
 clean::									@@\
 	$(RM) lib/**/libname.so.rev sodir/?*.o strings* xstrings*
 
-#endif /* !__linux */
+#endif /* !__linux__ */
 #endif /* SubdirBuildSortedSharedLibraryTarget */
 
 /*
@@ -226,10 +240,10 @@ clean::									@@\
 
 #ifndef SubdirBuildNormalSharedLibraryDataTarget
 
-#ifdef __linux
+#ifdef __linux__
 #define SubdirBuildNormalSharedLibraryDataTarget(libname,rev,sadir)
 
-#else /* __linux */
+#else /* __linux__ */
 
 #define SubdirBuildNormalSharedLibraryDataTarget(libname,rev,sadir)	@@\
 AllTarget(lib/**/libname.sa.rev)					@@\
@@ -244,15 +258,15 @@ lib/**/libname.sa.rev::  						@@\
 clean::									@@\
 	$(RM) lib/**/libname.sa.rev sadir/?*.o
 
-#endif /* !__linux */
+#endif /* !__linux__ */
 #endif /* SubdirBuildNormalSharedLibraryDataTarget */
 
 #else /* DoRanlibCmd */
 
 #ifndef SubdirBuildNormalSharedLibraryDataTarget
-#ifdef __linux
+#ifdef __linux__
 #define SubdirBuildNormalSharedLibraryDataTarget(libname,rev,sadir)
-#else /* __linux */
+#else /* __linux__ */
 #define SubdirBuildNormalSharedLibraryDataTarget(libname,rev,sadir)	@@\
 AllTarget(lib/**/libname.sa.rev)					@@\
 									@@\
@@ -267,7 +281,7 @@ clean::									@@\
 
 #endif /* SubdirBuildNormalSharedLibraryDataTarget */
 
-#endif /* !__linux */
+#endif /* !__linux__ */
 #endif /* DoRanlibCmd */
 
 /*
@@ -277,6 +291,26 @@ clean::									@@\
  * overflow the GLOBAL_OFFSET_TABLE for some architectures.
  */
 #ifndef SubdirSharedLibraryObjectRule
+#ifdef __linux__
+#define SubdirSharedLibraryObjectRule()					@@\
+all::									@@\
+	-@if [ ! -d shared ]; then mkdir shared; else exit 0; fi	@@\
+	-@if [ ! -f $(XSTR_STRINGS_FILE) ]; then \                      @@\
+		touch $(XSTR_STRINGS_FILE);  else exit 0; fi            @@\
+	-@if [ ! -f strings ]; then \                                   @@\
+		$(LN) $(XSTR_STRINGS_FILE) strings; else exit 0; fi     @@\
+									@@\
+.c.o:									@@\
+	$(RM) $@ shared/$@						@@\
+	$(CC) $(PIC) $(SHAREDCODEDEF) $(SHLIBDEF) $(CFLAGS) $(STRCONST) -c $*.c -o shared/$*.o	@@\
+	$(CC) $(CFLAGS) $(STRCONST) -c $*.c -o $*.o			@@\
+									@@\
+clean::									@@\
+	$(RM) strings*							@@\
+	-@if [ -d shared ]; then echo "	$(RM) shared/?*.o"; \		@@\
+		$(RM) shared/?*.o; else exit 0; fi			@@\
+
+#else /* __linux__ */
 #define SubdirSharedLibraryObjectRule()					@@\
 all::									@@\
 	-@if [ ! -d shared ]; then mkdir shared; else exit 0; fi	@@\
@@ -295,6 +329,7 @@ clean::									@@\
 	-@if [ -d shared ]; then echo "	$(RM) shared/?*.o"; \		@@\
 		$(RM) shared/?*.o; else exit 0; fi			@@\
 
+#endif /* !__linux__ */
 #endif /* SubdirSharedLibraryObjectRule */
 
 /*
@@ -380,9 +415,9 @@ objs:	depends								@@\
  * InstallSharedLibraryDataNoBuild - rules to install the shared library data
  * Check if ranlib is needed
  */
-#ifdef __linux
+#ifdef __linux__
 #define	InstallSharedLibraryDataNoBuild(libname,rev,dest)
-#else /* __linux */
+#else /* __linux__ */
 #if DoRanlibCmd
 
 #ifndef InstallSharedLibraryDataNoBuild
@@ -404,12 +439,13 @@ install:: 								@@\
 #endif /* InstallSharedLibraryDataNoBuild */
 
 #endif /* DoRanlibCmd */
-#endif /* __linux */
+#endif /* __linux__ */
 
 /*
  * InstallSharedLibraryNoBuild - generate rules to install the shared library.
  */
 #ifndef InstallSharedLibraryNoBuild
+#ifdef __linux__
 #define	InstallSharedLibraryNoBuild(libname,rev,dest)			@@\
 install::  								@@\
 	$(RM) $(DESTDIR)dest/lib/**/libname.so				@@\
@@ -417,6 +453,14 @@ install::  								@@\
 	(cd $(DESTDIR)dest && $(LN) lib/**/libname.so.rev lib/**/libname.so) @@\
 	(PATH=$$PATH:/sbin:/usr/sbin && ldconfig -v -N -l $(DESTDIR)dest/lib/**/libname.so.rev)
 
+#else /* __linux__ */
+#define	InstallSharedLibraryNoBuild(libname,rev,dest)			@@\
+install::  								@@\
+	$(RM) $(DESTDIR)dest/lib/**/libname.so				@@\
+	$(INSTALL) -c $(INSTSHAREDLIBFLAGS) lib/**/libname.so.rev $(DESTDIR)dest @@\
+	(cd $(DESTDIR)dest && $(LN) lib/**/libname.so.rev lib/**/libname.so) @@\
+
+#endif /* !__linux__ */
 #endif /* InstallSharedLibraryNoBuild */
 
 /*
@@ -494,12 +538,14 @@ NamedTargetSubdirs(populate,dirs,"populating",/**/,populate)
 #define LinkToFile(step,filename,linkname,dir)				@@\
 step:: filename								@@\
 	@case '${MFLAGS}' in *[i]*) set +e;; esac; 			@@\
-	-@if [ ! -f dir/linkname ]; then \				@@\
-		echo "linking dir/linkname to filename..." \		@@\
-		echo "  cd" dir; cd dir ; $(RM) linkname ; \		@@\
+	-@linkdestdir=dir; \						@@\
+	[ step = install ] && [ "x$(DESTDIR)" != x ] && linkdestdir=$(DESTDIR)/$$linkdestdir; \	@@\
+	if [ ! -f $$linkdestdir/linkname ]; then \			@@\
+		echo "linking $$linkdestdir/linkname to filename..."; \	@@\
+		echo "  cd $$linkdestdir"; cd "$$linkdestdir"; $(RM) linkname ; \	@@\
 		(set -x; $(LN) filename linkname); \			@@\
 	else \								@@\
-		echo "dir/linkname exists, no link made." ; \		@@\
+		echo "$$linkdestdir/linkname exists, no link made." ; \	@@\
 	fi
 #endif /* LinkToFile */
 

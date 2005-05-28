@@ -456,7 +456,7 @@ frame_set_icon_cmdline_options(frame_public)
     /* Free any malloc'ed strings */
     if (defaults_string)
 	free(defaults_string);
-#endif RECLAIM_STRINGS
+#endif /* RECLAIM_STRINGS */
 
     if (new_hints) {
 	Xv_Drawable_info *info;

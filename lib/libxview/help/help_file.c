@@ -18,7 +18,7 @@ static char     sccsid[] = "@(#)help_file.c 1.17 90/12/04";
 
 #include <xview_private/i18n_impl.h>
 
-#ifndef __linux
+#ifndef __linux__
 #define DEFAULT_HELP_DIRECTORY "/usr/lib/help"
 #else
 #define DEFAULT_HELP_DIRECTORY "/usr/openwin/lib/help"
@@ -86,7 +86,7 @@ xv_help_find_file(filename)
    /*
     * Need to fix this to get the XV_LC_DISPLAY_LANG from server
     */
-#ifndef __linux
+#ifndef __linux__
     if (_xv_use_locale)
     	xv_lc_display_lang = setlocale(LC_MESSAGES, NULL); 
 #else

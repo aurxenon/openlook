@@ -40,4 +40,4 @@ Pkg_private int              server_image_destroy_internal();
 Xv_private GC       xv_find_proper_gc();
 Xv_private Pixrect  *xv_mem_create();
 
-#endif  _xview_server_image_impl_h_already_included
+#endif  /* _xview_server_image_impl_h_already_included */

@@ -45,6 +45,6 @@ int cg3_destroy();
 Pixrect *cg3_region();
 int cg3_putcolormap();
 int cg3_getcolormap();
-#endif !KERNEL
+#endif /* !KERNEL */
 
-#endif	!cg3var_DEFINED
+#endif /* 	!cg3var_DEFINED */

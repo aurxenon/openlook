@@ -24,7 +24,12 @@ static char     sccsid[] = "@(#)server.c 20.157 93/04/28";
 #include <xview/notify.h>
 #include <xview/win_notify.h>
 #include <xview/defaults.h>
+/* mbuck@debian.org */
+#if 1
+#include <X11/Xlibint.h>
+#else
 #include <X11/Xlib.h>
+#endif
 #include <xview_private/portable.h>
 #include <xview_private/svr_atom.h>
 #include <xview_private/svr_impl.h>
@@ -91,7 +96,6 @@ Xv_private int 	    	 xv_has_been_initialized();
 Xv_private void 	 server_refresh_modifiers();
 
 extern char	    	*setlocale();
-char		    	*strdup();
 XrmDatabase 	    	 XrmGetFileDatabase();
 static Notify_func 	 default_scheduler;
 extern XrmDatabase  	 defaults_rdb;
@@ -100,7 +104,7 @@ extern char    		*getenv();
 Xv_private_data char 	*xv_shell_prompt;
 
 /* global default server parameters */
-#ifndef __linux
+#ifndef __linux__
 Xv_private_data Xv_Server xv_default_server;
 Xv_private_data Xv_Screen xv_default_screen;
 Xv_private_data Display *xv_default_display;
