@@ -31,6 +31,8 @@ static char sccsid[] = "@(#)textedit.c 15.50 90/05/22";
 #include <xview/sel_svc.h>
 #include <xview/sel_attrs.h>
 
+#include <locale.h>
+
 #ifdef ecd.help
 #include <suntool/help.h>
 #endif
@@ -477,6 +479,8 @@ textedit_main(argc, argv)
                 argscanner++;
         }
 
+
+setlocale(LC_ALL,"");
 
 	xv_init(XV_INIT_ARGC_PTR_ARGV,	&argc, argv, 0);
 

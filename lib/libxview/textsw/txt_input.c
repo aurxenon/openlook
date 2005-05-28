@@ -435,8 +435,9 @@ textsw_process_event(view_public, ie, arg)
 #endif
 		    mbtowc(textsw->to_insert_next_free++, &byte, 1);
 #else /* OW_I18N */
-		*textsw->to_insert_next_free++ =
-		    (char) event_action(ie);
+		if (event_action(ie))
+			*textsw->to_insert_next_free++ =
+			    (char) event_action(ie);
 #endif /* OW_I18N */
 		if (textsw->to_insert_next_free ==
 		    textsw->to_insert +

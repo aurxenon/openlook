@@ -48,11 +48,7 @@ int             tty_new_cursor_row, tty_new_cursor_col;
 #define ERROR_RETURN(val)	return(val);
 #endif				/* DEBUG */
 
-#ifndef __linux__
 #define notcontrol(c)	(((c&0177) >= ' ') && (c != '\177'))
-#else
-#define notcontrol(c)	((c >= ' ') && (c != '\177'))
-#endif
 
 /* Logical state of window */
 int             curscol;	/* cursor column */

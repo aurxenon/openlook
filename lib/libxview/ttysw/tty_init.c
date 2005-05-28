@@ -718,6 +718,22 @@ ttyinit(ttysw)
     int		    tmpfd;
     int		    pty = 0, tty = 0;
     int             on = 1;
+#ifdef __linux__
+    char *name;
+    int i;
+
+    i = openpty(&pty, &tty, NULL, NULL, NULL);
+    if (i < 0) {
+        error("openpty: %.100s", strerror(errno));
+        return 0;
+    }
+    name = ttyname(tty);
+    if (!name)
+        error("openpty returns device for which ttyname fails.");
+
+    strcpy(ttysw->tty_name, name);
+
+#else /* __linux__ */
 #ifndef SVR4
     int             ptynum = 0;
     char            linebuf[20], *line = &linebuf[0];
@@ -933,6 +949,8 @@ gotpty:
 #endif
  
 #endif /* SVR4 */
+
+#endif /* __linux__ */
 
     if (ttysw_restoreparms(tty))
 	(void) putenv(WE_TTYPARMS_E);

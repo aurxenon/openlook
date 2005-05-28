@@ -19,6 +19,7 @@ static  char sccsid[] = "@(#)cmdtool.c 15.61 93/06/28";
 #else
 #include <string.h>
 #endif /* SVR4 */
+#include <locale.h>
 
 #include <sys/types.h>
 #include <xview/attr.h>
@@ -139,6 +140,8 @@ main(argc,argv)
 #ifdef DEBUG
 	malloc_debug(0);   
 #endif	
+
+	setlocale(LC_ALL,"");
 	
 	/* This is required to initialize correctly */	
 	xv_init(XV_INIT_ARGC_PTR_ARGV, &argc, argv, 

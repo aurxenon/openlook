@@ -37,7 +37,7 @@ cat > imake.append <<EOF
   EXTRA_DEFINES  = -DOPENWINHOME_DEFAULT=\"$OPENWINHOME\"
   CONFIGDIR      = $X11DEST
   INCLUDES      := -I`pwd`/build/include $IMAKE_EXTRA_INCLUDES -I$OWDEST/include \$(INCLUDES)
-  LOCAL_LDFLAGS := -L`pwd`/lib/libolgx -L`pwd`/lib/libxview $IMAKE_EXTRA_LOCAL_LDFLAGS -L$OWDEST/lib \$(LOCAL_LDFLAGS)
+  LOCAL_LDFLAGS := -L`pwd`/lib/libolgx -L`pwd`/lib/libxview $IMAKE_EXTRA_LOCAL_LDFLAGS -L$OWDEST/lib \$(LOCAL_LDFLAGS) -lutil
   MAKEOVERRIDES  =
 # End of variable-definitions appended by imake-wrapper
 
