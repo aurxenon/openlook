@@ -4,7 +4,7 @@
 SSPKGHOME	= ../..
 
 LIBDIR		= $(OPENWINHOME)/lib
-LIBS		= -lxview -lolgx -lX11
+LIBS		= -lxview -lolgx -L/usr/X11R6/lib -lX11 -lutil
 SSPKGLIB	= $(SSPKGHOME)/lib/libsspkg.a
 
 

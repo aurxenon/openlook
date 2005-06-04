@@ -9,6 +9,7 @@ static char	sccsid[] = "@(#)tacho.c 1.17 93/10/25";
 #endif
 #endif
 
+#define irint(x) ((int)rint(x))
 
 #include <X11/Xlib.h>
 #include <xview/rect.h>

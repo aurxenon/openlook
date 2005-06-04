@@ -13,7 +13,7 @@ CFLAGS		= $(DBXFLAGS) -I$(SSPKGHOME)/include -I$(OPENWINHOME)/include
 LDFLAGS		= -L$(LIBDIR) $(LIBS) $(SSPKGLIB) -lm
 
 all: icons array_tile clockobj color color2 \
-	dnd dnd2 drawarea drawimage drawline drawtext grip \
+	dnd drawarea drawimage drawline drawtext grip \
 	group icons misc selection tacho thermo tree 
 
 array_tile: FORCE

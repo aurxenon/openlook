@@ -2,7 +2,7 @@
 #	@(#) Makefile 1.21 93/10/25 
 
 SSPKGHOME = 	.
-INSTALL_DIR =	/home2/install
+INSTALL_DIR =	/usr/openwin
 TARFILE =	/home2/tmp/sspkgs-tar
 
 SRCDIR =	$(SSPKGHOME)/src

@@ -15,9 +15,10 @@ INSTALL_DIR	= ..
 
 INCDIR		= $(SSPKGHOME)/include/sspkg
 PRIVATEINCDIR	= $(SSPKGHOME)/src
-#CFLAGS 		= -O
-CFLAGS		= -g
-CPPFLAGS	= -I$(SSPKGHOME)/include -I$(PRIVATEINCDIR) -I$(OPENWINHOME)/include
+CFLAGS 		= -Wall -pipe -O3 -m486 -DNO_SINCOS
+#CFLAGS		= -g -DNO_SINCOS
+CPPFLAGS	= -I$(SSPKGHOME)/include -I$(PRIVATEINCDIR) \
+		-I$(OPENWINHOME)/include
 
 
 INCLUDES =	$(INCDIR)/array.h	\
