@@ -62,7 +62,7 @@ Targets.other = \
 LIBRARY = libguidexv.a
 
 PROJECTDIR = $(GUIDEHOME)
-DESTDIR = $(PROJECTDIR)
+DESTDIR = $(OPENWINHOME)
 
 # Compiler flags.
 

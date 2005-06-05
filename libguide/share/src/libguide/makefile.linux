@@ -29,7 +29,7 @@ OBJECTS = \
 LIBRARY = libguide.a
 
 PROJECTDIR = $(GUIDEHOME)
-DESTDIR = $(PROJECTDIR)
+DESTDIR = $(OPENWINHOME)
 
 # Compiler flags.
 
