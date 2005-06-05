@@ -3,7 +3,7 @@
 
 SSPKGHOME = 	.
 INSTALL_DIR =	/usr/openwin
-TARFILE =	/home2/tmp/sspkgs-tar
+TARFILE =	/tmp/sspkgs.tar
 
 SRCDIR =	$(SSPKGHOME)/src
 LIBDIR =	$(SSPKGHOME)/lib
@@ -64,19 +64,19 @@ $(INSTALL_DIR): FORCE
 
 #tarfile: FORCE examples/README examples/things
 
-tarfile: FORCE LEGAL_NOTICE README examples/README examples/dnd2/README config.svr4 config.sunos4x
+tarfile: FORCE LEGAL_NOTICE README config.svr4 config.sunos4x
 	$(RM) $(TARFILE)
-	(cd ..; find ./sspkg2.0 -name SCCS -print > /tmp/excludelist)
-	(cd ..; find ./sspkg2.0 -name lex.yy.c -print >> /tmp/excludelist)
-	(cd ..; find ./sspkg2.0 -name libsspkg.a -print >> /tmp/excludelist)
-	(cd ..; find ./sspkg2.0 -name .make.state -print >> /tmp/excludelist)
-	(cd ..; find ./sspkg2.0 -name .nse_depinfo -print >> /tmp/excludelist)
-	(cd ..; find ./sspkg2.0 -type f -perm -700 -print >> /tmp/excludelist)
-	(echo ./sspkg2.0/Make.config >> /tmp/excludelist)
-	(echo ./sspkg2.0/test >> /tmp/excludelist)
-	(echo ./sspkg2.0/book >> /tmp/excludelist)
-	(echo ./sspkg2.0/lib >> /tmp/excludelist)
-	(cd ..; tar cvfXFF $(TARFILE) /tmp/excludelist ./sspkg2.0)
+	(find . -name SCCS -print > /tmp/excludelist)
+	(find . -name lex.yy.c -print >> /tmp/excludelist)
+	(find . -name libsspkg.a -print >> /tmp/excludelist)
+	(find . -name .make.state -print >> /tmp/excludelist)
+	(find . -name .nse_depinfo -print >> /tmp/excludelist)
+	(find . -type f -perm -700 -print >> /tmp/excludelist)
+	(echo ./Make.config >> /tmp/excludelist)
+	(echo ./test >> /tmp/excludelist)
+	(echo ./book >> /tmp/excludelist)
+	(echo ./lib >> /tmp/excludelist)
+	(cd ..; tar zcvf $(TARFILE) -X /tmp/excludelist ./SlingShot)
 	$(RM) /tmp/excludelist
 
 #	(cd `dirname $(TARFILE)`; tar xf $(TARFILE); makekit `find sspkg2.0 -print`)
