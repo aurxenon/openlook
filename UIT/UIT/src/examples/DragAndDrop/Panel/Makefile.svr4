@@ -1,0 +1,23 @@
+#
+#    SCCS ID: %Z%%M% %I% %E% SMI
+#
+#    Copyright (c) 1990-1992 Sun Microsystems, Inc.  All rights reserved.
+#    See LEGAL_NOTICE file for terms of the license.
+#
+
+CCFLAGS += -DSVR4 -DSYSV
+CPPFLAGS += -I$(UITHOME)/include/c++ -I$(OPENWINHOME)/include
+LDFLAGS += -L$(UITHOME)/lib -L$(OPENWINHOME)/lib
+LDLIBS += -lUIC -lxvps -lxview -lolgx -lX11 -lwire -lcps -lm
+LDLIBS += -lsocket -lnsl -lintl -ldl
+
+all: drag_source drop_target
+
+drag_source: drag_source.o
+	CC -o drag_source drag_source.o $(LDFLAGS) $(LDLIBS)
+
+drop_target: drop_target.o
+	CC -o drop_target drop_target.o $(LDFLAGS) $(LDLIBS)
+
+delete:
+	/bin/rm -f *.o drag_source drop_target

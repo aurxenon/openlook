@@ -1,0 +1,39 @@
+TARGET = \
+	$(LIB)/libUIC.a \
+	$(LIB)/libUICSS.a \
+	$(LIB)/libUIC.so.3.0 \
+	$(LIB)/libUICSS.so.3.0
+#TARGET = \
+	$(LIB)/libUIC.a \
+	$(LIB)/libUICSS.a
+
+all:	$(TARGET)
+
+$(LIB)/libUIC.a: $(OBJECTS)
+	cp $(GENERICHOME)/lib/libGeneric.a $(LIB)/libUIC.a
+	ar cr $(LIB)/libUIC.a $(OBJECTS)
+	ranlib $(LIB)/libUIC.a
+	/bin/cp $(GENINC)/Generic.h $(INCLUDE)
+	/bin/cp $(GENINC)/GenericList.h $(INCLUDE)
+	/bin/cp $(GENINC)/GenericHash.h $(INCLUDE)
+	/bin/cp $(GENINC)/Boolean.h $(INCLUDE)
+
+$(LIB)/libUICSS.a: $(SSOBJECTS)
+	ar cr $(LIB)/libUICSS.a $(SSOBJECTS)
+	ranlib $(LIB)/libUICSS.a
+
+$(LIB)/libUIC.so.3.0: $(OBJECTS)
+	gcc -shared -Wl,-soname,libUIC.so.3 -o $(LIB)/libUIC.so.3.0 $(GENERICHOME)/src/*.o \
+	      $(OBJECTS)
+	$(RM) $(LIB)/libUIC.so
+	ln -s ./libUIC.so.3.0 $(LIB)/libUIC.so
+	/bin/cp $(GENINC)/Generic.h $(INCLUDE)
+	/bin/cp $(GENINC)/GenericList.h $(INCLUDE)
+	/bin/cp $(GENINC)/GenericHash.h $(INCLUDE)
+	/bin/cp $(GENINC)/Boolean.h $(INCLUDE)
+
+$(LIB)/libUICSS.so.3.0: $(SSOBJECTS)
+	gcc -shared  -Wl,-soname,libUICSS.so.3 -o $(LIB)/libUICSS.so.3.0 $(GENERICHOME)/src/*.o \
+	      $(SSOBJECTS)
+	$(RM) $(LIB)/libUICSS.so
+	ln -s ./libUICSS.so.3.0 $(LIB)/libUICSS.so

@@ -1,0 +1,17 @@
+# 
+#    SCCS ID: %Z%%M% %I% %E% SMI
+#
+#    Copyright (c) 1992 Sun Microsystems, Inc.  All rights reserved.
+#    See LEGAL_NOTICE file for terms of the license. 
+# 
+
+CCFLAGS += -DSVR4 -DSYSV
+
+all: FileChooserButton.o
+
+FileChooserButton.o: FileChooserButton.cc FileChooserButton.h
+	CC -c $(CCFLAGS) FileChooserButton.cc \
+	      -I. -I$(OPENWINHOME)/include -I$(UITHOME)/include/c++
+
+delete:
+	/bin/rm -f *.o core

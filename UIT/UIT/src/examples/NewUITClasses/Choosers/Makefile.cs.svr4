@@ -1,0 +1,34 @@
+# 
+#    SCCS ID: %Z%%M% %I% %E% SMI
+#
+#    Copyright (c) 1992 Sun Microsystems, Inc.  All rights reserved.
+#    See LEGAL_NOTICE file for terms of the license. 
+# 
+
+CFLAGS += -w -DSVR4 -DSYSV
+
+chooser_service: chooser_service.o gcc.o ChooserService.types.deps
+	cp $(GUIDEHOME)/lib/libguidexv.a .
+	chmod +w libguidexv.a
+	ar r libguidexv.a gcc.o
+	cc -o chooser_service chooser_service.o \
+	      ./libguidexv.a -lxview -lolgx -lX -ltt -lsocket -lnsl -lintl -ldl
+
+chooser_service.o: chooser_service.c ChooserService_opnums.h
+	cc -c $(CFLAGS) chooser_service.c \
+	      -I$(OPENWINHOME)/include -I$(GUIDEHOME)/include
+
+gcc.o: gcc.c
+	cc -c $(CFLAGS) gcc.c \
+	      -I$(OPENWINHOME)/include -I$(GUIDEHOME)/include
+
+ChooserService.types.deps: ChooserService.types
+	tt_type_comp ChooserService.types
+	@echo ToolTalk types installed for chooser_service.
+	@echo Remember to \"kill -USR2\" the ttsession process so the new
+	@echo types will be active.  Also, the directory containing
+	@echo "chooser_service" must be in the execution path for the 
+	@echo process that started the ttsession. 
+
+delete:
+	/bin/rm -f *.o *.deps chooser_service core
