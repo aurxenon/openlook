@@ -171,8 +171,9 @@ public:
       focusX = UIC_NOT_SET;
       focusY = UIC_NOT_SET;
       triggerEvent = UIC_NOT_SET;
+      int size;
 
-      for (int size=0; msgs [size]; size++) ;
+      for (size=0; msgs [size]; size++) ;
       messages = new char* [size+1];
       for (int i=0; i < size; i++)
         messages [i] = strcpy (new char [strlen (msgs [i]) + 1], msgs [i]);
@@ -222,7 +223,8 @@ public:
       if (msgs) {
 	deleteMessages ();
 
-	for (int size=0; msgs [size]; size++) ;
+	int size;
+	for (size=0; msgs [size]; size++) ;
 	messages = new char* [size+1];
 	for (int i=0; i < size; i++)
 	  messages [i] = strcpy (new char [strlen (msgs [i]) + 1], msgs [i]);

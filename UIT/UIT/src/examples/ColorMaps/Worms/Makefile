@@ -5,22 +5,58 @@
 #    See LEGAL_NOTICE file for terms of the license.
 #
 
-CCFLAGS = -I$(OPENWINHOME)/include -I$(UITHOME)/include/c++ \
-	  -L$(UITHOME)/lib  -L$(OPENWINHOME)/lib
+PROGRAM = worms
+SOURCES.cc = worms.cc
+SOURCES.h = 
 
-LDLIBS = -lUIC -lxvps -lxview -lolgx -lX -lcps -lm
-LDLIBS += -lwire
+UITHOME=$(OPENWINHOME)
 
-OBJECTS = worms.o
+# Derived parameters.
 
-TARGET = worms
+SOURCES = \
+	$(SOURCES.h) \
+	$(SOURCES.l) \
+	$(SOURCES.y) \
+	$(SOURCES.cc)
 
-all: $(TARGET)
+TARGETS.cc = $(SOURCES.cc)
 
-worms: worms.o
-	CC $(CCFLAGS) -o worms $(OBJECTS) $(LDLIBS)
+TARGETS.h = \
+	$(SOURCES.l:%.l=%.h) \
+	$(SOURCES.y:%.y=%.h)
 
-worms.o: worms.cc
+TARGETS = \
+	$(TARGETS.h) \
+	$(TARGETS.cc)
+
+OBJECTS = \
+	$(TARGETS.cc:%.cc=%.o)
+
+# Compiler flags.
+
+CCFLAGS += -DNO_XVPS
+CPPFLAGS += -I$(UITHOME)/include/c++ -I$(OPENWINHOME)/include -fno-for-scope
+LDFLAGS += -L$(UITHOME)/lib -L$(OPENWINHOME)/lib -L/usr/X11R6/lib
+LDLIBS += -lUIC -lxview -lolgx -lX11 -lm -lutil
+
+CCC = g++ 
+
+# Standard targets.
+
+all:	 $(TARGETS.other) $(PROGRAM)
+objects: $(SOURCES.cc) $(TARGETS.cc) $(TARGETS.h) $(OBJECTS)
+sources: $(SOURCES)
+targets: $(SOURCES) $(TARGETS)
+
+$(PROGRAM): $(SOURCES.cc) $(TARGETS.cc) $(TARGETS.h) $(OBJECTS)
+	$(LINK.cc) -o $(PROGRAM) $(OBJECTS) $(LDLIBS)
+
+# Targets to be used by a certain CASE tool.
+
+stest: $(SOURCES.cc) $(TARGETS.cc) $(TARGETS.h) $(OBJECTS)
+	#load $(CCFLAGS) $(CPPFLAGS) $(LDFLAGS) $(TARGET_ARCH) \
+		-o $(PROGRAM) $(TARGETS.cc) $(LDLIBS)
+	#link
 
 delete:
-	/bin/rm -f $(OBJECTS) $(TARGET)
+	/bin/rm -f $(OBJECTS) $(PROGRAM)

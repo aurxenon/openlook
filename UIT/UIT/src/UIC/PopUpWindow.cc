@@ -318,7 +318,8 @@ void PopUpWindow::createObject (UIObject *parent)
   int num_displays = displayList.getSize ();
 
   // Loop through the displays added to the window
-  for (int i=0; i < num_displays; i++)
+  int i;
+  for (i=0; i < num_displays; i++)
     // Create the XView object for each display
     ((UIObject *) displayList [i])->createObject (this);
 

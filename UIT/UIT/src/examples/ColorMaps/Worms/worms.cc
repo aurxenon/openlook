@@ -19,9 +19,7 @@
 static double frand ();
 static void   done_handler (UIObject *);
 
-#ifndef __GNUC__
 const double PI = 3.14159265359;
-#endif
 
 #if defined(__STDC__) || defined(SVR4)
 const int MAX_RAND = (1 << 15) - 1;

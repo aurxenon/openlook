@@ -21,14 +21,6 @@
 static char sccsid [] = "@(#)TTYDisplay.cc 1.2 93/04/09 SMI"; 
 #endif
 
-#ifdef __GNUC__
-#define __sys_unistd_h
-
-extern "C" {
-int dup2 (int, int);
-}
-#endif
-
 // Includes
 #include "CharacterFont.h"
 #include "TTYDisplay.h"

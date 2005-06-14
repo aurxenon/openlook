@@ -1740,7 +1740,8 @@ void UIChoice::setUIChoiceAttributes (UIObject *parent)
     xv_set (owObject, PANEL_CHOOSE_ONE, TRUE, NULL);
    
   int num_choices = choices.getSize ();
-  for (int i = 0; i < num_choices ; i++)
+  int i;
+  for (i = 0; i < num_choices ; i++)
     if (choices [i]) {
       xv_set (owObject, PANEL_CHOICE_STRING, i, (char *) choices [i], NULL);
 

@@ -24,56 +24,6 @@ examples:
 	cd Windows; make
 	cd SlingShot; make ss_examples
 
-examples_svr4:
-	cd ColorMaps/Display; make -f Makefile.svr4
-	cd ColorMaps/Worms; make -f Makefile.svr4
-	cd HotRegions/Canvas/Xlib; make -f Makefile.svr4
-	cd Images/Choice; make -f Makefile.svr4
-	cd Images/List; make -f Makefile.svr4
-	cd Menus; make -f Makefile.svr4
-	cd NewUITClasses/PropertiesWindow; make -f Makefile.svr4
-	cd NewUITClasses/Choosers; make choosers_svr4
-	cd NotifyTargets; make -f Makefile.svr4
-	cd Windows; make -f Makefile.svr4
-	cd SlingShot; make ss_examples_svr4
-
-examples_NO_XVPS:
-	cd ColorMaps/Display; make -f Makefile.NO_XVPS
-	cd ColorMaps/Worms; make -f Makefile.NO_XVPS
-	cd HotRegions/Canvas/Xlib; make -f Makefile.NO_XVPS
-	cd Images/Choice; make -f Makefile.NO_XVPS
-	cd Images/List; make -f Makefile.NO_XVPS
-	cd Menus; make -f Makefile.NO_XVPS
-	cd NewUITClasses/PropertiesWindow; make -f Makefile.NO_XVPS
-	cd NotifyTargets; make -f Makefile.NO_XVPS
-	cd Windows; make -f Makefile.NO_XVPS
-	cd SlingShot; make ss_examples_NO_XVPS
-
-examples_svr4_NO_XVPS:
-	cd ColorMaps/Display; make -f Makefile.svr4.NO_XVPS
-	cd ColorMaps/Worms; make -f Makefile.svr4.NO_XVPS
-	cd HotRegions/Canvas/Xlib; make -f Makefile.svr4.NO_XVPS
-	cd Images/Choice; make -f Makefile.svr4.NO_XVPS
-	cd Images/List; make -f Makefile.svr4.NO_XVPS
-	cd Menus; make -f Makefile.svr4.NO_XVPS
-	cd NewUITClasses/PropertiesWindow; make -f Makefile.svr4.NO_XVPS
-	cd NotifyTargets; make -f Makefile.svr4.NO_XVPS
-	cd Windows; make -f Makefile.svr4.NO_XVPS
-	cd SlingShot; make ss_examples_svr4_NO_XVPS
-
-examples_g++_NO_XVPS:
-	cd ColorMaps/Display; make -f Makefile.g++.NO_XVPS
-	cd ColorMaps/Worms; make -f Makefile.g++.NO_XVPS
-	cd HotRegions/Canvas/Xlib; make -f Makefile.g++.NO_XVPS
-	cd Images/Choice; make -f Makefile.g++.NO_XVPS
-	cd Images/List; make -f Makefile.g++.NO_XVPS
-	cd Menus; make -f Makefile.g++.NO_XVPS
-	cd NewUITClasses/PropertiesWindow; make -f Makefile.g++.NO_XVPS
-	cd NotifyTargets; make -f Makefile.g++.NO_XVPS
-	cd OverviewExample; make -f Makefile.g++.NO_XVPS
-	cd Windows; make -f Makefile.g++.NO_XVPS
-	cd SlingShot; make ss_examples_g++_NO_XVPS
-
 delete:
 	cd ColorMaps/Display; make -i delete
 	cd ColorMaps/Worms; make -i delete

@@ -1,39 +1,37 @@
 TARGET = \
-	$(LIB)/libUIC.a \
-	$(LIB)/libUICSS.a \
-	$(LIB)/libUIC.so.3.0 \
-	$(LIB)/libUICSS.so.3.0
-#TARGET = \
-	$(LIB)/libUIC.a \
-	$(LIB)/libUICSS.a
+	libUIC.a \
+	libUICSS.a \
+	libUIC.so.3.0 \
+	libUICSS.so.3.0
 
 all:	$(TARGET)
 
-$(LIB)/libUIC.a: $(OBJECTS)
-	cp $(GENERICHOME)/lib/libGeneric.a $(LIB)/libUIC.a
-	ar cr $(LIB)/libUIC.a $(OBJECTS)
-	ranlib $(LIB)/libUIC.a
-	/bin/cp $(GENINC)/Generic.h $(INCLUDE)
-	/bin/cp $(GENINC)/GenericList.h $(INCLUDE)
-	/bin/cp $(GENINC)/GenericHash.h $(INCLUDE)
-	/bin/cp $(GENINC)/Boolean.h $(INCLUDE)
+libUIC.a: $(OBJECTS)
+	cp $(GENERICHOME)/lib/libGeneric.a libUIC.a
+	ar cr libUIC.a $(OBJECTS)
+	ranlib libUIC.a
 
-$(LIB)/libUICSS.a: $(SSOBJECTS)
-	ar cr $(LIB)/libUICSS.a $(SSOBJECTS)
-	ranlib $(LIB)/libUICSS.a
+install:
+	/bin/cp libUIC.a $(UITDEST)/lib
+	/bin/cp $(GENINC)/Generic.h $(UITDEST)/include
+	/bin/cp $(GENINC)/GenericList.h $(UITDEST)/include
+	/bin/cp $(GENINC)/GenericHash.h $(UITDEST)/inlcude
+	/bin/cp $(GENINC)/Boolean.h $(UITDEST)/include
+	install ./libUICSS.so.3.0 $(UITDEST)/lib
+	install ./libUIC.so.3.0 $(UITDEST)/lib
+	mkdir -p $(UITDEST)/include/c++
+	install $(INCLUDE)/*.h $(UITDEST)/include/c++
+	mkdir -p $(UITDEST)/include/c++/private
+	install $(INCLUDE)/private/*.h $(UITDEST)/include/c++/private
 
-$(LIB)/libUIC.so.3.0: $(OBJECTS)
+libUICSS.a: $(SSOBJECTS)
+	ar cr libUICSS.a $(SSOBJECTS)
+	ranlib libUICSS.a
+
+libUIC.so.3.0: $(OBJECTS)
 	gcc -shared -Wl,-soname,libUIC.so.3 -o $(LIB)/libUIC.so.3.0 $(GENERICHOME)/src/*.o \
 	      $(OBJECTS)
-	$(RM) $(LIB)/libUIC.so
-	ln -s ./libUIC.so.3.0 $(LIB)/libUIC.so
-	/bin/cp $(GENINC)/Generic.h $(INCLUDE)
-	/bin/cp $(GENINC)/GenericList.h $(INCLUDE)
-	/bin/cp $(GENINC)/GenericHash.h $(INCLUDE)
-	/bin/cp $(GENINC)/Boolean.h $(INCLUDE)
 
-$(LIB)/libUICSS.so.3.0: $(SSOBJECTS)
+libUICSS.so.3.0: $(SSOBJECTS)
 	gcc -shared  -Wl,-soname,libUICSS.so.3 -o $(LIB)/libUICSS.so.3.0 $(GENERICHOME)/src/*.o \
 	      $(SSOBJECTS)
-	$(RM) $(LIB)/libUICSS.so
-	ln -s ./libUICSS.so.3.0 $(LIB)/libUICSS.so

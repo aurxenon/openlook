@@ -1,47 +1,50 @@
 #
-#      SCCS ID: @(#)Makefile 1.3 93/02/08 SMI
+#      SCCS ID: @(#)Makefile.g++ 1.2 93/02/08 SMI
 #
 #      Copyright (c) 1990-1992 Sun Microsystems, Inc.  All rights reserved.
 #      See LEGAL_NOTICE file for terms of the license.
 #
-CCFLAGS  = -c -pic
+CCFLAGS  = -c -pipe -O3 -m486 -fPIC -fno-for-scope
 #CCFLAGS  = -c -g
 
 INCLUDE = ../include/
 LIB     = ../lib/
 TEST    = ../test/
+UITDST = /usr/openwin
 
 OBJECTS = Generic.o GenericHash.o GenericList.o
 
-all: $(LIB)libGeneric.a
+all: libGeneric.a
 
-$(LIB)libGeneric.a : $(OBJECTS)
-	ranlib $(LIB)libGeneric.a
+libGeneric.a : $(OBJECTS)
+	ranlib libGeneric.a
+
+install:
+	install libGeneric.a $(UITDST)/lib
 
 xs:
 	#load $(CCFLAGS) -I$(INCLUDE) $(OBJECTS:.o=.cc)
 
 Generic.o : Generic.cc $(INCLUDE)Generic.h
-	CC $(CCFLAGS) Generic.cc -I$(INCLUDE)
-	ar rv $(LIB)libGeneric.a Generic.o
+	g++ $(CCFLAGS) Generic.cc -I$(INCLUDE)
+	ar rv libGeneric.a Generic.o
 
 GenericHash.o : GenericHash.cc $(INCLUDE)GenericHash.h
-	CC $(CCFLAGS) GenericHash.cc -I$(INCLUDE)
-	ar rv $(LIB)libGeneric.a GenericHash.o
+	g++ $(CCFLAGS) GenericHash.cc -I$(INCLUDE)
+	ar rv libGeneric.a GenericHash.o
 
 GenericList.o : GenericList.cc $(INCLUDE)GenericList.h
-	CC $(CCFLAGS) GenericList.cc -I$(INCLUDE)
-	ar rv $(LIB)libGeneric.a GenericList.o
+	g++ $(CCFLAGS) GenericList.cc -I$(INCLUDE)
+	ar rv libGeneric.a GenericList.o
 
-delete:
-	/bin/rm -f *.o $(LIB)*.a $(TEST)*test
+clean:
+	/bin/rm -f *.o *.a *test
 
 test: hashtest listtest
 
 hashtest:
-	CC -o hashtest GenericHash.cc -DTEST -L$(LIB) -lGeneric -lm -I$(INCLUDE)
-	mv hashtest $(TEST)
+	g++ -fno-for-scope -o hashtest GenericHash.cc -DTEST -L. -lGeneric -lm \
+	       -I$(INCLUDE) 
 
 listtest:
-	CC -o listtest GenericList.cc -DTEST -L$(LIB) -lGeneric -I$(INCLUDE)
-	mv listtest $(TEST)
+	g++ -fno-for-scope -o listtest GenericList.cc -DTEST -L. -lGeneric -I$(INCLUDE) 

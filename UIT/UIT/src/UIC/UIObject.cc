@@ -27,6 +27,7 @@ static char sccsid [] = "@(#)UIObject.cc 1.14 93/06/08 SMI";
 #include <sysent.h>
 #endif
 
+#include <unistd.h>
 #include "UIObject.h"
 #include "ColorMap.h"
 #include "CharacterFont.h"
@@ -480,7 +481,8 @@ void UIObject::setEventInformation (Event *event)
   lastEvent.setXViewEvent (event);
 
   // Loop through the hot regions attached to this object...
-  for (int i = hotRegions.getSize () - 1; i > -1; i--) {
+  int i;
+  for (i = hotRegions.getSize () - 1; i > -1; i--) {
     // If this event is in this hot region...
     if (((HotRegion *) hotRegions [i])->detectHotRegionEvent (this, event)) {
       // This is a hot region event, so make a note of it

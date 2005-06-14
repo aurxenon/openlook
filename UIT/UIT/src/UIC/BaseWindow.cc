@@ -620,7 +620,8 @@ void BaseWindow::createObject (UIObject *parent)
   }
 
   int num_displays = displayList.getSize ();
-  for (int i=0; i < num_displays; i++)
+  int i;
+  for (i=0; i < num_displays; i++)
     ((UIObject *) displayList [i])->createObject (this);
   
   if (fitWidth)
