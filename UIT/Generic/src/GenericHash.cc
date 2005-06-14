@@ -210,7 +210,6 @@ GenericHash::~GenericHash ()
   tmp = start;
   while (tmp) {
     delete tmp->item;
-
     prev = tmp;
     tmp = tmp->rightEntry;
   }
@@ -790,29 +789,36 @@ class GenericInteger : public Generic {
 main ()
 {
   GenericHash     h1, h2;
-  GenericInteger  I1, I2, I3, I4, I5, I6, I7, I8;
+  GenericInteger  *I1 = new GenericInteger();
+  GenericInteger  *I2 = new GenericInteger();
+  GenericInteger  *I3 = new GenericInteger();
+  GenericInteger  *I4 = new GenericInteger();
+  GenericInteger  *I5 = new GenericInteger();
+  GenericInteger  *I6 = new GenericInteger();
+  GenericInteger  *I7 = new GenericInteger();
+  GenericInteger  *I8 = new GenericInteger();
 
   char           *address;
   Generic        *item;
 
-  I1.value = 1;
-  I2.value = 2;
-  I3.value = 3;
-  I4.value = 4;
-  I5.value = 5;
-  I6.value = 6;
-  I7.value = 7;
-  I8.value = 8;
+  I1->value = 1;
+  I2->value = 2;
+  I3->value = 3;
+  I4->value = 4;
+  I5->value = 5;
+  I6->value = 6;
+  I7->value = 7;
+  I8->value = 8;
 
-  h1.addItem ("one", &I1);
-  h1.addItem ("two", &I2);
-  h1.addItem ("three", &I3);
-  h1.addItem ("four", &I4);
+  h1.addItem ("one", I1);
+  h1.addItem ("two", I2);
+  h1.addItem ("three", I3);
+  h1.addItem ("four", I4);
 
-  h2.addItem ("five", &I5);
-  h2.addItem ("six", &I6);
-  h2.addItem ("seven", &I7);
-  h2.addItem ("eight", &I8);
+  h2.addItem ("five", I5);
+  h2.addItem ("six", I6);
+  h2.addItem ("seven", I7);
+  h2.addItem ("eight", I8);
 
   cout << "Correct result: 1-4:" << endl;
   cout << ((GenericInteger *) h1 ["one"])->value << endl;
@@ -859,17 +865,17 @@ main ()
   }
   cout << endl;
 
-  h1 ["seven"] = &I3;
+  h1 ["seven"] = I3;
   cout << "Correct result: 3:" << endl;
   cout << ((GenericInteger *) h1 ["seven"])->value << endl;
   cout << endl;
 
   h1.dropItems ();
 
-  h1.addItem ("one", &I1);
-  h1.addItem ("two", &I2);
-  h1.addItem ("three", &I3);
-  h1.addItem ("four", &I4);
+  h1.addItem ("one", I1);
+  h1.addItem ("two", I2);
+  h1.addItem ("three", I3);
+  h1.addItem ("four", I4);
 
   cout << "Correct result: 1-4:" << endl;
   cout << ((GenericInteger *) h1 ["one"])->value << endl;
