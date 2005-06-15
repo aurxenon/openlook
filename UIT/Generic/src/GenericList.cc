@@ -473,26 +473,33 @@ class GenericInteger : public Generic {
 main ()
 {
   GenericList    l1, l2, l3;
-  GenericInteger I1, I2, I3, I4, I5, I6, I7, I8;
+  GenericInteger *I1 = new GenericInteger();
+  GenericInteger *I2 = new GenericInteger();
+  GenericInteger *I3 = new GenericInteger();
+  GenericInteger *I4 = new GenericInteger();
+  GenericInteger *I5 = new GenericInteger();
+  GenericInteger *I6 = new GenericInteger();
+  GenericInteger *I7 = new GenericInteger();
+  GenericInteger *I8 = new GenericInteger();
 
-  I1.value = 1;
-  I2.value = 2;
-  I3.value = 3;
-  I4.value = 4;
-  I5.value = 5;
-  I6.value = 6;
-  I7.value = 7;
-  I8.value = 8;
+  I1->value = 1;
+  I2->value = 2;
+  I3->value = 3;
+  I4->value = 4;
+  I5->value = 5;
+  I6->value = 6;
+  I7->value = 7;
+  I8->value = 8;
   
-  l1.addItem (&I1);
-  l1.addItem (&I2);
-  l1.addItem (&I3);
-  l1.addItem (&I4);
+  l1.addItem (I1);
+  l1.addItem (I2);
+  l1.addItem (I3);
+  l1.addItem (I4);
 
-  l2.addItem (&I5);
-  l2.addItem (&I6);
-  l2.addItem (&I7);
-  l2.addItem (&I8);
+  l2.addItem (I5);
+  l2.addItem (I6);
+  l2.addItem (I7);
+  l2.addItem (I8);
 
   cout << "Correct result: 1-4:" << endl;
   for (int i=0; i < l1.getSize (); i++)
@@ -511,7 +518,7 @@ main ()
   cout << endl;
 
   cout << "Correct result: 0:" << endl;
-  l1.clear ();
+  l1.dropItems ();
   cout << l1.getSize () << endl << endl;
   cout << endl;
 
@@ -521,13 +528,13 @@ main ()
     cout << ((GenericInteger *) l3 [i])->value << endl;
   cout << endl;
 
-  l2.clear ();
+  l2.dropItems ();
   l3.dropItems ();
 
-  l1.addItem (&I1);
-  l1.addItem (&I2);
-  l1.addItem (&I3);
-  l1.addItem (&I4);
+  l1.addItem (I1);
+  l1.addItem (I2);
+  l1.addItem (I3);
+  l1.addItem (I4);
 
   cout << "Correct result: 1-4:" << endl;
   for (i=0; i < l1.getSize (); i++)
@@ -541,20 +548,20 @@ main ()
   cout << endl;
 
   cout << "Correct result: 1:" << endl;
-  cout << l1.findItem (&I2) << endl << endl;
+  cout << l1.findItem (I2) << endl << endl;
 
   cout << "Correct result: 1,4:" << endl;
-  l1.removeItem (&I2);
+  l1.removeItem (I2);
   for (i=0; i < l1.getSize (); i++)
     cout << ((GenericInteger *) l1 [i])->value << endl;
   cout << endl;
 
   l1.dropItems ();
 
-  l1.addItem (&I1);
-  l1.addItem (&I2);
-  l1.addItem (&I3);
-  l1.addItem (&I4);
+  l1.addItem (I1);
+  l1.addItem (I2);
+  l1.addItem (I3);
+  l1.addItem (I4);
 
   cout << "Correct result: 1-4:" << endl;
   for (i=0; i < l1.getSize (); i++)
@@ -568,10 +575,10 @@ main ()
   cout << endl;
 
   cout << "Correct result: 1:" << endl;
-  cout << l1.findItem (&I2) << endl << endl;
+  cout << l1.findItem (I2) << endl << endl;
 
   cout << "Correct result: 1,4:" << endl;
-  l1.removeItem (&I2);
+  l1.removeItem (I2);
   for (i=0; i < l1.getSize (); i++)
     cout << ((GenericInteger *) l1 [i])->value << endl;
 }

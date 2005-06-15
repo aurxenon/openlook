@@ -103,8 +103,8 @@ class GenericList : public Generic {
 		   position = 0; }
   GenericList (const GenericList& l);
   ~GenericList () { if (numItems) {
-                      for (int i=0; i < numItems; i++)
-			delete list [i];
+//                      for (int i=0; i < numItems; i++)
+//			delete list [i];
 		      delete list;
 		    }
 		  }

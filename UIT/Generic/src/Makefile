@@ -42,9 +42,9 @@ clean:
 
 test: hashtest listtest
 
-hashtest:
-	g++ -fno-for-scope -o hashtest GenericHash.cc -DTEST -L. -lGeneric -lm \
+hashtest: GenericHash.cc
+	g++ -fno-for-scope -g -o hashtest GenericHash.cc -DTEST -L. -lGeneric -lm \
 	       -I$(INCLUDE) 
 
-listtest:
-	g++ -fno-for-scope -o listtest GenericList.cc -DTEST -L. -lGeneric -I$(INCLUDE) 
+listtest: GenericList.cc
+	g++ -fno-for-scope -fuse-cxa-atexit -g -o listtest GenericList.cc -DTEST -L. -lGeneric -I$(INCLUDE) 
