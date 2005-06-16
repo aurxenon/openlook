@@ -7,7 +7,7 @@ TARGET = \
 all:	$(TARGET)
 
 libUIC.a: $(OBJECTS)
-	cp $(GENERICHOME)/lib/libGeneric.a libUIC.a
+	cp $(GENERICHOME)/src/libGeneric.a libUIC.a
 	ar cr libUIC.a $(OBJECTS)
 	ranlib libUIC.a
 
