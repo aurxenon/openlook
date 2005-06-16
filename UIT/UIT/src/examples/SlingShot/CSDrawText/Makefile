@@ -2,6 +2,8 @@ PROGRAM = drawtext
 SOURCES.cc = drawtext_ui.cc drawtext_stubs.cc
 SOURCES.h = 
 
+SSPKGHOME=/usr/openwin
+
 SOURCES = \
 	$(SOURCES.h) \
 	$(SOURCES.cc)
@@ -12,12 +14,11 @@ OBJECTS = \
 
 # Compiler flags.
 
-CCFLAGS += -g
-CPPFLAGS += -I$(UITHOME)/include/c++ -I$(OPENWINHOME)/include \
+CCFLAGS += -g -DNO_XVPS
+CPPFLAGS += -I../../../../include/c++ -I$(OPENWINHOME)/include \
 	    -I$(SSPKGHOME)/include
-LDFLAGS += -L$(UITHOME)/lib -L$(OPENWINHOME)/lib -L$(SSPKGHOME)/lib
-LDLIBS += -lUIC -lUICSS -lsspkg -lxvps -lxview -lolgx -lX11
-LDLIBS += -lwire -lcps
+LDFLAGS += -L../../../../UIC/src -L$(OPENWINHOME)/lib -L$(SSPKGHOME)/lib -L/usr/X11R6/lib
+LDLIBS += -lUIC -lUICSS -lsspkg -lxview -lolgx -lX11 -lutil
 LDLIBS += -lm
 
 # Standard targets.
@@ -30,5 +31,5 @@ targets: $(SOURCES) $(TARGETS)
 $(PROGRAM): $(SOURCES.cc) $(SOURCES.h) $(OBJECTS)
 	$(LINK.cc) -o $(PROGRAM) $(OBJECTS) $(LDLIBS)
 
-delete:
+clean:
 	$(RM) $(OBJECTS) $(PROGRAM) core
