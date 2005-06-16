@@ -18,7 +18,7 @@ extern void CanvasRepaintHandler (UIObject *);
 main (int argc, char **argv)
 {
   BaseWindow window1;
-  window1.initUI (argc, argv, UIC_OPEN_PS_CONNECTION, TRUE, NULL);
+  window1.initUI (argc, argv);
   window1.setWidth (519);
   window1.setHeight (323);
   window1.setLabel ("Base Window");
