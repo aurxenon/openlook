@@ -32,10 +32,12 @@ OBJECTS = \
 
 # Compiler flags.
 
-CPPFLAGS += -I$(UITHOME)/include/c++ -I$(OPENWINHOME)/include
-LDFLAGS += -L$(UITHOME)/lib -L$(OPENWINHOME)/lib
-LDLIBS += -lUIC -lxvps -lxview -lolgx -lX -lcps -lm
-LDLIBS += -lwire
+CCFLAGS += -DNO_XVPS
+CPPFLAGS += -I../../../include/c++ -I$(OPENWINHOME)/include
+LDFLAGS += -L../../../UIC/src -L$(OPENWINHOME)/lib -L/usr/X11R6/lib
+LDLIBS += -lUIC -lxview -lolgx -lX11 -lm -lutil
+
+CCC = g++
 
 # Standard targets.
 
