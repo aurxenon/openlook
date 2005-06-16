@@ -19,7 +19,7 @@ void selection_handler (UIObject *object)
   delete value;
 }
 
-void main (int argc, char **argv)
+int main (int argc, char **argv)
 {
   BaseWindow bw;
   bw.initUI (argc, argv);
