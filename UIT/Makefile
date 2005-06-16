@@ -14,6 +14,6 @@ world:
 	cd $(GENERICHOME)/src; make
 	cd $(UITHOME)/src/UIC; make
 
-delete:
-	cd $(GENERICHOME)/src; make -i delete
-	cd $(UITHOME)/src/UIC; make -i delete
+clean:
+	cd $(GENERICHOME)/src; make clean
+	cd $(UITHOME)/src/UIC; make clean
