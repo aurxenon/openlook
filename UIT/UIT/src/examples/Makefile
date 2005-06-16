@@ -12,7 +12,7 @@ examples:
 #	cd DragAndDrop/PrintTool; make
 #	cd HotRegions/Canvas/PostScript; make
 	cd HotRegions/Canvas/Xlib; make
-	cd HotRegions/Panel; make
+#	cd HotRegions/Panel; make
 	cd Images/Choice; make
 	cd Images/List; make
 	cd Menus; make
