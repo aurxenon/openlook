@@ -13,7 +13,7 @@ SSPKGHOME = /usr/openwin
 UITDEST = /usr/openwin
 
 # Use the CCFLAGS with -fpic to create a .so file
-CCFLAGS = -c -pipe -O3 -fPIC -fno-for-scope -I$(INCLUDE) -I$(GENERICHOME)/include -I$(OPENWINHOME)/include
+CCFLAGS = -c -g -pipe -O3 -fPIC -fno-for-scope -I$(INCLUDE) -I$(GENERICHOME)/include -I$(OPENWINHOME)/include
 
 CCFLAGS += -DNO_XVPS
 

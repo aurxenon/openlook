@@ -31,5 +31,5 @@ ChooserService.types.deps: ChooserService.types
 	@echo "chooser_service" must be in the execution path for the
 	@echo process that started the ttsession.
 
-delete:
+clean:
 	/bin/rm -f *.o *.a *.deps chooser_service core
