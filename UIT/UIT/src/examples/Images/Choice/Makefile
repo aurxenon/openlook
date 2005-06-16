@@ -5,22 +5,56 @@
 #    See LEGAL_NOTICE file for terms of the license.
 #
 
-CCFLAGS = -I$(OPENWINHOME)/include -I$(UITHOME)/include/c++ \
-	  -L$(UITHOME)/lib  -L$(OPENWINHOME)/lib
+PROGRAM = choice
+SOURCES.cc = choice.cc
+SOURCES.h = 
 
-LDLIBS = -lUIC -lxvps -lxview -lolgx -lX -lcps -lm
-LDLIBS += -lwire
+# Derived parameters.
 
-OBJECTS = choice.o
+SOURCES = \
+	$(SOURCES.h) \
+	$(SOURCES.l) \
+	$(SOURCES.y) \
+	$(SOURCES.cc)
 
-TARGET = choice
+TARGETS.cc = $(SOURCES.cc)
 
-all: $(TARGET)
+TARGETS.h = \
+	$(SOURCES.l:%.l=%.h) \
+	$(SOURCES.y:%.y=%.h)
 
-choice: choice.o
-	CC $(CCFLAGS) -o choice $(OBJECTS) $(LDLIBS)
+TARGETS = \
+	$(TARGETS.h) \
+	$(TARGETS.cc)
 
-choice.o: choice.cc
+OBJECTS = \
+	$(TARGETS.cc:%.cc=%.o)
 
-delete:
-	/bin/rm -f $(OBJECTS) $(TARGET)
+# Compiler flags.
+
+CCFLAGS += -DNO_XVPS
+CPPFLAGS += -I../../../../include/c++ -I$(OPENWINHOME)/include -fno-for-scope
+LDFLAGS += -L../../../../UIC/src -L$(OPENWINHOME)/lib -L/usr/X11R6/lib
+LDLIBS += -lUIC -lxview -lolgx -lX11 -lm -lutil
+
+CCC = g++
+
+# Standard targets.
+
+all:	 $(TARGETS.other) $(PROGRAM)
+objects: $(SOURCES.cc) $(TARGETS.cc) $(TARGETS.h) $(OBJECTS)
+sources: $(SOURCES)
+targets: $(SOURCES) $(TARGETS)
+
+$(PROGRAM): $(SOURCES.cc) $(TARGETS.cc) $(TARGETS.h) $(OBJECTS)
+	$(LINK.cc) -o $(PROGRAM) $(OBJECTS) $(LDLIBS)
+
+# Targets to be used by a certain CASE tool.
+
+stest: $(SOURCES.cc) $(TARGETS.cc) $(TARGETS.h) $(OBJECTS)
+	#load $(CCFLAGS) $(CPPFLAGS) $(LDFLAGS) $(TARGET_ARCH) \
+		-o $(PROGRAM) $(TARGETS.cc) $(LDLIBS)
+	#link
+
+clean:
+	/bin/rm -f $(OBJECTS) $(PROGRAM)
