@@ -14,7 +14,7 @@ extern void add_button_handler (UIObject *);
 extern void entry_list_handler (UIObject *);
 extern void delete_button_handler (UIObject *);
 
-void main (int argc, char **argv)
+int main (int argc, char **argv)
 {
   BaseWindow entry_window;
   entry_window.initUI (argc, argv);

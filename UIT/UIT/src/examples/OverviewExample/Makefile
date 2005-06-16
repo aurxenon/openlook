@@ -41,9 +41,11 @@ OBJECTS = \
 # Compiler flags.
 
 CCFLAGS += -DNO_XVPS
-CPPFLAGS += -I$(UITHOME)/include/c++ -I$(OPENWINHOME)/include
-LDFLAGS += -L$(UITHOME)/lib -L$(OPENWINHOME)/lib
-LDLIBS += -lUIC -lxview -lolgx -lX -lm
+CPPFLAGS += -I../../../include/c++ -I$(OPENWINHOME)/include
+LDFLAGS += -L../../../UIC/src -L$(OPENWINHOME)/lib -L/usr/X11R6/lib
+LDLIBS += -lUIC -lxview -lolgx -lX11 -lm -lutil
+
+CCC = g++
 
 # Standard targets.
 
@@ -56,7 +58,7 @@ $(PROGRAM): $(SOURCES.cc) $(TARGETS.cc) $(TARGETS.h) $(OBJECTS)
 	$(LINK.cc) -o $(PROGRAM) $(OBJECTS) $(LDLIBS)
 
 clean:
-	$(RM) $(SOURCES.G:%.G=%_ui.cc) $(TARGETS.other) $(TARGETS.h) $(OBJECTS) *.BAK *.delta core
+	$(RM) $(PROGRAM) $(SOURCES.G:%.G=%_ui.cc) $(TARGETS.other) $(TARGETS.h) $(OBJECTS) *.BAK *.delta core
 
 # Targets to be used by a certain CASE tool.
 
