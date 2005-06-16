@@ -11,8 +11,15 @@ SLINGSHOT=SLINGSHOT
 SSPKGHOME=/usr/openwin
 
 world:
-	cd $(GENERICHOME)/src; make
-	cd $(UITHOME)/src/UIC; make
+	cd Generic/src; make
+	cd UIT/src/UIC; make
+
+install:
+	cd Generic/src; make install
+	cd UIT/src/UIC; make install
+
+examples:
+	cd UIT/src/examples; make
 
 clean:
 	cd $(GENERICHOME)/src; make clean
