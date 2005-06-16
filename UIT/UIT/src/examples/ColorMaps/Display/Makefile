@@ -9,8 +9,6 @@ PROGRAM = display
 SOURCES.cc = display.cc
 SOURCES.h = 
 
-UITHOME = $(OPENWINHOME)
-
 # Derived parameters.
 
 SOURCES = \
@@ -34,10 +32,10 @@ OBJECTS = \
 
 # Compiler flags.
 
-CCFLAGS += -DNO_XVPS
-CPPFLAGS += -I$(UITHOME)/include/c++ -I$(OPENWINHOME)/include -fno-for-scope
-LDFLAGS += -L$(UITHOME)/lib -L$(OPENWINHOME)/lib -L/usr/X11R6/lib
-LDLIBS += -lUIC -lxview -lolgx -lX11 -lm -lutil
+CCFLAGS += -DNO_XVPS -fno-for-scope
+CPPFLAGS += -I../../../../include/c++ -I$(OPENWINHOME)/include -fno-for-scope
+LDFLAGS += -L../../../../src/UIC/ -L$(OPENWINHOME)/lib -L/usr/X11R6/lib
+LDLIBS += -lUIC -lxview -lolgx -lX11 -lm -lutil 
 
 CCC = g++
 
@@ -58,5 +56,5 @@ stest: $(SOURCES.cc) $(TARGETS.cc) $(TARGETS.h) $(OBJECTS)
 		-o $(PROGRAM) $(TARGETS.cc) $(LDLIBS)
 	#link
 
-delete:
+clean:
 	/bin/rm -f $(OBJECTS) $(PROGRAM)
