@@ -11,7 +11,7 @@ libUIC.a: $(OBJECTS)
 	ar cr libUIC.a $(OBJECTS)
 	ranlib libUIC.a
 
-install:
+install: $(TARGET)
 	/bin/cp libUIC.a $(UITDEST)/lib
 	/bin/cp $(GENINC)/Generic.h $(UITDEST)/include
 	/bin/cp $(GENINC)/GenericList.h $(UITDEST)/include

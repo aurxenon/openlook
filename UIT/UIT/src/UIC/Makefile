@@ -13,8 +13,7 @@ SSPKGHOME = /usr/openwin
 UITDEST = /usr/openwin
 
 # Use the CCFLAGS with -fpic to create a .so file
-CCFLAGS = -c -pipe -g -O3 -m486 -fPIC -fno-for-scope -I$(INCLUDE) -I$(GENERICHOME)/include -I$(OPENWINHOME)/include
-#CCFLAGS = -c -g -v -I$(INCLUDE) -I$(GENERICHOME)/include -I$(OPENWINHOME)/include
+CCFLAGS = -c -pipe -O3 -fPIC -fno-for-scope -I$(INCLUDE) -I$(GENERICHOME)/include -I$(OPENWINHOME)/include
 
 CCFLAGS += -DNO_XVPS
 
@@ -179,7 +178,7 @@ FileChooser.o:  FileChooser.cc $(INCLUDE)/FileChooser.h $(INCLUDE)/UIObject.h \
                 $(INCLUDE)/UIWindow.h $(INCLUDE)/PopUpWindow.h \
                 $(INCLUDE)/UICTypes.h $(INCLUDE)/ColorMap.h
  
-delete:
+clean:
 	/bin/rm -f $(OBJECTS)
 	/bin/rm -f $(SSOBJECTS)
 	/bin/rm -f $(TARGET)
