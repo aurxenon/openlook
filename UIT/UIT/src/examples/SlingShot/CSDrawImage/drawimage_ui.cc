@@ -5,7 +5,7 @@
 
 extern void drag_handler (UIObject *);
 
-void main (int argc, char **argv)
+int main (int argc, char **argv)
 {
   BaseWindow window1;
   window1.initUI (argc, argv);
