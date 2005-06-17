@@ -112,7 +112,7 @@ while [ $# -gt 0 ]; do
     instfinish)
       [ -e $OWDEST/lib/openwin-menu-std ] || mv $OWDEST/lib/openwin-menu $OWDEST/lib/openwin-menu-std
       install -d $OWDEST/lib/xview $OWDEST/share/locale/C/props
-      install -m 644 contrib/misc/openwin-menu* $OWDEST/lib
+      [ -e $OWDEST/lib/openwin-menu] || install -m 644 contrib/misc/openwin-menu* $OWDEST/lib
       install -m 755 contrib/misc/Xinitrc $OWDEST/lib
       install -m 755 contrib/misc/{openwin,owplaces} $OWDEST/bin
       install -m 644 contrib/misc/props-locale.C $OWDEST/share/locale/C/props/C

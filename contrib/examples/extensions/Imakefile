@@ -11,8 +11,8 @@ LOCATION = examples/extensions
 SUBDIRS = panel_items
 
 DEFINES = -DSTANDALONE $(XVCLIENTSYSDEFINES)
-SYS_LIBRARIES =
-INCLUDES = -I. -I$(HEADER_DEST) -I$(TOP)
+SYS_LIBRARIES = -lX11 -lutil -L$(OPENWINHOME)/lib
+INCLUDES = -I. -I$(HEADER_DEST) -I$(TOP) -I/usr/openwin/include
 DEPLIBS = XViewClientDepLibs
 LOCAL_LIBRARIES = XViewClientLibs
 
