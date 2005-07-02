@@ -1357,7 +1357,7 @@ contents or store the contents as a new file."),
 	    
 	xv_destroy(view->drop_site);
 	textsw_view_cleanup(view);
-	VIEW_PRIVATE(view_public) = NULL; /* WG Mar '95 */
+	((Xv_textsw_view*)view_public)->private_data = NULL; /* WG Mar '95 */
 	break;
 
       default:			/* Conservative in face of new cases. */

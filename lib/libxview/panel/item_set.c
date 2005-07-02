@@ -25,6 +25,7 @@ Xv_private void	    win_set_no_focus();
 Xv_private Graphics_info *xv_init_olgx();
 
 static void item_adjust_label_size();
+static		 fix_positions();
 
 extern Notify_value panel_base_event_handler();
 

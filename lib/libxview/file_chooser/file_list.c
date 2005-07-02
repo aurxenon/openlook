@@ -41,6 +41,7 @@ static int		go_down_one_directory();
 static int		flist_list_notify();
 static int		validate_new_directory();
 static void		flist_new_dir();
+static int 		flist_match_regex();
 
 #if defined(__STDC__) || defined(__cplusplus) || defined(c_plusplus)
 static void	flist_error(File_list_private *private, char *format, ...);
@@ -613,6 +614,7 @@ flist_load_dir( private, directory )
     static File_list_row *rows = NULL; /* array of row entries */
     char *cwd = (char *)NULL;
     int cd_status = XV_OK;
+    int chdir_rv = 0;
 
 #ifdef OW_I18N
     wchar_t *	dir_wcs = (wchar_t *)NULL;
@@ -684,7 +686,7 @@ flist_load_dir( private, directory )
      * traversing the path name you give it, so
      */
     cwd = getcwd(NULL, MAXPATHLEN);
-    chdir( private->directory );
+    chdir_rv = chdir( private->directory );
 
 
 
@@ -997,7 +999,7 @@ flist_load_dir( private, directory )
      * Jump back to working directory to avoid side effects
      */
     if ( cwd ) {
-	chdir( cwd );
+	chdir_rv = chdir( cwd );
 	xv_free( cwd );
     }
 

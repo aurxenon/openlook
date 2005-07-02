@@ -16,6 +16,8 @@ static char     sccsid[] = "@(#)rect_util.c 20.13 93/06/28 Copyr 1984 Sun Micro"
 
 #include <xview/rect.h>
 
+static int rect_nearest_edge();
+
 /*
  * Compute the distance from rect to (x, y). If (x, y) is in rect, zero is
  * returned. If x_used or y_used are non-zero, the projection point is

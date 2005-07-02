@@ -58,6 +58,7 @@ static          openwin_locate_bottom_viewers();
 static          openwin_locate_top_viewers();
 static          openwin_expand_viewers();
 static          openwin_register_initial_sb();
+static int      openwin_check_view();
 
 
 /******************************************************************/

@@ -15,7 +15,7 @@ static char     sccsid[] = "@(#) propsrecv.c 1.3 93/06/28 Sun Micro";
 #include "propscmd.h"
 
 extern	int	ShowWindowProps();
-	void	ReceivePropsCmd();
+static	void	ReceivePropsCmd();
 
 /* ----------------------------------------------------------------------
  *	RegisterPropsWindow

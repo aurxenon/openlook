@@ -39,10 +39,11 @@ static char     sccsid[] = "@(#)filter.c 20.28 93/06/28";
 
 char           *stream_fgets();
 
-enum CharClass
+static enum CharClass
                 breakProc();
-struct CharAction
+static struct CharAction
                 digits();
+static int any_shell_meta();
 
 
 struct filter_rec **
@@ -246,7 +247,7 @@ breakProc(c)
 /*
  * Are there any shell meta-characters in string s?
  */
-static
+static int
 any_shell_meta(s)
     register char  *s;
 {

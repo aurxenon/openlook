@@ -64,6 +64,7 @@ static void     tvsub(),
                 ttysel_function(),
                 ttysel_end_request();
 	     void ttysortextents();
+static 		ttysel_resynch();
 /* static */ void ttysel_cancel();
 /* static */ void ttysel_get_selection();
 /* static */ void ttyhiliteselection(); /* BUG ALERT: No XView prefix */

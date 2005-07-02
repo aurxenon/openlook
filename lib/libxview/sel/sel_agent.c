@@ -68,7 +68,7 @@ static Seln_result seln_do_request_from_file();
 static void     selection_agent_do_function();
 static Atom 	get_atom();
 static Seln_attribute save_atom();
-
+static int      waitforReadableTimeout();
 
 Xv_private Seln_result seln_convert_request_to_property();
 /* called by seln_svc.c

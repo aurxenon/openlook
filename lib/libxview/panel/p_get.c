@@ -16,6 +16,7 @@ static char     sccsid[] = "@(#)p_get.c 20.38 93/06/28";
 #include <xview/scrollbar.h>
 
 static int      shrink_to_fit();
+static		panel_shrink_margin();
 
 #define MAX_NEGATIVE_SHRINK 2000
 #define SHRINK_MARGIN       4

@@ -20,6 +20,10 @@ static char     sccsid[] = "@(#)dnd.c 1.30 93/06/28";
 #include <xview_private/windowimpl.h>
 
 static int  SendDndEvent(),
+	    SendOldDndEvent(),
+	    SendTrigger(),
+	    WaitForAck(),
+	    IsV2App(),
 	    Verification(),
 	    ConstructSiteList(),
 	    FindDropSite();

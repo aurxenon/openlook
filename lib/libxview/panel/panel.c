@@ -27,6 +27,7 @@ Pkg_private int panel_view_init();
 Pkg_private int panel_destroy();
 
 static int      panel_layout();
+static		panel_unregister_view();
 
 #ifndef __linux__
 Xv_private_data Defaults_pairs xv_kbd_cmds_value_pairs[4];

@@ -110,6 +110,7 @@ int MenuTrack();
 void DrawLocCursor();
 
 
+static Bool isEnabled();
 /*
  *****************************************************************************
  * Code for dealing with storing menu defaults.

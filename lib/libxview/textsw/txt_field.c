@@ -30,7 +30,7 @@ static char     sccsid[] = "@(#)txt_field.c 20.31 93/06/28";
 #define    NUM_OF_COL		2
 #define    MAX_STR_LENGTH       1024
 
-static void            textsw_get_match_symbol();
+static void     textsw_get_match_symbol();
 
 #ifdef OW_I18N
 
@@ -61,6 +61,7 @@ static char     *match_table[NUM_OF_COL][MAX_SYMBOLS] =
 #endif /* OW_I18N */
 
 
+static void     textsw_get_match_symbol();
 
 Pkg_private int
 textsw_begin_match_field(view)
@@ -121,7 +122,6 @@ check_selection(buf, buf_len, first, last_plus_one,
 		    CHAR            marker2[3];
 		    int             marker2_len;
 		    unsigned        direction;
-		    static void     textsw_get_match_symbol();
 
 		    buf = buf + (buf_len - marker1_len);
 		    (void) textsw_get_match_symbol(marker1, marker1_len,
@@ -152,7 +152,6 @@ check_selection(buf, buf_len, first, last_plus_one,
 		    CHAR            marker2[3];
 		    int             marker2_len;
 		    unsigned        direction;
-		    static void     textsw_get_match_symbol();
 
 		    (void) textsw_get_match_symbol(marker1, marker1_len,
 					 marker2, &marker2_len, &direction);

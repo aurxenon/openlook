@@ -79,6 +79,9 @@ Pkg_private Menu     textsw_get_unique_menu();
 Pkg_private Menu_item textsw_extras_gen_proc();
 Pkg_private void     textsw_do_save();
 
+static int      textsw_edit_do_menu_action(), textsw_view_do_menu_action(),
+                textsw_find_do_menu_action();
+
 int             STORE_FILE_POPUP_KEY;
 int             SAVE_FILE_POPUP_KEY;
 int             LOAD_FILE_POPUP_KEY;
@@ -140,8 +143,6 @@ textsw_new_menu(folio)
     Frame           frame = xv_get(textsw, WIN_FRAME);
     Menu_item       break_mode_item, undo_cmds_item, find_sel_cmds_item,
                     select_field_cmds_item;
-    static int      textsw_edit_do_menu_action(), textsw_view_do_menu_action(),
-                    textsw_find_do_menu_action();
     int             index;
     Pkg_private char *textsw_get_extras_filename();
     Pkg_private int textsw_build_extras_menu_items();

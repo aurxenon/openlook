@@ -28,6 +28,7 @@ extern int      errno;
 
 Pkg_private Es_status es_copy();
 static Seln_result textsw_seln_yield();
+static int textsw_should_ask_seln_svc();
 
 static char           *shelf_name = "/tmp/textsw_shelf";
 

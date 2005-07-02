@@ -44,7 +44,7 @@ static SlaveInfo slaveInfo = {
  *	Local Forward Declarations
  * ---------------------------------------------------------------------*/
 
-void	SlaveFailure();
+static void	SlaveFailure();
 
 
 /* ----------------------------------------------------------------------

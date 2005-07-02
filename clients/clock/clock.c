@@ -148,6 +148,11 @@ static Notify_value analog_timer_expired();
 static Notify_value icon_timer_expired();
 static Notify_value dig_timer_expired();
 
+static int seconds_on ();
+static int date_on ();
+static int min();
+static int armwidth();
+
 typedef enum {digital, analog} Face;
 
 /*	Clock Options.  BAK values are used when property sheet is reset	*/

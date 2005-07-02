@@ -61,6 +61,7 @@ static int      BlockForEvent();
 static int      GetButtonEvent();
 static int      win_translate_KP_keysym();
 static int 	translate_key();
+static int	xevent_to_event();
 
 extern struct rectlist *win_get_damage();
 extern void     server_set_timestamp();

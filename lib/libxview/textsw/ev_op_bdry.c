@@ -28,6 +28,9 @@ Pkg_private void ev_clear_from_margins();
 static Ev_finger_handle ev_insert_finger();
 static Ev_mark_object last_generated_id;
 
+static int ev_find_finger_internal();
+static     ev_remove_finger_internal();
+
 #define FORALL(index_var)						\
 	for (index_var = 0; index_var < fingers->last_plus_one; index_var++)
 

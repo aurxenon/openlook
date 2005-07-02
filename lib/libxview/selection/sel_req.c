@@ -56,6 +56,10 @@ static int GetSelection();
 static int ProcessReply();
 static Requestor *SelGetReq();
 
+static int XvGetRequestedValue();
+static int ProcessReq();
+static int OldPkgIsOwner();
+static int ProcessNonBlkIncr();
 
 /*ARGSUSED*/
 Pkg_private int
@@ -1226,7 +1230,7 @@ Selection_requestor  sel;
 }
 
 
-static XID 
+XID 
 SelGetOwnerXID( selReq )
 Sel_req_info  *selReq;
 {

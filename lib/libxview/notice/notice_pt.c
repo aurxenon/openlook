@@ -63,6 +63,7 @@ static notice_buttons_handle notice_button_for_event();
 static void     notice_copy_event();
 static Xv_window	notice_get_focus_win();
 static int	notice_show_focus_win();
+static int 	notice_quadrant();
 
 /*
  * --------------------------- STATICS ------------------------------

@@ -43,6 +43,10 @@ extern 	Bool	PropGetWMIconName();
 /* Class function vector */
 static ClassIconFrame classIconFrame;
 
+static int heightTopIcon();
+static int heightBottomIcon();
+static int widthBothIcon();
+
 /***************************************************************************
 * private event functions
 ***************************************************************************/

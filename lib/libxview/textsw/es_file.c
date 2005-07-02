@@ -495,7 +495,7 @@ Error_Return:
 }
 
 /* ARGSUSED */
-static          caddr_t
+caddr_t
 #ifdef ANSI_FUNC_PROTO
 es_file_get(Es_handle esh, Es_attribute attribute, ...)
 #else

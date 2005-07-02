@@ -22,7 +22,7 @@ static char     sccsid[] = "@(#)input.c 20.20 93/06/28";
 		XV_MSG("input stream not of type input"), 0); \
 	ops = in->ops.input_ops
 
-char	*stream_getstring();
+static char	*stream_getstring();
 
 /* GENERIC INPUT FUNCTIONS */
 

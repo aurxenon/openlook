@@ -44,6 +44,7 @@ static 		void	set_mask_bit(),
     			window_ungrab_selectbutton(),
 			win_map(),
 			update_rect();
+static 		void    window_set_softkey_labels();
 static		int	do_passive_grab = FALSE;
 Xv_private 	void	window_release_selectbutton();
 Xv_private 	void	window_x_allow_events();
@@ -1072,7 +1073,6 @@ window_set_avlist_tier3(win_public, attrs, error, new_rect, old_rect, win_attrs,
 
       case WIN_SOFT_FNKEY_LABELS: {
         register Xv_Drawable_info 	*info;
-        static void                   	 window_set_softkey_labels();
 
         DRAWABLE_INFO_MACRO(win_public, info);
         win->softkey_flag = TRUE;

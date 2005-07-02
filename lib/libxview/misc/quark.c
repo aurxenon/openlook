@@ -16,7 +16,7 @@ static char     sccsid[] = "@(#) quark.c 50.11 93/06/28";
 #include  <xview/xview.h>
 #include  <xview/pkg.h>
 
-Xv_opaque resource_type_conv();
+static Xv_opaque resource_type_conv();
 
 /* 
  *    Utilities to deal with quark lists and such.

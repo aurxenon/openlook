@@ -36,6 +36,7 @@ static int sel_set_ownership(/* sel_owner */);
 static int (*OldErrorHandler)();
 static int SelOwnerErrorHandler();
 static int ValidatePropertyEvent();
+static int SendIncr();
 
 static void SelClean();
 static void HandleMultipleReply();

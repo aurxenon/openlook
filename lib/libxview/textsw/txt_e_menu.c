@@ -73,6 +73,7 @@ Pkg_private Textsw_view textsw_from_menu();
 static	int      extras_menufile_changed();
 static	int      walk_getmenu();
 static	int      free_argv();
+static  	 any_shell_meta();
 static	int      Nargs;
 static	char	*check_filename_locale();
 

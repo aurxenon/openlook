@@ -34,7 +34,7 @@ static char     sccsid[] = "@(#)tty_mapkey.c 20.41 93/06/28";
 
 extern Notify_error win_post_event();
 extern char    *getenv();
-extern char    *strcat();
+//extern char    *strcat();
 
 /* static routines	 */
 

@@ -47,6 +47,7 @@ static void	gauge_layout();
 /* Local functions */
 static void     paint_gauge();
 static void     update_rects();
+static int      etoi();
 
 static Panel_ops ops = {
     panel_default_handle_event,		/* handle_event() */

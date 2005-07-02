@@ -27,6 +27,8 @@ Pkg_private Es_handle textsw_esh_for_span();
 Pkg_private Seln_rank textsw_acquire_seln();
 Pkg_private caddr_t  textsw_checkpoint_undo();
 
+static int textsw_do_put();
+
 Pkg_private int
 textsw_begin_put(view, inform_svc)
     Textsw_view_handle view;

@@ -161,6 +161,8 @@ ttysw_lookup_boldstyle(str)
     }
 }
 
+static int ttyinit();
+
 Pkg_private int
 ttysw_print_bold_options()
 {

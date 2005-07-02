@@ -11,7 +11,7 @@ static char     sccsid[] = "@(#)gettext.c 50.21 93/06/28";
 #include <xview_private/gettext.h>
 
 char * dgettext(char *, char *), *bindtextdomain();
-char *_gettext();
+static char *_gettext();
 char *fgets(), *getenv();
 #if !defined(__linux__) || !defined(__GLIBC__)
 caddr_t mmap();

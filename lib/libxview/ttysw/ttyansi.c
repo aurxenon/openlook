@@ -78,6 +78,10 @@ int scroll_bottom = 0; /* to implement scroll region change */
 int pre_edit_rows_scrolled; /* updated in ansi_lf, used in ttysw callbacks */
 #endif
 
+static int send_input_to_textsw();
+static int ansi_lf();
+static int ansi_char();
+
 /*
  * Interpret a string of characters of length <len>.  Stash and restore the
  * cursor indicator.

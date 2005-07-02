@@ -119,6 +119,7 @@ static Ei_handle ei_plain_text_destroy();
 static caddr_t  ei_plain_text_get();
 static int      ei_plain_text_lines_in_rect();
 static struct ei_process_result ei_plain_text_process();
+static paint_batch();
 int             ei_plain_text_set();
 /* XXXX static int				ei_plain_text_set(); */
 #ifdef OW_I18N

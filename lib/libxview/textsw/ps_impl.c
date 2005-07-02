@@ -64,6 +64,9 @@ static int      ps_set();
 
 static Es_index write_header_etc();
 
+static copy_pieces();
+static int get_current_offset();
+
 static struct es_ops ps_ops = {
     ps_commit,
     ps_destroy,
@@ -1575,7 +1578,7 @@ ps_undo_to_mark(esh, mark, notify_proc, notify_data)
     private->last_write_plus_one = ES_INFINITY;
 }
 
-static          caddr_t
+caddr_t
 #ifdef ANSI_FUNC_PROTO
 ps_get(Es_handle esh, Es_attribute attribute, ...)
 #else

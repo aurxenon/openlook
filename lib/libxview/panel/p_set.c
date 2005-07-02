@@ -23,6 +23,8 @@ Xv_private char     *xv_font_bold();
 Xv_private char     *xv_font_regular_cmdline();
 
 static void panel_set_fonts();
+static int column_from_absolute_x();
+static int row_from_absolute_y();
 
 
 Pkg_private     Xv_opaque

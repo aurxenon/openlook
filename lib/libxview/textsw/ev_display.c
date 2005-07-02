@@ -47,6 +47,8 @@ Pkg_private Es_index ev_index_for_line();
 Pkg_private struct ei_process_result ev_display_internal();
 Pkg_private void ev_display_in_rect();
 
+static void     ev_swap_line_table();
+
 /*
  * The following code is a short-circuit to use simpler output for the carets
  * that the initial xv_rop() implementation. It uses pixmaps that are just
@@ -940,7 +942,6 @@ ev_scroll_lines(view, line_count, scroll_by_display_lines)
 	register int    i;
 	Es_index        pos, pos_to_remember;
 	Pkg_private void ev_lt_format();
-	static void     ev_swap_line_table();
 
 	esbuf.esh = chain->esh;
 	esbuf.buf = buf;

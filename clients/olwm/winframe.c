@@ -67,6 +67,7 @@ void FrameSetupGrabs();
 
 static void setTitleText();
 static void setFooterText();
+static int headerHeight();
 void FrameUpdateShape();
 #ifdef OW_I18N_L4
 static void setIMStatusText();

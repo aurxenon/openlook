@@ -76,6 +76,7 @@ Xv_private char		*xv_strtok();
 Xv_private Notify_value  xv_input_pending();
 Xv_private void 	 xv_do_enqueued_input();
 Xv_private void		 xv_merge_cmdline();
+static int		 xv_set_scheduler();
 #ifdef OS_HAS_LOCALE
 static void		 server_set_locale(),
 			 server_effect_locale(),

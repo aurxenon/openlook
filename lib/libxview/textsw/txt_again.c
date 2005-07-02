@@ -27,6 +27,8 @@ static char     sccsid[] = "@(#)txt_again.c 20.43 93/06/28";
 Pkg_private Es_index textsw_do_input();
 Pkg_private Es_index textsw_do_pending_delete();
 
+static int textsw_string_min_free();
+
 string_t        null_string = {0, 0, 0};
 
 #define	TEXT_DELIMITER	"\\"

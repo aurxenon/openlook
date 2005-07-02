@@ -15,7 +15,7 @@ static	char	sccsid[] = "@(#) helprecv.c 1.3 93/06/28 Sun Micro";
 #include "helpcmd.h"
 
 extern	int	ShowHelpWindow();
-	void	ReceiveHelpCmd();
+static	void	ReceiveHelpCmd();
 
 /* ----------------------------------------------------------------------
  *	RegisterHelpWindow

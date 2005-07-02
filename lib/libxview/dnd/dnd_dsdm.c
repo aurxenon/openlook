@@ -26,6 +26,7 @@ static char     sccsid[] = "@(#)dnd_dsdm.c 1.8 93/06/28";
 			(dnd->siteRects[i].screen_number == dnd->screenNumber)
 
 Xv_private int DndSendPreviewEvent();
+static void	ReplyProc();
 
 
 Xv_private int
@@ -40,7 +41,6 @@ DndContactDSDM(dnd)
     if (!dnd->sel) {
         Xv_object  	owner,
     			server;
-    	static void	ReplyProc();
 
     	owner = (Xv_object)xv_get(DND_PUBLIC(dnd), XV_OWNER);
 

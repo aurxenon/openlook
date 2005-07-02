@@ -44,9 +44,9 @@ char		cmdBuf[CMDBUFLEN];
 /* ----------------------------------------------------------------------
  *	Forward Definitions
  * ----------------------------------------------------------------------*/
-void		InitScreenInfo();
-void		ParseScreenArgs();
-Notify_value	InputReader();
+static void		InitScreenInfo();
+static void		ParseScreenArgs();
+static Notify_value	InputReader();
 
 /* ----------------------------------------------------------------------
  * 	main

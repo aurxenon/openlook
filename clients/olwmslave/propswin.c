@@ -38,11 +38,11 @@ static WindowProps	*winPropsList = 0; 	/* dynamic array of WindowProps
  *      Local Forward Declarations
  * ----------------------------------------------------------------------*/
 int		ShowWindowProps();
-void		InitWindowProps();
-Bool		CreateWindowProps();
-Notify_value	DestroyWindowProps();
-void		ApplyProps();
-void		ResetProps();
+static void		InitWindowProps();
+static Bool		CreateWindowProps();
+static Notify_value	DestroyWindowProps();
+static void		ApplyProps();
+static void		ResetProps();
 
 /* ----------------------------------------------------------------------
  *      ShowWindowProps

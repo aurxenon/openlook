@@ -140,15 +140,18 @@ static char    *font_rescale_from_font();
 static int      font_read_attrs();
 static int      font_string_compare();
 static int      font_string_compare_nchars();
+static int      font_construct_name();
 static char	*font_strip_name();
 static int	font_delim_count();
 static XID font_try_misc_name();
 static Font_locale_info *find_font_locale_info();
 static int	font_setup_known_families();
 static int	font_setup_known_styles();
+static int	font_setup_defaults();
 static void	font_init_known_families();
 static void	font_init_known_styles();
 static void	font_init_sizes();
+static int	font_init_create_attrs();
 static void	font_reduce_wildcards();
 
 typedef struct family_foundry {

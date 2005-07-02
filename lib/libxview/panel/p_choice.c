@@ -95,6 +95,10 @@ Pkg_private Xv_opaque choice_set_avlist();
 Pkg_private Xv_opaque choice_get_attr();
 Pkg_private int choice_destroy();
 
+static int find_choice();
+static int modify_choice();
+static int re_alloc_choices();
+static int move_specified();
 
 /*
  * Static functions

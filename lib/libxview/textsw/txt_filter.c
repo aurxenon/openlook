@@ -77,6 +77,8 @@ Pkg_private Es_index textsw_do_input();
 static short unsigned type_for_filter_rec();
 static int      event_code_for_filter_rec();
 
+static int talk_to_filter();
+static int start_filter();
 /*
  * WARNING: this is a hack to force the variable to be in memory. this var
  * gets changed somehow when it is in register in the context of a vfork();

@@ -22,6 +22,7 @@ static char     sccsid[] = "@(#)sel_util.c 1.29 93/06/28";
 static void tvdiff();
 static void FreeMultiProp();
 static int	SelMatchReply();
+static int	SelFindReply();
 static Sel_req_tbl *SelMatchReqTbl();
 
 Pkg_private struct timeval *

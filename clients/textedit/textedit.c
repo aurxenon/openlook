@@ -48,6 +48,7 @@ char *sprintf();
 #endif
 void	frame_cmdline_help();
 static int		off();
+static 			die();
 static Notify_value	mysigproc();
 /*
 extern Notify_value	textedit_event_proc();

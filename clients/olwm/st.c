@@ -34,6 +34,8 @@
 	(table->hash == ST_NUMHASH) ? ((int) (key) % table->num_bins) :\
 	(*table->hash)((key), table->num_bins))
 
+static rehash();
+
 st_table *st_init_table_with_params(compare, hash, size, density, grow_factor,
 				    reorder_flag)
 int (*compare)();

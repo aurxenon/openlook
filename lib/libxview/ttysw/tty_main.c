@@ -94,6 +94,11 @@ extern int      do_cursor_draw;
 extern int      tty_new_cursor_row, tty_new_cursor_col;
 extern int	tty_has_new_bufmod;
 
+static int      ttysw_process_point();
+static int      ttysw_process_adjust();
+static int      ttysw_process_motion();
+static int      ttysw_process_keyboard();
+
 /* shorthand */
 #define	iwbp	ttysw->ttysw_ibuf.cb_wbp
 #define	irbp	ttysw->ttysw_ibuf.cb_rbp

@@ -128,14 +128,15 @@ char		*help_get_text();
  *	Local Forward Functions
  * ---------------------------------------------------------------------*/
 int		ShowHelpWindow();
-void		InitHelpWindow();
-Bool		CreateHelpWindow();
-Notify_value	DestroyHelpWindow();
-void		ResetHelpWindow();
-Bool		TextHelpWindow();
-Bool		ImageHelpWindow();
-void		MoreHelp();
-void		ErrorNotice();
+static void		InitHelpWindow();
+static Bool		CreateHelpWindow();
+static Notify_value	DestroyHelpWindow();
+static void		ResetHelpWindow();
+static Bool		TextHelpWindow();
+static Bool		ImageHelpWindow();
+static void		MoreHelp();
+static void		ErrorNotice();
+static int		ConstrainMousePos();
 
 /* ----------------------------------------------------------------------
  *	ShowHelpWindow

@@ -116,7 +116,7 @@ es_mem_destroy(esh)
 }
 
 /* ARGSUSED */
-static          caddr_t
+caddr_t
 #ifdef ANSI_FUNC_PROTO
 es_mem_get(Es_handle esh, Es_attribute attribute, ...)
 #else

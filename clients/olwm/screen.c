@@ -111,6 +111,12 @@ static XrmQuark reverseVideoIQ;
 static XrmQuark stippledRubberBandsCQ;
 static XrmQuark stippledRubberBandsIQ;
 
+static updateScreenWindowColor();
+static updateScreenForegroundColor();
+static updateScreenBackgroundColor();
+static updateScreenBorderColor();
+static updateScreenWorkspaceColor();
+static updateScreenGlyphFont();
 
 /*-------------------------------------------------------------------------
  *	Local Functions

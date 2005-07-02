@@ -18,6 +18,8 @@ static char     sccsid[] = "@(#)fmcmd_set.c 1.46 93/06/28";
 #include <xview/panel.h>
 #include <xview/server.h>
 
+static int 	    update_default_pin_state();
+
 Pkg_private     Xv_opaque
 frame_cmd_set_avlist(frame_public, avlist)
     Frame           frame_public;
@@ -30,7 +32,6 @@ frame_cmd_set_avlist(frame_public, avlist)
     int             result = XV_OK;
     int             add_decor, delete_decor, set_win_attr;
     Atom            add_decor_list[WM_MAX_DECOR], delete_decor_list[WM_MAX_DECOR];
-    int 	    update_default_pin_state();
 
     DRAWABLE_INFO_MACRO(frame_public, info);
     server_public = xv_server(info);
