@@ -1561,8 +1561,8 @@ olgx_get_perdisplay_list(dpy, screen)
     cur->dpy = dpy;
     cur->screen = screen;
     cur->gc_list_ptr = NULL;
-    cur->busy_stipple = NULL;
-    cur->grey_stipple = NULL;
+    cur->busy_stipple = 0;
+    cur->grey_stipple = 0;
     cur->next = olgx_perdisp_res_list;
     olgx_perdisp_res_list = cur;
 
