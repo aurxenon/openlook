@@ -471,7 +471,7 @@ server_init(parent, server_public, avlist)
         if (home = getenv("HOME"))
 	    (void) strcpy(filename, home);
         else
-	    filename[0] = NULL;
+	    filename[0] = XV_NULL;
         (void) strcat(filename, "/.Xdefaults");
         server->db = XrmGetFileDatabase(filename);
     }
@@ -1551,7 +1551,7 @@ server_init_atoms(server_public)
      */
     atom = XInternAtom(server->xdisplay, "JOURNAL_SYNC", TRUE);
     if (atom == BadValue || atom == BadAlloc) {
-	xv_error(NULL,
+	xv_error(XV_NULL,
 		 ERROR_SEVERITY, ERROR_NON_RECOVERABLE, 
 		 ERROR_STRING, 
 		 XV_MSG("Can't create SERVER_JOURNAL_ATOM atom"),
@@ -1747,9 +1747,9 @@ xv_string_to_rgb(buffer, red, green, blue)
     unsigned char   *blue;
 
 {
-        int     hex_buffer;
+        int     hex_buffer, sr;
         unsigned char   *conv_ptr;
-        (void) sscanf(buffer, "#%6x", &hex_buffer);
+        sr = sscanf(buffer, "#%6x", &hex_buffer);
 
         conv_ptr = (unsigned char *) &hex_buffer;
         *red = conv_ptr[1];
@@ -1842,7 +1842,7 @@ static void
 server_warning(msg)
     char	*msg;
 {
-    xv_error(NULL,
+    xv_error(XV_NULL,
 	     ERROR_STRING,	msg,
 	     ERROR_PKG,		SERVER,
 	     NULL);

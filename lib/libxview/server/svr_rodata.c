@@ -26,7 +26,7 @@
  *
  ***************************************************************************/
 const unsigned int win_keymap[] = {
-	NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
+	0, 0, 0, 0, 0, 0, 0, 0,
 /*
  * TTY Functions, cleverly chosen to map to ascii, for convenience of
  * programming, but could have been arbitrary (at the cost of lookup
@@ -37,10 +37,10 @@ const unsigned int win_keymap[] = {
 	XK_Tab,
 	XK_Linefeed,
 	XK_Clear,
-	NULL,
+	0,
 	XK_Return,
 
-	NULL, NULL,
+	0, 0,
 
 	/* BUG: On X11/NeWS, Keysym F36 and F37 happen to fall into a couple
 		of holes in the win_keymap table.  We will use them for
@@ -51,31 +51,31 @@ const unsigned int win_keymap[] = {
 	KEY_TOP(11),					/* XK_SunF36 */
 	KEY_TOP(12),					/* XK_SunF37 */
 
-	NULL,
+	0,
 
 	XK_Pause,
 #ifndef XK_Scroll_Lock
-        NULL,
+        0,
 #else    
         /* BUG: Only in R4. */
         XK_Scroll_Lock,                 		/* XK_Scroll_Lock */
 #endif /* XK_Scroll_Lock */
-	NULL, NULL, NULL, NULL, NULL, NULL,
+	0, 0, 0, 0, 0, 0,
 
 	XK_Escape,
 
-	NULL, NULL, NULL, NULL,
+	0, 0, 0, 0,
 
 	/* International & multi-key character composition */
 
 	XK_Multi_key,
 	XK_Kanji,
 
-	NULL, NULL, NULL,                         NULL, NULL, NULL,
-	NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
-	NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
-	NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
-	NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
+	0, 0, 0,                         0, 0, 0,
+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 
 	/* Cursor control & motion */
 
@@ -89,7 +89,7 @@ const unsigned int win_keymap[] = {
 	XK_End,
 	XK_Begin,
 
-	NULL, NULL, NULL, NULL, NULL, NULL, NULL,
+	0, 0, 0, 0, 0, 0, 0,
 
 	/* Misc Functions */
  
@@ -97,7 +97,7 @@ const unsigned int win_keymap[] = {
 	XK_Print,
 	XK_Execute,
 	XK_Insert,
-	NULL,
+	0,
 	XK_Undo,
 	XK_Redo,
 	XK_Menu,
@@ -106,8 +106,8 @@ const unsigned int win_keymap[] = {
 	XK_Help,
 	SHIFT_BREAK,					/* XK_Break */
 	
-	NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
-	NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
+	0, 0, 0, 0, 0, 0, 0, 0, 0,
+	0, 0, 0, 0, 0, 0, 0, 0, 0,
 
 	SHIFT_ALTG,					/* XK_script_switch */
 	SHIFT_NUMLOCK,					/* XK_Num_Lock      */
@@ -116,24 +116,24 @@ const unsigned int win_keymap[] = {
 
 	XK_KP_Space,
 
-	NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
+	0, 0, 0, 0, 0, 0, 0, 0,
 
 	XK_KP_Tab,
 
-	NULL, NULL, NULL,
+	0, 0, 0,
 
 	XK_KP_Enter,
 
-	NULL, NULL, NULL,
+	0, 0, 0,
 
 	XK_KP_F1,
 	XK_KP_F2,
 	XK_KP_F3,
 	XK_KP_F4,
 
-	NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
-	NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
-	NULL,
+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+	0,
 
 	XK_KP_Multiply,
 	XK_KP_Add,
@@ -152,7 +152,7 @@ const unsigned int win_keymap[] = {
 	XK_KP_8,
 	XK_KP_9,
 
-	NULL, NULL, NULL,
+	0, 0, 0,
 
 	XK_KP_Equal,
 
@@ -215,8 +215,8 @@ const unsigned int win_keymap[] = {
 	XK_Hyper_L,
 	XK_Hyper_R,
 
-	NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
-	NULL, NULL, NULL, NULL, NULL, NULL,
+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+	0, 0, 0, 0, 0, 0,
 
 	XK_Delete
 };

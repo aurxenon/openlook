@@ -431,6 +431,7 @@ CHAR		*resourceString;
 XrmDatabase	db;
 {
     AcceleratorValue av;
+    int sr;
 
     /* if its starts with 'coreset', look for coreset resource */
 #ifdef OW_I18N
@@ -445,7 +446,7 @@ XrmDatabase	db;
 	char *strtype;
 
 	*funcname = '\0';
-	SSCANF( resourceString, "%*s%s", funcname );
+	sr = SSCANF( resourceString, "%*s%s", funcname );
 
 	/*
 	 * Put resource name in multibyte buffer to pass to XrmGetResource()

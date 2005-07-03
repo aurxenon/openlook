@@ -275,7 +275,7 @@ server_refresh_modifiers(server_public, update_map)
 	}
 
 	/* all our attempts failed */
-	xv_error(NULL,
+	xv_error(XV_NULL,
 		 ERROR_STRING, 
 		    XV_MSG("Problems setting default modifier mapping"),
 		 ERROR_PKG, SERVER,
