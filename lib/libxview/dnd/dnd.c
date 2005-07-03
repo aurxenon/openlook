@@ -161,9 +161,9 @@ dnd_send_drop(dnd_public)
 	goto BreakOut;
     }
 
-    if ((status = Verification(ev, dnd)) == DND_SUCCEEDED) {
+    if ((status = Verification((XButtonEvent*)ev, dnd)) == DND_SUCCEEDED) {
 	                    /* If drop site is within same process, optimize! */
-	status = SendTrigger(dnd, info, ev, win_data(dpy,dnd->dropSite.window));
+	status = SendTrigger(dnd, info, (XButtonEvent*)ev, win_data(dpy,dnd->dropSite.window));
     }
 
 BreakOut:
@@ -767,7 +767,7 @@ Verification(ev, dnd)
 				 * property, construct the rects and determine
 				 * if the drop happened within a drop region.
 				 */
-	(void)ConstructSiteList(dpy, NULL, interest_prop, &drop_site,
+	(void)ConstructSiteList(dpy, XV_NULL, interest_prop, &drop_site,
 				&nsites);
 	XFree((char *)interest_prop);
 	if (!FindDropSite(dnd, drop_site, nsites, &dnd->dropSite)) { 

@@ -30,7 +30,7 @@ dnd_init(parent, dnd_public, avlist)
     Xv_drag_drop	dnd_public;
     Attr_avlist		avlist;
 {
-    Dnd_info			*dnd = NULL;
+    Dnd_info			*dnd = XV_NULL;
     Xv_dnd_struct		*dnd_object;
 
     dnd = (Dnd_info *)xv_alloc(Dnd_info);
@@ -169,7 +169,7 @@ BuildDefaults(dnd)
     dnd->atom[DSDM] =    (Atom) xv_get(server,
 					SERVER_ATOM, "_SUN_DRAGDROP_DSDM");
     dnd->type = DND_MOVE;
-    dnd->sel = NULL;
+    dnd->sel = XV_NULL;
     dnd->siteRects = NULL;
     dnd->affXCursor = (Cursor)NULL; 
     dnd->xCursor = (Cursor)NULL;

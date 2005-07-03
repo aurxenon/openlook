@@ -207,7 +207,7 @@ dnd_site_get_attr(site_public, error, attr, args)
         default:
            if (xv_check_bad_attr(&xv_drop_site_item, attr) == XV_ERROR)
 		*error = XV_ERROR;
-	   value = NULL;
+	   value = XV_NULL;
 	   break;
     }
 
