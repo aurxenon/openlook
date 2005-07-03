@@ -41,7 +41,7 @@ server_image_rop(dest, dx, dy, dw, dh, op, src, sx, sy)
 	    xv_read_internal(dest, dx, dy, dw, dh, op, xv_display(info),
 			     xv_xid(info), sx, sy);
 	} else {
-	    xv_error(NULL,
+	    xv_error(XV_NULL,
 		     ERROR_STRING,
 		         XV_MSG("server_image_rop(): src is not a server image"),
 		     ERROR_PKG, SERVER_IMAGE,
@@ -80,7 +80,7 @@ server_image_rop(dest, dx, dy, dw, dh, op, src, sx, sy)
 	    break;
 	}
       default:
-	xv_error(NULL,
+	xv_error(XV_NULL,
 		 ERROR_STRING,
 	XV_MSG("server_image_rop(): dest is not a memory pixrect or a server_image"),
 		 ERROR_PKG, SERVER_IMAGE,
@@ -103,7 +103,7 @@ server_image_stencil(dest, dx, dy, dw, dh, op, st, stx, sty, src, sx, sy)
     Pixrect        *temp_pr, *temp_st;
 
     if (stencil_type != MEMORY_PR && stencil_type != SERVER_IMAGE_PR) {
-	xv_error(NULL,
+	xv_error(XV_NULL,
 		 ERROR_STRING,
 		     XV_MSG("server_image_stencil(): stencil is not a memory pr or a server image"),
 		 ERROR_PKG, SERVER_IMAGE,
@@ -124,7 +124,7 @@ server_image_stencil(dest, dx, dy, dw, dh, op, st, stx, sty, src, sx, sy)
 				    ((Pixrect *) src)->pr_height,
 				    ((Pixrect *) src)->pr_depth);
 	    if (!temp_pr) {
-		xv_error(NULL,
+		xv_error(XV_NULL,
 			 ERROR_STRING,
 			     XV_MSG("server_image_stencil(): Can't create mpr in server_image_stencil"),
 			 ERROR_PKG, SERVER_IMAGE,
@@ -139,7 +139,7 @@ server_image_stencil(dest, dx, dy, dw, dh, op, st, stx, sty, src, sx, sy)
 					((Pixrect *) st)->pr_height,
 					((Pixrect *) st)->pr_depth);
 		if (!temp_st) {
-		    xv_error(NULL,
+		    xv_error(XV_NULL,
 			     ERROR_STRING,
 			         XV_MSG("server_image_stencil(): Can't create mpr in server_image_stencil"),
 			     ERROR_PKG, SERVER_IMAGE,
@@ -170,7 +170,7 @@ server_image_stencil(dest, dx, dy, dw, dh, op, st, stx, sty, src, sx, sy)
 	     * If the src isn't image pr, and dest IS mpr, then this routine
 	     * should never have been called.
 	     */
-	    xv_error(NULL,
+	    xv_error(XV_NULL,
 		     ERROR_STRING,
 		  XV_MSG("server_image_stencil(): dest is mpr, src isn't image pr"),
 		     ERROR_PKG, SERVER_IMAGE,
@@ -198,7 +198,7 @@ server_image_stencil(dest, dx, dy, dw, dh, op, st, stx, sty, src, sx, sy)
 	    break;
 	}
       default:
-	xv_error(NULL,
+	xv_error(XV_NULL,
 		 ERROR_STRING,
 	       XV_MSG("server_image_stencil(): dest is not mpr or server_image_pr"),
 		 ERROR_PKG, SERVER_IMAGE,
@@ -233,7 +233,7 @@ server_image_replrop(dest, dx, dy, dw, dh, op, src, sx, sy)
 			   SERVER_IMAGE_DEPTH, ((Pixrect *) dest)->pr_depth,
 					     0);
 		if (!temp) {
-		    xv_error(NULL,
+		    xv_error(XV_NULL,
 			     ERROR_STRING,
 		    XV_MSG("server_image_replrop(): Unable to create server image"),
 			     ERROR_PKG, SERVER_IMAGE,
@@ -250,7 +250,7 @@ server_image_replrop(dest, dx, dy, dw, dh, op, src, sx, sy)
 		/* Destroy the remote image copy */
 		xv_destroy((Xv_opaque)temp);
 	    } else {
-		xv_error(NULL,
+		xv_error(XV_NULL,
 			 ERROR_STRING,
 		  XV_MSG("server_image_replrop(): dest is mpr, src isn't image pr"),
 			 ERROR_PKG, SERVER_IMAGE,
@@ -280,7 +280,7 @@ server_image_replrop(dest, dx, dy, dw, dh, op, src, sx, sy)
 		xv_replrop_internal(display, info, xid,
 			     replrop_gc, dx, dy, dw, dy, src, sx, sy, info);
 	    } else {
-		xv_error(NULL,
+		xv_error(XV_NULL,
 			 ERROR_STRING,
 			 XV_MSG("server_image_replrop(): dest is image pr, src isn't image pr or mpr"),
 			 ERROR_PKG, SERVER_IMAGE,
@@ -290,7 +290,7 @@ server_image_replrop(dest, dx, dy, dw, dh, op, src, sx, sy)
 	    break;
 	}
       default:
-	xv_error(NULL,
+	xv_error(XV_NULL,
 		 ERROR_STRING,
 	       XV_MSG("server_image_replrop(): dest is not mpr or server_image_pr"),
 		 ERROR_PKG, SERVER_IMAGE,
@@ -337,7 +337,7 @@ server_image_region(dest, x, y, w, h)
     Xv_opaque       dest;
     int             x, y, w, h;
 {
-    xv_error(NULL,
+    xv_error(XV_NULL,
 	     ERROR_STRING, 
 	     XV_MSG("server_image_region: Unsupported operation"),
 	     ERROR_PKG, SERVER_IMAGE,
@@ -351,7 +351,7 @@ server_image_colormap(dest, index, count, red, green, blue)
     int             index, count;
     unsigned char   red[], green[], blue[];
 {
-    xv_error(NULL,
+    xv_error(XV_NULL,
 	     ERROR_STRING, 
 	     XV_MSG("Server images do not have associated colormaps"),
 	     ERROR_PKG, SERVER_IMAGE,

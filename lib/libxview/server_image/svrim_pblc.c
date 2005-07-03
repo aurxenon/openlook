@@ -67,7 +67,7 @@ server_image_create_internal(parent, server_image_public, avlist, offset_ptr)
 	(Xv_opaque) xv_alloc(Server_image_info);
 
     if (!(server_image = SERVER_IMAGE_PRIVATE(server_image_public))) {
-	xv_error(NULL,
+	xv_error(XV_NULL,
 		 ERROR_STRING, 
 		 XV_MSG("Server image alloc failed"),
 		 ERROR_PKG, SERVER_IMAGE,
@@ -128,7 +128,7 @@ server_image_create_internal(parent, server_image_public, avlist, offset_ptr)
 			free( ct_file );
 #endif /* OW_I18N */
 		if (status != BitmapSuccess) {
-		    xv_error(NULL,
+		    xv_error(XV_NULL,
 			ERROR_STRING, 
 			XV_MSG("SERVER_IMAGE_BITMAP_FILE: Server image creation failed"),
 			ERROR_PKG, SERVER_IMAGE,
@@ -219,7 +219,7 @@ server_image_set_internal(server_image_public, avlist)
 
 	      	    if (XGetGeometry(display, (Drawable)attrs[1], &root, &x, &y,
 			&width, &height, &border_width, &depth) == 0) { 
-		        xv_error(NULL,
+		        xv_error(XV_NULL,
 		      	    ERROR_STRING,
 		      	        XV_MSG("SERVER_IMAGE_PIXMAP: Unable to get geometry"),
 		      	    ERROR_PKG, SERVER_IMAGE,
@@ -272,12 +272,12 @@ server_image_set_internal(server_image_public, avlist)
 					  XV_AUTO_CREATE, FALSE,
 					  CMS_NAME, (char *) attrs[1], 
 					  NULL);
-		if (info->cms == NULL) {
+		if (info->cms == XV_NULL) {
 		    char            error[60];
 		    sprintf(error, 
 			XV_MSG("Colormap segment %s not found"), 
 			(char *) attrs[1]);
-		    xv_error(NULL,
+		    xv_error(XV_NULL,
 			     ERROR_STRING, error,
 			     ERROR_PKG, SERVER_IMAGE,
 			     0);
@@ -318,7 +318,7 @@ server_image_set_internal(server_image_public, avlist)
 		XCreatePixmap(display,
 		    xv_get(xv_get(screen, XV_ROOT), XV_XID),
 		    rpr->pr_size.x, rpr->pr_size.y, rpr->pr_depth))) {
-	    		xv_error(NULL,
+	    		xv_error(XV_NULL,
 		     	    ERROR_STRING,
 			    XV_MSG("Server Image creation failed"),
 		     	    ERROR_PKG, SERVER_IMAGE,
@@ -330,7 +330,7 @@ server_image_set_internal(server_image_public, avlist)
 	xv_visual(info) = (Screen_visual *)xv_get(screen,
 	    SCREEN_IMAGE_VISUAL, xv_xid(info), rpr->pr_depth);
 	xv_plane_mask(info) = ~0;
-	if (xv_cms(info) == NULL) {
+	if (xv_cms(info) == XV_NULL) {
 	    xv_cms(info) = (Cms) xv_get(screen, SCREEN_DEFAULT_CMS);
 	    xv_bg(info) = xv_is_bitmap(info) ? 0 : 
 				xv_get(info->cms, CMS_BACKGROUND_PIXEL);
@@ -342,7 +342,7 @@ server_image_set_internal(server_image_public, avlist)
     if ((new_bits == TRUE) || (new_x_bits == TRUE)) {
 	Pixrect        *pr;
 
-	if (xv_cms(info) == NULL) {
+	if (xv_cms(info) == XV_NULL) {
 	    xv_cms(info) = (Cms) xv_get(screen, SCREEN_DEFAULT_CMS);
 	    xv_bg(info) = xv_is_bitmap(info) ? 0 : 
 				xv_get(info->cms, CMS_BACKGROUND_PIXEL);
