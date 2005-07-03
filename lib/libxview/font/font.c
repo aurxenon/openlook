@@ -862,7 +862,7 @@ font_init(parent_public, font_public, avlist)
      */
     linfo = find_font_locale_info(server, avlist);
     if (!linfo) {
-       xv_error(NULL, 
+       xv_error(XV_NULL, 
 	  ERROR_STRING, "Unable to find font locale information", 
 	  ERROR_PKG, FONT, 
 	  NULL);
@@ -939,7 +939,7 @@ font_init(parent_public, font_public, avlist)
 	    (void) sprintf(dummy, XV_MSG("Cannot load font set '%s'"),
 		    message_name);
 
-	    xv_error(NULL,
+	    xv_error(XV_NULL,
 	        ERROR_STRING, dummy,
 	        ERROR_PKG, FONT,
 	        0);
@@ -964,7 +964,7 @@ font_init(parent_public, font_public, avlist)
 	    (void) sprintf(dummy, XV_MSG("Cannot load font '%s'"),
 		       (my_attrs.orig_name) ? my_attrs.orig_name 
 					: my_attrs.name);
-	    xv_error(NULL,
+	    xv_error(XV_NULL,
 		 ERROR_STRING, dummy,
 		 ERROR_PKG, FONT,
 		 0);
@@ -1320,7 +1320,7 @@ font_init(parent_public, font_public, avlist)
 	    (void) sprintf(dummy, XV_MSG("Cannot load font '%s'"),
 		       (my_attrs.orig_name) ? my_attrs.orig_name 
 					: my_attrs.name);
-	    xv_error(NULL,
+	    xv_error(XV_NULL,
 		 ERROR_STRING, dummy,
 		 ERROR_PKG, FONT,
 		 0);
@@ -1665,7 +1665,7 @@ xv_font_with_name(server, name)
 
 
     if (font_public == NULL)
-        xv_error(NULL,
+        xv_error(XV_NULL,
             ERROR_SEVERITY, ERROR_RECOVERABLE,
             ERROR_STRING,
                 XV_MSG("Unable to open default font set \n"),            NULL);
@@ -2177,7 +2177,7 @@ font_rescale_from_font(font, scale, attrs)
 
 	sprintf(dummy, XV_MSG("Bad scale value:%d"), 
 			(int)scale);
-	xv_error(NULL,
+	xv_error(XV_NULL,
 	        ERROR_STRING, dummy,
 	        ERROR_PKG, FONT,
 	        0);
@@ -2309,7 +2309,7 @@ font_rescale_from_font(font, scale, attrs)
 	char	dummy[128];
 
 	sprintf(dummy, "Bad scale value:%d", (int)scale);
-	xv_error(NULL,
+	xv_error(XV_NULL,
 	        ERROR_STRING, dummy,
 	        ERROR_PKG, FONT,
 	        0);
@@ -2613,7 +2613,7 @@ font_find_font(parent_public, pkg, avlist)
 
     linfo = find_font_locale_info(server, avlist);
     if (!linfo) {
-	xv_error(NULL,
+	xv_error(XV_NULL,
 	    ERROR_STRING, "Unable to find font locale information",
 	    ERROR_PKG, FONT,
 	    NULL);
@@ -3418,7 +3418,7 @@ Font_locale_info	*linfo;
 	 * This might be because of recursive family definitions
 	 */
 	if (null_entry_found && (numresolved == oldresolved))  {
-            xv_error(NULL,
+            xv_error(XV_NULL,
                     ERROR_STRING, 
 			XV_MSG("Initialization of font families failed. Possible recursive family definition"),
                     ERROR_PKG, FONT,
@@ -3982,7 +3982,7 @@ font_attrs_name:
 
 	/* If rescaling failed, return error code */
 	if ((font_name == NULL) || (strlen(font_name) == 0))  {
-	    xv_error(NULL,
+	    xv_error(XV_NULL,
 		ERROR_STRING, "Attempt to rescale from font failed",
 		ERROR_PKG, FONT,
 		0);
@@ -4057,7 +4057,7 @@ font_attrs_name:
                 sprintf(dummy, 
 	            XV_MSG("Font style %s is not known, using default style instead"),
                             font_attrs->style);
-                xv_error(NULL,
+                xv_error(XV_NULL,
                     ERROR_STRING, dummy,
                     ERROR_PKG, FONT,
                     0);
@@ -4074,7 +4074,7 @@ font_attrs_name:
 	        (void) sprintf(dummy, 
 			XV_MSG("Cannot load font '%s'"), 
 			font_name);
-	        xv_error(NULL,
+	        xv_error(XV_NULL,
 		         ERROR_STRING, dummy,
 		         ERROR_PKG, FONT,
 		         0);
@@ -4090,7 +4090,7 @@ font_attrs_name:
     }
 
     if (!font_attrs->names)  {
-        xv_error(NULL,
+        xv_error(XV_NULL,
             ERROR_STRING, XV_MSG("Failed to find font names"),
             ERROR_PKG, FONT,
             0);
@@ -4167,7 +4167,7 @@ Font_return_attrs	font_attrs;
 
 	        sprintf(dummy, 
 			XV_MSG("Attempt to rescale from font failed"));
-	        xv_error(NULL,
+	        xv_error(XV_NULL,
 		     ERROR_STRING, dummy,
 		     ERROR_PKG, FONT,
 		     0);
@@ -4191,7 +4191,7 @@ Font_return_attrs	font_attrs;
                 sprintf(dummy, 
 	            XV_MSG("Font style %s is not known, using default style instead"),
                             font_attrs->style);
-                xv_error(NULL,
+                xv_error(XV_NULL,
                     ERROR_STRING, dummy,
                     ERROR_PKG, FONT,
                     0);
@@ -4208,7 +4208,7 @@ Font_return_attrs	font_attrs;
 	        (void) sprintf(dummy, 
 			XV_MSG("Cannot load font '%s'"), 
 			font_name);
-	        xv_error(NULL,
+	        xv_error(XV_NULL,
 		         ERROR_STRING, dummy,
 		         ERROR_PKG, FONT,
 		         0);
@@ -4218,7 +4218,7 @@ Font_return_attrs	font_attrs;
     }
 
     if (!font_attrs->name)  {
-        xv_error(NULL,
+        xv_error(XV_NULL,
             ERROR_STRING, XV_MSG("Failed to construct font name"),
             ERROR_PKG, FONT,
             0);

@@ -1784,7 +1784,7 @@ fc_update_dimming( private, row )
 
     if ( (private->type == FILE_CHOOSER_OPEN) 
 	&& ( (private->custom == FILE_CHOOSER_SELECT_ALL)
-	    || (private->custom == NULL)
+	    || (private->custom == XV_NULL)
 	    )
 	)
 	return;

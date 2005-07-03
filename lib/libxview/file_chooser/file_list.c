@@ -1098,7 +1098,7 @@ flist_update_list( private, rows, num_rows )
 	    attrs[1] = (Attr_attribute) start_at;
 	    attrs[2] = (Attr_attribute) row_vals;
 	    attrs[3] = (Attr_attribute) num;
-	    attrs[4] = NULL;
+	    attrs[4] = XV_NULL;
 	    (void) (* plist_set)(public, (Attr_avlist) attrs);
 	    start_at += FLIST_INSERT_ROWS;
 	    num = 0;
@@ -1117,7 +1117,7 @@ flist_update_list( private, rows, num_rows )
 	attrs[0] = PANEL_LIST_DELETE_ROWS;
 	attrs[1] = (Attr_attribute) num_rows;
 	attrs[2] = (Attr_attribute) (rows_in_list - num_rows);
-	attrs[3] = NULL;
+	attrs[3] = XV_NULL;
 	(void) (* plist_set)(public, (Attr_avlist) attrs);
     }
 
@@ -1128,7 +1128,7 @@ flist_update_list( private, rows, num_rows )
     if ( private->f.show_dir ) {
 	attrs[0] = PANEL_LIST_TITLE;
 	attrs[1] = (Attr_attribute) private->directory;
-	attrs[2] = NULL;
+	attrs[2] = XV_NULL;
 	(void) (* plist_set)(public, (Attr_avlist) attrs);
     }
 
@@ -1167,7 +1167,7 @@ flist_update_list( private, rows, num_rows )
 #define PEEKC()		(*sp)
 #define UNGETC(c)	(--sp)
 #define RETURN(c)	return c;
-#define ERROR(c)	xv_error(0, ERROR_STRING, XV_MSG("Invalid regular expression!"), \
+#define ERROR(c)	xv_error(XV_NULL, ERROR_STRING, XV_MSG("Invalid regular expression!"), \
 				 ERROR_PKG, FILE_LIST, NULL)
 
 /*

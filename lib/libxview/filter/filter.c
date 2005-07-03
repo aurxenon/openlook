@@ -69,7 +69,7 @@ xv_parse_filter_table(in, filename)
 
 	    (void) sprintf(dummy,
 			   XV_MSG("while parsing filter file %s"), filename);
-	    xv_error(NULL,
+	    xv_error(XV_NULL,
 		     ERROR_LAYER, ERROR_SYSTEM,
 		     ERROR_STRING, dummy,
 		     0);
@@ -105,7 +105,7 @@ xv_parse_filter_table(in, filename)
 	    (void) sprintf(dummy,
 			   XV_MSG("filter file %s: missing command-line"), 
 			   filename);
-	    xv_error(NULL,
+	    xv_error(XV_NULL,
 		     ERROR_STRING, dummy,
 		     0);
 
@@ -157,7 +157,7 @@ error:
 	    (void) sprintf(dummy,
 			   XV_MSG("problem parsing filter file %s"), 
 			   filename);
-	    xv_error(NULL,
+	    xv_error(XV_NULL,
 		     ERROR_STRING, dummy,
 		     0);
 	}
@@ -174,7 +174,7 @@ errorNoSkip:
 			       XV_MSG("problem near character position %d"),
 			       pos.charpos);
 	    i--;
-	    xv_error(NULL,
+	    xv_error(XV_NULL,
 		     ERROR_STRING, dummy,
 		     0);
 	}
@@ -187,7 +187,7 @@ errorNoSkip:
 	(void) sprintf(dummy, 
 		XV_MSG("while parsing filter file %s"), 
 		filename);
-	xv_error(NULL,
+	xv_error(XV_NULL,
 		 ERROR_LAYER, ERROR_SYSTEM,
 		 ERROR_STRING, dummy,
 		 0);

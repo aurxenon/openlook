@@ -78,7 +78,7 @@ xv_strcpy ( dest, src )
 	xv_free_ref( dest );
 	dest = new;
     } else {
-	(void) xv_error( NULL,
+	(void) xv_error( XV_NULL,
 			ERROR_LAYER,	ERROR_SYSTEM,
 			ERROR_STRING,	XV_MSG("out of memory, copying string!"),
 			NULL );
