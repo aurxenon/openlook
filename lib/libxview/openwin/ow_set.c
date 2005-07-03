@@ -89,7 +89,7 @@ openwin_set(owin_public, avlist)
 	    break;
 
 	  case WIN_VERTICAL_SCROLLBAR:
-	    if ((Scrollbar) avlist[1] != NULL) {
+	    if ((Scrollbar) avlist[1] != XV_NULL) {
 		STATUS_SET(owin, adjust_vertical);
 	    } else {
 		STATUS_RESET(owin, adjust_vertical);
@@ -101,7 +101,7 @@ openwin_set(owin_public, avlist)
 	    }
 	    break;
 	  case WIN_HORIZONTAL_SCROLLBAR:
-	    if ((Scrollbar) avlist[1] != NULL) {
+	    if ((Scrollbar) avlist[1] != XV_NULL) {
 		STATUS_SET(owin, adjust_horizontal);
 	    } else {
 		STATUS_RESET(owin, adjust_horizontal);
@@ -274,7 +274,7 @@ ow_parse_split_attrs(owin, avlist)
     Openwin_attribute attr;
     Openwin_split_direction split_direction = OPENWIN_SPLIT_HORIZONTAL;
     Openwin_view_info *view;
-    Xv_Window       split_view = NULL;
+    Xv_Window       split_view = XV_NULL;
     int             split_position = 0;
     int             split_viewstart = OPENWIN_SPLIT_NEWVIEW_IN_PLACE;
     Rect            r;
@@ -313,7 +313,7 @@ ow_parse_split_attrs(owin, avlist)
     /* do data validation */
 
     /* see if a window was passed to be split and if it is valid */
-    if (split_view == NULL || openwin_viewdata_for_view(split_view, &view) != XV_OK) {
+    if (split_view == XV_NULL || openwin_viewdata_for_view(split_view, &view) != XV_OK) {
 	/* error invalid view */
 	return (XV_ERROR);
     }
@@ -374,10 +374,10 @@ ow_set_scrollbar(owin, sb, direction)
     Xv_opaque       sb_notify_client;
 
     /* give the vertical scrollbar to the first view */
-    if (sb != NULL) {
+    if (sb != XV_NULL) {
 	/* if we already have a scrollbar report an error */
 	while (view != NULL) {
-	    if (openwin_sb(view, direction) != NULL) {
+	    if (openwin_sb(view, direction) != XV_NULL) {
 		/* FATAL ERROR */
 		return ((Xv_opaque) XV_ERROR);
 	    }
@@ -415,7 +415,7 @@ ow_set_scrollbar(owin, sb, direction)
 	       0);
 
 	sb_notify_client = xv_get(sb, SCROLLBAR_NOTIFY_CLIENT);
-	if (sb_notify_client == NULL ||
+	if (sb_notify_client == XV_NULL ||
 	    sb_notify_client == OPENWIN_PUBLIC(owin)) {
 	    xv_set(sb,
 		   SCROLLBAR_NOTIFY_CLIENT, owin->views->view,
@@ -436,8 +436,8 @@ ow_set_scrollbar(owin, sb, direction)
 	/* for each view unset as having sb and adjust view */
 	for (view = owin->views; view != NULL; view = view->next_view) {
 	    sb = openwin_sb(view, direction);
-	    openwin_set_sb(view, direction, NULL);
-	    if (sb != NULL) {
+	    openwin_set_sb(view, direction, XV_NULL);
+	    if (sb != XV_NULL) {
 		xv_destroy(sb);
 	    }
 	}

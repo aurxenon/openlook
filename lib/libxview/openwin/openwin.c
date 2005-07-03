@@ -214,7 +214,7 @@ openwin_layout(owin_public, child, op, d1, d2, d3, d4, d5)
 	    /* must look through data structures since can't */
 	    /* do a get on the sb to get information */
 	    if (openwin_viewdata_for_sb(owin, child, &view, &direction, &last) == XV_OK) {
-		openwin_set_sb(view, direction, NULL);
+		openwin_set_sb(view, direction, XV_NULL);
 		/* only re-adjust if last view with sb */
 		if (last) {
 		    if (direction == SCROLLBAR_VERTICAL) {

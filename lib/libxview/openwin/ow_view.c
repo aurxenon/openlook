@@ -78,11 +78,11 @@ openwin_create_initial_view(owin)
     /* add scrollbars if we have seen them */
     if (owin->vsb_on_create) {
 	openwin_register_initial_sb(owin, new_view, owin->vsb_on_create, SCROLLBAR_VERTICAL);
-	owin->vsb_on_create = NULL;
+	owin->vsb_on_create = XV_NULL;
     }
     if (owin->hsb_on_create) {
 	openwin_register_initial_sb(owin, new_view, owin->hsb_on_create, SCROLLBAR_HORIZONTAL);
-	owin->hsb_on_create = NULL;
+	owin->hsb_on_create = XV_NULL;
     }
 }
 
@@ -211,12 +211,12 @@ openwin_test_for_sb(owin, sb, sb_direction, view, last_sb)
 	test_sb = openwin_sb(test_view, sb_direction);
 	if (test_sb == sb) {
 	    *view = test_view;
-	} else if (test_sb != NULL) {
+	} else if (test_sb != XV_NULL) {
 	    *last_sb = FALSE;
 	}
     }
 
-    if (*view != NULL) {
+    if (*view != XV_NULL) {
 	return (XV_OK);
     } else {
 	return (XV_ERROR);
@@ -257,7 +257,7 @@ openwin_split_view(owin, view, direction, pos, view_start)
     openwin_adjust_view(owin, view, &r);
 
     /* add needed scrollbars */
-    if ((sb = openwin_sb(view, SCROLLBAR_VERTICAL)) != NULL) {
+    if ((sb = openwin_sb(view, SCROLLBAR_VERTICAL)) != XV_NULL) {
 	openwin_copy_scrollbar(owin, sb, new_view);
 	if (direction == OPENWIN_SPLIT_HORIZONTAL) {
 	    sb = openwin_sb(new_view, SCROLLBAR_VERTICAL);
@@ -265,7 +265,7 @@ openwin_split_view(owin, view, direction, pos, view_start)
 		   view_start / (int) xv_get(sb, SCROLLBAR_PIXELS_PER_UNIT), 0);
 	}
     }
-    if ((sb = openwin_sb(view, SCROLLBAR_HORIZONTAL)) != NULL) {
+    if ((sb = openwin_sb(view, SCROLLBAR_HORIZONTAL)) != XV_NULL) {
 	openwin_copy_scrollbar(owin, sb, new_view);
 	if (direction == OPENWIN_SPLIT_VERTICAL) {
 	    sb = openwin_sb(new_view, SCROLLBAR_HORIZONTAL);
@@ -433,10 +433,10 @@ openwin_remove_scrollbars(view)
     vsb = openwin_sb(view, SCROLLBAR_VERTICAL);
     hsb = openwin_sb(view, SCROLLBAR_HORIZONTAL);
 
-    if (vsb != NULL) {
+    if (vsb != XV_NULL) {
 	xv_destroy_status(vsb, DESTROY_CLEANUP);
     }
-    if (hsb != NULL) {
+    if (hsb != XV_NULL) {
 	xv_destroy_status(hsb, DESTROY_CLEANUP);
     }
 }
@@ -562,12 +562,12 @@ openwin_check_view(view)
     if (ret != XV_OK)
 	return (ret);
 
-    if ((sb = openwin_sb(view, SCROLLBAR_VERTICAL)) != NULL) {
+    if ((sb = openwin_sb(view, SCROLLBAR_VERTICAL)) != XV_NULL) {
 	ret = xv_destroy_status(sb, DESTROY_CHECKING);
 	if (ret != XV_OK)
 	    return (ret);
     }
-    if ((sb = openwin_sb(view, SCROLLBAR_HORIZONTAL)) != NULL) {
+    if ((sb = openwin_sb(view, SCROLLBAR_HORIZONTAL)) != XV_NULL) {
 	ret = xv_destroy_status(sb, DESTROY_CHECKING);
 	if (ret != XV_OK)
 	    return (ret);

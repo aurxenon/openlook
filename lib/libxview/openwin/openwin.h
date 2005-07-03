@@ -53,7 +53,7 @@
 
 #define	OPENWIN_EACH_VIEW(openwin, view)	\
    {int _view_cnt = 0; 				\
-   while (((view) = (Xv_Window) xv_get((openwin), OPENWIN_NTH_VIEW, _view_cnt++)) != NULL) { 					\
+   while (((view) = (Xv_Window) xv_get((openwin), OPENWIN_NTH_VIEW, _view_cnt++)) != XV_NULL) { 					\
 
 #define	OPENWIN_END_EACH	}}
 

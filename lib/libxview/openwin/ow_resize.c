@@ -104,13 +104,13 @@ openwin_adjust_view(owin, view, view_rect)
 	r.r_height = view_rect->r_height;
     }
     /* place the scrollbars */
-    if ((sb = openwin_sb(view, SCROLLBAR_VERTICAL)) != NULL) {
+    if ((sb = openwin_sb(view, SCROLLBAR_VERTICAL)) != XV_NULL) {
 	openwin_place_scrollbar(OPENWIN_PUBLIC(owin), view->view,
 		   openwin_sb(view, SCROLLBAR_VERTICAL), SCROLLBAR_VERTICAL,
 				&r, &sb_r);
 	xv_set(sb, WIN_RECT, &sb_r, 0);
     }
-    if ((sb = openwin_sb(view, SCROLLBAR_HORIZONTAL)) != NULL) {
+    if ((sb = openwin_sb(view, SCROLLBAR_HORIZONTAL)) != XV_NULL) {
 
 	openwin_place_scrollbar(OPENWIN_PUBLIC(owin), view->view,
 	       openwin_sb(view, SCROLLBAR_HORIZONTAL), SCROLLBAR_HORIZONTAL,
@@ -139,7 +139,7 @@ openwin_place_scrollbar(owin_public, view_public, sb, direction, r, sb_r)
     Xv_openwin_info *owin = OPENWIN_PRIVATE(owin_public);    
     int             border_width;
 
-    if (sb == NULL)
+    if (sb == XV_NULL)
 	return;
     border_width = openwin_border_width(owin_public, view_public);
 
@@ -223,13 +223,13 @@ openwin_adjust_view_rect(owin, view, view_rect)
 	openwin_paint_border(OPENWIN_PUBLIC(owin), view, TRUE);
 #endif /* SELECTABLE_VIEWS */
 
-    if (vsb != NULL) {
+    if (vsb != XV_NULL) {
 	xv_set(vsb,
 	       SCROLLBAR_VIEW_LENGTH, 
 	       view_rect->r_height / (int) xv_get(vsb, SCROLLBAR_PIXELS_PER_UNIT),
 	       0);
     }
-    if (hsb != NULL) {
+    if (hsb != XV_NULL) {
 	xv_set(hsb,
 	       SCROLLBAR_VIEW_LENGTH, 
 	       view_rect->r_width / (int) xv_get(hsb, SCROLLBAR_PIXELS_PER_UNIT),
@@ -294,11 +294,11 @@ openwin_adjust_view_by_margins(owin, view, margin, view_rect)
      * a scrollbar 
      */
     if (view->right_edge ||
-	(openwin_sb(view, SCROLLBAR_VERTICAL) != NULL) ||
+	(openwin_sb(view, SCROLLBAR_VERTICAL) != XV_NULL) ||
 	STATUS(owin, adjust_vertical)) 
       n_vmargins = 0;
     if (view->bottom_edge ||
-	(openwin_sb(view, SCROLLBAR_HORIZONTAL) != NULL) ||
+	(openwin_sb(view, SCROLLBAR_HORIZONTAL) != XV_NULL) ||
 	STATUS(owin, adjust_horizontal))
       n_hmargins = 0;
     
