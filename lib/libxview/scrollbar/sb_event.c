@@ -226,14 +226,14 @@ scrollbar_handle_event(sb_public, event, arg, type)
 			xv_set(paint_window, WIN_SET_FOCUS, 0);
 			xv_set(openwin, XV_FOCUS_ELEMENT, 0, 0);
 		    } else
-			openwin = NULL;
+			openwin = XV_NULL;
 		} else {
 		    /* Next view window receives input focus */
 		    view_window = xv_get(openwin, OPENWIN_NTH_VIEW, view_nbr+1);
 		    if (view_window)
 			xv_set(view_window, WIN_SET_FOCUS, 0);
 		    else
-			openwin = NULL;
+			openwin = XV_NULL;
 		}
 	    }
 	    if (!openwin) {
@@ -302,14 +302,14 @@ scrollbar_handle_event(sb_public, event, arg, type)
 			xv_set(paint_window, WIN_SET_FOCUS, 0);
 			xv_set(openwin, XV_FOCUS_ELEMENT, 0, 0);
 		    } else
-			openwin = NULL;
+			openwin = XV_NULL;
 		} else {
 		    /* Next view window receives input focus */
 		    view_window = xv_get(openwin, OPENWIN_NTH_VIEW, view_nbr+1);
 		    if (view_window)
 			xv_set(view_window, WIN_SET_FOCUS, 0);
 		    else
-			openwin = NULL;
+			openwin = XV_NULL;
 		}
 	    }
 	    if (!openwin) {
@@ -1287,7 +1287,7 @@ scrollbar_destroy_split(sb)
     extern void     win_free_event();
 
     win_post_id_and_arg(sb->managee,
-			ACTION_SPLIT_DESTROY, NOTIFY_SAFE, NULL,
+			ACTION_SPLIT_DESTROY, NOTIFY_SAFE, XV_NULL,
 			win_copy_event, win_free_event);
 }
 
@@ -1386,7 +1386,7 @@ scrollbar_find_view_nbr(sb, openwin)
 
     for (view_nbr = 0;
 	 (view = xv_get(openwin, OPENWIN_NTH_VIEW, view_nbr))
-	  != NULL;
+	  != XV_NULL;
 	 view_nbr++)
 	if (view == sb->managee)
 	    break;

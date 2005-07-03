@@ -41,7 +41,7 @@ va_dcl
         va_end(args);
     }
     else
-        avlist[0] = NULL;
+        avlist[0] = XV_NULL;
 
     return (Scrollbar) xv_create(0, SCROLLBAR,
 				 ATTR_LIST, avlist,

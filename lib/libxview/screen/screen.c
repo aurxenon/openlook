@@ -79,7 +79,7 @@ screen_init(parent, screen_public, avlist)
 	switch ((int) attrs[0]) {
 	  case SCREEN_NUMBER:
 	    if ((int) attrs[1] >= ScreenCount(display)) {
-		xv_error(NULL,
+		xv_error(XV_NULL,
 			 ERROR_BAD_VALUE, attrs[1], attrs[0],
 			 ERROR_PKG, SCREEN,
 			 0);
@@ -212,7 +212,7 @@ screen_default_visual_info(display, screen)
 	    sprintf(message, XV_MSG("Unknown visual class \"%s\", using default visual\n"),
 	    defaults_get_string("window.visual", "Window.Visual",
 				(char *)NULL));
-	    xv_error(NULL,
+	    xv_error(XV_NULL,
 		     ERROR_STRING, message,
 		     ERROR_PKG, SCREEN,
 		     NULL);
@@ -329,7 +329,7 @@ screen_set_cached_window_busy(screen_public, window, busy)
 	}
     }
     if (cached_window == NULL) {
-	xv_error(NULL,
+	xv_error(XV_NULL,
 		 ERROR_STRING, 
 		 XV_MSG("Unable to return window to screen cache"),
 		 ERROR_PKG, SCREEN,

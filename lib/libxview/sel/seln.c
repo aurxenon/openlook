@@ -72,7 +72,7 @@ selection_get(sel_read, window)
     struct selection selection, *sel = &selection;
     FILE           *file;
     int             c;
-    int             n;
+    int             n, ur;
     extern          errno;
 
     *sel = selnull;
@@ -92,7 +92,7 @@ selection_get(sel_read, window)
     if ((c = getc(file)) == EOF) {
 	goto Cleanup;		/* Selection has been cleared */
     } else
-	(void) ungetc(c, file);
+	ur = ungetc(c, file);
     if ((n = fscanf(file,
 	 "TYPE=%ld, ITEMS=%ld, ITEMBYTES=%ld, PUBFLAGS=%lx, PRIVDATA=%lx%c",
 		    &sel->sel_type, &sel->sel_items, &sel->sel_itembytes,

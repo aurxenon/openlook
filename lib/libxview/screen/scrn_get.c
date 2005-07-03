@@ -329,8 +329,8 @@ screen_get_cached_gc_list(screen, window)
 		FONT_STYLE, FONT_STYLE_BOLD,
 		FONT_SIZE, xv_get(std_font, FONT_SIZE),
 		0);
-	    if (bold_font == NULL) {
-		xv_error(NULL,
+	    if (bold_font == XV_NULL) {
+		xv_error(XV_NULL,
 		    ERROR_STRING,
 		        XV_MSG("Unable to find bold font; using standard font"),
 		    ERROR_PKG, SCREEN,

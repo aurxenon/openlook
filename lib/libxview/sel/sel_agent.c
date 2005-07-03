@@ -125,7 +125,7 @@ selection_init_agent(server, screen)
 #endif
 
     if ((window = xv_create(root_window, WINDOW, WIN_SELECTION_WINDOW,
-			    XV_SHOW, FALSE, 0)) == NULL) {
+			    XV_SHOW, FALSE, 0)) == XV_NULL) {
 	complain("Could not create window");
 	exit(1);
     }
@@ -1776,7 +1776,7 @@ register Atom  *current_value;
 
 				    /* else, lets get it's value.             */
         if ((*current_value = XInternAtom(dpy, prop_name, 0)) == None) 
-                xv_error(NULL,
+                xv_error(XV_NULL,
                         ERROR_STRING,
 		    XV_MSG("Couldn't get selection atom, selections may not work. (Selection package)"),
 			0);

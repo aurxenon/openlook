@@ -161,7 +161,7 @@ rect_order(r1, r2, sortorder)
 	return (TRUE);
 	break;
       default:
-	xv_error(NULL,
+	xv_error(XV_NULL,
 		 ERROR_STRING, 
 		 XV_MSG("Bad sortorder arg in mostRect"),
 		 0);
