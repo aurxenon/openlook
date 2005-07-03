@@ -79,24 +79,24 @@ l10n_config_list_t	l10n_config_initial_specific_setting[] = {
 #define	CLASS_NAME_LEN	20
 l10n_config_list_t	l10n_config_basic_setting[] = {
 #define	BASIC_SETTING		0
-{"basic_setting",	"basicLocale",	D_string, NULL},
+{"basic_setting",	"basicLocale",	D_string, XV_NULL},
 
 {0},
 };
 
 l10n_config_list_t	l10n_config_initial_specific_setting[] = {
 #define	INPUT_LANGUAGE		0
-{"input_language",	"inputLang", 	D_string, NULL},
+{"input_language",	"inputLang", 	D_string, XV_NULL},
 
 #define	DISPLAY_LANGUAGE	1
-{"display_language", "displayLang",	D_string, NULL},
+{"display_language", "displayLang",	D_string, XV_NULL},
 
 #define	TIME_FORMAT		2
-{"time_format",	"timeFormat",	D_string, NULL},
+{"time_format",	"timeFormat",	D_string, XV_NULL},
 
 
 #define	NUMERIC_FORMAT		3
-{"numeric_format",	"numeric",	D_string, NULL},
+{"numeric_format",	"numeric",	D_string, XV_NULL},
 
 #define	SS_CATEGORY		4
 {0}

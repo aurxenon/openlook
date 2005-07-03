@@ -9,6 +9,8 @@
 #include <xview/xview.h>
 #include <xview/panel.h>
 #include <xview/defaults.h>
+#include <xview_private/i18n_impl.h>
+
 
 #define BORDER_WIDTH	1
 

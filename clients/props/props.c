@@ -158,7 +158,7 @@ apply_props_proc(panel_item, event)
 		    if ((Panel_item_type) xv_get(id->panel_item,
 					PANEL_ITEM_CLASS) == PANEL_TEXT_ITEM)
 			defaults_set_integer(id->name,
-					     atoi(xv_get(id->panel_item,
+					     atoi((char*)xv_get(id->panel_item,
 							 PANEL_VALUE)));
 		    else
 			defaults_set_integer(id->name,
@@ -168,7 +168,7 @@ apply_props_proc(panel_item, event)
 		    if ((Panel_item_type) xv_get(id->panel_item,
 					PANEL_ITEM_CLASS) == PANEL_TEXT_ITEM)
 			defaults_set_string(id->name,
-					xv_get(id->panel_item, PANEL_VALUE));
+					(char*)xv_get(id->panel_item, PANEL_VALUE));
 		    else {
 			int         index;
 			int         i;
@@ -222,7 +222,7 @@ set_props_values(panel_item, event)
 	    switch (id->type) {
 	    case D_number:
 		tmp = defaults_get_integer(id->name, id->class,
-					   id->default_value);
+					   (int)id->default_value);
 		if ((Panel_item_type) xv_get(id->panel_item, PANEL_ITEM_CLASS)
 			== PANEL_TEXT_ITEM) {
 		    sprintf(number_string, "%d", tmp);
@@ -262,7 +262,7 @@ set_props_values(panel_item, event)
 	    case D_boolean:
 		xv_set(id->panel_item, PANEL_VALUE,
 		       defaults_get_boolean(id->name, id->class,
-					    id->default_value),
+					    (int)id->default_value),
 		       NULL);
 		break;
 	    default:
@@ -715,6 +715,7 @@ factory_choice(panel_item, event)
     Event      *event;
 {
     int         factory = !(int) xv_get(panel_item, PANEL_VALUE);
+    int         dummy;
 
     if (factory == showing_factory)
 	return;
@@ -722,7 +723,7 @@ factory_choice(panel_item, event)
     if (factory) {
 	if (!saved_defaults[0]) {
 	    strcpy(saved_defaults, "/tmp/.XtempXXXXXX");
-	    mktemp(saved_defaults);
+	    dummy = mkstemp(saved_defaults);
 	} else
 	    unlink(saved_defaults);
 
@@ -791,7 +792,7 @@ frame_unmap_proc(frame, event, arg, type)
     if (event_action(event) == ACTION_CLOSE) {
 	exit(0);
     }
-    return (notify_next_event_func(frame, event, arg, type));
+    return (notify_next_event_func(frame, (Xv_opaque)event, arg, type));
 }
 
 main(argc, argv)
@@ -826,7 +827,7 @@ main(argc, argv)
         bindtextdomain("props", localepath);
     }
 
-    frame = xv_create(NULL, FRAME_CMD,
+    frame = xv_create(XV_NULL, FRAME_CMD,
 		      XV_VISUAL_CLASS, PseudoColor,
 		      XV_DEPTH, 8,
 		      WIN_INHERIT_COLORS, TRUE,
