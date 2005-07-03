@@ -164,7 +164,7 @@ unsigned long              wrk_space_pixel;
 		   left,top,font_set,icon->ic_text_wcs);
 #else
         DrawString(pixwin, xv_fg(info), wrk_space_pixel,
-		   left, top, font, icon->ic_text);
+		   left, top, (Xv_opaque)font, icon->ic_text);
 #endif
     else
 #ifdef OW_I18N
@@ -360,7 +360,7 @@ register int             x, y;
 		val.fill_style = FillTiled;
 		val_mask = GCFillStyle | GCTile;
     	} else {
-		xv_error(NULL,
+		xv_error(XV_NULL,
 			ERROR_STRING,
 		 	XV_MSG("icon: can't handle drawables of different depth"),
 		 	0);
@@ -375,7 +375,7 @@ register int             x, y;
 			     icon->ic_gfxrect.r_top + y,
 			     icon->ic_gfxrect.r_width, icon->ic_gfxrect.r_height,
 			     (Xv_opaque) icon->ic_mpr, 0, 0, info ) == XV_ERROR) {
-	    xv_error( NULL, ERROR_STRING, 
+	    xv_error( XV_NULL, ERROR_STRING, 
 		XV_MSG("xv_rop: xv_rop_internal failed"), 0 );
 	}
     }

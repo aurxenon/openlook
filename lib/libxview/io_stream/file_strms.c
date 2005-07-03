@@ -17,7 +17,7 @@ static char     sccsid[] = "@(#)file_strms.c 20.18 93/06/28";
 
 #define GetFISData struct xv_file_input_stream_data *data = (struct xv_file_input_stream_data*) in->client_data
 
-static struct xv_file_input_stream_data {
+struct xv_file_input_stream_data {
     FILE           *fp;
     int             lineno;
 };
@@ -130,7 +130,7 @@ xv_file_input_stream(s, fp)
     }
     value = (STREAM *) xv_malloc(sizeof(STREAM));
     if (value == NULL) {	/* malloc can fail */
-	xv_error(NULL,
+	xv_error(XV_NULL,
 		 ERROR_SEVERITY, ERROR_SYSTEM,
 		 0);
 	return ((STREAM *)NULL);
@@ -141,7 +141,7 @@ xv_file_input_stream(s, fp)
     data = (struct xv_file_input_stream_data *) xv_malloc(
 				     sizeof(struct xv_file_input_stream_data));
     if (data == NULL) {
-	xv_error(NULL,
+	xv_error(XV_NULL,
 		 ERROR_SEVERITY, ERROR_SYSTEM,
 		 0);
 	return ((STREAM *)NULL);
@@ -156,7 +156,7 @@ xv_file_input_stream(s, fp)
 
 #define GetFOSData struct xv_file_output_stream_data *data = (struct xv_file_output_stream_data*) out->client_data
 
-static struct xv_file_output_stream_data {
+struct xv_file_output_stream_data {
     FILE           *fp;
     int             lineno;
 };
@@ -237,7 +237,7 @@ xv_file_output_stream(s, fp, append)
     }
     value = (STREAM *) xv_malloc(sizeof(STREAM));
     if (value == NULL) {	/* malloc can fail */
-	xv_error(NULL,
+	xv_error(XV_NULL,
 		 ERROR_SEVERITY, ERROR_SYSTEM,
 		 0);
 	return ((STREAM *)NULL);
@@ -248,7 +248,7 @@ xv_file_output_stream(s, fp, append)
     data = (struct xv_file_output_stream_data *) xv_malloc(
 				    sizeof(struct xv_file_output_stream_data));
     if (data == NULL) {
-	xv_error(NULL,
+	xv_error(XV_NULL,
 		 ERROR_SEVERITY, ERROR_SYSTEM,
 		 0);
 	return ((STREAM *)NULL);

@@ -64,9 +64,9 @@ va_dcl
         va_end(valist);
     }
     else
-        avlist[0] = NULL;
+        avlist[0] = XV_NULL;
 
-    return (Icon) xv_create_avlist(NULL, ICON, avlist);
+    return (Icon) xv_create_avlist(XV_NULL, ICON, avlist);
 }
 
 /*ARGSUSED*/
@@ -463,12 +463,12 @@ Icon            icon_public;
 	  sprintf( msg,
 		  XV_MSG("icon: color name \"%s\" not in database"),
 		  color_name );
-	  xv_error( NULL, ERROR_SEVERITY, ERROR_RECOVERABLE,
+	  xv_error( XV_NULL, ERROR_SEVERITY, ERROR_RECOVERABLE,
 		   ERROR_STRING, msg,
 		   ERROR_PKG, ICON,
 		   NULL );
       } else if ( !XAllocColor( display, cmap, &color ) )  {
-	  xv_error( NULL, ERROR_SEVERITY, ERROR_RECOVERABLE,
+	  xv_error( XV_NULL, ERROR_SEVERITY, ERROR_RECOVERABLE,
 		   ERROR_STRING, 
 		   XV_MSG("icon: all color cells are allocated"),
 		   ERROR_PKG, ICON,

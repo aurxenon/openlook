@@ -41,7 +41,7 @@ icon_open_header(from_file, error_msg, info)
 /* See comments in icon_load.h */
 {
 #define INVALID	-1
-    register int    c;
+    register int    c, tc;
     char            c_temp;
     register FILE  *result;
 
@@ -117,7 +117,7 @@ icon_open_header(from_file, error_msg, info)
 		if (c_temp == '/')
 		    c = 0;	/* Force exit */
 		else
-		    (void) ungetc(c_temp, result);
+		    tc = ungetc(c_temp, result);
 	    }
 	    break;
 	  default:{
@@ -196,7 +196,7 @@ icon_read_pr(fd, header, pr)
 		break;
 #endif
 	      default:
-		xv_error(NULL,
+		xv_error(XV_NULL,
 			 ERROR_SEVERITY, ERROR_NON_RECOVERABLE,
 			 ERROR_STRING,
 			     XV_MSG("icon file header valid bits not 16 or 32"),
@@ -250,7 +250,7 @@ icon_load_svrim(from_file, error_msg)
 
     fd = icon_open_header(from_file, error_msg, &header);
     if (fd == NULL)
-	return (NULL);
+	return (XV_NULL);
     /*
      * Allocate the memory pixrect and read the actual bits making up the icon.
      */

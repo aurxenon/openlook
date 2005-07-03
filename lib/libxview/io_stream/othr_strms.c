@@ -17,7 +17,7 @@ static char     sccsid[] = "@(#)othr_strms.c 20.20 93/06/28";
 
 #define GetFCSData struct xv_filter_comments_stream_data *data = (struct xv_filter_comments_stream_data*) in->client_data
 
-static struct xv_filter_comments_stream_data {
+struct xv_filter_comments_stream_data {
     Bool            backed_up;
     char            backup, lastchar;
 };

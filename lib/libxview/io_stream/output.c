@@ -17,7 +17,7 @@ static char     sccsid[] = "@(#)output.c 20.18 93/06/28";
 #define Get_Output_Ops \
 	struct output_ops_vector *ops;\
 	if (out->stream_type != Output) \
-	    xv_error(NULL, \
+	    xv_error(XV_NULL, \
 		ERROR_SEVERITY, ERROR_NON_RECOVERABLE, \
 		ERROR_STRING, \
 		XV_MSG("output stream not of type output"), \

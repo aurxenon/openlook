@@ -17,7 +17,7 @@ static char     sccsid[] = "@(#)str_strms.c 20.17 93/06/28";
 
 #define GetSISData struct string_input_stream_data	*data = (struct string_input_stream_data*) in->client_data
 
-static struct string_input_stream_data {
+struct string_input_stream_data {
     char           *string;
     int             charpos;
 };
@@ -119,7 +119,7 @@ string_input_stream(s, in)
 
 	value = (STREAM *) xv_malloc(sizeof(STREAM));
 	if (value == NULL) {	/* malloc can fail */
-	    xv_error(NULL,
+	    xv_error(XV_NULL,
 		     ERROR_LAYER, ERROR_SYSTEM,
 		     0);
 	    return ((STREAM *)NULL);
@@ -130,7 +130,7 @@ string_input_stream(s, in)
 	data = (struct string_input_stream_data *) xv_malloc(
 				   sizeof(struct string_input_stream_data));
 	if (data == NULL) {
-	    xv_error(NULL,
+	    xv_error(XV_NULL,
 		     ERROR_LAYER, ERROR_SYSTEM,
 		     0);
 	    return ((STREAM *)NULL);
@@ -148,7 +148,7 @@ string_input_stream(s, in)
 
 #define GetSOSData struct string_output_stream_data *data = (struct string_output_stream_data*) out->client_data
 
-static struct string_output_stream_data {
+struct string_output_stream_data {
     char           *string;
     int             charpos;
 };
@@ -213,7 +213,7 @@ string_output_stream(s, out)
 
 	value = (STREAM *) xv_malloc(sizeof(STREAM));
 	if (value == NULL) {	/* malloc can fail */
-	    xv_error(NULL,
+	    xv_error(XV_NULL,
 		     ERROR_LAYER, ERROR_SYSTEM,
 		     0);
 	    return ((STREAM *)NULL);
@@ -224,7 +224,7 @@ string_output_stream(s, out)
 	data = (struct string_output_stream_data *) xv_malloc(
 				  sizeof(struct string_output_stream_data));
 	if (data == NULL) {
-	    xv_error(NULL,
+	    xv_error(XV_NULL,
 		     ERROR_LAYER, ERROR_SYSTEM,
 		     0);
 	    return ((STREAM *)NULL);
