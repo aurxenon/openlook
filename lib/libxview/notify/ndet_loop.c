@@ -785,13 +785,13 @@ pkg_private void		/* Should be static but there might be
 ndet_signal_catcher(sig, code, scp)
     int             sig;
     int             code;
-    int             wr;
 #if !defined(SVR4) && !defined(__linux__)
     struct sigcontext *scp;
 #else /* SVR4 */
     ucontext_t *scp;
 #endif /* SVR4 */
 {
+    int             dummy;
 
 #if defined(SVR4) || defined(__linux__)
     void        (*old_handler) () = ndet_prev_sigvec[sig].sa_handler;
@@ -842,7 +842,7 @@ Done:
      * be processed.
      */
     if( pipe_started )
-        wr = write( pipefds[1], "a", 1 );
+        dummy = write( pipefds[1], "a", 1 );
 
 #ifdef	NTFY_DEBUG
     if (ndet_track_sigs)

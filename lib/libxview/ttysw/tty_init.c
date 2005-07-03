@@ -722,7 +722,7 @@ ttyinit(ttysw)
     int             on = 1;
 #ifdef __linux__
     char *name;
-    int i;
+    int i, dummy;
 
     i = openpty(&pty, &tty, NULL, NULL, NULL);
     if (i < 0) {
@@ -818,7 +818,6 @@ gotpty:
       struct strioctl cmd;
       unsigned int chunk;
       extern int tty_has_new_bufmod;
-      int fd;
       /*
 	note that we're not using SB_SEND_ON_WRITE | SB_DEFER_CHUNK.
 	Turns out the shell (or someone down the pty) does an ioctl
@@ -966,10 +965,10 @@ gotpty:
 #ifndef SVR4  /* SunOS4.x code */
     tmpfd = dup(0);
     (void) close(0);
-    fd = dup(tty);
+    dummy = dup(tty);
     ttysw->ttysw_ttyslot = updateutmp((char *) 0, 0, tty);
     (void) close(0);
-    fd = dup(tmpfd);
+    dummy = dup(tmpfd);
     (void) close(tmpfd);
 #else  /* SVR4 code */
     ttysw->ttysw_ttyslot = 0;
