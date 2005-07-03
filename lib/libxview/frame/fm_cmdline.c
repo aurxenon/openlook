@@ -443,7 +443,7 @@ frame_set_icon_cmdline_options(frame_public)
     }
 
     /* null terminate attr list */
-    *defaults = NULL;
+    *defaults = XV_NULL;
 
     /* Do a frame set if there are frame attrs */
     if (defaults_array[0])

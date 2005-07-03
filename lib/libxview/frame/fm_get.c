@@ -93,7 +93,7 @@ frame_get_attr(frame_public, status, attr, valist)
 		if (--n == 0)
 		return sw;
 	    FRAME_END_EACH
-		return NULL;
+		return XV_NULL;
 	}
 
       case FRAME_OLD_RECT:
@@ -182,7 +182,7 @@ frame_get_attr(frame_public, status, attr, valist)
 		if (--n == 0)
 		return sw;
 	    FRAME_END_EACH
-		return NULL;
+		return XV_NULL;
 	}
 
       case FRAME_CLOSED:
@@ -426,7 +426,7 @@ frame_get_attr(frame_public, status, attr, valist)
 	    
 	    /* subframes don't have a closed rect */
 	    if (is_subframe)
-	      return NULL;
+	      return XV_NULL;
 	    (void) win_getrect(frame->icon, &rect_local);
 	    return (Xv_opaque) & rect_local;
 	}
@@ -444,7 +444,7 @@ frame_get_attr(frame_public, status, attr, valist)
 	if (xv_check_bad_attr(&xv_frame_class_pkg, attr) == XV_ERROR) {
 	    *status = XV_ERROR;
 	}
-	return (Xv_opaque) 0;
+	return XV_NULL;
     }
 }
 

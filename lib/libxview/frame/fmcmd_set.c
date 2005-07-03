@@ -224,7 +224,7 @@ frame_cmd_set_avlist(frame_public, avlist)
 
 		        default_panel_item = (Panel_item) xv_get(frame->panel,
 							    PANEL_DEFAULT_ITEM);
-		        if (default_panel_item == NULL)
+		        if (default_panel_item == XV_NULL)
 		            break;
 		        rect = (Rect *) xv_get(default_panel_item,
 							       PANEL_ITEM_RECT);

@@ -203,9 +203,9 @@ help_frame_destroy_proc(client, status)
 	if (help_info) {
 	    if (help_info->help_image) {
 		xv_destroy(help_info->help_image);
-		help_info->help_image = NULL;
+		help_info->help_image = XV_NULL;
 	    }
-	    help_info->help_frame = NULL;
+	    help_info->help_frame = XV_NULL;
 	}
     }
     return (notify_next_destroy_func(client, status));
@@ -244,7 +244,7 @@ xv_help_save_image(pw, client_width, client_height, mouse_x, mouse_y)
     if (help_info->help_image && 
 	(xv_depth(info) != xv_get(help_info->help_image,SERVER_IMAGE_DEPTH))) {
 	xv_destroy(help_info->help_image);
-	help_info->help_image = NULL;
+	help_info->help_image = XV_NULL;
     }
     if (!help_info->help_image) {
 	/* Create a server image for magnifying glass with help target image */

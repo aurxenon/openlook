@@ -275,7 +275,7 @@ fullscreen_set_avlist(fullscreen_public, avlist)
 	    } else if (fullscreen->grab_kbd) 
 		fullscreen_allow_events(display, SyncKeyboard);
 	} else {
-	    xv_error(NULL,
+	    xv_error(XV_NULL,
 		     ERROR_STRING, 
 		     XV_MSG("Attempt to allow synchronous event processing without first being in synchronous mode. Attribute ignored!"),
 		     ERROR_PKG, FULLSCREEN,

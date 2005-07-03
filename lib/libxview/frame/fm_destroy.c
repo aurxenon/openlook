@@ -83,7 +83,7 @@ frame_destroy(frame_public, status)
 		? XV_OK : XV_ERROR);
     }
     if (status == DESTROY_CLEANUP) {	/* waste of time if ...PROCESS_DEATH */
-	if (frame->footer != NULL)
+	if (frame->footer != XV_NULL)
 	  xv_destroy(frame->footer);
 #ifdef OW_I18N
 	_xv_free_ps_string_attr_dup(&frame->left_footer);
@@ -93,19 +93,19 @@ frame_destroy(frame_public, status)
 	_xv_free_ps_string_attr_dup(&frame->left_IMstatus);
 	_xv_free_ps_string_attr_dup(&frame->right_IMstatus);
 #else
-	if (frame->left_footer != NULL)
+	if (frame->left_footer != XV_NULL)
 	  free(frame->left_footer);
-	if (frame->right_footer != NULL)
+	if (frame->right_footer != XV_NULL)
 	  free(frame->right_footer);
 #endif /* OW_I18N */
 
         if (frame->default_icon)  {
 	    xv_destroy(frame->default_icon);
 
-	    frame->default_icon = NULL;
+	    frame->default_icon = XV_NULL;
 	}
 
-	if (frame->focus_window != NULL)  {
+	if (frame->focus_window != XV_NULL)  {
 	    Server_image	image;
 	    GC			gc;
 	    

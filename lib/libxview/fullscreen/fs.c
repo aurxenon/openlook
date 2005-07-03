@@ -156,7 +156,7 @@ fullscreen_init_internal(owner, fullscreen_public, avlist, offset_ptr)
     }
     /* check if we are already in fullscreen mode on this window */
     if (xv_get(fullscreen->input_window, WIN_IS_IN_FULLSCREEN_MODE)) {
-	xv_error(NULL,
+	xv_error(XV_NULL,
 		 ERROR_STRING, 
 		 XV_MSG("Already in fullscreen mode!"),
 		 ERROR_PKG, FULLSCREEN,

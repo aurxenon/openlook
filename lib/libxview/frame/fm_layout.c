@@ -163,8 +163,8 @@ frame_layout(frame_public, child, op, d1, d2, d3, d4, d5)
 
       case WIN_DESTROY:{
 	    Xv_Window      *first_child;
-	    Xv_Window       prev_child = NULL;
-	    Xv_Window       next_child = NULL;
+	    Xv_Window       prev_child = XV_NULL;
+	    Xv_Window       next_child = XV_NULL;
 
 	    /*
 	     * we cannot rely on the is_subframe flag for destroy because the
@@ -197,9 +197,9 @@ frame_layout(frame_public, child, op, d1, d2, d3, d4, d5)
 
 	    /* don't reference the child anymore if it had the input focus */
 	    if (child == frame->focus_subwindow)
-		frame->focus_subwindow = NULL;
+		frame->focus_subwindow = XV_NULL;
 	    if (frame->primary_focus_sw == child)
-		frame->primary_focus_sw = NULL;
+		frame->primary_focus_sw = XV_NULL;
 	    break;
 	}
 

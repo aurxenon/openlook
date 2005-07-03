@@ -76,7 +76,7 @@ frame_set_avlist(frame_public, avlist)
     static Rect		 icon_rect;	
     Bool		 update_hints = FALSE;
     Cms			 new_frame_cms = (Cms)NULL;
-    unsigned long	 new_frame_fg = NULL;
+    unsigned long	 new_frame_fg = 0L;
     Bool		 new_frame_fg_set = FALSE;
     Bool		 update_footer_color = FALSE;
 #ifdef OW_I18N
@@ -604,7 +604,7 @@ frame_set_avlist(frame_public, avlist)
 		if (status_get(frame, show_footer) != show_footer) {
 		    if (status_get(frame, created)) {
 			if (show_footer) {
-			    if (frame->footer == NULL) {
+			    if (frame->footer == XV_NULL) {
 				frame->footer = frame_create_footer(frame);
 			    } else {
 				xv_set(frame->footer, XV_SHOW, TRUE, 0);
@@ -613,7 +613,7 @@ frame_set_avlist(frame_public, avlist)
 					 (int)xv_get(frame->footer, XV_HEIGHT),
 					 &update_hints);
 			} else {
-			    if (frame->footer != NULL) {
+			    if (frame->footer != XV_NULL) {
 				xv_set(frame->footer, XV_SHOW, FALSE, 0);
 			        frame_adjust_normal_hints(frame,
 					-(int)xv_get(frame->footer, XV_HEIGHT),
@@ -1515,7 +1515,7 @@ frame_set_icon(frame, icon, set_icon_rect, icon_rect)
 
     if ((frame->default_icon) && (frame->default_icon != icon)) {
 	xv_destroy(frame->default_icon);
-	frame->default_icon = NULL;
+	frame->default_icon = XV_NULL;
     }
 		
     if (frame->icon == icon) {
