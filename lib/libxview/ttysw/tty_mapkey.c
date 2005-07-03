@@ -338,7 +338,7 @@ ttysw_strtokey(s)
 		(void) sprintf(dummy,
 			       XV_MSG(".ttyswrc error: %s cannot be mapped"),
 			       s);
-		xv_error(NULL,
+		xv_error(XV_NULL,
 			 ERROR_STRING, dummy,
 			 ERROR_PKG, TTY,
 			 0);
@@ -363,7 +363,7 @@ savestr(s)
 
     p = malloc((unsigned) (strlen(s) + 1));
     if (p == (char *) NULL) {
-	xv_error(NULL,
+	xv_error(XV_NULL,
 		 ERROR_LAYER, ERROR_SYSTEM,
 		 ERROR_STRING, 
 		 XV_MSG("while saving key strings"),

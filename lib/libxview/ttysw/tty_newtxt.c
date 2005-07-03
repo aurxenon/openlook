@@ -182,7 +182,7 @@ setup_font(window, pixfont)
     font = (Font) xv_get(pixfont, XV_XID);
 
     /* it should always be valid, but be careful */
-    if (font != NULL) {
+    if (font != XV_NULL) {
 	gc_list = get_gc_list(info);
 	
 	XSetFont(display, gc_list[DEFAULT_GC], font);

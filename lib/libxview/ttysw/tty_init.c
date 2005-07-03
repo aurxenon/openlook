@@ -232,7 +232,7 @@ ttysw_init_folio_internal(tty_public)
 {
     extern          ttysw_eventstd();
     Ttysw_folio     ttysw;
-    Xv_opaque       font = NULL;
+    Xv_opaque       font = XV_NULL;
     int             is_client_pane;
     char            *font_name = NULL;
 
@@ -818,6 +818,7 @@ gotpty:
       struct strioctl cmd;
       unsigned int chunk;
       extern int tty_has_new_bufmod;
+      int fd;
       /*
 	note that we're not using SB_SEND_ON_WRITE | SB_DEFER_CHUNK.
 	Turns out the shell (or someone down the pty) does an ioctl
@@ -965,10 +966,10 @@ gotpty:
 #ifndef SVR4  /* SunOS4.x code */
     tmpfd = dup(0);
     (void) close(0);
-    (void) dup(tty);
+    fd = dup(tty);
     ttysw->ttysw_ttyslot = updateutmp((char *) 0, 0, tty);
     (void) close(0);
-    (void) dup(tmpfd);
+    fd = dup(tmpfd);
     (void) close(tmpfd);
 #else  /* SVR4 code */
     ttysw->ttysw_ttyslot = 0;

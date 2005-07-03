@@ -65,7 +65,7 @@ win_delete_drop_item(win, dropItem, mode)
     if (mode == Win_Drop_Site) {
         if (!win->dropSites) return(XV_ERROR); 
 	nodeHead = winDropSiteNode = win->dropSites;
-        assert(dropItem != NULL);
+        assert(dropItem != XV_NULL);
     } else {
         if (!win->dropInterest) return(XV_ERROR); 
 	nodeHead = winDropSiteNode = win->dropInterest;

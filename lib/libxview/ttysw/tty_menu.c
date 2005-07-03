@@ -93,7 +93,7 @@ ttysw_walkmenu(ttysw_folio_public)
 			   HELP_INFO("ttysw:menu")
 			   0);
 
-    page_mode_item = xv_create(NULL,
+    page_mode_item = xv_create(XV_NULL,
 			       MENUITEM,
 			       MENU_STRING, 
 			       XV_MSG("Disable Page Mode"),
@@ -104,7 +104,7 @@ ttysw_walkmenu(ttysw_folio_public)
 			       0);
 
 
-    copy_item = xv_create(NULL,
+    copy_item = xv_create(XV_NULL,
 			  MENUITEM,
 			  MENU_STRING, 
 			  XV_MSG("Copy"),
@@ -113,7 +113,7 @@ ttysw_walkmenu(ttysw_folio_public)
 			  HELP_INFO("ttysw:mcopy")
 			  0);
 
-    paste_item = xv_create(NULL,
+    paste_item = xv_create(XV_NULL,
 			   MENUITEM,
 			   MENU_STRING, 
 			   XV_MSG("Paste"),
@@ -133,7 +133,7 @@ ttysw_walkmenu(ttysw_folio_public)
 
 
     if (IS_TERMSW(ttysw_folio_public)) {
-	enable_scroll_item = xv_create(NULL,
+	enable_scroll_item = xv_create(XV_NULL,
 				       MENUITEM,
 				       MENU_STRING, 
 				       XV_MSG("Enable Scrolling"),
@@ -393,7 +393,7 @@ ttysw_set_menu(termsw_public)
 			  HELP_INFO("ttysw:mmode")
 			  0);
 
-    editiable_item = xv_create(NULL,
+    editiable_item = xv_create(XV_NULL,
 			       MENUITEM,
 			       MENU_STRING, 
 			       XV_MSG("Editable"),
@@ -402,7 +402,7 @@ ttysw_set_menu(termsw_public)
 			       MENU_CLIENT_DATA, textsw,
 			       HELP_INFO("ttysw:mmode")
 			       0);
-    readonly_item = xv_create(NULL,
+    readonly_item = xv_create(XV_NULL,
 			      MENUITEM,
 			      MENU_STRING, 
 			      XV_MSG("Read Only"),
@@ -418,7 +418,7 @@ ttysw_set_menu(termsw_public)
 	   MENU_DEFAULT_ITEM, readonly_item,
 	   0);
 
-    mode_item = (Menu_item) xv_create(NULL,
+    mode_item = (Menu_item) xv_create(XV_NULL,
 				      MENUITEM,
 				      MENU_STRING, 
 				      XV_MSG("Mode"),
@@ -426,7 +426,7 @@ ttysw_set_menu(termsw_public)
 				      HELP_INFO("ttysw:mmode")
 				      0);
 
-    store_item = xv_create(NULL,
+    store_item = xv_create(XV_NULL,
 			   MENUITEM,
 			   MENU_STRING, 
 			   XV_MSG("Store log as new file "),
@@ -435,7 +435,7 @@ ttysw_set_menu(termsw_public)
 			   MENU_CLIENT_DATA, textsw,
 			   HELP_INFO("textsw:mstorelog")
 			   0);
-    clear_item = xv_create(NULL,
+    clear_item = xv_create(XV_NULL,
 			   MENUITEM,
 			   MENU_STRING, 
 			   XV_MSG("Clear log"),
@@ -451,7 +451,7 @@ ttysw_set_menu(termsw_public)
 	   MENU_APPEND_ITEM, clear_item,
 	   0);
 
-    history_item = (Menu_item) xv_create(NULL,
+    history_item = (Menu_item) xv_create(XV_NULL,
 					 MENUITEM,
 					 MENU_STRING, 
 					 XV_MSG("History"),
@@ -459,21 +459,21 @@ ttysw_set_menu(termsw_public)
 					 HELP_INFO("ttysw:mhistory")
 					 0);
 
-    edit_item = (Menu) xv_create(NULL,
+    edit_item = (Menu) xv_create(XV_NULL,
 				 MENUITEM,
 				 MENU_STRING, XV_MSG("Edit"),
 		 MENU_PULLRIGHT, xv_get(termsw_public, TEXTSW_SUBMENU_EDIT),
 				 HELP_INFO("ttysw:medit")
 				 0);
 
-    find_item = (Menu) xv_create(NULL,
+    find_item = (Menu) xv_create(XV_NULL,
 				 MENUITEM,
 				 MENU_STRING, XV_MSG("Find"),
 		 MENU_PULLRIGHT, xv_get(termsw_public, TEXTSW_SUBMENU_FIND),
 				 HELP_INFO("ttysw:mfind")
 				 0);
 
-    extras_item = (Menu) xv_create(NULL,
+    extras_item = (Menu) xv_create(XV_NULL,
 				   MENUITEM,
 				   MENU_STRING, 
 				   XV_MSG("Extras"),
@@ -486,7 +486,7 @@ ttysw_set_menu(termsw_public)
 			    HELP_INFO("textsw:meditor")
 			    0);
 
-    enable_editor_item = xv_create(NULL,
+    enable_editor_item = xv_create(XV_NULL,
 				   MENUITEM,
 				   MENU_STRING, 
 				   XV_MSG("Enable"),
@@ -494,7 +494,7 @@ ttysw_set_menu(termsw_public)
 				   MENU_CLIENT_DATA, textsw,
 				   HELP_INFO("textsw:meneditor")
 				   0);
-    disable_editor_item = xv_create(NULL,
+    disable_editor_item = xv_create(XV_NULL,
 				    MENUITEM,
 				    MENU_STRING, 
 				    XV_MSG("Disable"),
@@ -508,7 +508,7 @@ ttysw_set_menu(termsw_public)
 	   MENU_APPEND_ITEM, disable_editor_item,
 	   MENU_DEFAULT_ITEM, enable_editor_item,
 	   0);
-    editor_item = (Menu) xv_create(NULL,
+    editor_item = (Menu) xv_create(XV_NULL,
 				   MENUITEM,
 				   MENU_STRING, 
 				   XV_MSG("File Editor"),
@@ -521,7 +521,7 @@ ttysw_set_menu(termsw_public)
 			    HELP_INFO("textsw:mscroll")
 			    0);
 
-    enable_scroll_item = xv_create(NULL,
+    enable_scroll_item = xv_create(XV_NULL,
 				   MENUITEM,
 				   MENU_STRING, 
 				   XV_MSG("Enable Scrolling"),
@@ -529,7 +529,7 @@ ttysw_set_menu(termsw_public)
 				   MENU_CLIENT_DATA, textsw,
 				   HELP_INFO("textsw:menscroll")
 				   0);
-    disable_scroll_item = xv_create(NULL,
+    disable_scroll_item = xv_create(XV_NULL,
 				    MENUITEM,
 				    MENU_STRING, 
 				    XV_MSG("Disable Scrolling"),
@@ -544,7 +544,7 @@ ttysw_set_menu(termsw_public)
 	   MENU_APPEND_ITEM, disable_scroll_item,
 	   HELP_INFO("textsw:mscroll")
 	   0);
-    scroll_item = (Menu) xv_create(NULL,
+    scroll_item = (Menu) xv_create(XV_NULL,
 				   MENUITEM,
 				   MENU_STRING, 
 				   XV_MSG("Scrolling"),

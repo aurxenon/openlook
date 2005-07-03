@@ -238,7 +238,7 @@ Pkg_private int		tty_notice_key;
 #define	textsw_add_mark_i18n		textsw_add_mark_wc
 #define	textsw_erase_i18n		textsw_erase_wcs
 #define	textsw_delete_i18n		textsw_delete_wcs
-#else /OW_I18N */
+#else /* OW_I18N */
 #define	TEXTSW_LENGTH_I18N		TEXTSW_LENGTH
 #define	TEXTSW_CONTENTS_I18N		TEXTSW_CONTENTS
 #define	textsw_replace_i18n		textsw_replace_bytes

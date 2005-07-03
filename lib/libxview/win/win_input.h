@@ -425,9 +425,9 @@
 				  (ie)->ie_shiftmask = (ie)->ie_locx = \
 				  (ie)->ie_locy = (ie)->ie_time.tv_sec = \
 				  (ie)->ie_time.tv_usec = 0, \
-				  (ie)->ie_win = NULL, \
-				  (ie)->ie_xevent = NULL, \
-                    		  (ie)->ie_string = NULL, \
+				  (ie)->ie_win = XV_NULL, \
+				  (ie)->ie_xevent = (XEvent*)NULL, \
+                    		  (ie)->ie_string = (char*)NULL, \
 				  (ie)->ie_code = (ie)->action  =  \
 				  ACTION_NULL_EVENT)
 
@@ -448,7 +448,7 @@
 	   event_id((event)))
 
 #define event_xevent_type(event) \
-		(((event)->ie_xevent != NULL) ? \
+		(((event)->ie_xevent != (XEvent*)NULL) ? \
 		    ((((XEvent *)(event)->ie_xevent))->type) : \
 			XV_ERROR)
 

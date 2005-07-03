@@ -123,7 +123,7 @@ window_layout(parent, child, op, d1, d2, d3, d4, d5)
 	    (void) sprintf(dummy, 
 		XV_MSG("window layout option (%d) not recognized (window_layout)"),
 			   op);
-	    xv_error(NULL,
+	    xv_error(XV_NULL,
 		     ERROR_STRING, dummy,
 		     ERROR_PKG, WINDOW,
 		     0);

@@ -20,7 +20,7 @@ static char     sccsid[] = "@(#)window_cms.c 20.57 93/06/28";
 #include <X11/Xatom.h>
 
 
-Attr_attribute  xv_cms_name_key = NULL;
+Attr_attribute  xv_cms_name_key = XV_NULL;
 void            window_set_cms();
 void		window_set_cmap_property();
 
@@ -44,7 +44,7 @@ window_set_cms_name(win_public, new_name)
 		  XV_AUTO_CREATE, FALSE,
 		  CMS_NAME, new_name,
 		  NULL);
-    if (cms != NULL) {
+    if (cms != XV_NULL) {
 	if (cur_name) {
 	    free(cur_name);
 	    xv_set(win_public, XV_KEY_DATA, xv_cms_name_key, NULL, 0);
@@ -86,7 +86,7 @@ window_set_cms_data(win_public, cms_data)
     visual_class = (int)xv_get(win_public, XV_VISUAL_CLASS);
     visual = (Visual *)xv_get(win_public, XV_VISUAL);
     if ((cms_data->type == XV_DYNAMIC_CMS) && !(visual_class % 2)) {
-	xv_error(NULL,
+	xv_error(XV_NULL,
 		 ERROR_STRING,
 		   XV_MSG("Cannot set a dynamic colormap segment on a window created\n\
 with a static visual"),
@@ -95,7 +95,7 @@ with a static visual"),
 	return;
     }
     if (!xv_cms_name_key) {
-	xv_error(NULL,
+	xv_error(XV_NULL,
 	  ERROR_STRING,
 	    XV_MSG("Attempting to set colormap segment data before naming the segment"),
 	  ERROR_PKG, WINDOW,
@@ -118,7 +118,7 @@ with a static visual"),
 			    XV_AUTO_CREATE, FALSE,
 			    CMS_NAME, cur_name,
 			    NULL);
-	if (cms == NULL) {
+	if (cms == XV_NULL) {
 	    cms = xv_create(xv_screen(info), CMS, 
 			XV_VISUAL, visual,
 			CMS_NAME, cur_name,
@@ -146,7 +146,7 @@ with a static visual"),
     } 
 
     xv_free(cms_colors);
-    if (cms == NULL) {
+    if (cms == XV_NULL) {
 	cms = (Cms) xv_get(xv_screen(info), SCREEN_DEFAULT_CMS);
     }
     window_set_cms(win_public, cms, 0, 
@@ -180,7 +180,7 @@ window_set_cms(win_public, cms, cms_bg, cms_fg)
 
     if (XVisualIDFromVisual((Visual *)xv_get(win_public, XV_VISUAL)) != 
 	XVisualIDFromVisual((Visual *)xv_get(cms, XV_VISUAL))) {
-	    xv_error(NULL, 
+	    xv_error(XV_NULL, 
 		     ERROR_STRING,
 		     XV_MSG("Can not set a CMS on a window that was created with a different visual"),
 		     ERROR_PKG, WINDOW,

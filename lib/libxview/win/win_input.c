@@ -613,12 +613,12 @@ xevent_to_event(display, xevent, event, pwindow)
     register int    	 event_type = (xevent->type & 0177);
     register unsigned 	 temp;
     XAnyEvent      	*any = (XAnyEvent *) xevent;
-    Xv_object       	 window = NULL;
+    Xv_object       	 window = XV_NULL;
     Xv_Drawable_info 	*info;
     Xv_opaque       	 server_public;
     static XID      	 pointer_window_xid;
     static short    	 nbuttons = 0;
-    static Xv_opaque 	 last_server_public = NULL;
+    static Xv_opaque 	 last_server_public = XV_NULL;
     static unsigned int  but2_mod,
 			 but3_mod,
 			 chord,

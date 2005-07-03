@@ -54,11 +54,11 @@ Pkg_private void window_get_grab_flag();
   if (error_msg) { \
       char dummy[128]; \
       (void) sprintf(dummy, "%s\n%s", msg, error_msg); \
-      xv_error(NULL, \
+      xv_error(XV_NULL, \
           ERROR_SEVERITY, ERROR_NON_RECOVERABLE, \
           ERROR_STRING, dummy, ERROR_PKG, WINDOW, 0); \
   } else { \
-      xv_error(NULL, \
+      xv_error(XV_NULL, \
           ERROR_STRING, msg, ERROR_PKG, WINDOW, 0); \
       return XV_ERROR; \
   }
@@ -283,7 +283,7 @@ window_init(parent_public, win_public, avlist)
 	} else if (xv_get(parent_public, WIN_IS_ROOT))
 	    win->top_level = TRUE;
 	else if (!xv_get(parent_public, XV_IS_SUBTYPE_OF, WINDOW)) {
-	    xv_error(NULL,
+	    xv_error(XV_NULL,
         	     ERROR_SEVERITY, ERROR_NON_RECOVERABLE,
         	     ERROR_STRING, 
 			XV_MSG("Subwindow owner is not a window\n"),

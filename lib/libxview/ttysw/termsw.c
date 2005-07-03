@@ -170,7 +170,7 @@ static int
 termsw_view_init_internal(parent, termsw_view_public, avlist)
     Xv_Window       parent;
     Termsw_view     termsw_view_public;
-    Textsw_attribute avlist[];
+    Termsw_attribute avlist[];
 {
     Xv_termsw_view *termsw_view_object =
     (Xv_termsw_view *) termsw_view_public;
@@ -237,7 +237,7 @@ termsw_folio_init_internal(parent, termsw_folio, avlist)
     Xv_opaque       font;
 #endif
     char           *def_str;
-    char           *termcap;
+    char           *termcap, *tmp;
     static char    *cmd_termcap =
     "TERMCAP=sun-cmd:te=\\E[>4h:ti=\\E[>4l:tc=sun:";
     static char    *cmd_term = "TERM=sun-cmd";
@@ -257,7 +257,7 @@ termsw_folio_init_internal(parent, termsw_folio, avlist)
 
     /* Generate a new temporary file name and open the file up. */
     (void) strcpy(tmpfile_name, "/tmp/tty.txt.XXXXXX");
-    (void) mktemp(tmpfile_name);
+    tmp = mktemp(tmpfile_name);
     if ((fd = open(tmpfile_name, O_CREAT | O_RDWR | O_EXCL, 0600)) < 0) {
 	return (XV_ERROR);
     }

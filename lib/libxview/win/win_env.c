@@ -15,6 +15,9 @@ static char     sccsid[] = "@(#)win_env.c 20.16 93/06/28";
  * other functions)
  */
 
+#include <string.h>
+#include <stdio.h>
+
 #include <xview/rect.h>
 #include <xview/win_env.h>
 #include <xview/win_struct.h>
