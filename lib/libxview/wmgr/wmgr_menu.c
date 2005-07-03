@@ -159,13 +159,13 @@ wmgr_constructargs(args, programname, otherargs, maxargcount)
     char           *args[], *programname, *otherargs;
     int             maxargcount;
 {   
-#define terminatearg() {*cpt = NULL;needargstart = 1;}
+#define terminatearg() {*cpt = XV_NULL;needargstart = 1;}
 #define STRINGQUOTE     '"'
     int             argindex = 0, needargstart = 1, quotedstring = 0;
     register char  *cpt;
      
     args[argindex++] = programname;
-    for (cpt = otherargs; (cpt != 0) && (*cpt != NULL); cpt++) {
+    for (cpt = otherargs; (cpt != 0) && (*cpt != XV_NULL); cpt++) {
         if (quotedstring) {
             if (*cpt == STRINGQUOTE) {
                 terminatearg();
