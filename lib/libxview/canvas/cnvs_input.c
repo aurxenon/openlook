@@ -415,7 +415,7 @@ canvas_window_event(canvas_public, event)
     register Event *event;
 {
     Xv_Window       paint_window;
-    Event           tmp_event;
+    static Event    tmp_event;
     int             x, y;
 
     paint_window = xv_get(canvas_public, CANVAS_NTH_PAINT_WINDOW, 0);
@@ -440,7 +440,7 @@ canvas_event(canvas_public, event)
     register Event *event;
 {
     Xv_Window       paint_window;
-    Event           tmp_event;
+    static Event    tmp_event;
     int             x, y;
 
     paint_window = xv_get(canvas_public, CANVAS_NTH_PAINT_WINDOW, 0);
