@@ -42,9 +42,9 @@ va_dcl
         va_end(args);
     }
     else
-        avlist[0] = NULL;
+        avlist[0] = XV_NULL;
 
-    menu = (Menu) xv_create_avlist(NULL, MENU, avlist);
+    menu = (Menu) xv_create_avlist(XV_NULL, MENU, avlist);
     return menu;
 }
 
@@ -67,9 +67,9 @@ va_dcl
         va_end(valist);
     } 
     else 
-        avlist[0] = NULL; 
+        avlist[0] = XV_NULL; 
 
-    return (Menu_item) xv_create_avlist(NULL, MENUITEM, avlist);
+    return (Menu_item) xv_create_avlist(XV_NULL, MENUITEM, avlist);
 }
 
 Sv1_public      Xv_opaque

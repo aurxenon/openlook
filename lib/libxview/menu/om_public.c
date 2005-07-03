@@ -445,8 +445,8 @@ menu_create_internal(parent, object, avlist)	/*ARGSUSED*/
 	}
 	m_cache->color_index = -1;
 	m_cache->column_major = TRUE;
-	m_cache->default_image.bold_font = NULL;
-	m_cache->default_image.font = NULL;
+	m_cache->default_image.bold_font = XV_NULL;
+	m_cache->default_image.font = XV_NULL;
 	m_cache->default_image.left_margin = 1;
 	m_cache->default_image.margin = 1;
 	m_cache->default_image.right_margin = 1;
@@ -717,10 +717,10 @@ menu_pullright_return_result(menu_item_public)
     Xv_opaque       v;
 
     if (!menu_item_public)
-	return NULL;
+	return XV_NULL;
     mi = MENU_ITEM_PRIVATE(menu_item_public);
     if (!mi->pullright)
-	return NULL;
+	return XV_NULL;
 
 
     m = mi->parent;
@@ -860,7 +860,7 @@ menu_pkg_find(menu_public, pkg, avlist)		/*ARGSUSED*/
     Xv_menu_info   *m_base;
 
     if (!menu_public)
-	return NULL;
+	return XV_NULL;
 
     m_base = MENU_PRIVATE(menu_public);
 
@@ -877,7 +877,7 @@ menu_pkg_find(menu_public, pkg, avlist)		/*ARGSUSED*/
 		         XV_MSG("menu_find: menu's gen_proc failed to generate a menu"),
 		     ERROR_PKG, MENU,
 		     0);
-	    return NULL;
+	    return XV_NULL;
 	}
     } else {
 	m = m_base;
@@ -1017,7 +1017,7 @@ exit:
     if (gen_proc)
 	(gen_proc) (menu_public, MENU_DISPLAY_DONE);
 
-    return mi ? MENU_ITEM_PUBLIC(mi) : NULL;
+    return mi ? MENU_ITEM_PUBLIC(mi) : XV_NULL;
 }
 
 
@@ -1224,7 +1224,7 @@ menu_create_pin_panel_items(panel, menu)
     Panel           panel;
     Xv_menu_info   *menu;
 {
-    Panel_item	    choice_item = NULL;	/* choice or toggle item */
+    Panel_item	    choice_item = XV_NULL;	/* choice or toggle item */
     int		    choice_nbr = 0;
     int             i;
     int		    label_width;
@@ -1365,7 +1365,7 @@ menu_create_pin_panel_items(panel, menu)
 		       0);
 #endif /* OW_I18N */
 	} else
-	    xv_error(NULL,
+	    xv_error(XV_NULL,
 		     ERROR_SEVERITY, ERROR_NON_RECOVERABLE,
 		     ERROR_STRING,
 			 XV_MSG("menu item does not have a string or image"),

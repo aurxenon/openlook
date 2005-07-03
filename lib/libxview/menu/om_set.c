@@ -117,7 +117,7 @@ menu_sets(menu_public, attrs)
 #endif /* OW_I18N */
 	    if (m->nitems < m->max_nitems || extend_item_list(m)) {
 		m->item_list[m->nitems++] = MENU_ITEM_PRIVATE(
-						   xv_create(NULL, MENUITEM,
+						   xv_create(XV_NULL, MENUITEM,
 			    MENU_RELEASE, attrs[0], attrs[1], attrs[2], 0));
 	    }
 	    break;
@@ -129,7 +129,7 @@ menu_sets(menu_public, attrs)
 #endif /* OW_I18N */
             if (m->nitems < m->max_nitems || extend_item_list(m)) {
                 m->item_list[m->nitems++] = MENU_ITEM_PRIVATE(
-                                                   xv_create(NULL, MENUITEM,
+                                                   xv_create(XV_NULL, MENUITEM,
                             MENU_RELEASE, attrs[0], attrs[1], attrs[2], 
 				attrs[3],0));
             }
@@ -310,7 +310,7 @@ menu_gen_pin_window:
 		while (*a) {
 		    if (m->nitems < m->max_nitems || extend_item_list(m)) {
 			m->item_list[m->nitems] = MENU_ITEM_PRIVATE(
-						   xv_create(NULL, MENUITEM,
+						   xv_create(XV_NULL, MENUITEM,
 							     MENU_RELEASE,
 						      MENU_IMAGE_ITEM, *a++,
 							 m->nitems + 1, 0));
@@ -357,7 +357,7 @@ menu_gen_pin_window:
 	  case MENU_ITEM:
 	    if (m->nitems < m->max_nitems || extend_item_list(m)) {
 		m->item_list[m->nitems] = MENU_ITEM_PRIVATE(xv_create_avlist(
-						NULL, MENUITEM, &attrs[1]));
+						XV_NULL, MENUITEM, &attrs[1]));
 	    }
 	    (void) xv_set(MENU_ITEM_PUBLIC(m->item_list[m->nitems++]), MENU_RELEASE, 0);
 	    repin = TRUE;
@@ -507,7 +507,7 @@ menu_gen_pin_window:
                 while (*a) {
                     if (m->nitems < m->max_nitems || extend_item_list(m)) {
                         m->item_list[m->nitems] = MENU_ITEM_PRIVATE(
-                                                   xv_create(NULL, MENUITEM,
+                                                   xv_create(XV_NULL, MENUITEM,
                                                              MENU_RELEASE,
                                         (attrs[0] == MENU_STRINGS) ?
                                                            MENU_STRING_ITEM :
@@ -527,7 +527,7 @@ menu_gen_pin_window:
                 while (*a) {
                     if (m->nitems < m->max_nitems || extend_item_list(m)) {
                         m->item_list[m->nitems] = MENU_ITEM_PRIVATE(
-                                                   xv_create(NULL, MENUITEM,
+                                                   xv_create(XV_NULL, MENUITEM,
 							     XV_INSTANCE_NAME, *a,
                                                              MENU_RELEASE,
                                         (attrs[0] == MENU_STRINGS_AND_ACCELERATORS) ?
@@ -547,7 +547,7 @@ menu_gen_pin_window:
 		while (*a) {
 		    if (m->nitems < m->max_nitems || extend_item_list(m)) {
 			m->item_list[m->nitems] = MENU_ITEM_PRIVATE(
-						   xv_create(NULL, MENUITEM,
+						   xv_create(XV_NULL, MENUITEM,
 							     MENU_RELEASE,
 							   MENU_STRING_ITEM,
 						   *a++, m->nitems + 1, 0));
@@ -565,7 +565,7 @@ menu_gen_pin_window:
                 while (*a) {
                     if (m->nitems < m->max_nitems || extend_item_list(m)) {
                         m->item_list[m->nitems] = MENU_ITEM_PRIVATE(
-                                                   xv_create(NULL, MENUITEM,
+                                                   xv_create(XV_NULL, MENUITEM,
                                                 XV_INSTANCE_NAME, *a,
                                                 MENU_RELEASE,
                                                 MENU_STRING_AND_ACCELERATOR,
@@ -631,7 +631,7 @@ menu_gen_pin_window:
 		    (void) sprintf(dummy,
 			   XV_MSG("Invalid argument for attribute MENU_LINE_AFTER_ITEM: %d"),
 				   (int) attrs[1]);
-		    xv_error(NULL,
+		    xv_error(XV_NULL,
 			     ERROR_STRING, dummy,
 			     ERROR_PKG, MENU,
 			     0);
@@ -640,7 +640,7 @@ menu_gen_pin_window:
 	    break;
 
 	  case MENU_CLASS:
-	    xv_error(NULL,
+	    xv_error(XV_NULL,
 		 ERROR_STRING, 
 		    XV_MSG("MENU_CLASS attribute is get-only"),
 		 ERROR_PKG, MENU,
@@ -1170,7 +1170,7 @@ menu_item_sets(menu_item_public, attrs)
 	    mi->value = (Xv_opaque) attrs[1];
 	    if (mi->value)
 		MENU_PRIVATE(mi->value)->parent = mi;
-	    mi->pullright = mi->value != NULL;
+	    mi->pullright = mi->value != XV_NULL;
 	    if (mi->parent && mi->parent->pin_window && mi->panel_item_handle) {
 		xv_set(mi->panel_item_handle,
 		       PANEL_ITEM_MENU, mi->value,
@@ -1185,7 +1185,7 @@ menu_item_sets(menu_item_public, attrs)
             mi->image.svr_im = (Server_image) attrs[1];
             mi->image.width = mi->image.height = 0;
 	    mi->value = (Xv_opaque) attrs[2];
-	    mi->pullright = mi->value != NULL;
+	    mi->pullright = mi->value != XV_NULL;
 	    if (mi->parent && mi->parent->pin_window && mi->panel_item_handle) {
 		xv_set(mi->panel_item_handle,
 		       PANEL_LABEL_IMAGE, mi->image.svr_im,
@@ -1224,7 +1224,7 @@ menu_item_sets(menu_item_public, attrs)
             mi->image.string = (char *) attrs[1];
             mi->image.width = mi->image.height = 0;
 	    mi->value = (Xv_opaque) attrs[2];
-	    mi->pullright = mi->value != NULL;
+	    mi->pullright = mi->value != XV_NULL;
 	    if (mi->parent && mi->parent->pin_window && mi->panel_item_handle) {
 		xv_set(mi->panel_item_handle,
 		       PANEL_LABEL_STRING, mi->image.string,
@@ -1310,7 +1310,7 @@ menu_item_sets(menu_item_public, attrs)
 		    (void) sprintf(dummy,
 			   XV_MSG("Invalid argument for attribute MENU_LINE_AFTER_ITEM: %d"),
 				   (int) attrs[1]);
-		    xv_error(NULL,
+		    xv_error(XV_NULL,
 			     ERROR_STRING, dummy,
 			     ERROR_PKG, MENU,
 			     0);
@@ -1586,7 +1586,7 @@ menu_create_title(m, type, arg1)
 	m->nitems++;
 	for (i = m->nitems - 1; i > 0; i--)
 	    m->item_list[i] = m->item_list[i - 1];
-	menu_item = xv_create(NULL, MENUITEM,
+	menu_item = xv_create(XV_NULL, MENUITEM,
 			      MENU_FEEDBACK, FALSE,
 			      MENU_RELEASE,
 			      MENU_TITLE,
@@ -1623,7 +1623,7 @@ destroy_panel_item_handles(m)
 		xv_destroy(m->item_list[i]->panel_item_handle);
 		panel_item_destroyed = TRUE;
 	    }
-	    m->item_list[i]->panel_item_handle = NULL;
+	    m->item_list[i]->panel_item_handle = XV_NULL;
 	    }
     }
 }
@@ -1817,7 +1817,7 @@ menu_set_acc_on_frame(frame,menu,item, set)
 		            acc_string ? acc_string : "NULL");
 #endif /* OW_I18N */
 
-                        xv_error(NULL, ERROR_STRING, i18n_str, NULL);
+                        xv_error(XV_NULL, ERROR_STRING, i18n_str, NULL);
 		    }
 		    else  {
                         menu_set_key_qual(menu, item, TRUE, keysym, 
@@ -1850,7 +1850,7 @@ menu_set_acc_on_frame(frame,menu,item, set)
 		        acc_string ? acc_string : "NULL");
 #endif /* OW_I18N */
 
-                    xv_error(NULL, ERROR_STRING, i18n_str, 0);
+                    xv_error(XV_NULL, ERROR_STRING, i18n_str, 0);
 		}
 
 		/*

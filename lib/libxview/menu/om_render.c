@@ -198,7 +198,7 @@ menu_render(menu, group, parent)
      */
     if (gen_proc = menu->gen_proc) {
 	gen_menu = gen_proc(MENU_PUBLIC(menu), MENU_DISPLAY);
-	if (gen_menu == NULL) {
+	if (gen_menu == XV_NULL) {
 	    xv_error((Xv_opaque) menu,
 		     ERROR_STRING,
 		       XV_MSG("menu_render: menu's gen_proc failed to generate a menu"),
@@ -1237,13 +1237,13 @@ cleanup:
                notify_remove_event_func(m->window,
                    (Notify_func)menu_window_event_proc,
                    NOTIFY_IMMEDIATE);
-	    m->window = NULL;
+	    m->window = XV_NULL;
 	}
 	if (m->shadow_window) {
 	    xv_set(m->shadow_window, XV_SHOW, FALSE, 0);
 	    screen_set_cached_window_busy(xv_screen(info), m->shadow_window,
 					  FALSE);
-	    m->shadow_window = NULL;
+	    m->shadow_window = XV_NULL;
 	}
 	if (xv_get(xv_server(info), SERVER_JOURNALLING))
 	    xv_set(xv_server(info), SERVER_JOURNAL_SYNC_EVENT, 1, 0);
@@ -1931,7 +1931,7 @@ paint_menu_item(m, n, feedback_state)
     char	    *tmp;
     /* ACC_XVIEW */
 
-    if (m->window == NULL)
+    if (m->window == XV_NULL)
 	return;	/* in case of race condition between unmap and expose */
 
     DRAWABLE_INFO_MACRO(m->window, info);
@@ -2513,7 +2513,7 @@ menu_shadow_paint(window)
 	    GCForeground | GCBackground | GCFunction | GCPlaneMask |
 	    GCStipple | GCFillStyle, &gc_value);
 	if (!shadow_gc) {
-	    xv_error(NULL,
+	    xv_error(XV_NULL,
 		     ERROR_STRING,
 		       XV_MSG("menu_create: unable to create shadow Graphics Context"),
 		     ERROR_PKG, MENU,
@@ -2674,7 +2674,7 @@ menu_client_window_event_proc(win, event, arg, type)
 	    /* Find the menu item under the pointer */
 	    help_item = find_item_nbr(m, event, &row, &column);
 	    if (help_item > m->nitems)
-		help_item = NULL;	/* inside the menu, but not no menu items */
+		help_item = XV_NULL;	/* inside the menu, but not no menu items */
 	    /* Get the help data string for the menu item */
 	    help_data = NULL;
 	    if (help_item)

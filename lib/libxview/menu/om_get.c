@@ -39,7 +39,7 @@ menu_gets(menu_public, status, attr, args)
     Attr_attribute  attr;
     va_list         args;
 {
-    Xv_opaque       v = NULL;
+    Xv_opaque       v = XV_NULL;
     int             value;
     register Xv_menu_info *m = MENU_PRIVATE(menu_public);
 
@@ -68,7 +68,7 @@ menu_gets(menu_public, status, attr, args)
 	break;
 
       case MENU_PARENT:
-	v = NULL;
+	v = XV_NULL;
 	if (m->parent != NULL) {
 	    v = MENU_ITEM_PUBLIC(m->parent);
 	}
@@ -109,11 +109,11 @@ menu_gets(menu_public, status, attr, args)
 	break;
 
       case MENU_FIRST_EVENT:
-	v = m->group_info ? (Xv_opaque) & m->group_info->first_event : NULL;
+	v = m->group_info ? (Xv_opaque) & m->group_info->first_event : XV_NULL;
 	break;
 
       case MENU_LAST_EVENT:
-	v = m->group_info ? (Xv_opaque) & m->group_info->last_event : NULL;
+	v = m->group_info ? (Xv_opaque) & m->group_info->last_event : XV_NULL;
 	break;
 
       case MENU_NOTIFY_PROC:
@@ -198,7 +198,7 @@ menu_item_gets(menu_item_public, status, attr, args)
     Attr_attribute  attr;
     va_list         args;
 {
-    Xv_opaque       v = NULL;
+    Xv_opaque       v = XV_NULL;
     Xv_menu_item_info *mi = MENU_ITEM_PRIVATE(menu_item_public);
 
     switch (attr) {
@@ -212,7 +212,7 @@ menu_item_gets(menu_item_public, status, attr, args)
 	break;
 
       case MENU_PARENT:
-	v = NULL;
+	v = XV_NULL;
 	if (mi->parent != NULL) {
 	    v = MENU_PUBLIC(mi->parent);
 	}

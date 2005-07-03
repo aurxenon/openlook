@@ -87,7 +87,7 @@ menu_image_compute_size(m, im, std_image)	/* returns status */
 	/* make every string menu item with the same font the same height */
 	im->button_size.y = Button_Height(m->ginfo);
     } else if (!(m->pin && im->title)) {
-	xv_error(NULL,
+	xv_error(XV_NULL,
 		 ERROR_STRING, 
 		    XV_MSG("Menu item does not have a string or image"),
 		 ERROR_PKG, MENU,
