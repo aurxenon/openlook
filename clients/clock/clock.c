@@ -179,7 +179,7 @@ typedef struct clckOptions {
 /*	Coordinates & measures used to display/resize  both clock faces		*/
 
 typedef struct displayInfo {
-	Server_image	images[12];		/* number images for digital clock */
+	struct pixwin	*images[12];		/* number images for digital clock */
 	int		fontHeight;		/* number images' height	   */
 	int		fontWidth;		/* number images' width		   */
 	int		y_coord;		/* number images' y-coordinate	   */
@@ -288,6 +288,7 @@ readrc(o)
         struct  passwd *pw;
         char    buf[100];
         FILE    *fp;
+        int     dummy;
  
 	if (o==NULL) return;
 	o-> face = analog;
@@ -303,7 +304,7 @@ readrc(o)
         strcat(buf, ".clockrc");
         fp = fopen(buf, "r");
         if (fp == NULL) return;
-        fscanf(fp, "%d %d %d", &o->face, &o->seconds, &o->date);
+        dummy = fscanf(fp, "%d %d %d", &o->face, &o->seconds, &o->date);
 	backup_values (o);
         fclose(fp);
 }
@@ -372,20 +373,20 @@ canvas_interpose(pw, event, arg, type)
 	int id;
 
 	/*print_event(pw, event);   */
-	rc = notify_next_event_func (pw, event, arg, type);
+	rc = notify_next_event_func ((Xv_opaque)pw, (Xv_opaque)event, arg, type);
 	id = event_action(event);
 	
-	c = (Clock) xv_get(pw, XV_KEY_DATA, key, 0);
+	c = (Clock) xv_get((Xv_opaque)pw, XV_KEY_DATA, key, 0);
 	switch(id) {
 	case WIN_REPAINT:
 		(void)clock_repaint_proc(c->canvas, pw, NULL);
 		break;
 	case WIN_RESIZE:  /* pw doesn't get WIN_RESIZE; more horse shit */
-		(void)clock_resize_proc(pw, (int)xv_get(pw, XV_WIDTH, 0), (int)xv_get(pw, XV_HEIGHT, 0));
+		(void)clock_resize_proc(pw, (int)xv_get((Xv_opaque)pw, XV_WIDTH, 0), (int)xv_get((Xv_opaque)pw, XV_HEIGHT, 0));
 		break;
 	case ACTION_MENU:
 		if (event_is_down(event)) {
-			menu_show((Menu) xv_get(pw, WIN_MENU, 0), pw, event, 0);
+			menu_show((Menu) xv_get((Xv_opaque)pw, WIN_MENU, 0), (Xv_opaque)pw, event, 0);
 /*			menu_show(c->menu, c->canvas, event, 0);   */
 /*			xv_set(c->menu, XV_SHOW, TRUE, 0);	   */
 		}
@@ -407,13 +408,13 @@ frame_interpose (frame, event, arg, type)
 	Notify_value rc;
 	Clock c;
 
-	rc = notify_next_event_func (frame, event, arg, type);
+	rc = notify_next_event_func (frame, (Xv_opaque)event, arg, type);
 	if (event_action(event) == ACTION_CLOSE) {
 		c = (Clock) xv_get (frame, XV_KEY_DATA, key, 0);
 		w = (int) xv_get (c->canvas, XV_WIDTH, 0);
 		h = (int) xv_get (c->canvas, XV_HEIGHT, 0);
 		centerX=0; centerY=0;
-		pw_write(c->pw, 0, 0, w, h, PIX_CLR, 0, 0, 0);
+		pw_write((Xv_opaque)c->pw, 0, 0, w, h, PIX_CLR, 0, 0, 0);
 		init_images(c, 64, 64);
 		icon_repaint(c->icon, c->iconpw, NULL);
 	}
@@ -438,7 +439,7 @@ icon_interpose (icon, event, arg, type)
 	Notify_value rc;
 	Clock c;
 
-	rc = notify_next_event_func(icon, event, arg, type);
+	rc = notify_next_event_func(icon, (Xv_opaque)event, arg, type);
 	c = (Clock) xv_get(icon, XV_KEY_DATA, key, 0);
 
 	if (event_action(event) == WIN_REPAINT) {
@@ -461,7 +462,7 @@ clock_repaint_proc (canvas, pw, area)
 	c = (Clock) xv_get (canvas, XV_KEY_DATA, key, 0);
 	w = (int) xv_get (canvas, XV_WIDTH, 0);
 	h = (int) xv_get (canvas, XV_HEIGHT, 0);
-	pw_write (pw, 0, 0, w, h, PIX_CLR, 0, 0, 0);
+	pw_write ((Xv_opaque)pw, 0, 0, w, h, PIX_CLR, 0, 0, 0);
 	switch (c->options->face) {
 	case analog:
 		analog_repaint (canvas, pw, area);
@@ -481,7 +482,7 @@ make_image (w, h, kd)
 	caddr_t kd;
 {
 	Server_image i;
-	i = (Server_image) xv_create (NULL, SERVER_IMAGE,
+	i = (Server_image) xv_create (XV_NULL, SERVER_IMAGE,
 		XV_WIDTH, w,
 		XV_HEIGHT, h,
 		SERVER_IMAGE_DEPTH, 1,
@@ -494,7 +495,7 @@ make_image (w, h, kd)
 init_images (c, w, h)
 	Clock c; int w, h;
 {
-	int now;
+	time_t now;
 	struct tm *tm;
 
 	/* resize the remote images */
@@ -502,18 +503,18 @@ init_images (c, w, h)
 	now = time(0);
 	tm  = localtime (&now);
 
-	if (tempr != NULL) xv_destroy (tempr);
+	if (tempr != XV_NULL) xv_destroy (tempr);
 	tempr = make_image (w, h, c);
 
-	if (handspr != NULL) xv_destroy (handspr);
+	if (handspr != XV_NULL) xv_destroy (handspr);
 	handspr = make_image (w, h, c);
 	paint_hands (c, handspr, tm-> tm_min*6,
 		tm-> tm_hour*30 + tm-> tm_min/2, min(w, h));
 
-	if (dotspr != NULL) xv_destroy (dotspr);
+	if (dotspr != XV_NULL) xv_destroy (dotspr);
 	dotspr = make_image (w, h, c);
 
-	if (spotpr != NULL) xv_destroy (spotpr);
+	if (spotpr != XV_NULL) xv_destroy (spotpr);
 	spotpr = make_image (w/12, h/12, c);
 	draw_circle (spotpr, armwidth(w)/8);
 
@@ -548,7 +549,7 @@ clock_resize_proc (canvas, width, height)
 	d	= c-> display;
 	smaller	= min(cwidth,cheight);
 
-	pw_write(c->pw, 0, 0, cwidth, cheight, PIX_CLR, 0, 0, 0);
+	pw_write((Xv_opaque)c->pw, 0, 0, cwidth, cheight, PIX_CLR, 0, 0, 0);
 	switch (c->options->face) {
 		case digital:
 		if (cwidth < MIN_DIG_WIDTH) {
@@ -662,7 +663,7 @@ paint_ticks (pw, radius, spotpr)
 	int arm_width = armwidth (radius);
 
 	for (i=0; i<12; i++)
-	pw_write (pw,  
+	pw_write ((Xv_opaque)pw,  
 		cs[i*30] * 20 * radius/2400+radius-arm_width/4,
 		sn[i*30] * 20 * radius/2400+radius-arm_width/4,
 		arm_width+1,
@@ -726,11 +727,11 @@ erase_hand (c, x1, y1, x2, y2, x3, y3, angle, diameter)
 
         pw_polygon_2(pw, 0, 0, 1, nptarr, vlist, PIX_CLR,
                 0, 0, 0);
-        pw_vector(pw, vlist[0].x, vlist[0].y, vlist[1].x, vlist[1].y,
+        pw_vector((Xv_opaque)pw, vlist[0].x, vlist[0].y, vlist[1].x, vlist[1].y,
                 PIX_CLR, 1);
-        pw_vector(pw, vlist[0].x, vlist[0].y, vlist[2].x, vlist[2].y,
+        pw_vector((Xv_opaque)pw, vlist[0].x, vlist[0].y, vlist[2].x, vlist[2].y,
                 PIX_CLR, 1);
-        pw_vector(pw, vlist[1].x, vlist[1].y, vlist[2].x, vlist[2].y,
+        pw_vector((Xv_opaque)pw, vlist[1].x, vlist[1].y, vlist[2].x, vlist[2].y,
                 PIX_CLR, 1);
 }
 
@@ -804,8 +805,8 @@ paint_hand (pr, x1, y1, x2, y2, x3, y3, angle, diameter)
         vlist[2].x = xx3;
         vlist[2].y = yy3;
  
-        pw_polygon_2(pr, 0, 0, 1, nptarr, vlist, PIX_SRC,
-            gray_patch, 0, 0);
+        pw_polygon_2((struct pixwin*)pr, 0, 0, 1, nptarr, vlist, PIX_SRC,
+            (struct pixrect*)gray_patch, 0, 0);
         pw_vector(pr, vlist[0].x, vlist[0].y, vlist[1].x, vlist[1].y,
             PIX_SET, 1);
         pw_vector(pr, vlist[0].x, vlist[0].y, vlist[2].x, vlist[2].y,
@@ -864,7 +865,7 @@ erase_date (c)
         Clock c;
 {
 	xv_set(c->frame, FRAME_LABEL, "", 0);
-	date_buf[0] = NULL;
+	date_buf[0] = XV_NULL;
 }
 
 
@@ -914,7 +915,7 @@ erase_second_hand (c)
 	y1 = d->secondhand.lastSecY;
 	x2 = d->secondhand.lastSecX1;
 	y2 = d->secondhand.lastSecY1;
-	if (x1 != -1) pw_vector (pw, x1, y1, x2, y2, PIX_SRC ^ PIX_DST, 1); 
+	if (x1 != -1) pw_vector ((Xv_opaque)pw, x1, y1, x2, y2, PIX_SRC ^ PIX_DST, 1); 
 }
 	
 static void
@@ -946,8 +947,8 @@ paint_second_hand (c)
 	}
 	else {
 		pw = c->pw;
-		width = (int)xv_get (pw, XV_WIDTH, 0);
-		height = (int)xv_get (pw, XV_HEIGHT, 0);
+		width = (int)xv_get ((Xv_opaque)pw, XV_WIDTH, 0);
+		height = (int)xv_get ((Xv_opaque)pw, XV_HEIGHT, 0);
 		diameter= (int)xv_get(handspr, XV_WIDTH, 0);
 		/*fprintf(stderr, "w=%d, h=%d, di=%d\n", width, height, diameter);*/
 	}
@@ -965,7 +966,7 @@ paint_second_hand (c)
 	d->secondhand.lastSecY1 = centerY+y;
 
 	/*fprintf(stderr, "centerX=%d, centerY=%d\n", centerX, centerY);*/
-	pw_vector (pw, width/2, height/2,
+	pw_vector ((Xv_opaque)pw, width/2, height/2,
 		centerX+x, centerY+y, PIX_SRC ^ PIX_DST, 1);
 }
 	
@@ -1037,7 +1038,7 @@ analog_repaint (canvas, pw, area)
 		tm-> tm_hour*30 + tm-> tm_min/2, prw);
 	pw_write (handspr, 0, 0, prw, prh, PIX_SRC | PIX_DST, dotspr, 0, 0);  
 	center (w, h, &centerX, &centerY, prw, prh);
-	pw_write (pw, centerX, centerY, prw, prh, PIX_SRC, handspr, 0, 0);
+	pw_write ((Xv_opaque)pw, centerX, centerY, prw, prh, PIX_SRC, handspr, 0, 0);
 	if (seconds_on (c->options)) paint_second_hand(c);
 /*	c->display->secondhand.lastSecX = -1;  */
 }
@@ -1048,7 +1049,7 @@ icon_repaint (i, pw, area)
 	Pixwin *pw;
 	Rectlist *area;
 {
-	int now;
+	time_t now;
 	Font_string_dims size;
 	struct tm *tm;
 	Clock c;
@@ -1179,13 +1180,13 @@ paint_dig_seconds (c, tm)
 	xv_get(d-> font, FONT_STRING_DIMS, "f", &fontSize);
 	y_coord		= ((int) xv_get (canvas, XV_HEIGHT, 0)-fontHeight)/2;
 
-	pw_text (pw, d-> slots[5], 
+	pw_text ((Xv_opaque)pw, d-> slots[5], 
 		fontSize.height + y_coord, 
 		PIX_SRC,
 		font, 
 		nums[tm-> tm_sec]
 		);
-	pw_text (pw, d-> slots[5],
+	pw_text ((Xv_opaque)pw, d-> slots[5],
 		(2*fontSize.height) + y_coord + 3,   /* 3 = fudge factor */
 		PIX_SRC,
 		font,
@@ -1196,7 +1197,7 @@ paint_dig_seconds (c, tm)
 static void
 dig_repaint (canvas, pw, area)
 	Canvas		canvas;
-	Pixwin *	pw;
+	Pixwin		*pw;
 	Rectlist	*area;
 {
 /* Alpha compatibility, mbuck@debian.org */
@@ -1223,32 +1224,32 @@ dig_repaint (canvas, pw, area)
 		tm-> tm_hour = 12;
 	
 	if (majorHour[tm-> tm_hour] == 1)
-		pw_write (pw, d-> slots[0],
+		pw_write ((Xv_opaque)pw, d-> slots[0],
 			y_coord, fontWidth, 
                  	fontHeight, PIX_SRC, 
                   	d-> images[1],
 		  	0, 0);
 	else
-          	pw_write (pw, d-> slots[0],
+          	pw_write ((Xv_opaque)pw, d-> slots[0],
 		  	y_coord, fontWidth, 
                   	fontHeight, PIX_SRC,
                   	d-> images[11],
 		  	0, 0);
 		
-	pw_write (pw, d-> slots[1],
+	pw_write ((Xv_opaque)pw, d-> slots[1],
 		y_coord, fontWidth, 
 		fontHeight, PIX_SRC,
 		d-> images[minorHour[tm-> tm_hour]],
 		0, 0);
-	pw_write (pw, d-> slots[2],
+	pw_write ((Xv_opaque)pw, d-> slots[2],
 		y_coord, fontWidth, 
 		fontHeight, PIX_SRC, 
 		d-> images[10], 0, 0);
-	pw_write (pw, d-> slots[3],
+	pw_write ((Xv_opaque)pw, d-> slots[3],
 		y_coord, fontWidth, 
 		fontHeight, PIX_SRC,
 		d-> images[tm-> tm_min/10], 0, 0);
-	pw_write (pw, d-> slots[4],
+	pw_write ((Xv_opaque)pw, d-> slots[4],
 		y_coord, fontWidth, 
 		fontHeight, PIX_SRC,
 		d-> images[tm-> tm_min % 10], 0, 0);
@@ -1334,7 +1335,8 @@ clock_apply (item, event)
 	Panel_item item;
 	Event *event;
 {
-	int w, h, now;
+	int w, h;
+	time_t now;
 	struct tm *tm;
 	Clock c		= (Clock) xv_get (item, XV_KEY_DATA, key, 0);
 	ClockDisplay d	= c-> display;
@@ -1358,7 +1360,7 @@ clock_apply (item, event)
 		if (face_changed(o)) {
 			w = (int) xv_get (c->canvas, XV_WIDTH, 0);
 			h = (int) xv_get (c->canvas, XV_HEIGHT, 0);
-			pw_write(c->pw, 0, 0, w, h, PIX_CLR, 0, 0, 0);
+			pw_write((Xv_opaque)c->pw, 0, 0, w, h, PIX_CLR, 0, 0, 0);
 		}
 		if (seconds_changed(o)) {
 			switch (o-> face) {
@@ -1367,7 +1369,7 @@ clock_apply (item, event)
 					enable_timer(c->frame, 0, 1, 0, 1);
 				}
 				else {
-					pw_write(c->pw, d->slots[5], d->y_coord, d->fontWidth, 
+					pw_write((Xv_opaque)c->pw, d->slots[5], d->y_coord, d->fontWidth, 
                                 		5000, PIX_CLR, 0, 0, 0);
 					enable_timer (c->frame, 0, 60-tm->tm_sec, 0, 60);
 					dig_repaint(c->canvas, c->pw, NULL); 
@@ -1432,7 +1434,7 @@ layout_options (o)
 	Pixfont *pf = (Pixfont *) xv_get (o->panel, XV_FONT, 0);
 	
 	str	= (char *) xv_get (o-> faceStr, PANEL_LABEL_STRING, 0);
-	xv_get(pf, FONT_STRING_DIMS, str, &size);
+	xv_get((Xv_opaque)pf, FONT_STRING_DIMS, str, &size);
 	xv_set (o-> faceStr, 
 		XV_X, wd - size.width,	
 		XV_Y, xv_row (o-> panel, 1),
@@ -1442,7 +1444,7 @@ layout_options (o)
 		XV_Y, xv_row (o-> panel, 1),
 		0);
 	str	= (char *) xv_get (o-> displayStr, PANEL_LABEL_STRING, 0);
-	xv_get(pf, FONT_STRING_DIMS, str, &size);
+	xv_get((Xv_opaque)pf, FONT_STRING_DIMS, str, &size);
 	xv_set (o-> displayStr,
 		XV_X, wd - size.width,
 		XV_Y, xv_row (o->panel, 2),
@@ -1656,7 +1658,7 @@ init_icon (c)
 	iconhandspr	= make_image (w, h, c);
 	iconspotpr	= make_image (dotsize,  dotsize,  c);
 	
-	c->icon = (Icon) xv_create (NULL, ICON, 
+	c->icon = (Icon) xv_create (XV_NULL, ICON, 
 		ICON_IMAGE, iconpr,
 /*		WIN_REPAINT, icon_repaint,   */
 		XV_KEY_DATA, key, c,
@@ -1695,16 +1697,16 @@ init_display (c)
         d->hands.width = -1;
 	d-> fontHeight	= MIN_FONT_HEIGHT;
 	d-> fontWidth	= MIN_FONT_WIDTH;	
-	d-> font = (Xv_Font) xv_create (NULL, FONT, 
+	d-> font = (Xv_Font) xv_create (XV_NULL, FONT, 
 		FONT_FAMILY, FONT_FAMILY_LUCIDA,
 		FONT_SIZE, 10,
 		0);
-	if (d->font==NULL) {
-		d->font = (Xv_Font) xv_create (NULL, FONT, 
+	if (d->font==XV_NULL) {
+		d->font = (Xv_Font) xv_create (XV_NULL, FONT, 
 			FONT_NAME, "fixed",
 			FONT_SIZE, 10,
 			0);
-		if (d->font==NULL) {
+		if (d->font==XV_NULL) {
 			cleanup(c);
 			fprintf(stderr, "%s\n", "Cannot open font");
 			exit(0);
@@ -1797,13 +1799,13 @@ init_clck (argc, argv)
 		0);					
 	clck-> pw = (Pixwin *)
 		 xv_get (clck-> canvas, CANVAS_NTH_PAINT_WINDOW, 0);       
-	(void)xv_set(clck->pw, 
+	(void)xv_set((Xv_opaque)clck->pw, 
 		WIN_CONSUME_KBD_EVENTS, KEY_LEFT(3), WIN_MOUSE_BUTTONS, 0,
 		XV_KEY_DATA, key, clck,
 		WIN_MENU, clck->menu,
 		WIN_BIT_GRAVITY, ForgetGravity,  /* horse shit */
 		0);
-	notify_interpose_event_func(clck->pw, canvas_interpose, 0); 
+	notify_interpose_event_func((Xv_opaque)clck->pw, canvas_interpose, 0); 
 	init_images (clck, (int) xv_get (clck->canvas, XV_WIDTH, 0),
 		(int) xv_get (clck->canvas, XV_HEIGHT, 0));
 	now = time (0);
@@ -1893,15 +1895,15 @@ build_numbers (c)
 
 	for (i = 0; i < 12; i++)  {
 		if (d-> images[i] != NULL)
-		(void) xv_destroy (d-> images[i]);
+		(void) xv_destroy ((Xv_opaque)d-> images[i]);
 		d-> images[i] = 
-		  (Server_image) xv_create (NULL, SERVER_IMAGE,
+		  (struct pixwin *) xv_create (XV_NULL, SERVER_IMAGE,
 			XV_WIDTH, width,
 			XV_HEIGHT, height,
 			SERVER_IMAGE_DEPTH, 1,
 			XV_KEY_DATA, key, c,
 			0);
-		pw_write (d-> images[i], 0, 0, width, height, PIX_CLR, 0, 0, 0);
+		pw_write ((Xv_opaque)d-> images[i], 0, 0, width, height, PIX_CLR, 0, 0, 0);
 	}
 
 	for (i = 0; i < 11; i++)

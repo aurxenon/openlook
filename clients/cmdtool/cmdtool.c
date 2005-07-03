@@ -166,7 +166,7 @@ main(argc,argv)
 	icon_label[0] = 0177;	/* del, highly unlikely as cmd arg */
 	icon_label[1] = '\0';
 
-        cmd_pixmap = (Server_image)xv_create(NULL, SERVER_IMAGE,
+        cmd_pixmap = (Server_image)xv_create(XV_NULL, SERVER_IMAGE,
                    	                     XV_WIDTH,  64,
 		                             XV_HEIGHT, 64,
 		                             SERVER_IMAGE_BITS,      
@@ -174,7 +174,7 @@ main(argc,argv)
                                              am_cmdtool ? cmd_image : tty_image,
 		                             NULL);
 
-        cmd_mask_pixmap = (Server_image)xv_create(NULL, SERVER_IMAGE,
+        cmd_mask_pixmap = (Server_image)xv_create(XV_NULL, SERVER_IMAGE,
 		                                 XV_WIDTH,  64,
 		                                 XV_HEIGHT, 64,
 		                                 SERVER_IMAGE_BITS,
@@ -183,7 +183,7 @@ main(argc,argv)
                                                               tty_mask_image,
 		                                 NULL);
 
-	tool_icon = (Icon)xv_create(NULL, ICON,
+	tool_icon = (Icon)xv_create(XV_NULL, ICON,
             WIN_RETAINED, TRUE,				    
             ICON_IMAGE, cmd_pixmap,
             ICON_MASK_IMAGE, cmd_mask_pixmap,
@@ -191,12 +191,12 @@ main(argc,argv)
             ICON_TRANSPARENT,TRUE,
             NULL);
 
-	base_frame = xv_create((Xv_window)NULL, FRAME,
+	base_frame = xv_create(XV_NULL, FRAME,
 			FRAME_ICON, tool_icon,
 		        HELP_STRING_FILENAME,	"manpage_synopsis_help_index",
 			0);
 			
-	if (base_frame == NULL) {
+	if (base_frame == XV_NULL) {
 	    fprintf(stderr, MSG("Cannot create base frame.  Process aborted.\n"));
 	    exit(1);
 	}		
