@@ -207,7 +207,7 @@ Attr_avlist	    avlist;
 	    sel_req->typeIndex = (int) attrs[1];
 	    sel_req->typeTbl[sel_req->typeIndex].propInfo = xv_alloc( Sel_prop_info);
 	    propInfo = sel_req->typeTbl[sel_req->typeIndex].propInfo;
-	    propInfo->data = NULL;
+	    propInfo->data = XV_NULL;
 	    propInfo->format = 8;
 	    propInfo->length = 0;
 	    propInfo->type = XA_STRING;
@@ -393,7 +393,7 @@ Sel_req_info         *selReq;
 
     replyInfo->property = xv_sel_get_property( selection->dpy );
     replyInfo->requestor = win;
-    if ( time == NULL )
+    if ( time == XV_NULL )
 	replyInfo->time = xv_sel_get_last_event_time( selection->dpy, win );
     else
     	replyInfo->time = time;
@@ -401,7 +401,7 @@ Sel_req_info         *selReq;
     replyInfo->timeout = xv_get( req, SEL_TIMEOUT_VALUE );
     replyInfo->multiple = 0;
     replyInfo->data = (Xv_opaque) NULL;
-    replyInfo->format = NULL;
+    replyInfo->format = XV_NULL;
     replyInfo->incr = 0;
     replyInfo->status = 0;
     replyInfo->length = (long) NULL;
@@ -1165,7 +1165,7 @@ int   *format;
 
     XTime = xv_sel_cvt_timeval_to_xtime( time );
     
-    if ( XTime == NULL )  {
+    if ( XTime == XV_NULL )  {
         XTime = xv_sel_get_last_event_time( dpy, xid );
 	xv_set( requestor, SEL_TIME, xv_sel_cvt_xtime_to_timeval( XTime ), 0 );
     }
@@ -1218,7 +1218,7 @@ Selection_requestor  sel;
 
     XTime = xv_sel_cvt_timeval_to_xtime( time );
     
-    if ( XTime == NULL )  {
+    if ( XTime == XV_NULL )  {
         XTime = xv_sel_get_last_event_time( dpy, xid );
 	xv_set( sel, SEL_TIME, xv_sel_cvt_xtime_to_timeval( XTime ), 0 );
     }

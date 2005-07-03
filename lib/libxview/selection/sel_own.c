@@ -161,7 +161,7 @@ va_list	    valist;
 	if (ip->next) {
 	    return (Xv_opaque) SEL_ITEM_PUBLIC(ip->next);
 	} else {
-	    return NULL;
+	    return XV_NULL;
 	}
       case SEL_OWN:
 	return (Xv_opaque) sel_owner->own;
@@ -299,7 +299,7 @@ Sel_owner_info *sel_owner;
     owner->time = xv_sel_cvt_timeval_to_xtime( time );
     lastEventTime = xv_sel_get_last_event_time( sel_owner->dpy, sel_owner->xid );
     
-    if ( owner->time == NULL || owner->time < lastEventTime ) { 
+    if ( owner->time == XV_NULL || owner->time < lastEventTime ) { 
         owner->time = lastEventTime;
 	xv_set( sel_owner_public, 
 	       SEL_TIME, xv_sel_cvt_xtime_to_timeval( owner->time ), 

@@ -68,7 +68,7 @@ sel_item_set_avlist(sel_item_public, avlist)
 
 {
     Attr_avlist	    attrs;
-    Xv_opaque	    data = NULL;
+    Xv_opaque	    data = XV_NULL;
     int		    data_set = FALSE;
     int		    length_set = FALSE;
     int		    nbr_bytes;

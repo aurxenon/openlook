@@ -67,7 +67,7 @@ Window     xid;
 	sel->atomList = xv_sel_find_atom_list( dpy, xid );
 	sel->dpy = dpy;
 	sel->selection = selection;
-	sel->xid = NULL;
+	sel->xid = XV_NULL;
 	sel->status = 0;
 	(void)XSaveContext( dpy, (Window)selection, selCtx, (caddr_t)sel );
     }
@@ -116,7 +116,7 @@ Window   win;
     /* Wait for the PropertyNotify */
     arg = PropertyNotify;
     if ( !xv_sel_block_for_event( dpy, &event, 3 , xv_sel_predicate, (char *) &arg ) ) {
-	xv_error(NULL,
+	xv_error(XV_NULL,
                  ERROR_STRING,XV_MSG("xv_sel_get_last_event_time: Unable to get the last event time"),
 	         ERROR_PKG,SELECTION,
                  0);
@@ -602,7 +602,7 @@ Sel_reply_info  *reply;
 	reqTbl->reply = reply;
 	reqTbl->next = NULL;
 	(void)XSaveContext( dpy, DefaultRootWindow(dpy),replyCtx,
-			   (caddr_t *)reqTbl);
+			   (XPointer)reqTbl);
 	return reqTbl;
     }
     return (Sel_req_tbl *) xv_sel_add_new_req( reqTbl, reply );
@@ -924,7 +924,7 @@ int      clientType;
     infoPtr = cmptInfo;
     
     do {
-	if ( (infoPtr->selection == selection) || (infoPtr->selection == NULL) ) {
+	if ( (infoPtr->selection == selection) || (infoPtr->selection == XV_NULL) ) {
 	    infoPtr->selection = selection;
 	    infoPtr->clientType = clientType;
 	    infoPtr->owner = xid; 	    
@@ -966,9 +966,9 @@ Atom     selection;
     
     do {
 	if ( infoPtr->selection == selection ) {
-	    infoPtr->selection = NULL;
-	    infoPtr->owner = NULL;	    
-	    infoPtr->clientType = NULL;
+	    infoPtr->selection = XV_NULL;
+	    infoPtr->owner = XV_NULL;	    
+	    infoPtr->clientType = XV_NULL;
 	    return;
 	}
 	if ( infoPtr->next == NULL )
