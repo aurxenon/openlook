@@ -78,10 +78,10 @@ extern const char *xv_notptr_str;
 #define XV_OBJECT_TO_STANDARD(_passed_object, _caller, _object)\
 {\
       if (!_passed_object) {\
-        xv_error(NULL, ERROR_INVALID_OBJECT,xv_notptr_str,\
+        xv_error(XV_NULL, ERROR_INVALID_OBJECT,xv_notptr_str,\
                  ERROR_STRING, _caller,\
                  0);\
-        _object = ((Xv_opaque)0);\
+        _object = (XV_NULL);\
     }\
     else\
        _object = (((Xv_base *)_passed_object)->seal == XV_OBJECT_SEAL) ? _passed_object : xv_object_to_standard(_passed_object, _caller);\

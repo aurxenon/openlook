@@ -142,14 +142,14 @@ generic_create_instance_qlist(parent, instance_name)
     Xv_object       parent;
     char	    *instance_name;
 {
-    Xv_opaque       	parent_quarks = NULL, quarks;
+    Xv_opaque       	parent_quarks = (Xv_opaque)NULL, quarks;
     short		null_parent = FALSE;
 
     if (instance_name == NULL)  {
 	return((XrmQuarkList)NULL);
     }
 
-    if (parent != NULL) 
+    if (parent != (Xv_object)NULL) 
         parent_quarks = xv_get(parent, XV_INSTANCE_QLIST); 
     else {
 	null_parent = TRUE;
@@ -158,7 +158,7 @@ generic_create_instance_qlist(parent, instance_name)
 
     quarks = db_qlist_from_name(instance_name, parent_quarks);
 
-    if ((null_parent == TRUE) && (parent_quarks != NULL))
+    if ((null_parent == TRUE) && (parent_quarks != (Xv_object)NULL))
 	free((void *)parent_quarks);
 
     return((XrmQuarkList)quarks);
@@ -174,7 +174,7 @@ generic_set_instance_name(parent, object, instance_name)
 
     quarks = (Xv_opaque)generic_create_instance_qlist(parent, instance_name);
 
-    if (quarks != NULL)    
+    if (quarks != (Xv_opaque)NULL)    
         xv_set(object, XV_INSTANCE_QLIST, quarks, NULL);
 }
 
@@ -188,7 +188,7 @@ generic_set_avlist(object, avlist)
     Generic_node   *prev, *existing_node;
     int             ref_count;
     Generic_info	*generic = GEN_PRIVATE(object);
-    register Xv_opaque error_code = NULL;
+    register Xv_opaque error_code = (Xv_opaque)NULL;
 
     for (; *avlist; avlist = attr_next(avlist)) {
       /* The following check is done for performance reasons.  The check

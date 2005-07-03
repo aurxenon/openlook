@@ -57,7 +57,7 @@ void *xv_alloc_save_ret;
 
 void xv_alloc_error()
 {
-   xv_error(NULL,
+   xv_error(XV_NULL,
             ERROR_LAYER, ERROR_SYSTEM,
             ERROR_STRING, "call to alloc function returned NULL pointer",
             0);
@@ -72,7 +72,7 @@ void *xv_calloc( num, size )
       return ptr;
    else
    {
-      xv_error(NULL,
+      xv_error(XV_NULL,
                ERROR_LAYER, ERROR_SYSTEM,
                ERROR_STRING, "call to calloc function returned NULL pointer",
                0);
@@ -238,7 +238,7 @@ xv_find_avlist(parent, pkg, avlist)
 {
     register Xv_pkg *find_pkg;
     Attr_avlist     attrs;
-    Xv_object       object = NULL;
+    Xv_object       object = XV_NULL;
     int             auto_create = TRUE, auto_create_seen = FALSE;
 
     for (attrs = (Attr_avlist) avlist;
@@ -374,7 +374,7 @@ xv_create_avlist(parent, pkg, avlist)
     /*
      * Flatten out XV_USE_DB lists first
      */
-    avlist_used = attr_customize((Xv_object)NULL, orig_pkg, instance_name, parent, 
+    avlist_used = attr_customize(XV_NULL, orig_pkg, instance_name, parent, 
 				avlist_copy, ATTR_STANDARD_SIZE, avlist);
 
     /*
@@ -400,7 +400,7 @@ xv_create_avlist(parent, pkg, avlist)
 	    ccom_object->pkg = ccom_object->pkg->parent_pkg;
 	    (void) xv_destroy_status(object, DESTROY_CLEANUP);
 	}
-	object = NULL;
+	object = XV_NULL;
     } else {
 	/*
 	 * Pass the avlist back to object to allow "normal" xv_set processing
@@ -428,7 +428,7 @@ xv_create_avlist(parent, pkg, avlist)
 
 		  default:
 		    (void) xv_destroy_status(object, DESTROY_CLEANUP);
-		    return (NULL);
+		    return (XV_NULL);
 		}
 	    }
 	}
@@ -452,8 +452,8 @@ va_dcl
     Attr_attribute	flat_avlist[ATTR_STANDARD_SIZE];
     va_list         args;
 
-    if (object == NULL) {
-	xv_error(NULL,
+    if (object == XV_NULL) {
+	xv_error(XV_NULL,
 	    ERROR_SEVERITY, ERROR_NON_RECOVERABLE,
 	    ERROR_STRING,
 		XV_MSG("NULL pointer passed to xv_set"),
@@ -465,7 +465,7 @@ va_dcl
     va_end( args );
 
     avlist = attr_customize(object, ((Xv_base *) object)->pkg,
-                        (char *)NULL, (Xv_opaque)NULL, flat_avlist,
+                        (char *)NULL, XV_NULL, flat_avlist,
                         ATTR_STANDARD_SIZE, avlist);
     return xv_set_avlist(object, avlist);
 }
@@ -835,7 +835,7 @@ xv_check_bad_attr(pkg, attr)
 	 || pkg == XV_GENERIC_OBJECT
 #endif
 	) && !ATTR_CONSUMED(attr)) {
-	xv_error(NULL,
+	xv_error(XV_NULL,
 		 ERROR_BAD_ATTR, attr,
 		 0);
 	return XV_OK;

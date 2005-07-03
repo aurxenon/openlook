@@ -86,7 +86,7 @@ xv_x_error_handler(dpy, event)
 	xv_xlib_error_proc(dpy, event);  /* should exit(1) */
     else
 	/* Using X11R3 */
-	xv_error(NULL,
+	xv_error( XV_NULL,
 	    ERROR_SERVER, event,
 	    ERROR_SEVERITY, ERROR_NON_RECOVERABLE,
 	    0);

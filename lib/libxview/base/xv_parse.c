@@ -316,7 +316,7 @@ xv_parse_one(app_name, argc, argv)
 			XV_MSG("%s: missing argument after %s"), 
 			app_name,
 		       argv[0]);
-	xv_error(NULL,
+	xv_error(XV_NULL,
 		 ERROR_STRING, dummy,
 		 0);
 

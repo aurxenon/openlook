@@ -98,7 +98,7 @@ va_dcl
 
     /* can only be called once */
     if (xv_init_called)
-	return((Xv_object)NULL);
+	return(XV_NULL);
 
     /* 
      * Initialize the version string and number
@@ -132,7 +132,7 @@ va_dcl
         va_end(valist);
     }
     else
-        attrs_start[0] = NULL;
+        attrs_start[0] = XV_NULL;
 
     /*
      * Get argv, argc for preparsing done below
@@ -491,7 +491,7 @@ xv_connection_error(server_name)
         strcpy(error_string, ERROR_MSG);
         strcat(error_string, ":0");
     }
-    xv_error(NULL,
+    xv_error( XV_NULL,
                  ERROR_SEVERITY, ERROR_NON_RECOVERABLE,
                  ERROR_STRING, error_string,
                  ERROR_PKG, SERVER,
