@@ -103,7 +103,7 @@ va_dcl
     AVLIST_DECL;
 
     if (!client_window) {
-	xv_error(NULL,
+	xv_error(XV_NULL,
 		 ERROR_STRING,
 	     XV_MSG("NULL parent window passed to notice_prompt(). Not allowed."),
 	         ERROR_PKG, NOTICE,
@@ -114,7 +114,7 @@ va_dcl
     notice = (struct notice *) xv_calloc(1, sizeof(struct notice));
 
     if (!notice) {
-        xv_error(NULL,
+        xv_error(XV_NULL,
             ERROR_STRING, 
 	    XV_MSG("Malloc failed."),
 	    ERROR_PKG, NOTICE,
@@ -148,7 +148,7 @@ va_dcl
 
     notice->event = (Event *) event;
     notice->client_window = client_window;
-    notice->owner_window = notice->fullscreen_window = NULL;
+    notice->owner_window = notice->fullscreen_window = XV_NULL;
 
     VA_START(valist, event);
     MAKE_AVLIST(valist, avlist);
@@ -193,7 +193,7 @@ Notice_info	*notice;
 {
     register Xv_Drawable_info 	*info;
     notice_buttons_handle 	button;
-    Cms				cms = NULL;
+    Cms				cms = XV_NULL;
     notice_buttons_handle 	current_button = NULL;
     notice_buttons_handle 	prev_button = NULL;
     notice_buttons_handle 	default_button = NULL;
@@ -222,7 +222,7 @@ Notice_info	*notice;
     Fullscreen			fs;
     Rect			notice_screen_rect;
     Xv_Window       		client_window = notice->client_window;
-    Xv_Window       		focus_window = NULL;
+    Xv_Window       		focus_window = XV_NULL;
     int      			leftoff, topoff;
     int				mouseless = FALSE, first_repaint_set = FALSE;
 

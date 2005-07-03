@@ -5,10 +5,10 @@ static char     sccsid[] = "@(#)notice_set.c 1.21 93/06/28";
 #endif
 
 /*
- *	(c) Copyright 1989 Sun Microsystems, Inc. Sun design patents 
- *	pending in the U.S. and foreign countries. See LEGAL NOTICE 
- *	file for terms of the license.
- */
+*	(c) Copyright 1989 Sun Microsystems, Inc. Sun design patents 
+*	pending in the U.S. and foreign countries. See LEGAL NOTICE 
+*	file for terms of the license.
+*/
 #include <stdio.h>
 #include <string.h>
 #include <X11/Xlib.h>
@@ -29,312 +29,312 @@ static CHAR     **notice_string_set();
 
 Pkg_private Xv_opaque
 notice_set_avlist(notice_public, avlist)
-    register Xv_Notice notice_public;
-    register Attr_attribute *avlist;
+register Xv_Notice notice_public;
+register Attr_attribute *avlist;
 {
-    Notice_info	*notice = NOTICE_PRIVATE(notice_public);
+Notice_info	*notice = NOTICE_PRIVATE(notice_public);
 
-    return(notice_generic_set(notice, avlist, TRUE));
+return(notice_generic_set(notice, avlist, TRUE));
 }
 
 Pkg_private Xv_opaque
 notice_generic_set(notice, avlist, is_object)
-    register	notice_handle notice;
-    register	Attr_attribute *avlist;
-    Bool	is_object;
+register	notice_handle notice;
+register	Attr_attribute *avlist;
+Bool	is_object;
 {
-    notice_buttons_handle last_button = NULL;
-    notice_buttons_handle reuse_buttons = notice->button_info;
-    int		yes_button_seen = FALSE;
-    int		no_button_seen = FALSE;
-    int		num_butt = 0;
-    int		num_strs = 0;
-    int		trigger_set = 0;
-    caddr_t	value;
-    CHAR	*str;
-    CHAR	**new_msg = NULL;
-    CHAR	*one_msg[2];
+notice_buttons_handle last_button = NULL;
+notice_buttons_handle reuse_buttons = notice->button_info;
+int		yes_button_seen = FALSE;
+int		no_button_seen = FALSE;
+int		num_butt = 0;
+int		num_strs = 0;
+int		trigger_set = 0;
+caddr_t	value;
+CHAR	*str;
+CHAR	**new_msg = NULL;
+CHAR	*one_msg[2];
 #ifdef OW_I18N
-    CHAR	**wc_msg;
+CHAR	**wc_msg;
 #endif
-    Bool	butt_changed = FALSE;
-    Bool	show_seen = FALSE;
-    Bool	bad_attr;
+Bool	butt_changed = FALSE;
+Bool	show_seen = FALSE;
+Bool	bad_attr;
 
-    for (; *avlist; avlist = attr_next(avlist)) {
-        value = (caddr_t) avlist[1];
-	bad_attr = FALSE;
-	switch (avlist[0]) {
+for (; *avlist; avlist = attr_next(avlist)) {
+value = (caddr_t) avlist[1];
+bad_attr = FALSE;
+switch (avlist[0]) {
 
-	/*
-	 * GENERIC NOTICE ATTRIBUTES
-	 * - Attributes used by ALL NOTICES
-	 */
-        case NOTICE_LOCK_SCREEN:
-	    notice->lock_screen = ((Bool)value != FALSE);
-	break;
+/*
+ * GENERIC NOTICE ATTRIBUTES
+ * - Attributes used by ALL NOTICES
+ */
+case NOTICE_LOCK_SCREEN:
+    notice->lock_screen = ((Bool)value != FALSE);
+break;
 
-        case NOTICE_BLOCK_THREAD:
-	    notice->block_thread = ((Bool)value != FALSE);
-	break;
+case NOTICE_BLOCK_THREAD:
+    notice->block_thread = ((Bool)value != FALSE);
+break;
 
 #ifdef OW_I18N
-          case NOTICE_MESSAGE_STRINGS_ARRAY_PTR:
-	    /* Convert mbs to wchar before passing to new_msg */
-	    {	int 	str_count, i;
-		char 	**pptr = NULL;
-		char	*str;
+  case NOTICE_MESSAGE_STRINGS_ARRAY_PTR:
+    /* Convert mbs to wchar before passing to new_msg */
+    {	int 	str_count, i;
+	char 	**pptr = NULL;
+	char	*str;
 
-		pptr = (char **)value;
-	        for (str_count = 0, i =0, str = pptr[i]; str; str = pptr[++i]) {
-		     str_count++;
-	        }
-	        wc_msg = xv_calloc(str_count+1, sizeof(CHAR *));
-		pptr =(char **)value;
-	        for (i=0; i < str_count ; i++) {
-		    wc_msg[i] = _xv_mbstowcsdup(pptr[i]);
-		}
-		wc_msg[str_count] = (CHAR *)NULL;
-	        new_msg = (CHAR **)wc_msg;
-	    }
-            break;
+	pptr = (char **)value;
+	for (str_count = 0, i =0, str = pptr[i]; str; str = pptr[++i]) {
+	     str_count++;
+	}
+	wc_msg = xv_calloc(str_count+1, sizeof(CHAR *));
+	pptr =(char **)value;
+	for (i=0; i < str_count ; i++) {
+	    wc_msg[i] = _xv_mbstowcsdup(pptr[i]);
+	}
+	wc_msg[str_count] = (CHAR *)NULL;
+	new_msg = (CHAR **)wc_msg;
+    }
+    break;
 
-          case NOTICE_MESSAGE_STRINGS_ARRAY_PTR_WCS:
-            new_msg = (CHAR **)value;
-            break;
+  case NOTICE_MESSAGE_STRINGS_ARRAY_PTR_WCS:
+    new_msg = (CHAR **)value;
+    break;
 
-          case NOTICE_MESSAGE_STRINGS:
-	    /* Convert mbs to wchar before passing to new_msg */
-	    {	int 	str_count, i;
-		char 	**pptr = NULL;
-		char	*str;
+  case NOTICE_MESSAGE_STRINGS:
+    /* Convert mbs to wchar before passing to new_msg */
+    {	int 	str_count, i;
+	char 	**pptr = NULL;
+	char	*str;
 
-		pptr = (char **)&avlist[1];
-	        for (str_count = 0, i =0, str = pptr[i]; str; str = pptr[++i]) {
-		     str_count++;
-	        }
-	        wc_msg = xv_calloc(str_count+1, sizeof(CHAR *));
-		pptr =(char **)&avlist[1];
-	        for (i=0; i < str_count ; i++) {
-		    wc_msg[i] = _xv_mbstowcsdup(pptr[i]);
-		}
-		wc_msg[str_count] = (CHAR *)NULL;
-	        new_msg = (CHAR **)wc_msg;
-	    }
-            break;
- 
-          case NOTICE_MESSAGE_STRINGS_WCS:
-            new_msg = (CHAR **)&avlist[1];
-            break;
- 
-          case NOTICE_MESSAGE_STRING:
-	    one_msg[0] = (wchar_t *)_xv_mbstowcsdup((char *)avlist[1]);
-	    one_msg[1] = (CHAR *)NULL;
-	    new_msg = (CHAR **) one_msg;
+	pptr = (char **)&avlist[1];
+	for (str_count = 0, i =0, str = pptr[i]; str; str = pptr[++i]) {
+	     str_count++;
+	}
+	wc_msg = xv_calloc(str_count+1, sizeof(CHAR *));
+	pptr =(char **)&avlist[1];
+	for (i=0; i < str_count ; i++) {
+	    wc_msg[i] = _xv_mbstowcsdup(pptr[i]);
+	}
+	wc_msg[str_count] = (CHAR *)NULL;
+	new_msg = (CHAR **)wc_msg;
+    }
+    break;
+
+  case NOTICE_MESSAGE_STRINGS_WCS:
+    new_msg = (CHAR **)&avlist[1];
+    break;
+
+  case NOTICE_MESSAGE_STRING:
+    one_msg[0] = (wchar_t *)_xv_mbstowcsdup((char *)avlist[1]);
+    one_msg[1] = (CHAR *)NULL;
+    new_msg = (CHAR **) one_msg;
+    break;
+
+  case NOTICE_MESSAGE_STRING_WCS:
+    one_msg[0] = (CHAR *)avlist[1];
+    one_msg[1] = (CHAR *)NULL;
+    new_msg = (CHAR **) one_msg;
+    break;
+
+  case NOTICE_BUTTON_YES:
+  case NOTICE_BUTTON_YES_WCS:{
+	notice_buttons_handle button;
+
+	if (!yes_button_seen) {
+	    yes_button_seen = TRUE;
+	} else {
+	    (void) xv_error(XV_NULL,
+			    ERROR_STRING, 
+			    XV_MSG("Only one NOTICE_BUTTON_YES attr allowed. Attr ignored."),
+			    ERROR_PKG, NOTICE,
+			    0);
 	    break;
+	}
 
-          case NOTICE_MESSAGE_STRING_WCS:
-	    one_msg[0] = (CHAR *)avlist[1];
-	    one_msg[1] = (CHAR *)NULL;
-	    new_msg = (CHAR **) one_msg;
-            break;
- 
-          case NOTICE_BUTTON_YES:
-          case NOTICE_BUTTON_YES_WCS:{
-                notice_buttons_handle button;
- 
-                if (!yes_button_seen) {
-                    yes_button_seen = TRUE;
-                } else {
-                    (void) xv_error(NULL,
-                                    ERROR_STRING, 
-				    XV_MSG("Only one NOTICE_BUTTON_YES attr allowed. Attr ignored."),
-				    ERROR_PKG, NOTICE,
-                                    0);
-                    break;
-                }
+	/*   
+	 * Button structs are reused for notices
+	 * If there were no buttons to start off with, they
+	 * are allocated
+	 */
+	if (reuse_buttons)  {
+	    last_button = button = reuse_buttons;
+	    reuse_buttons = reuse_buttons->next;
+	    if (button->string)  {
+		free(button->string);
+		button->string = (CHAR *)NULL;
+	    }
+	}
+	else  {
+	    button = (notice_buttons_handle) notice_create_button_struct();
+	    button->panel_item = (Panel_item)NULL;
+	    button->next = (notice_buttons_handle)NULL;
+	    (void) notice_add_button_to_list(notice, button);
+	}
 
-                /*   
-                 * Button structs are reused for notices
-                 * If there were no buttons to start off with, they
-                 * are allocated
-                 */
-                if (reuse_buttons)  {
-                    last_button = button = reuse_buttons;
-                    reuse_buttons = reuse_buttons->next;
-                    if (button->string)  {
-                        free(button->string);
-                        button->string = (CHAR *)NULL;
-                    }
-                }
-                else  {
-                    button = (notice_buttons_handle) notice_create_button_struct();
-                    button->panel_item = (Panel_item)NULL;
-                    button->next = (notice_buttons_handle)NULL;
-                    (void) notice_add_button_to_list(notice, button);
-                }
+	if (avlist[0] == NOTICE_BUTTON_YES)
+	  button->string = (wchar_t *)_xv_mbstowcsdup((char *)avlist[1]);
+	else
+	  button->string = XV_STRSAVE((CHAR *) avlist[1]);
+	button->is_yes = TRUE;
+	button->value = NOTICE_YES;
+	notice->yes_button_exists = TRUE;
+	num_butt++;
+	butt_changed = TRUE;
+	break;
+  }	
 
-                if (avlist[0] == NOTICE_BUTTON_YES)
-                  button->string = (wchar_t *)_xv_mbstowcsdup((char *)avlist[1]);
-                else
-                  button->string = XV_STRSAVE((CHAR *) avlist[1]);
-                button->is_yes = TRUE;
-                button->value = NOTICE_YES;
-                notice->yes_button_exists = TRUE;
-                num_butt++;
-		butt_changed = TRUE;
-                break;
-	  }	
+  case NOTICE_BUTTON_NO:
+  case NOTICE_BUTTON_NO_WCS:{
+	notice_buttons_handle button;
 
-          case NOTICE_BUTTON_NO:
-          case NOTICE_BUTTON_NO_WCS:{
-                notice_buttons_handle button;
- 
-                if (!no_button_seen) {
-                    no_button_seen = TRUE;
-                } else {
-                    xv_error(NULL,
-                             ERROR_STRING,
-                    	     XV_MSG("Only one NOTICE_BUTTON_NO attr allowed. Attr ignored."),
-			     ERROR_PKG, NOTICE,
-                             0);
-                    break;
-                }
+	if (!no_button_seen) {
+	    no_button_seen = TRUE;
+	} else {
+	    xv_error(XV_NULL,
+		     ERROR_STRING,
+		     XV_MSG("Only one NOTICE_BUTTON_NO attr allowed. Attr ignored."),
+		     ERROR_PKG, NOTICE,
+		     0);
+	    break;
+	}
 
-                if (reuse_buttons)  {
-                    last_button = button = reuse_buttons;
-                    reuse_buttons = reuse_buttons->next;
-                    if (button->string)  {
-                        free(button->string);
-                        button->string = (CHAR *)NULL;
-                    }
-                }
-                else  {
-                    button = (notice_buttons_handle) notice_create_button_struct();
-                    button->panel_item = (Panel_item)NULL;
-                    button->next = (notice_buttons_handle)NULL;
-                    (void) notice_add_button_to_list(notice, button);
-                }
+	if (reuse_buttons)  {
+	    last_button = button = reuse_buttons;
+	    reuse_buttons = reuse_buttons->next;
+	    if (button->string)  {
+		free(button->string);
+		button->string = (CHAR *)NULL;
+	    }
+	}
+	else  {
+	    button = (notice_buttons_handle) notice_create_button_struct();
+	    button->panel_item = (Panel_item)NULL;
+	    button->next = (notice_buttons_handle)NULL;
+	    (void) notice_add_button_to_list(notice, button);
+	}
 
-                if( avlist[0] == NOTICE_BUTTON_NO )
-                  button->string = (wchar_t *)_xv_mbstowcsdup((char *)avlist[1]);
-                else
-                  button->string = XV_STRSAVE((CHAR *) avlist[1]);
-                button->is_no = TRUE;
-                button->value = NOTICE_NO;
-                notice->no_button_exists = TRUE;
-                num_butt++;
-		butt_changed = TRUE;
+	if( avlist[0] == NOTICE_BUTTON_NO )
+	  button->string = (wchar_t *)_xv_mbstowcsdup((char *)avlist[1]);
+	else
+	  button->string = XV_STRSAVE((CHAR *) avlist[1]);
+	button->is_no = TRUE;
+	button->value = NOTICE_NO;
+	notice->no_button_exists = TRUE;
+	num_butt++;
+	butt_changed = TRUE;
 
-                break;
-            }
+	break;
+    }
 
-          case NOTICE_BUTTON:
-          case NOTICE_BUTTON_WCS:{
-                notice_buttons_handle button;
- 
-                if (reuse_buttons)  {         
-                    last_button = button = reuse_buttons;
-                    reuse_buttons = reuse_buttons->next;
-                    if (button->string)  {
-                        free(button->string);
-                        button->string = (CHAR *)NULL;
-                    }
-                }
-                else  {
-                    button = (notice_buttons_handle) notice_create_button_struct();
-                    button->panel_item = (Panel_item)NULL;
-                    button->next = (notice_buttons_handle)NULL;
-                    (void) notice_add_button_to_list(notice, button);
-                }
+  case NOTICE_BUTTON:
+  case NOTICE_BUTTON_WCS:{
+	notice_buttons_handle button;
 
-                if( avlist[0] == NOTICE_BUTTON )
-                  button->string = (wchar_t *)_xv_mbstowcsdup((char *)avlist[1]);
-                else
-                  button->string = XV_STRSAVE((CHAR *) avlist[1]);
-                button->value = (int) avlist[2];
-		num_butt++;
-		butt_changed = TRUE;
+	if (reuse_buttons)  {         
+	    last_button = button = reuse_buttons;
+	    reuse_buttons = reuse_buttons->next;
+	    if (button->string)  {
+		free(button->string);
+		button->string = (CHAR *)NULL;
+	    }
+	}
+	else  {
+	    button = (notice_buttons_handle) notice_create_button_struct();
+	    button->panel_item = (Panel_item)NULL;
+	    button->next = (notice_buttons_handle)NULL;
+	    (void) notice_add_button_to_list(notice, button);
+	}
 
-                break;
-            }
+	if( avlist[0] == NOTICE_BUTTON )
+	  button->string = (wchar_t *)_xv_mbstowcsdup((char *)avlist[1]);
+	else
+	  button->string = XV_STRSAVE((CHAR *) avlist[1]);
+	button->value = (int) avlist[2];
+	num_butt++;
+	butt_changed = TRUE;
+
+	break;
+    }
 #else
-        case NOTICE_MESSAGE_STRINGS_ARRAY_PTR:
-            new_msg = (char **) value;
-        break;
+case NOTICE_MESSAGE_STRINGS_ARRAY_PTR:
+    new_msg = (char **) value;
+break;
 
-        case NOTICE_MESSAGE_STRINGS:
-            new_msg = (char **) &avlist[1];
-        break;
+case NOTICE_MESSAGE_STRINGS:
+    new_msg = (char **) &avlist[1];
+break;
 
-        case NOTICE_MESSAGE_STRING:
-            one_msg[0] = (char *)avlist[1];
-            one_msg[1] = (char *)NULL;
-            new_msg = (char **) one_msg;
-        break;
+case NOTICE_MESSAGE_STRING:
+    one_msg[0] = (char *)avlist[1];
+    one_msg[1] = (char *)NULL;
+    new_msg = (char **) one_msg;
+break;
 
-        case NOTICE_BUTTON_YES:{
-            notice_buttons_handle button;
+case NOTICE_BUTTON_YES:{
+    notice_buttons_handle button;
 
-            if (!yes_button_seen) {
-                yes_button_seen = TRUE;
-            } else {
-                (void) xv_error(NULL,
-                            ERROR_STRING,
-                            XV_MSG("Only one NOTICE_BUTTON_YES attr allowed. Attr ignored."),
-                            ERROR_PKG, NOTICE,
-                            0);
-                break;
-            }
+    if (!yes_button_seen) {
+	yes_button_seen = TRUE;
+    } else {
+	(void) xv_error(XV_NULL,
+		    ERROR_STRING,
+		    XV_MSG("Only one NOTICE_BUTTON_YES attr allowed. Attr ignored."),
+		    ERROR_PKG, NOTICE,
+		    0);
+	break;
+    }
 
-	    /*
-	     * Button structs are reused for notices
-	     * If there were no buttons to start off with, they
-	     * are allocated
-	     */
-	    if (reuse_buttons)  {
-                last_button = button = reuse_buttons;
-		reuse_buttons = reuse_buttons->next;
-		if (button->string)  {
-		    free(button->string);
-		    button->string = (char *)NULL;
-		}
-	    }
-	    else  {
-                button = (notice_buttons_handle) notice_create_button_struct();
-		button->panel_item = (Panel_item)NULL;
-		button->next = (notice_buttons_handle)NULL;
-                (void) notice_add_button_to_list(notice, button);
-	    }
+    /*
+     * Button structs are reused for notices
+     * If there were no buttons to start off with, they
+     * are allocated
+     */
+    if (reuse_buttons)  {
+	last_button = button = reuse_buttons;
+	reuse_buttons = reuse_buttons->next;
+	if (button->string)  {
+	    free(button->string);
+	    button->string = (char *)NULL;
+	}
+    }
+    else  {
+	button = (notice_buttons_handle) notice_create_button_struct();
+	button->panel_item = (Panel_item)NULL;
+	button->next = (notice_buttons_handle)NULL;
+	(void) notice_add_button_to_list(notice, button);
+    }
 
-	    /*
-	     * Space has to be malloc for string.
-	     * For non-locking notices that use panel items, this
-	     * Is not necessary, since the string is cached by the
-	     * panel pkg. But for screen locking notices, we have to cache
-	     * the strings. So, we do it for all cases.
-	     * Doing it for one case only will make things more
-	     * complicated than it already is, since we can switch
-	     * back and forth from non-screen-locking to screen-locking
-	     * notices.
-	     */
-            button->string = xv_strsave((char *)avlist[1]);
-            button->is_yes = TRUE;
-            button->value = NOTICE_YES;
-            notice->yes_button_exists = TRUE;
-            num_butt++;
-	    butt_changed = TRUE;
+    /*
+     * Space has to be malloc for string.
+     * For non-locking notices that use panel items, this
+     * Is not necessary, since the string is cached by the
+     * panel pkg. But for screen locking notices, we have to cache
+     * the strings. So, we do it for all cases.
+     * Doing it for one case only will make things more
+     * complicated than it already is, since we can switch
+     * back and forth from non-screen-locking to screen-locking
+     * notices.
+     */
+    button->string = xv_strsave((char *)avlist[1]);
+    button->is_yes = TRUE;
+    button->value = NOTICE_YES;
+    notice->yes_button_exists = TRUE;
+    num_butt++;
+    butt_changed = TRUE;
 
-            break;
-        }
+    break;
+}
 
-        case NOTICE_BUTTON_NO:{
-            notice_buttons_handle button;
+case NOTICE_BUTTON_NO:{
+    notice_buttons_handle button;
 
-            if (!no_button_seen) {
-                no_button_seen = TRUE;
-            } else {
-                xv_error(NULL,
+    if (!no_button_seen) {
+	no_button_seen = TRUE;
+    } else {
+	xv_error(XV_NULL,
                     ERROR_STRING,
                     XV_MSG("Only one NOTICE_BUTTON_NO attr allowed. Attr ignored."),
                     ERROR_PKG, NOTICE,
@@ -487,7 +487,7 @@ notice_generic_set(notice, avlist, is_object)
 		/*
 		 * End list with NULL
 		 */
-		busy_frames[count] = NULL;
+		busy_frames[count] = XV_NULL;
 
 		notice->busy_frames = busy_frames;
 	    }

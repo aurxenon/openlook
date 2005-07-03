@@ -92,7 +92,7 @@ db_cvt_string_to_bool(from_value, to_value)
 	    if (chr1 != chr2)
 		break;
   	}
-	if (chr1 == NULL) {
+	if (chr1 == XV_NULL) {
 	    *to_value = (i % 2) ? False : True;
 	    return(XV_OK);
 	}

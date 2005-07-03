@@ -64,7 +64,7 @@ xv_expand_name(name)
     char            cmdbuf[BUFSIZ];
     register int    pid, length;
     register char  *Shell;
-    int             status, pivec[2];
+    int             status, pivec[2], dr;
     char           *echo = "echo ";
     char           *trimchars = "\t \n";
 
@@ -97,7 +97,7 @@ xv_expand_name(name)
 	    Shell = Default_Shell;
 	(void) close(pivec[0]);
 	(void) close(1);
-	(void) dup(pivec[1]);
+	dr = dup(pivec[1]);
 	(void) close(pivec[1]);
 	(void) close(2);
 	execl(Shell, Shell, "-c", cmdbuf, 0);
@@ -129,7 +129,7 @@ xv_expand_name(name)
     ;
     status &= 0377;
     if (status != 0 && status != SIGPIPE) {
-	xv_error(NULL,
+	xv_error(XV_NULL,
 		 ERROR_STRING, XV_MSG("\"Echo\" failed"),
 		 0);
 	return (NONAMES);
@@ -143,7 +143,7 @@ xv_expand_name(name)
 	(void) sprintf(dummy, 
 			XV_MSG("Buffer overflow (> %d)  expanding \"%s\""),
 		       NCARGS, name);
-	xv_error(NULL,
+	xv_error(XV_NULL,
 		 ERROR_STRING, dummy,
 		 0);
 	return (NONAMES);
@@ -188,7 +188,7 @@ xv_mk_0list()
     result = (struct namelist *)
 	xv_malloc(sizeof(int) + sizeof(char *));
     if (result == NONAMES) {
-	xv_error(NULL,
+	xv_error(XV_NULL,
 		 ERROR_LAYER, ERROR_SYSTEM,
 		 ERROR_STRING, XV_MSG("in xv_expand_name"),
 		 0);
@@ -210,7 +210,7 @@ xv_mk_1list(str)
 	xv_malloc((unsigned)
 	       sizeof(int) + 2 * sizeof(char *) + strlen(str) +1);
     if (result == NONAMES) {
-	xv_error(NULL,
+	xv_error(XV_NULL,
 		 ERROR_LAYER, ERROR_SYSTEM,
 		 ERROR_STRING, XV_MSG("in xv_expand_name"),
 		 0);
@@ -247,7 +247,7 @@ makelist(len, str)
 	xv_malloc((unsigned)
 	       sizeof(int) + (count + 1) *sizeof(char *) + len);
     if (result == NONAMES) {
-	xv_error(NULL,
+	xv_error(XV_NULL,
 		 ERROR_LAYER, ERROR_SYSTEM,
 		 ERROR_STRING, XV_MSG("in xv_expand_name"),
 		 0);

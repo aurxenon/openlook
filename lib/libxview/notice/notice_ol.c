@@ -1058,7 +1058,7 @@ notice_handle   notice;
                                 NULL);
 
     if (font == NULL) {
-        xv_error(NULL,
+        xv_error(XV_NULL,
             ERROR_STRING,
                 XV_MSG("Unable to find \"fixed\" font. (Notice package)"),
         NULL);
@@ -1112,7 +1112,7 @@ notice_handle 	notice;
 	     * If all the above fails, return error code
 	     */
 	    if (!default_font) {
-	        xv_error(NULL,
+	        xv_error(XV_NULL,
 	                ERROR_STRING,
 	        XV_MSG("Unable to find \"fixed\" font."),
 	                 ERROR_PKG, NOTICE,
@@ -1332,7 +1332,7 @@ notice_offset_from_baseline(font)
     XFontStruct		*x_font_info;
 #endif /* OW_I18N */
 
-    if (font == NULL)
+    if (font == XV_NULL)
 	return (0);
 
 #ifdef OW_I18N

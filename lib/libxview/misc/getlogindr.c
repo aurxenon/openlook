@@ -39,14 +39,14 @@ xv_getlogindir()
     else
 	passwdent = getpwnam(loginname);
     if (passwdent == NULL) {
-	xv_error(NULL,
+	xv_error(XV_NULL,
 		 ERROR_STRING,
 		     XV_MSG("xv_getlogindir: couldn't find user in password file"),
 		 0);
 	return (NULL);
     }
     if (passwdent->pw_dir == NULL) {
-	xv_error(NULL,
+	xv_error(XV_NULL,
 		 ERROR_STRING,
 		     XV_MSG("xv_getlogindir: no home directory in password file"),
 		 0);

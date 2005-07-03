@@ -28,14 +28,14 @@ db_name_from_qlist(qlist)
     register int    i;  
 
     if (qlist == NULL)
-	return(NULL);
+	return(XV_NULL);
     
     for (i = 0; qlist[i] != NULLQUARK; i++) 
                 ;
     if (i != 0) 
         return((Xv_opaque)XrmQuarkToString(qlist[i - 1]));
     else 
-        return((Xv_opaque)NULL);
+        return(XV_NULL);
 }
 
 Xv_private XrmQuarkList

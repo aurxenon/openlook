@@ -51,7 +51,7 @@ Bool		on;
 {
     Xv_server   	server;
     Xv_screen   	screen;
-    Xv_cursor		busyPointer = NULL;
+    Xv_cursor		busyPointer = XV_NULL;
 
     screen = xv_get(parent, XV_SCREEN);
     server = xv_get(screen, SCREEN_SERVER);

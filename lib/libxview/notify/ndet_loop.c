@@ -89,7 +89,7 @@ pkg_private_data struct sigaction ndet_sigvec =
 #ifndef __linux__
 	{SA_RESTART, {ndet_signal_catcher}, {0}, {0,0}};
 #else
-	{ndet_signal_catcher,0,SA_RESTART,NULL}; /* handler,mask,flags,restorer */
+	{ndet_signal_catcher,0,SA_RESTART,XV_NULL}; /* handler,mask,flags,restorer */
 #endif
 	static int      ndet_signal_code;
 	static ucontext_t *ndet_signal_context;
@@ -785,6 +785,7 @@ pkg_private void		/* Should be static but there might be
 ndet_signal_catcher(sig, code, scp)
     int             sig;
     int             code;
+    int             wr;
 #if !defined(SVR4) && !defined(__linux__)
     struct sigcontext *scp;
 #else /* SVR4 */
@@ -841,7 +842,7 @@ Done:
      * be processed.
      */
     if( pipe_started )
-        write( pipefds[1], "a", 1 );
+        wr = write( pipefds[1], "a", 1 );
 
 #ifdef	NTFY_DEBUG
     if (ndet_track_sigs)

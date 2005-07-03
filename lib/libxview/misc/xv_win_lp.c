@@ -48,7 +48,7 @@ printf("save_loop_frame = %lx\n", (unsigned long)save_loop_frame);
 */
 
     if (!frame)  {
-        xv_error(NULL,
+        xv_error(XV_NULL,
             ERROR_STRING, 
             XV_MSG("xv_window_loop() : NULL frame passed."),
             NULL);
@@ -100,7 +100,7 @@ printf("save_loop_frame = %lx\n", (unsigned long)save_loop_frame);
     if (!display)  {
         display = (Display *)xv_get(xv_default_server, XV_DISPLAY);
         if (!display)  {
-            xv_error(NULL,
+            xv_error(XV_NULL,
                 ERROR_STRING, 
                 XV_MSG("xv_window_loop() : Cannot get handle to display"),
             NULL);

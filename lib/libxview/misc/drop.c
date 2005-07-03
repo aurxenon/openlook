@@ -42,7 +42,7 @@ xv_decode_drop(ev, buffer, bsize)
 				       	/* Dig out the ClientMessage event. */
     cM = (XClientMessageEvent *)event_xevent(ev);
 
-    if ((window = win_data(cM->display, cM->window)) == NULL)
+    if ((window = win_data(cM->display, cM->window)) == XV_NULL)
 	return (DD_FAILED);
 
     if (cM->message_type == xv_get(XV_SERVER_FROM_WINDOW(window), SERVER_ATOM,

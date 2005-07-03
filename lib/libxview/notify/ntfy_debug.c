@@ -62,7 +62,7 @@ ntfy_assert_debug(code)
 
     error_string = xv_malloc(strlen("Notifier internal error (code #999)") + 1);
     sprintf(error_string, "Notifier internal error (code #%d)", code);
-    xv_error(NULL,
+    xv_error(XV_NULL,
 	     ERROR_STRING, error_string,
 	     0);
     free(error_string);
@@ -78,7 +78,7 @@ ntfy_fatal_error(msg)
 			  + 2);
     strcpy(error_string, XV_MSG("Notifier fatal error: "));
     strcat(error_string, msg);
-    xv_error(NULL,
+    xv_error(XV_NULL,
 	     ERROR_STRING, error_string,
 	     0);
     free(error_string);

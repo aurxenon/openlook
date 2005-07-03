@@ -84,7 +84,7 @@ notice_init_internal(client_window, notice_public, avlist)
     Notice_info 	*notice;
 
     if (!client_window) {
-	xv_error(NULL,
+	xv_error(XV_NULL,
 		 ERROR_STRING,
 	     XV_MSG("NULL parent window passed to NOTICE. Not allowed."),
 	         ERROR_PKG, NOTICE,
@@ -101,7 +101,7 @@ notice_init_internal(client_window, notice_public, avlist)
      */
     notice = (Notice_info *) xv_calloc(1, sizeof(Notice_info));
     if (!notice) {
-        xv_error(NULL,
+        xv_error(XV_NULL,
             ERROR_STRING, XV_MSG("Malloc failed."),
 	    ERROR_PKG, NOTICE,
         0);
@@ -264,7 +264,7 @@ notice_create_button_struct()
 
     pi = (notice_buttons_handle) xv_calloc(1, sizeof(struct notice_buttons));
     if (!pi) {
-	xv_error(NULL,
+	xv_error(XV_NULL,
 	         ERROR_STRING,
 	     XV_MSG("calloc failed in notice_create_button_struct()."),
 	         ERROR_PKG, NOTICE,
@@ -286,7 +286,7 @@ notice_create_msg_struct()
 
     pi = (notice_msgs_handle) xv_calloc(1, sizeof(struct notice_msgs));
     if (!pi) {
-	xv_error(NULL,
+	xv_error(XV_NULL,
 	         ERROR_STRING,
 	     XV_MSG("calloc failed in notice_create_msg_struct()."),
 	         ERROR_PKG, NOTICE,

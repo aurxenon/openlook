@@ -2,6 +2,8 @@
  * hashfn.c
  */
 
+#include "stdlib.h"
+
 #ifndef lint
 #ifdef sccs
 static char     sccsid[] = "@(#)hashfn.c 20.12 93/06/28";

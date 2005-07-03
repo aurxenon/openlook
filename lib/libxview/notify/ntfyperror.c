@@ -70,7 +70,7 @@ notify_perror(str)
 	msg = XV_MSG("Unknown notifier error");
     }
     (void) sprintf(dummy, "%s: %s", str, msg);
-    xv_error(NULL,
+    xv_error(XV_NULL,
 	     ERROR_STRING, dummy,
 	     0);
 }
