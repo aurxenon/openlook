@@ -367,7 +367,7 @@ cms_parse_named_colors(cms, named_colors)
     for (--count; count >= 0; --count) {
 	if (!XParseColor(display, DefaultColormap(display, screen_num), named_colors[count],
 	    	xcolors+count)) {
-	    xv_error(NULL,
+	    xv_error(XV_NULL,
 		 ERROR_STRING,
 		 XV_MSG("Unable to find RGB values for a named color"),
 		 ERROR_PKG, CMS,

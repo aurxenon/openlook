@@ -40,7 +40,7 @@ va_dcl
         va_end(valist);
     }
     else
-        avlist[0] = NULL;
+        avlist[0] = XV_NULL;
 
     return (xv_create_avlist(XV_NULL, CURSOR, avlist));
 }

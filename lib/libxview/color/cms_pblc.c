@@ -111,7 +111,7 @@ cms_init(parent, cms_public, avlist)
      * static visual.
      */
     if (cms->type == XV_DYNAMIC_CMS && !XV_DYNAMIC_VISUAL(cms->visual->vinfo->class)) {
-	xv_error(NULL, 
+	xv_error(XV_NULL, 
 		 ERROR_STRING,
 		 XV_MSG("Can not allocate a read/write cms from a static visual"),
 		 ERROR_PKG, CMS,
@@ -183,7 +183,7 @@ cms_set_avlist(cms_public, avlist)
 		break;
 
 	    case CMS_TYPE:
-		xv_error(NULL,
+		xv_error(XV_NULL,
 		         ERROR_STRING, 
 				XV_MSG("CMS_TYPE is a create-only attribute"),
 		    	 ERROR_PKG, CMS,
@@ -237,7 +237,7 @@ cms_set_avlist(cms_public, avlist)
 					   (int)xv_get(cms->screen, SCREEN_NUMBER, 0));
 		    if (!XParseColor(display, cmap, 
 				     control_color, &(xcolors[0]))) {
-			xv_error(NULL, 
+			xv_error(XV_NULL, 
 				 ERROR_STRING,
 				 "Unable to parse window color",
 				 ERROR_PKG, CMS,
@@ -258,7 +258,7 @@ cms_set_avlist(cms_public, avlist)
 
 		    if (cms_set_colors(cms, (Xv_Singlecolor *)NULL, xcolors, 
 			    (unsigned long)0, (unsigned long)CMS_CONTROL_COLORS) == XV_ERROR) {
-			xv_error(NULL,
+			xv_error(XV_NULL,
 			    ERROR_STRING,
 			    XV_MSG("Unable to allocate control colors for colormap segment"),
 			    ERROR_PKG, CMS,
@@ -417,7 +417,7 @@ cms_get_attr(cms_public, status, attr, args)
 			       (unsigned char *)NULL) == XV_OK) {
 		value = (Xv_opaque)v;
 	    } else {
-		value = NULL;
+		value = XV_NULL;
 	    }
 	}
 #else
@@ -427,7 +427,7 @@ cms_get_attr(cms_public, status, attr, args)
 			   (unsigned char *)NULL) == XV_OK) {
 	    value = (Xv_opaque)avlist[0];
 	} else {
-	    value = NULL;
+	    value = XV_NULL;
 	}
 #endif
 	break;
@@ -444,7 +444,7 @@ cms_get_attr(cms_public, status, attr, args)
 			       (unsigned char *)NULL) == XV_OK) {
 		value = (Xv_opaque)v;
 	    } else {
-		value = NULL;
+		value = XV_NULL;
 	    }
 	}
 #else
@@ -454,7 +454,7 @@ cms_get_attr(cms_public, status, attr, args)
 			   (unsigned char *)NULL) == XV_OK) {
 	    value = (Xv_opaque)avlist[0];
 	} else {
-	    value = NULL;
+	    value = XV_NULL;
 	}
 #endif
 	break;
@@ -534,7 +534,7 @@ cms_find_cms(screen_public, pkg, avlist)
 	    break;
 	}
     }
-    return(NULL);
+    return(XV_NULL);
 }
 
 Pkg_private int

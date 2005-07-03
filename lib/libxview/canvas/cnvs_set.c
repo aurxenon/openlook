@@ -31,7 +31,7 @@ canvas_set_avlist(canvas_public, avlist)
     int             width = 0;
     int             height = 0;
     int             vsb_set = 0, hsb_set = 0;
-    Scrollbar       vsb = NULL, hsb = NULL;
+    Scrollbar       vsb = XV_NULL, hsb = XV_NULL;
     short           new_paint_size = FALSE;
     short           recheck_paint_size = FALSE;
     int             ok = TRUE;
@@ -301,7 +301,7 @@ canvas_append_paint_attrs(canvas, argv)
     Canvas_info    *canvas;
     Attr_avlist     argv;
 {
-    if (canvas->paint_avlist == NULL) {
+    if (canvas->paint_avlist == XV_NULL) {
 	canvas->paint_avlist = (Attr_avlist) xv_alloc_n(Canvas_attribute, ATTR_STANDARD_SIZE);
 	canvas->paint_end_avlist = canvas->paint_avlist;
     }

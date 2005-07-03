@@ -44,7 +44,7 @@ cursor_make_x(root_info, w, h, d, op, xhot, yhot, xfg, xbg, pr)
     Xv_Drawable_info info;
 
     if ((w <= 0) || (h <= 0) || (d <= 0)) {
-	xv_error(NULL,
+	xv_error(XV_NULL,
 		 ERROR_STRING,
 		   XV_MSG("cannot create cursor with null image"),
 		 ERROR_PKG, CURSOR,
@@ -56,7 +56,7 @@ cursor_make_x(root_info, w, h, d, op, xhot, yhot, xfg, xbg, pr)
      * does not handle negative xhot or yhot.
      */
     if ((xhot < 0) || (yhot < 0))
-	xv_error(NULL,
+	xv_error(XV_NULL,
 	         ERROR_STRING, 
 		 XV_MSG("cursor_make_x(): bad xhot/yhot parameters"),
 		 ERROR_PKG, CURSOR,
@@ -172,7 +172,7 @@ cursor_make_x(root_info, w, h, d, op, xhot, yhot, xfg, xbg, pr)
 	mask = src;
 	break;
       default:
-	xv_error(NULL,
+	xv_error(XV_NULL,
 	         ERROR_STRING, "cursor_make_x(): unknown rasterop specified",
 		 ERROR_PKG, CURSOR,
 		 0);
@@ -213,7 +213,7 @@ cursor_make_x_font(root_info, src_char, mask_char, xfg, xbg)
 					  FONT_TYPE, FONT_TYPE_CURSOR,
 					  0);
     if (!xview_cursor_font)
-	xv_error(NULL,
+	xv_error(XV_NULL,
 		 ERROR_STRING, 
 		 XV_MSG("Unable to find OPEN LOOK cursor font"),
 		 ERROR_PKG, CURSOR,

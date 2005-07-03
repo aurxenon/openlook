@@ -28,7 +28,7 @@ canvas_get_attr(canvas_public, stat, attr, valist)
     switch (attr) {
       case CANVAS_NTH_PAINT_WINDOW:
 	view_public = (Xv_Window) xv_get(canvas_public, OPENWIN_NTH_VIEW, va_arg(valist, int));
-	if (view_public != NULL) {
+	if (view_public != XV_NULL) {
 	    return ((Xv_opaque) CANVAS_VIEW_PRIVATE(view_public)->paint_window);
 	} else {
 	    return ((Xv_opaque) NULL);
@@ -65,7 +65,7 @@ canvas_get_attr(canvas_public, stat, attr, valist)
 
       case CANVAS_VIEWABLE_RECT:
 	paint_window = va_arg(valist, Xv_Window);
-	if (paint_window != NULL) {
+	if (paint_window != XV_NULL) {
 	    view = CANVAS_VIEW_PRIVATE((Canvas_view) xv_get(paint_window, XV_OWNER));
 	    if (view == NULL) {
 		return (Xv_opaque) NULL;

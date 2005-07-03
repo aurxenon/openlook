@@ -438,7 +438,7 @@ canvas_view_create_paint_window(view)
 	canvas->paint_avlist = canvas->paint_end_avlist = NULL;
     }
 
-    if (view->paint_window == NULL) {
+    if (view->paint_window == XV_NULL) {
 	return ((int) XV_ERROR);
     }
 
@@ -449,7 +449,7 @@ canvas_view_create_paint_window(view)
     
     if (status(canvas, created)) {
 	split_paint = (Xv_Window) xv_get(canvas_public, CANVAS_NTH_PAINT_WINDOW, 0);
-	if (split_paint != NULL) {
+	if (split_paint != XV_NULL) {
 	    Xv_opaque   defaults_array[ATTR_STANDARD_SIZE];
 	    Attr_avlist defaults = defaults_array;
 	    Xv_opaque   value;
@@ -500,12 +500,12 @@ canvas_view_create_paint_window(view)
 	    /* Deal with possible scrollbars */
 	    sb = (Scrollbar)xv_get(canvas_public, OPENWIN_VERTICAL_SCROLLBAR,
 				   view_public);
-	    if (sb != NULL) {
+	    if (sb != XV_NULL) {
 		canvas_scroll(view->paint_window, sb);
 	    }
 	    sb = (Scrollbar)xv_get(canvas_public, OPENWIN_HORIZONTAL_SCROLLBAR,
 				   view_public);
-	    if (sb != NULL) {
+	    if (sb != XV_NULL) {
 		canvas_scroll(view->paint_window, sb);
 	    }
 	}

@@ -25,7 +25,7 @@ static char     sccsid[] = "@(#)defaults.c 20.33 93/06/28";
 #endif
 #include <xview/xv_error.h>
 /* mbuck@debian.org */
-#if 1
+#if 0
 #include <X11/Xlibint.h>
 #else
 #include <X11/Xlib.h>
@@ -145,7 +145,7 @@ defaults_get_boolean(name, class, default_bool)
 	(void) sprintf(buffer,
 	       XV_MSG("\"%s\" is an unrecognized boolean value (Defaults package)"),
 		       string_value);
-	xv_error(NULL,
+	xv_error(XV_NULL,
 		 ERROR_STRING, buffer,
 		 0);
 	value = default_bool;
@@ -180,7 +180,7 @@ defaults_get_character(name, class, default_char)
 	sprintf(buffer, 
 		XV_MSG("\"%s\" is not a character constant (Defaults package)"),
 		string_value);
-	xv_error(NULL,
+	xv_error(XV_NULL,
 		 ERROR_STRING, buffer,
 		 0);
 	return default_char;
@@ -256,7 +256,7 @@ defaults_get_integer(name, class, default_integer)
 	sprintf(buffer, 
 		XV_MSG("\"%s\" is not an integer (Defaults package)"), 
 		string_value);
-	xv_error(NULL,
+	xv_error(XV_NULL,
 		 ERROR_STRING, buffer,
 		 0);
 	return default_integer;
@@ -296,7 +296,7 @@ defaults_get_integer_check(name, class, default_int, minimum, maximum)
 	sprintf(buffer, 
 	XV_MSG("The value of name \"%s\" (class \"%s\") is %d,\nwhich is not between %d and %d. (Defaults package)"),
 		name, class, value, minimum, maximum);
-	xv_error(NULL,
+	xv_error(XV_NULL,
 		 ERROR_STRING, buffer,
 		 0);
 	return default_int;
@@ -437,7 +437,7 @@ defaults_load_db(filename)
 	new_db = XrmGetFileDatabase(filename);
     else {
 	if (!xv_default_display) {
-	    xv_error(0,
+	    xv_error(XV_NULL,
 		     ERROR_STRING,
 		       XV_MSG("Unable to load server Resource Manager property -\n\
 no server defined (Defaults package)"),
@@ -481,7 +481,7 @@ defaults_store_db(filename)
 
     /* Update the server Resource mManager property. */
     if (!xv_default_display) {
-	xv_error(0,
+	xv_error(XV_NULL,
 		 ERROR_STRING,
 		   XV_MSG("Unable to update server Resource Manager property -\n\
 no server defined (Defaults package)"),
@@ -509,7 +509,7 @@ store_db_cleanup:
     return;
 
 store_db_error:
-    xv_error(0,
+    xv_error(XV_NULL,
 	     ERROR_STRING,
      XV_MSG("Unable to update server Resource Manager property (Defaults package)"),
 	     0);

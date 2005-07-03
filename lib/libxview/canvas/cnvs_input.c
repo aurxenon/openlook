@@ -419,7 +419,7 @@ canvas_window_event(canvas_public, event)
     int             x, y;
 
     paint_window = xv_get(canvas_public, CANVAS_NTH_PAINT_WINDOW, 0);
-    if (paint_window == NULL) {
+    if (paint_window == XV_NULL) {
 	/* call xv_error */
 	return (event);
     }
@@ -444,7 +444,7 @@ canvas_event(canvas_public, event)
     int             x, y;
 
     paint_window = xv_get(canvas_public, CANVAS_NTH_PAINT_WINDOW, 0);
-    if (paint_window == NULL) {
+    if (paint_window == XV_NULL) {
 	/* call xv_error */
 	return (event);
     }
