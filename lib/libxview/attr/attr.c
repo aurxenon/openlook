@@ -31,7 +31,7 @@ Attr_avlist attr_make_count( listhead, listlen, valist, countptr )
     va_list         valist;
     int            *countptr;
 {
-    return( copy_va_to_av( valist, listhead, (Attr_attribute)NULL ));
+    return( copy_va_to_av( valist, listhead, XV_NULL ));
 }
 
 /*
@@ -110,7 +110,7 @@ Xv_private Attr_avlist copy_va_to_av( valist1, avlist1, attr1 )
    {
       if( ++arg_count > arg_count_max )
       {
-         xv_error( (Xv_object)NULL,
+         xv_error( XV_NULL,
                    ERROR_STRING, XV_MSG(
               "A/V list more than 250 elements long, extra elements ignored"),
                    0);
@@ -125,7 +125,7 @@ Xv_private Attr_avlist copy_va_to_av( valist1, avlist1, attr1 )
 
             if(( arg_count += cardinality ) > arg_count_max )
             {
-               xv_error( (Xv_object)NULL,
+               xv_error( XV_NULL,
                          ERROR_STRING, XV_MSG(
                "A/V list more than 250 elements long, extra elements ignored"),
                          0);
@@ -148,7 +148,7 @@ Xv_private Attr_avlist copy_va_to_av( valist1, avlist1, attr1 )
                   do {
                       if(( arg_count += cardinality ) > arg_count_max )
                       {
-                         xv_error( (Xv_object)NULL,
+                         xv_error( XV_NULL,
                                    ERROR_STRING, XV_MSG(
               "A/V list more than 250 elements long, extra elements ignored"),
                                    0);
@@ -162,7 +162,7 @@ Xv_private Attr_avlist copy_va_to_av( valist1, avlist1, attr1 )
                case ATTR_LIST_IS_PTR:
                   if( ++arg_count  > arg_count_max )
                   {
-                     xv_error( (Xv_object)NULL,
+                     xv_error( XV_NULL,
                                ERROR_STRING, XV_MSG(
               "A/V list more than 250 elements long, extra elements ignored"),
                                0);
