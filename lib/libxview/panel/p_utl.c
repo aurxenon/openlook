@@ -324,7 +324,7 @@ panel_unlink(ip, destroy)
 
     /* if it's default panel item, clear the default value */
     if (panel->default_item == ITEM_PUBLIC(ip))
-	panel->default_item = NULL;
+	panel->default_item = XV_NULL;
 
     /* unlinked item is no longer current */
     if (panel->current == ip)
@@ -966,7 +966,7 @@ panel_set_kbd_focus(panel, ip)
     Item_info      *ip;
 {
     if (ip == NULL || hidden(ip))
-	return NULL;
+	return XV_NULL;
 
     panel_yield_kbd_focus(panel);
     panel->kbd_focus_item = ip;
@@ -982,7 +982,7 @@ panel_advance_caret(panel_public)
     Panel_info     *panel = PANEL_PRIVATE(panel_public);
 
     if (!panel->kbd_focus_item)
-	return (NULL);
+	return (XV_NULL);
 
     (void) panel_set_kbd_focus(panel, panel_next_kbd_focus(panel, TRUE));
 
@@ -997,7 +997,7 @@ panel_backup_caret(panel_public)
     Panel_info     *panel = PANEL_PRIVATE(panel_public);
 
     if (!panel->kbd_focus_item)
-	return (NULL);
+	return (XV_NULL);
 
     (void) panel_set_kbd_focus(panel, panel_previous_kbd_focus(panel, TRUE));
 

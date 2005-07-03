@@ -939,7 +939,7 @@ choice_accept_menu(item_public, event)
 	dp->display_level != PANEL_CURRENT)
 	return;
 
-    if (ip->menu == NULL || paint_window == NULL)
+    if (ip->menu == XV_NULL || paint_window == XV_NULL)
 	return;
 
     /* Invert the abbreviated menu button */
@@ -1307,13 +1307,13 @@ choice_images_to_menu_items(ip, images, mitems, last)
 	switch (image_type(image)) {
 	  case PIT_STRING:
 #ifdef OW_I18N
-            mitems[i] = xv_create(NULL, MENUITEM,
+            mitems[i] = xv_create(XV_NULL, MENUITEM,
                                   MENU_STRING_ITEM_WCS, image_string_wc(image), i,
                                   MENU_COLOR, color_index,
 				  MENU_RELEASE,
                                   0);
 #else
-	    mitems[i] = xv_create(NULL, MENUITEM,
+	    mitems[i] = xv_create(XV_NULL, MENUITEM,
 				  MENU_STRING_ITEM, image_string(image), i,
 		    		  MENU_COLOR, color_index,
 				  MENU_RELEASE,
@@ -1325,7 +1325,7 @@ choice_images_to_menu_items(ip, images, mitems, last)
 	    break;
 
 	  case PIT_SVRIM:
-	    mitems[i] = xv_create(NULL, MENUITEM,
+	    mitems[i] = xv_create(XV_NULL, MENUITEM,
 		    		  MENU_IMAGE_ITEM, image_svrim(image), i,
 		    		  MENU_COLOR, color_index,
 				  MENU_RELEASE,

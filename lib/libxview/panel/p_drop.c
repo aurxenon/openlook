@@ -590,7 +590,7 @@ drop_paint_value(ip, dp)
     Item_info	   *ip;
     Drop_info	   *dp;
 {
-    Server_image    glyph = NULL;
+    Server_image    glyph = XV_NULL;
     Xv_Drawable_info *info;
     Panel_info	   *panel = ip->panel;
     Xv_Window	    pw;

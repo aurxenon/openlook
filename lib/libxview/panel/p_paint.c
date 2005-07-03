@@ -34,8 +34,8 @@ panel_redisplay(panel_public, pw, repaint_area)
     /* If this is a PANEL with out Panel Menu Items, then draw a line
      * at the top of the panel.
      */
-    if (xv_get(panel_public, WIN_VERTICAL_SCROLLBAR) == NULL &&
-	xv_get(panel_public, WIN_HORIZONTAL_SCROLLBAR) == NULL &&
+    if (xv_get(panel_public, WIN_VERTICAL_SCROLLBAR) == XV_NULL &&
+	xv_get(panel_public, WIN_HORIZONTAL_SCROLLBAR) == XV_NULL &&
 	!(panel->items && is_menu_item(panel->items))) {
         DRAWABLE_INFO_MACRO(pw, info); 
 	
@@ -123,7 +123,7 @@ panel_paint(client_object, flag)
     Panel_info     *object = PANEL_PRIVATE(client_object);
 
     if (!object || (flag != PANEL_CLEAR && flag != PANEL_NO_CLEAR))
-	return NULL;
+	return XV_NULL;
 
     if (is_panel(object)) {
 	(*object->ops.panel_op_paint) (object, flag);

@@ -66,7 +66,7 @@ panel_set_avlist(panel_public, avlist)
 
 	  case PANEL_CARET_ITEM:
 	    if (!avlist[1]) {
-		xv_error(NULL,
+		xv_error(XV_NULL,
 			 ERROR_BAD_VALUE, avlist[1], PANEL_CARET_ITEM,
 			 ERROR_PKG, PANEL,
 			 0);
@@ -75,7 +75,7 @@ panel_set_avlist(panel_public, avlist)
 	    ip = ITEM_PRIVATE(avlist[1]);
 	    if (inactive(ip) || hidden(ip) ||
 		(!wants_key(ip) && !ip->child_kbd_focus_item)) {
-		xv_error(NULL,
+		xv_error(XV_NULL,
 			 ERROR_BAD_VALUE, avlist[1], PANEL_CARET_ITEM,
 			 ERROR_PKG, PANEL,
 			 0);
@@ -190,7 +190,7 @@ panel_set_avlist(panel_public, avlist)
 
 		/* repaint the previous default item */
 		if (item) { 
-		    panel->default_item = NULL;
+		    panel->default_item = XV_NULL;
 		    ip = ITEM_PRIVATE (item);
 		    panel_redisplay_item (ip, ip->repaint);
 		    panel->default_item = (Panel_item) avlist[1];
@@ -217,7 +217,7 @@ panel_set_avlist(panel_public, avlist)
 		/* Clear caret */
 		panel_text_caret_on(panel, FALSE);
 	    }
-	    panel->caret = NULL;
+	    panel->caret = XV_NULL;
 	    break;
 
 #ifdef VERSION_3
@@ -359,13 +359,13 @@ panel_set_avlist(panel_public, avlist)
     }
 
     /* set up any scrollbars */
-    if (new_v_scrollbar != NULL &&
+    if (new_v_scrollbar != XV_NULL &&
     (int (*) ()) xv_get(new_v_scrollbar, SCROLLBAR_NORMALIZE_PROC) == NULL) {
 	xv_set(new_v_scrollbar,
 	       SCROLLBAR_NORMALIZE_PROC, panel_normalize_scroll,
 	       0);
     }
-    if (new_h_scrollbar != NULL &&
+    if (new_h_scrollbar != XV_NULL &&
     (int (*) ()) xv_get(new_h_scrollbar, SCROLLBAR_NORMALIZE_PROC) == NULL) {
 	xv_set(new_h_scrollbar,
 	       SCROLLBAR_NORMALIZE_PROC, panel_normalize_scroll,
@@ -407,7 +407,7 @@ panel_set_fonts(panel_public, panel)
     glyph_font = xv_find_olglyph_font(panel->std_font);
 
     if (!glyph_font)
-	xv_error(NULL,
+	xv_error(XV_NULL,
 		 ERROR_STRING, 
 		    XV_MSG("Unable to find OPEN LOOK glyph font"),
 		 ERROR_SEVERITY, ERROR_NON_RECOVERABLE,
@@ -437,7 +437,7 @@ panel_set_fonts(panel_public, panel)
      * is done to determine if the bold font size is about the same
      * as the other fonts that are used.
      */  
-    panel->bold_font = NULL;
+    panel->bold_font = XV_NULL;
 
     if (save_bold_name = bold_name = xv_font_bold())
     {
@@ -471,8 +471,8 @@ panel_set_fonts(panel_public, panel)
                 0);
         }
 
-        if (panel->bold_font == NULL)
-            xv_error(NULL,
+        if (panel->bold_font == XV_NULL)
+            xv_error(XV_NULL,
                  ERROR_STRING,
 		     XV_MSG("Unable to find bold font"),
                  ERROR_PKG, PANEL,
@@ -481,7 +481,7 @@ panel_set_fonts(panel_public, panel)
             xv_free( bold_name );
     }
     
-    if (panel->bold_font == NULL) {
+    if (panel->bold_font == XV_NULL) {
         panel->bold_font = xv_find(panel_public, FONT,
             FONT_FAMILY, xv_get(panel->std_font, FONT_FAMILY),
             FONT_STYLE, FONT_STYLE_BOLD,
@@ -493,8 +493,8 @@ panel_set_fonts(panel_public, panel)
     defaults_set_locale(NULL, NULL);
 #endif
 
-    if (panel->bold_font == NULL) {
-        xv_error(NULL,
+    if (panel->bold_font == XV_NULL) {
+        xv_error(XV_NULL,
                  ERROR_STRING,
 		     XV_MSG("Unable to find bold font; using standard font"),
                  ERROR_PKG, PANEL,

@@ -792,7 +792,7 @@ panel_item_parent(item, parent)
     register Panel_info *new_panel = NULL;
     register Panel_info *current_panel = ip->panel;
 
-    if (parent != NULL) {
+    if (parent != XV_NULL) {
 	new_panel = PANEL_PRIVATE(parent);
     }
     if (current_panel != NULL) {

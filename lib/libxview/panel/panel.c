@@ -91,7 +91,7 @@ panel_init(parent, panel_public, avlist)
 	SERVER_ATOM, "_SUN_SELECTION_END");
     panel->atom.seln_yield = (Atom) xv_get(server,
 	SERVER_ATOM, "_SUN_SELN_YIELD"); /* for SunView1 selection clients */
-    panel->caret = NULL;
+    panel->caret = XV_NULL;
     panel->caret_on = FALSE;
     panel->current_col_x = PANEL_ITEM_X_START;
     panel->drag_threshold = defaults_get_integer("openWindows.dragThreshold",

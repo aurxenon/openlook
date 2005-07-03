@@ -196,8 +196,8 @@ item_get_attr(item_public, status, which_attr, valist)	/*ARGSUSED*/
 	return (Xv_opaque) ip->color_index;
 
       case XV_OWNER:
-	return ((Xv_opaque) (ip->panel != NULL) ? PANEL_PUBLIC(ip->panel) :
-		NULL);
+	return ((Xv_opaque) (ip->panel != XV_NULL) ? PANEL_PUBLIC(ip->panel) :
+		XV_NULL);
 
       case PANEL_BUSY:
 	return (Xv_opaque) busy(ip);
@@ -242,6 +242,6 @@ item_get_attr(item_public, status, which_attr, valist)	/*ARGSUSED*/
 	if (xv_check_bad_attr(&xv_panel_item_pkg, which_attr) == XV_ERROR) {
 	    *status = XV_ERROR;
 	}
-	return (Xv_opaque) NULL;
+	return XV_NULL;
     }
 }

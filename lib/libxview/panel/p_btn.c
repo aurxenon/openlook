@@ -156,7 +156,7 @@ btn_begin_preview(item_public, event)
 
 	/* Get the Server Image or string of the default item */
 	submenu = ip->menu;
-	if ((default_menu = generate_menu(submenu)) == NULL)
+	if ((default_menu = generate_menu(submenu)) == XV_NULL)
 	    return;
 	default_menu_item = (Menu_item) xv_get(default_menu, MENU_DEFAULT_ITEM);
 	if (!default_menu_item)
@@ -203,12 +203,7 @@ btn_begin_preview(item_public, event)
 	if (pin_is_default) {
 	    image.im_type = PIT_STRING;
 	    image_string(&image) = NULL;
-/* Alpha compatibility, mbuck@debian.org */
-#if 1
-	    label = (char *)"";
-#else
-	    label = "";
-#endif
+	    label = (Xv_opaque)"";
 	} else if (!(image_string(&image) = (char *) xv_get(default_menu_item,
 		MENU_STRING))) {
 	    olgx_state |= OLGX_LABEL_IS_PIXMAP;
@@ -306,7 +301,7 @@ btn_cancel_preview(item_public, event)
     if (ip->menu || action_select_is_down(event))
 	panel_paint_button_image(ip, &ip->label, inactive(ip), ip->menu, 0);
     if (ip->menu) {
-	if ((default_menu = generate_menu(ip->menu)) == NULL)
+	if ((default_menu = generate_menu(ip->menu)) == XV_NULL)
 	    return;
 	default_menu_item = (Menu_item) xv_get(default_menu, MENU_DEFAULT_ITEM);
 	if (!default_menu_item)
@@ -384,7 +379,7 @@ btn_accept_menu(item_public, event)
     Item_info      *ip = ITEM_PRIVATE(item_public);
     Xv_Window       paint_window = event_window(event);
 
-    if (ip->menu == NULL || paint_window == NULL)
+    if (ip->menu == XV_NULL || paint_window == XV_NULL)
 	return;
 
     /*
@@ -586,13 +581,13 @@ generate_menu(menu)
 
     if (gen_proc = (Menu(*) ()) xv_get(menu, MENU_GEN_PROC)) {
 	gen_menu = gen_proc(menu, MENU_DISPLAY);
-	if (gen_menu == NULL) {
+	if (gen_menu == XV_NULL) {
 	    xv_error(menu,
 		     ERROR_STRING,
 		 XV_MSG("begin_preview: menu's gen_proc failed to generate a menu"),
 		     ERROR_PKG, PANEL,
 		     0);
-	    return (NULL);
+	    return (XV_NULL);
 	}
 	return (gen_menu);
     } else

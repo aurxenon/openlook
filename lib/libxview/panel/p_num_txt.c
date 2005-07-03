@@ -750,12 +750,12 @@ check_dimming(dp)	/* returns TRUE: button state changed;
     register Num_text_info *dp;
 {
     int    state_changed = FALSE;
-    int    value;
+    int    value, sr;
 
     if (inactive_btn(dp))
 	return FALSE;
 
-    sscanf((char *) xv_get(dp->text_field, PANEL_VALUE), "%d", &value);
+    sr = sscanf((char *) xv_get(dp->text_field, PANEL_VALUE), "%d", &value);
 
     if (value == dp->min_value) {
 	if ((dp->btn_state & DOWN_INACTIVE) == 0)
@@ -790,7 +790,7 @@ get_value(dp)
 #else
     char *ptr;
 #endif /* OW_I18N */
-    int value;
+    int value, sr;
 
 
 #ifdef OW_I18N
@@ -826,7 +826,7 @@ get_value(dp)
             value = 0;
     }
     else
-        sscanf(ptr, "%d", &value);
+        sr = sscanf(ptr, "%d", &value);
 #endif /* OW_I18N */
     return value;
 }

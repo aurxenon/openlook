@@ -270,7 +270,7 @@ text_init(panel_public, item_public, avlist)
     /* If the pixmap used to save and restore the pixels underneath the
      * caret hasn't been created yet, then do so now.
      */
-    if (panel->caret_bg_pixmap == NULL) {
+    if (panel->caret_bg_pixmap == XV_NULL) {
 	DRAWABLE_INFO_MACRO(panel_public, info);
 	panel->caret_bg_pixmap = XCreatePixmap(xv_display(info),
 	    xv_get(xv_get(xv_screen(info), XV_ROOT), XV_XID),
@@ -2363,7 +2363,7 @@ paint_caret(ip, on)
 
     if ((on && (panel->caret_on || (dp->flags & TEXT_SELECTED))) ||
 	(!on && !panel->caret_on) ||
-	panel->caret == NULL)
+	panel->caret == XV_NULL)
 	return;
     panel->caret_on = on;
 
@@ -2401,7 +2401,7 @@ paint_caret(ip, on)
 		XChangeGC(display, gc_list[SCREEN_GLYPH_GC],
 			  GCForeground, &gc_values);
 		str[0] = panel->caret;
-		str[1] = NULL;
+		str[1] = XV_NULL;
 		XDrawString(display, pw_xid, gc_list[SCREEN_GLYPH_GC],
 			    x, y, str, 1);
 #ifdef OW_I18N
@@ -3330,7 +3330,7 @@ length:
 #endif /* OW_I18N */
 Done:
     *type = panel->atom.null;
-    *data = NULL;
+    *data = XV_NULL;
     *length = 0;
     *format = 32;
     return TRUE;
@@ -4588,7 +4588,7 @@ error:
 		    char    buf[64];
 		    sprintf(buf, XV_MSG("Unable to get contents of %s selection"),
 			    xv_get(panel->sel_req, SEL_RANK_NAME));
-		    xv_error(NULL,
+		    xv_error(XV_NULL,
 			     ERROR_STRING, buf,
 			     ERROR_PKG, PANEL,
 			     0);

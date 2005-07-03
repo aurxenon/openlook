@@ -1129,7 +1129,7 @@ pls:
 		if (!dp->choose_one)
 		    xv_set(dp->read_menu,
 			MENU_APPEND_ITEM,
-			    xv_create(NULL, MENUITEM,
+			    xv_create(XV_NULL, MENUITEM,
 				MENU_STRING, 
 				    XV_MSG("Clear All Choices"),
 				MENU_ACTION, clear_all_choices,
@@ -1139,7 +1139,7 @@ pls:
 		if (!dp->read_only) {
 		    xv_set(dp->read_menu,
 			MENU_APPEND_ITEM,
-			    xv_create(NULL, MENUITEM,
+			    xv_create(XV_NULL, MENUITEM,
 				MENU_STRING, 
 				XV_MSG("Edit List"),
 				MENU_ACTION, enter_edit_mode,
@@ -3668,7 +3668,7 @@ set_row_font(dp, row, font)
 		   XV_MSG("Font height exceeds row height; font ignored"),
 		 ERROR_PKG, PANEL,
 		 0);
-	row->font = NULL;
+	row->font = XV_NULL;
     }
     if (row->font != old_font)
 	row->display_str_len = 0;   /* force recomputation */

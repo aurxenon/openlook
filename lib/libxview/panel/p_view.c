@@ -34,7 +34,7 @@ panel_view_init(parent, view_public, avlist)
     } else
 	pw = parent;
     screen = (Xv_Screen) xv_get(pw, XV_SCREEN);
-    if (pw != NULL) {
+    if (pw != XV_NULL) {
 	(void) xv_set(pw,
 		      WIN_RETAINED,
 		      ((int) xv_get(screen, SCREEN_RETAIN_WINDOWS)),

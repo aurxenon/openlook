@@ -174,7 +174,7 @@ top_pair(panel, target, low_ip, high_ip)
 static void
 normalize_top(panel, offset)
     Panel_info     *panel;
-    int            *offset;
+    unsigned long  *offset;
 {
     Item_info      *low_ip, *high_ip;
     register int    top;
@@ -213,7 +213,7 @@ normalize_bottom(panel, pw, scrolling_up, offset)
     Panel_info     *panel;
     Xv_Window       pw;
     int             scrolling_up;
-    int            *offset;
+    unsigned long   *offset;
 {
     register Item_info *ip;
     register int    low_bottom = 0;
@@ -294,7 +294,7 @@ left_pair(panel, target, low_ip, high_ip)
 static void
 normalize_left(panel, offset)
     Panel_info     *panel;
-    int            *offset;
+    unsigned long  *offset;
 {
     Item_info      *low_ip, *high_ip;
     register int    left;
@@ -323,7 +323,7 @@ normalize_right(panel, pw, scrolling_up, offset)
     Panel_info     *panel;
     Xv_Window       pw;
     int             scrolling_up;
-    int            *offset;
+    unsigned long   *offset;
 {
     register Item_info *ip;
     register int    low_right = 0;

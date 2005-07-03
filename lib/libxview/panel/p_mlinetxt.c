@@ -703,7 +703,7 @@ mltxt_yield_kbd_focus(item_public)
 	    xv_set(dp->focus_pw, WIN_SET_FOCUS, 0);
 	    win_ungrab_quick_sel_keys( dp->view );
 	    win_grab_quick_sel_keys( dp->focus_pw );
-	    dp->focus_pw = NULL;
+	    dp->focus_pw = XV_NULL;
 	}
 }
 
