@@ -169,7 +169,7 @@ Selected text is in read only area."),
     buf = sel_str = temp_ptr = NULL;
     if (do_insert) {
 	temp_ptr = buf = MALLOC((unsigned) ((last_plus_one - first) + 5));
-	buf[0] = NULL;
+	buf[0] = XV_NULL;
 	STRCPY(buf, delimiter_pairs[0][value]);
 	temp_ptr = buf + STRLEN(buf);
 
@@ -198,7 +198,7 @@ Selected text is in read only area."),
 		    (STRNCMP(delimiter_pairs[1][value], temp_ptr, del_len2) == 0)) {
 		    STRNCPY(buf, sel_str + del_len1,
 			    (sel_str_len - (del_len1 + del_len2)));
-		    buf[(sel_str_len - (del_len1 + del_len2))] = NULL;
+		    buf[(sel_str_len - (del_len1 + del_len2))] = XV_NULL;
 		} else {
                     text_notice = (Xv_Notice)xv_get(frame, 
                                     XV_KEY_DATA, text_notice_key, 

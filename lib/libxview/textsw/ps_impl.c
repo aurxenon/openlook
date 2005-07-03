@@ -175,7 +175,7 @@ ps_create(client_data, original, scratch)
     return (esh);
 
 AllocFailed:
-    xv_error(NULL,
+    xv_error(XV_NULL,
 	     ERROR_STRING, 
 	     XV_MSG("ps_create(): alloc failure"),
 	     ERROR_PKG, TEXTSW,

@@ -159,7 +159,7 @@ textsw_call_filter(view, filter_argv)
     int             filter_input, filter_output, result = 0;
     Es_index        save_length;
     Ev_mark_object  save_lpo_id;
-    Ev_mark_object  save_insert = NULL;
+    Ev_mark_object  save_insert = XV_NULL;
     int             pid;
     Textsw_selection_object selection;
     Notify_func     old_sigpipe = (Notify_func) 0;

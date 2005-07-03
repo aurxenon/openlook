@@ -63,7 +63,7 @@ do_load_proc(folio, ie)
     Frame           popup_frame;
     Frame           frame;
     Xv_Notice	    text_notice;
-    char            curr_dir[MAX_STR_LENGTH];
+    char            curr_dir[MAX_STR_LENGTH], *cwd;
 #ifdef OW_I18N
     CHAR            curr_dir_ws[MAX_STR_LENGTH];
 #endif
@@ -152,7 +152,7 @@ Load File will discard these edits. Please confirm."),
 #endif
 
     /* if "cd" is not disabled */
-    (void) getcwd(curr_dir, MAX_STR_LENGTH);
+    cwd = getcwd(curr_dir, MAX_STR_LENGTH);
 #ifdef OW_I18N
     (void) mbstowcs(curr_dir_ws, curr_dir, MAX_STR_LENGTH);
     if (STRCMP(curr_dir_ws, dir_str) != 0) {	/* } for match */
@@ -270,7 +270,7 @@ open_cmd_proc(fc, path,file,client_data)
     register int    locx, locy;
     Frame           frame;
     Xv_Notice       text_notice;
-    char            curr_dir[MAX_STR_LENGTH];
+    char            curr_dir[MAX_STR_LENGTH], *cwd;
 #ifdef OW_I18N
     CHAR            curr_dir_ws[MAX_STR_LENGTH];
 #endif
@@ -339,7 +339,7 @@ Load File will discard these edits. Please confirm."),
 #endif 
  
     /* if "cd" is not disabled */
-    (void) getcwd(curr_dir, MAX_STR_LENGTH);
+    cwd = getcwd(curr_dir, MAX_STR_LENGTH);
 #ifdef OW_I18N
     (void) mbstowcs(curr_dir_ws, curr_dir, MAX_STR_LENGTH);
     if (STRCMP(curr_dir_ws, dir_str) != 0) {    /* } for match */
@@ -514,12 +514,12 @@ create_load_items(panel, view)
 {
 
     CHAR            load_string[MAX_STR_LENGTH];
-    char            current_dir_load_string[MAX_STR_LENGTH];
+    char            current_dir_load_string[MAX_STR_LENGTH], *cwd;
     int             dummy;
 
-    load_string[0] = NULL;
+    load_string[0] = XV_NULL;
     (void) textsw_get_selection(view, &dummy, &dummy, load_string, MAX_STR_LENGTH);
- (void) getcwd(current_dir_load_string, MAX_STR_LENGTH); 
+    cwd = getcwd(current_dir_load_string, MAX_STR_LENGTH); 
     load_panel_items[(int) DIR_STRING_ITEM] = panel_create_item(panel, PANEL_TEXT,
 						 PANEL_LABEL_X, ATTR_COL(0),
 						 PANEL_LABEL_Y, ATTR_ROW(0),

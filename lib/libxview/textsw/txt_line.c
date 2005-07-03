@@ -126,7 +126,7 @@ create_sel_line_items(panel, view)
     CHAR            line_number[MAX_STR_LENGTH];
     int             dummy;
 
-    line_number[0] = NULL;
+    line_number[0] = XV_NULL;
     (void) textsw_get_selection(view, &dummy, &dummy, line_number, MAX_STR_LENGTH);
 
     sel_line_panel_items[(int) SEL_LINE_NUMBER_ITEM] =

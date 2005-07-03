@@ -137,7 +137,7 @@ textsw_create_popup_frame(view, popup_type)
 {
     Frame           frame_parent = xv_get(VIEW_REP_TO_ABS(view), WIN_FRAME);
     Frame           popup_frame, base_frame;
-    Panel           panel = NULL;
+    Panel           panel = XV_NULL;
     char           *label;
 #ifdef OW_I18N
     int		    win_use_im = ((popup_type != TEXTSW_MENU_SEL_MARK_TEXT) &&
@@ -329,7 +329,7 @@ textsw_get_and_set_selection(popup_frame, view, popup_type)
 #define PANEL_SET_VALUE		panel_set_value
 #endif
 
-    show_str[0] = NULL;
+    show_str[0] = XV_NULL;
     xv_set(popup_frame, 
 	   XV_KEY_DATA, TEXTSW_CURRENT_POPUP_KEY, 
 	   FOLIO_REP_TO_ABS(FOLIO_FOR_VIEW(view)),
@@ -445,7 +445,7 @@ textsw_get_selection(view, first, last_plus_one, selected_str, max_str_len)
 	    selection.buf_len = max_str_len - 1;
 
 	STRNCPY(selected_str, selection.buf, selection.buf_len);
-	selected_str[selection.buf_len] = NULL;
+	selected_str[selection.buf_len] = XV_NULL;
     }
     *first = selection.first;
     *last_plus_one = selection.last_plus_one;

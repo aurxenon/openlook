@@ -707,7 +707,7 @@ DndConvertProc(dnd, type, data, length, format)
 	xv_destroy_safe(dnd);
 	*format = 32;
 	*length = 0;
-	*data = NULL;
+	*data = XV_NULL;
         *type = (Atom)xv_get(server, SERVER_ATOM, "NULL");
         return(True);
     } else if (*type == (Atom)xv_get(server, SERVER_ATOM, "DELETE")) {
@@ -732,7 +732,7 @@ DndConvertProc(dnd, type, data, length, format)
 	}
         *format = 32;
         *length = 0;
-        *data = NULL;
+        *data = XV_NULL;
         *type = (Atom)xv_get(server, SERVER_ATOM, "NULL");
         return(True);
     } else if (*type == (Atom)xv_get(server, SERVER_ATOM,

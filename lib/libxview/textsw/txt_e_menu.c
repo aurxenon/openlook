@@ -50,7 +50,11 @@ extern int errno;
 #define	ERROR	-1
 
 #define	MAX_FILES	40
+
+#ifndef MAXPATHLEN
 #define MAXPATHLEN	1024
+#endif
+
 #define	EXTRASMENU	"text_extras_menu"
 #define	MAXSTRLEN	256
 #define	MAXARGS		20
@@ -210,7 +214,7 @@ extras_menufile_changed()
 	if (stat(Extras_stat_array[i].name, &statb) < 0) {
 	    if (errno == ENOENT)
 		return (TRUE);
-	    xv_error(NULL,
+	    xv_error(XV_NULL,
 		     ERROR_LAYER, ERROR_SYSTEM,
 		     ERROR_STRING, Extras_stat_array[i].name,
 		     ERROR_PKG, TEXTSW,
@@ -301,7 +305,7 @@ textsw_build_extras_menu_items(textsw_view, file, menu)
 			      2);
 	strcpy(error_string, XV_MSG("extras menu file "));
 	strcat(error_string, full_file);
-	xv_error(NULL,
+	xv_error(XV_NULL,
 		 ERROR_LAYER, ERROR_SYSTEM,
 		 ERROR_STRING, error_string,
 		 ERROR_PKG, TEXTSW,
@@ -314,7 +318,7 @@ textsw_build_extras_menu_items(textsw_view, file, menu)
 	(void) sprintf(dummy, 
 	XV_MSG("textsw: max number of menu files is %ld"),
 		       MAX_FILES);
-	xv_error(NULL,
+	xv_error(XV_NULL,
 		 ERROR_STRING, dummy,
 		 ERROR_PKG, TEXTSW,
 		 0);
@@ -323,7 +327,7 @@ textsw_build_extras_menu_items(textsw_view, file, menu)
 	return (ERROR);
     }
     if (stat(full_file, &statb) < 0) {
-	xv_error(NULL,
+	xv_error(XV_NULL,
 		 ERROR_LAYER, ERROR_SYSTEM,
 		 ERROR_STRING, full_file,
 		 ERROR_PKG, TEXTSW,
@@ -380,7 +384,7 @@ walk_getmenu(textsw_view, m, file, mfd, lineno)
 		for (p = line + 2; isspace(*p); p++);
 
 		if (*p != '\0' && sscanf(p, "%[^\n]\n", help) > 0)
-		    menu_set((mi != NULL ? mi : m), XV_HELP_DATA, help, 0);
+		    menu_set((mi != XV_NULL ? mi : m), XV_HELP_DATA, help, 0);
 	    }
 	    continue;
 	}
@@ -398,7 +402,7 @@ walk_getmenu(textsw_view, m, file, mfd, lineno)
 	    (void) sprintf(dummy, 
 	    XV_MSG("textsw: format error in %s: line %d"),
 			   file, *lineno);
-	    xv_error(NULL,
+	    xv_error(XV_NULL,
 		     ERROR_STRING, dummy,
 		     ERROR_PKG, TEXTSW,
 		     0);
@@ -417,7 +421,7 @@ walk_getmenu(textsw_view, m, file, mfd, lineno)
 		strcpy(error_string, 
 		XV_MSG("textsw: icon file format error: "));
 		strcat(error_string, err);
-		xv_error(NULL,
+		xv_error(XV_NULL,
 			 ERROR_STRING, error_string,
 			 ERROR_PKG, TEXTSW,
 			 0);
@@ -501,7 +505,7 @@ textsw_handle_extras_menuitem(menu, item)
 
     if AN_ERROR
 	(textsw_view == 0)
-	    return NULL;
+	    return XV_NULL;
 
     view = VIEW_ABS_TO_REP(textsw_view);
     folio = FOLIO_FOR_VIEW(view);
@@ -607,7 +611,7 @@ textsw_savestr(s)
     register char  *p;
 
     if ((p = malloc((unsigned) (strlen(s) + 1))) == NULL) {
-	xv_error(NULL,
+	xv_error(XV_NULL,
 		 ERROR_SEVERITY, ERROR_NON_RECOVERABLE,
 		 ERROR_LAYER, ERROR_SYSTEM,
 		 ERROR_STRING, XV_MSG("textsw: menu strings"),
@@ -625,7 +629,7 @@ textsw_save2str(s, t)
     register char  *p;
 
     if ((p = malloc((unsigned) (strlen(s) + strlen(t) + 1 + 1))) == NULL) {
-	xv_error(NULL,
+	xv_error(XV_NULL,
 		 ERROR_SEVERITY, ERROR_NON_RECOVERABLE,
 		 ERROR_LAYER, ERROR_SYSTEM,
 		 ERROR_STRING, XV_MSG("textsw: menu strings"),

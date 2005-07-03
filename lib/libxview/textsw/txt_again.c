@@ -1142,7 +1142,7 @@ textsw_do_again(view, x, y)
 		buffer_length = textsw_text_for_replay(again, &buffer);
 		CHECK_ERROR(buffer_length <= 0);
 
-		buffer[buffer_length] = NULL;	/* In case garbage follow */
+		buffer[buffer_length] = XV_NULL;	/* In case garbage follow */
 		filter_argv = textsw_string_to_argv(buffer);
 		(void) textsw_call_filter(view, filter_argv);
 

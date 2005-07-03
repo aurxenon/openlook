@@ -61,6 +61,7 @@ do_store_proc(folio, ie)
     Frame           frame;
     Xv_Notice	    text_notice;
     char            curr_dir[MAX_STR_LENGTH];
+    char           *cwd;
 #ifdef OW_I18N
     CHAR            curr_dir_ws[MAX_STR_LENGTH];
 #endif
@@ -105,7 +106,7 @@ do_store_proc(folio, ie)
 #endif /* OW_I18N */
 
     /* if "cd" is not disabled and the "cd" dir is not the current dir */
-    (void) getcwd(curr_dir, MAX_STR_LENGTH);
+    cwd = getcwd(curr_dir, MAX_STR_LENGTH);
 #ifdef OW_I18N
     (void) mbstowcs(curr_dir_ws, curr_dir, MAX_STR_LENGTH);
     if (STRCMP(curr_dir_ws, dir_str) != 0) {	/* } for match */
@@ -249,11 +250,12 @@ create_store_items(panel, view)
     CHAR            store_string[MAX_STR_LENGTH];
     char            current_dir_store_string[MAX_STR_LENGTH];
     int             dummy;
+    char           *cwd;
 
 
-    store_string[0] = NULL;
+    store_string[0] = XV_NULL;
     (void) textsw_get_selection(view, &dummy, &dummy, store_string, MAX_STR_LENGTH);
-    (void) getcwd(current_dir_store_string, MAX_STR_LENGTH);
+    cwd = getcwd(current_dir_store_string, MAX_STR_LENGTH);
     store_panel_items[(int) DIR_STRING_ITEM] = panel_create_item(panel, PANEL_TEXT,
 						 PANEL_LABEL_X, ATTR_COL(0),
 						 PANEL_LABEL_Y, ATTR_ROW(0),

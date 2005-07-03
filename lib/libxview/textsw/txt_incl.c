@@ -66,6 +66,7 @@ do_include_proc(folio, ie)
     Frame           frame;
     Xv_Notice       text_notice;
     int		    textsw_changed_directory;
+    char           *cwd;
 
 #ifdef OW_I18N
     dir_str = (CHAR *) xv_get(include_panel_items[(int) DIR_STRING_ITEM],
@@ -109,16 +110,16 @@ do_include_proc(folio, ie)
     /* if "cd" is not disabled and the "cd" dir is not the current dir */
 #ifdef OW_I18N
 #if defined(SVR4) || defined(__linux__)
-    (void) getcwd(curr_dir_mb, MAX_STR_LENGTH);
+    cwd = getcwd(curr_dir_mb, MAX_STR_LENGTH);
 #else
-    (void) getwd(curr_dir_mb);
+    cwd = getwd(curr_dir_mb);
 #endif /* SVR4 */
     (void) mbstowcs(curr_dir, curr_dir_mb, MAX_STR_LENGTH);
 #else /* OW_I18N */
 #if defined(SVR4) || defined(__linux__)
-    (void) getcwd(curr_dir, MAX_STR_LENGTH);
+    cwd = getcwd(curr_dir, MAX_STR_LENGTH);
 #else
-    (void) getwd(curr_dir);
+    cwd = getwd(curr_dir);
 #endif /* SVR4 */
 #endif /* OW_I18N */
 
@@ -268,14 +269,15 @@ create_include_items(panel, view)
     CHAR            include_string[MAX_STR_LENGTH];
     char            current_dir_include_string[MAX_STR_LENGTH];
     int             dummy;
+    char           *cwd;
 
-    include_string[0] = NULL;
+    include_string[0] = XV_NULL;
     (void) textsw_get_selection(view, &dummy, &dummy, include_string,
 				MAX_STR_LENGTH);
 #if defined(SVR4) || defined(__linux__)
- (void) getcwd(current_dir_include_string, MAX_STR_LENGTH);
+    cwd = getcwd(current_dir_include_string, MAX_STR_LENGTH);
 #else
-  (void) getwd(current_dir_include_string);
+    cwd = getwd(current_dir_include_string);
 #endif /* SVR4 */
     include_panel_items[(int) DIR_STRING_ITEM] =
 	panel_create_item(panel, PANEL_TEXT,
@@ -348,7 +350,7 @@ include_cmd_proc(fc,path,file,client_data)
 
     Textsw_view_handle view = (Textsw_view_handle)window_get(fc,WIN_CLIENT_DATA,0);
     Textsw_folio       folio = FOLIO_FOR_VIEW(view);
-    int                error;
+    int                error, dummy;
     Textsw          textsw = FOLIO_REP_TO_ABS(folio);
     CHAR           *dir_str;
     register int    locx, locy;
@@ -360,6 +362,7 @@ include_cmd_proc(fc,path,file,client_data)
     Frame           frame;
     Xv_Notice       text_notice;
     int		    textsw_changed_directory;
+    char           *cwd;
 
 #ifdef OW_I18N
     dir_str = (CHAR *) xv_get(fc,FILE_CHOOSER_DIRECTORY_WCS) ;
@@ -385,16 +388,16 @@ include_cmd_proc(fc,path,file,client_data)
     /* if "cd" is not disabled and the "cd" dir is not the current dir */
 #ifdef OW_I18N
 #if defined(SVR4) || defined(__linux__)
-    (void) getcwd(curr_dir_mb, MAX_STR_LENGTH);
+    dummy = getcwd(curr_dir_mb, MAX_STR_LENGTH);
 #else
-    (void) getwd(curr_dir_mb);
+    dummy = getwd(curr_dir_mb);
 #endif /* SVR4 */
     (void) mbstowcs(curr_dir, curr_dir_mb, MAX_STR_LENGTH);
 #else /* OW_I18N */
 #if defined(SVR4) || defined(__linux__)
-    (void) getcwd(curr_dir, MAX_STR_LENGTH);
+    cwd = getcwd(curr_dir, MAX_STR_LENGTH);
 #else
-    (void) getwd(curr_dir);
+    cwd = getwd(curr_dir);
 #endif /* SVR4 */
 #endif /* OW_I18N */
 

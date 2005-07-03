@@ -207,7 +207,7 @@ textsw_read_defaults(textsw, defaults)
 {
     char           *def_str;	/* Strings owned by defaults. */
     register Attr_attribute attr;
-    Xv_opaque       font = NULL;
+    Xv_opaque       font = XV_NULL;
     char	   *name;
     Xv_opaque       textsw_public = TEXTSW_PUBLIC(textsw);
     int             is_client_pane = xv_get(textsw_public,
@@ -483,7 +483,7 @@ textsw_set_cursor(textsw, cursor_type)
 	/*
 	 * BUG: Should print out error message
 	 */
-	if (cursor == NULL)
+	if (cursor == XV_NULL)
 	    return;
 	FORALL_TEXT_VIEWS(folio, view) {
 	    xv_set(VIEW_REP_TO_ABS(view), WIN_CURSOR, cursor, 0);
@@ -1357,7 +1357,7 @@ contents or store the contents as a new file."),
 	    
 	xv_destroy(view->drop_site);
 	textsw_view_cleanup(view);
-	((Xv_textsw_view*)view_public)->private_data = NULL; /* WG Mar '95 */
+	((Xv_textsw_view*)view_public)->private_data = XV_NULL; /* WG Mar '95 */
 	break;
 
       default:			/* Conservative in face of new cases. */

@@ -878,7 +878,7 @@ ei_plain_text_get(eih, attribute)
       case EI_FONT:
 	return ((caddr_t) private->font);
       case EI_TAB_WIDTH:
-	return ((caddr_t) (private->tab_width));
+	return ((caddr_t) (int)(private->tab_width));
 #ifdef OW_I18N
       case EI_LOCALE_IS_ALE:
 	return ((caddr_t) (private->locale_is_ale));

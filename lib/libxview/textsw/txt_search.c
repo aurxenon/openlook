@@ -364,11 +364,11 @@ create_search_items(panel, view)
 
 
 
-    search_string[0] = NULL;
+    search_string[0] = XV_NULL;
     (void) textsw_get_selection(view, &dummy, &dummy, search_string,
 				MAX_STR_LENGTH);
 
-    direction_menu = xv_create(NULL, MENU,
+    direction_menu = xv_create(XV_NULL, MENU,
 			       MENU_ITEM,
 			       MENU_STRING, forward,
 			       MENU_VALUE, 1,
@@ -462,7 +462,7 @@ create_search_items(panel, view)
 			  HELP_INFO("textsw:wrap")
 			  0);
 
-    if (search_string[0] != NULL)
+    if (search_string[0] != XV_NULL)
 	xv_set(panel, PANEL_CARET_ITEM,
 	       search_panel_items[(int) REPLACE_STRING_ITEM], 0);
     else {

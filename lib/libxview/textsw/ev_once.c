@@ -324,7 +324,7 @@ ev_rect_for_ith_physical_line(view, phys_line, first, rect, skip_white_space)
     CHAR            newline_str[2];
     
     newline_str[0] = '\n';
-    newline_str[1] = NULL;
+    newline_str[1] = '\0';
 
     ev_view_range(view, first, &last_plus_one);
     if (phys_line == 0) {

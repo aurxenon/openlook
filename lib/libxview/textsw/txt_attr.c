@@ -320,7 +320,7 @@ textsw_set_internal(textsw, view, attrs, is_folio)
 			textsw_setup_scrollbar(view->scrollbar);
 			view->state &= ~TXTSW_SCROLLBAR_DISABLED;
 		    } else {
-			view->scrollbar = NULL;
+			view->scrollbar = XV_NULL;
 			view->state |= TXTSW_SCROLLBAR_DISABLED;
 		    }
 		    /*

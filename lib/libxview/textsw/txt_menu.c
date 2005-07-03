@@ -182,21 +182,21 @@ textsw_new_menu(folio)
 			   HELP_INFO("textsw:mbreakmode")
 			   0);
     menu_items[(int) TEXTSW_MENU_WRAP_LINES_AT_WORD] =
-	xv_create(NULL,
+	xv_create(XV_NULL,
 		  MENUITEM,
 		  MENU_STRING, XV_MSG("Wrap at Word"),
 		  MENU_VALUE, TEXTSW_MENU_WRAP_LINES_AT_WORD,
 		  HELP_INFO("textsw:mwrapwords")
 		  0);
     menu_items[(int) TEXTSW_MENU_WRAP_LINES_AT_CHAR] =
-	xv_create(NULL,
+	xv_create(XV_NULL,
 		  MENUITEM,
 		  MENU_STRING, XV_MSG("Wrap at Character"),
 		  MENU_VALUE, TEXTSW_MENU_WRAP_LINES_AT_CHAR,
 		  HELP_INFO("textsw:mwrapchars")
 		  0);
     menu_items[(int) TEXTSW_MENU_CLIP_LINES] =
-	xv_create(NULL,
+	xv_create(XV_NULL,
 		  MENUITEM,
 		  MENU_STRING, XV_MSG("Wrap at Character"),
 		  MENU_STRING, XV_MSG("Clip Lines"),
@@ -228,7 +228,7 @@ textsw_new_menu(folio)
 			  HELP_INFO("textsw:mundocmds")
 			  0);
     menu_items[(int) TEXTSW_MENU_UNDO] =
-	xv_create(NULL,
+	xv_create(XV_NULL,
 		  MENUITEM,
 		  MENU_STRING, XV_MSG("Undo Last Edit"),
 		  MENU_VALUE, TEXTSW_MENU_UNDO,
@@ -242,7 +242,7 @@ textsw_new_menu(folio)
 		MENU_ACCELERATOR, "coreset Undo", NULL);
 
     menu_items[(int) TEXTSW_MENU_UNDO_ALL] =
-	xv_create(NULL,
+	xv_create(XV_NULL,
 		  MENUITEM,
 		  MENU_STRING, XV_MSG("Undo All Edits"),
 		  MENU_VALUE, TEXTSW_MENU_UNDO_ALL,
@@ -258,21 +258,21 @@ textsw_new_menu(folio)
 				  HELP_INFO("textsw:mselfieldcmds")
 				  0);
     menu_items[(int) TEXTSW_MENU_SEL_ENCLOSE_FIELD] =
-	xv_create(NULL,
+	xv_create(XV_NULL,
 		  MENUITEM,
 		  MENU_STRING, XV_MSG("Expand"),
 		  MENU_VALUE, TEXTSW_MENU_SEL_ENCLOSE_FIELD,
 		  HELP_INFO("textsw:mselexpand")
 		  0);
     menu_items[(int) TEXTSW_MENU_SEL_NEXT_FIELD] =
-	xv_create(NULL,
+	xv_create(XV_NULL,
 		  MENUITEM,
 		  MENU_STRING, XV_MSG("Next"),
 		  MENU_VALUE, TEXTSW_MENU_SEL_NEXT_FIELD,
 		  HELP_INFO("textsw:mselnext")
 		  0);
     menu_items[(int) TEXTSW_MENU_SEL_PREV_FIELD] =
-	xv_create(NULL,
+	xv_create(XV_NULL,
 		  MENUITEM,
 		  MENU_STRING, XV_MSG("Previous"),
 		  MENU_VALUE, TEXTSW_MENU_SEL_PREV_FIELD,
@@ -289,7 +289,7 @@ textsw_new_menu(folio)
 			      HELP_INFO("textsw:mfindselcmds")
 			      0);
     menu_items[(int) TEXTSW_MENU_FIND] =
-	xv_create(NULL,
+	xv_create(XV_NULL,
 		  MENUITEM,
 		  MENU_STRING, XV_MSG("Forward"),
 		  MENU_VALUE, TEXTSW_MENU_FIND,
@@ -303,7 +303,7 @@ textsw_new_menu(folio)
 		MENU_ACCELERATOR, "coreset Find", NULL);
 
     menu_items[(int) TEXTSW_MENU_FIND_BACKWARD] =
-	xv_create(NULL,
+	xv_create(XV_NULL,
 		  MENUITEM,
 		  MENU_STRING, XV_MSG("Backward"),
 		  MENU_VALUE, TEXTSW_MENU_FIND_BACKWARD,
@@ -315,7 +315,7 @@ textsw_new_menu(folio)
 	   0);
 
     menu_items[(int) TEXTSW_MENU_LOAD] =
-	xv_create(NULL,
+	xv_create(XV_NULL,
 		  MENUITEM,
 		  MENU_STRING, XV_MSG(LOAD_FILE),
 		  MENU_VALUE, TEXTSW_MENU_LOAD,
@@ -329,7 +329,7 @@ textsw_new_menu(folio)
 		MENU_ACCELERATOR, "coreset Open", NULL);
 
     menu_items[(int) TEXTSW_MENU_SAVE] =
-	xv_create(NULL,
+	xv_create(XV_NULL,
 		  MENUITEM,
 		  MENU_STRING, XV_MSG(SAVE_FILE),
 		  MENU_VALUE, TEXTSW_MENU_SAVE,
@@ -337,7 +337,7 @@ textsw_new_menu(folio)
 		  0);
 
     menu_items[(int) TEXTSW_MENU_STORE] =
-	xv_create(NULL,
+	xv_create(XV_NULL,
 		  MENUITEM,
 		  MENU_STRING, XV_MSG(STORE_NEW_FILE),
 		  MENU_VALUE, TEXTSW_MENU_STORE,
@@ -360,14 +360,14 @@ textsw_new_menu(folio)
 
 
     menu_items[(int) TEXTSW_MENU_FILE_STUFF] =
-	xv_create(NULL,
+	xv_create(XV_NULL,
 		  MENUITEM,
 		  MENU_STRING, XV_MSG(INCLUDE_FILE),
 		  MENU_VALUE, TEXTSW_MENU_FILE_STUFF,
 		  HELP_INFO("textsw:mincludefile")
 		  0);
     menu_items[(int) TEXTSW_MENU_RESET] =
-	xv_create(NULL,
+	xv_create(XV_NULL,
 		  MENUITEM,
 		  MENU_STRING, XV_MSG(EMPTY_DOC),
 		  MENU_VALUE, TEXTSW_MENU_RESET,
@@ -387,13 +387,13 @@ textsw_new_menu(folio)
 	   0);
 
     menu_items[(int) TEXTSW_MENU_AGAIN] =
-	xv_create(NULL,
+	xv_create(XV_NULL,
 		  MENUITEM,
 		  MENU_STRING, XV_MSG(AGAIN_STR),
 		  MENU_VALUE, TEXTSW_MENU_AGAIN,
 		  HELP_INFO("textsw:meditagain")
 		  0);
-    undo_cmds_item = xv_create(NULL,
+    undo_cmds_item = xv_create(XV_NULL,
 			       MENUITEM,
 			       MENU_STRING, XV_MSG(UNDO_STR),
 			       MENU_PULLRIGHT, undo_cmds,
@@ -401,21 +401,21 @@ textsw_new_menu(folio)
 			       HELP_INFO("textsw:meditundo")
 			       0);
     menu_items[(int) TEXTSW_MENU_COPY] =
-	xv_create(NULL,
+	xv_create(XV_NULL,
 		  MENUITEM,
 		  MENU_STRING,  XV_MSG(COPY_STR),
 		  MENU_VALUE, TEXTSW_MENU_COPY,
 		  HELP_INFO("textsw:meditcopy")
 		  0);
     menu_items[(int) TEXTSW_MENU_PASTE] =
-	xv_create(NULL,
+	xv_create(XV_NULL,
 		  MENUITEM,
 		  MENU_STRING, XV_MSG(PASTE_STR),
 		  MENU_VALUE, TEXTSW_MENU_PASTE,
 		  HELP_INFO("textsw:meditpaste")
 		  0);
     menu_items[(int) TEXTSW_MENU_CUT] =
-	xv_create(NULL,
+	xv_create(XV_NULL,
 		  MENUITEM,
 		  MENU_STRING, XV_MSG(CUT_STR),
 		  MENU_VALUE, TEXTSW_MENU_CUT,
@@ -446,14 +446,14 @@ textsw_new_menu(folio)
 
 
     menu_items[(int) TEXTSW_MENU_NORMALIZE_LINE] =
-	xv_create(NULL,
+	xv_create(XV_NULL,
 		  MENUITEM,
 		  MENU_STRING, XV_MSG(SEL_LINE_AT_NUM),
 		  MENU_VALUE, TEXTSW_MENU_NORMALIZE_LINE,
 		  HELP_INFO("textsw:mselectline")
 		  0);
     menu_items[(int) TEXTSW_MENU_COUNT_TO_LINE] =
-	xv_create(NULL,
+	xv_create(XV_NULL,
 		  MENUITEM,
 		  MENU_STRING, XV_MSG(WHAT_LINE_NUM),
 		  MENU_VALUE, TEXTSW_MENU_COUNT_TO_LINE,
@@ -461,13 +461,13 @@ textsw_new_menu(folio)
 		  HELP_INFO("textsw:mwhatline")
 		  0);
     menu_items[(int) TEXTSW_MENU_NORMALIZE_INSERTION] =
-	xv_create(NULL,
+	xv_create(XV_NULL,
 		  MENUITEM,
 		  MENU_STRING, XV_MSG(SHOW_CARET_AT_TOP),
 		  MENU_VALUE, TEXTSW_MENU_NORMALIZE_INSERTION,
 		  HELP_INFO("textsw:mshowcaret")
 		  0);
-    break_mode_item = xv_create(NULL,
+    break_mode_item = xv_create(XV_NULL,
 				MENUITEM,
 				MENU_STRING, 
 				XV_MSG(CHANGE_LINE_WRAP),
@@ -487,14 +487,14 @@ textsw_new_menu(folio)
 	   0);
 
     menu_items[(int) TEXTSW_MENU_FIND_AND_REPLACE] =
-	xv_create(NULL,
+	xv_create(XV_NULL,
 		  MENUITEM,
 		  MENU_STRING, XV_MSG(FIND_REPLACE),
 		  MENU_VALUE, TEXTSW_MENU_FIND_AND_REPLACE,
     /* MENU_LINE_AFTER_ITEM,	MENU_HORIZONTAL_LINE, */
 		  HELP_INFO("textsw:mfindreplace")
 		  0);
-    find_sel_cmds_item = xv_create(NULL,
+    find_sel_cmds_item = xv_create(XV_NULL,
 				   MENUITEM,
 				   MENU_STRING, 
 				   XV_MSG(FIND_SELECTION),
@@ -502,13 +502,13 @@ textsw_new_menu(folio)
 				   HELP_INFO("textsw:mfindselcmds")
 				   0);
     menu_items[(int) TEXTSW_MENU_SEL_MARK_TEXT] =
-	xv_create(NULL,
+	xv_create(XV_NULL,
 		  MENUITEM,
 		  MENU_STRING, XV_MSG(FIND_MARKED_TEXT),
 		  MENU_VALUE, TEXTSW_MENU_SEL_MARK_TEXT,
 		  HELP_INFO("textsw:mfindtext")
 		  0);
-    select_field_cmds_item = xv_create(NULL,
+    select_field_cmds_item = xv_create(XV_NULL,
 				       MENUITEM,
 				       MENU_STRING, 
 				       XV_MSG(REPLACE_FIELD),
@@ -535,7 +535,7 @@ textsw_new_menu(folio)
 			 MENU_TITLE_ITEM, XV_MSG("Text Pane"),
 			 HELP_INFO("textsw:mtopmenu")
 			 0);
-    menu_items[(int) TEXTSW_MENU_FILE_CMDS] = xv_create(NULL,
+    menu_items[(int) TEXTSW_MENU_FILE_CMDS] = xv_create(XV_NULL,
 							MENUITEM,
 							MENU_STRING, 
 						XV_MSG("File"),
@@ -544,28 +544,28 @@ textsw_new_menu(folio)
 							0);
 
 
-    menu_items[(int) TEXTSW_MENU_VIEW_CMDS] = xv_create(NULL,
+    menu_items[(int) TEXTSW_MENU_VIEW_CMDS] = xv_create(XV_NULL,
 							MENUITEM,
 							MENU_STRING, 
 						XV_MSG("View"),
 			MENU_PULLRIGHT, sub_menu[(int) TXTSW_VIEW_SUB_MENU],
 					    HELP_INFO("textsw:mdisplaycmds")
 							0);
-    menu_items[(int) TEXTSW_MENU_EDIT_CMDS] = xv_create(NULL,
+    menu_items[(int) TEXTSW_MENU_EDIT_CMDS] = xv_create(XV_NULL,
 							MENUITEM,
 							MENU_STRING, 
 						XV_MSG("Edit"),
 			MENU_PULLRIGHT, sub_menu[(int) TXTSW_EDIT_SUB_MENU],
 					       HELP_INFO("textsw:meditcmds")
 							0);
-    menu_items[(int) TEXTSW_MENU_FIND_CMDS] = xv_create(NULL,
+    menu_items[(int) TEXTSW_MENU_FIND_CMDS] = xv_create(XV_NULL,
 							MENUITEM,
 							MENU_STRING, 
 						XV_MSG("Find"),
 			MENU_PULLRIGHT, sub_menu[(int) TXTSW_FIND_SUB_MENU],
 					       HELP_INFO("textsw:mfindcmds")
 							0);
-    menu_items[(int) TEXTSW_MENU_EXTRAS_CMDS] = xv_create(NULL,
+    menu_items[(int) TEXTSW_MENU_EXTRAS_CMDS] = xv_create(XV_NULL,
 							  MENUITEM,
 				      MENU_GEN_PROC, textsw_extras_gen_proc,
 		      MENU_PULLRIGHT, sub_menu[(int) TXTSW_EXTRAS_SUB_MENU],
@@ -755,7 +755,7 @@ Pkg_private     Textsw_view
 textsw_from_menu(menu)
     Menu            menu;
 {
-    Textsw_view     textsw_view = NULL;
+    Textsw_view     textsw_view = XV_NULL;
     Menu            temp_menu;
     Menu_item       temp_item;
 
@@ -1052,7 +1052,7 @@ Press \"Continue\" to proceed."),
                         NOTICE_BUTTON_YES, XV_MSG("Continue"),
                         XV_SHOW, TRUE,
 			NOTICE_BUSY_FRAMES,
-				menu_pinned ? menu_cmd_frame : NULL,
+				menu_pinned ? menu_cmd_frame : XV_NULL,
 			NULL,
                         NULL);
 
@@ -1071,7 +1071,7 @@ Press \"Continue\" to proceed."),
                         NOTICE_BUTTON_YES, XV_MSG("Continue"),
                         XV_SHOW, TRUE, 
 			NOTICE_BUSY_FRAMES,
-				menu_pinned ? menu_cmd_frame : NULL,
+				menu_pinned ? menu_cmd_frame : XV_NULL,
 			NULL,
                         NULL);
                 }
@@ -1096,7 +1096,7 @@ Press \"Continue\" to proceed."),
                         NOTICE_BUTTON_YES, XV_MSG("Continue"),
                         XV_SHOW, TRUE,
 			NOTICE_BUSY_FRAMES,
-				menu_pinned ? menu_cmd_frame : NULL,
+				menu_pinned ? menu_cmd_frame : XV_NULL,
 			NULL,
 			NULL,
                         0);
@@ -1116,7 +1116,7 @@ Press \"Continue\" to proceed."),
                         NOTICE_BUTTON_YES, XV_MSG("Continue"),
                         XV_SHOW, TRUE, 
 			NOTICE_BUSY_FRAMES,
-				menu_pinned ? menu_cmd_frame : NULL,
+				menu_pinned ? menu_cmd_frame : XV_NULL,
 			NULL,
                         NULL);
                 }

@@ -608,7 +608,7 @@ textsw_do_newline(view, action)
     CHAR            newline_str[2];
     
     newline_str[0] = action; /* 1030878 */
-    newline_str[1] = NULL;
+    newline_str[1] = XV_NULL;
 
     textsw_flush_caches(view, TFC_INSERT | TFC_PD_SEL);
     if (folio->state & TXTSW_AUTO_INDENT)

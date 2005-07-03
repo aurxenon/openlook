@@ -241,7 +241,7 @@ textsw_get_match_symbol(buf, buf_len, match_buf, match_buf_len, direction)
 
     *match_buf_len = 0;
     *direction = EV_FIND_DEFAULT;
-    match_buf[0] = NULL;
+    match_buf[0] = XV_NULL;
 
     for (i = 0; i < NUM_OF_COL; i++) {
 	for (j = 0; j < MAX_SYMBOLS; j++) {
@@ -448,7 +448,7 @@ textsw_match_selection_and_normalize(view, start_marker, field_flag)
 	if (str_length == MAX_STR_LENGTH)
 	    str_length--;
 
-	buf[str_length] = NULL;
+	buf[str_length] = XV_NULL;
 
 	if (field_flag == TEXTSW_NOT_A_FIELD) {
 	    if (str_length > ONE_FIELD_LENGTH) {

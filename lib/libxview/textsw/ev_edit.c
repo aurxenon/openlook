@@ -482,7 +482,7 @@ ev_make_visible(view, position, lower_context, auto_scroll_by, delta)
     CHAR            newline_str[2];
 
     newline_str[0] = '\n';
-    newline_str[1] = NULL;
+    newline_str[1] = '\0';
  
     line_seq = (Ev_impl_line_seq) view->line_table.seq;
     top_of_lc = MAX(1,

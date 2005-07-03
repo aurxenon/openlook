@@ -143,7 +143,7 @@ textsw_normalize_internal(
     CHAR            newline_str[2];
     
     newline_str[0] = '\n';
-    newline_str[1] = NULL;
+    newline_str[1] = XV_NULL;
 
     if (flags & TXTSW_NI_NOT_IF_IN_VIEW) {
 	switch (ev_xy_in_view(view->e_view, first, &lt_index, &rect)) {

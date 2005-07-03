@@ -60,7 +60,7 @@ textsw_view_abs_to_rep(abstract)
 {
     Textsw_view_handle view;
 
-    if( abstract == NULL )
+    if( abstract == XV_NULL )
 	return NULL;
 
     view = VIEW_PRIVATE(abstract);
