@@ -24,7 +24,7 @@ static char     sccsid[] = "@(#)file_list.c 1.30 93/06/28";
 #include <xview_private/portable.h>
 
 #ifdef __FreeBSD__
-#include <regex.h>
+#include <regexp.h>
 #endif
 
 
