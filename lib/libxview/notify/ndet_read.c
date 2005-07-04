@@ -30,7 +30,7 @@ static int      ndet_read_done;
 
 static Notify_client ndet_read_nclient = (Notify_client) & ndet_read_done;
 
-#if !(defined(BSD) && (BSD >= 199103))
+#if !(defined(BSD) && (BSD >= 199103)) && !defined(__linux__)
 extern int
 read(fd, buf, nbytes)
     register int    fd;
