@@ -207,7 +207,7 @@ Notify_event_type       type;
 	   	   then abort the load. */
 
 		if (edited)
-			alert_result = (int) notice_prompt(base_frame, &event,
+			alert_result = (int) notice_prompt(base_frame, event,
 				NOTICE_MESSAGE_STRINGS,
 				"Your file has been edited.",
 				"Do you wish to discard these edits?",
@@ -225,7 +225,7 @@ Notify_event_type       type;
 			s_p = document_name;
 			while (*s_p && (*s_p != '\t'))
 				s_p++;
-			*s_p = NULL;
+			*s_p = XV_NULL;
 	
                 	xv_set(textsw, 
 				TEXTSW_FILE, document_name, 
@@ -238,7 +238,7 @@ Notify_event_type       type;
                 return(NOTIFY_DONE);
         }
 
-        return notify_next_event_func(window, event, arg, type);
+        return notify_next_event_func(window, (Xv_opaque)event, arg, type);
 }
 	
 static
@@ -253,7 +253,7 @@ set_name_frame(textsw_local, attributes)
 	int		 len, pass_on = 0, repaint = 0;
 	int		 was_read_only = read_only;
 	Attr_avlist	 attrs;
-	char		*attr_string;
+	char		*attr_string, *cwd;
 
 	if (handling_signal)
 	    return;
@@ -270,17 +270,17 @@ set_name_frame(textsw_local, attributes)
 		attr_string = (char *)attrs[1];
 		switch (attr_string[0]) {
 		  case '/':
-		    (void)strcpy(current_directory, attrs[1]);
+		    (void)strcpy(current_directory, (char*)attrs[1]);
 		    break;
 		  case '.':
 		    if (attr_string[1] != '\0')
-			(void) getwd(current_directory);
+			cwd = getcwd(current_directory,sizeof(current_directory));
 		    break;
 		  case '\0':
 		    break;
 		  default:
 		    (void)strcat(current_directory, "/");
-		    (void)strcat(current_directory, attrs[1]);
+		    (void)strcat(current_directory, (char*)attrs[1]);
 		    break;
 		}
 		ATTR_CONSUME(*attrs);
@@ -292,17 +292,17 @@ set_name_frame(textsw_local, attributes)
 		ATTR_CONSUME(*attrs);
 		break;
 	      case TEXTSW_ACTION_LOADED_FILE:
-		(void)strcpy(current_filename, attrs[1]);
+		(void)strcpy(current_filename, (char*)attrs[1]);
 		edited = read_only = 0;
 		goto Update_icon_text;
 	      case TEXTSW_ACTION_EDITED_FILE:
 		edited = 1;
 		*ptr++ = '>';
 Update_icon_text:
-		len = (strlen(attrs[1]) > sizeof(icon_text) - 2) ?
-		    sizeof(icon_text) - 2 : strlen(attrs[1]);
+		len = (strlen((char*)attrs[1]) > sizeof(icon_text) - 2) ?
+		    sizeof(icon_text) - 2 : strlen((char*)attrs[1]);
 		    /* need 1 char for edit/not, 1 for null */
-		(void)strncpy(ptr, attrs[1], len); ptr[len] = '\0';
+		(void)strncpy(ptr, (char*)attrs[1], len); ptr[len] = '\0';
 		(void)strcpy(ptr, base_name(ptr));	/* strip path */
 		ATTR_CONSUME(*attrs);
 		break;
@@ -334,12 +334,12 @@ Update_icon_text:
 			(char *) xv_get(edit_icon, XV_LABEL) : icon_text;
 		
 		/* adjust icon text top/height to match font height */
-		text_rect.r_height = xv_get(font, FONT_DEFAULT_CHAR_HEIGHT);
+		text_rect.r_height = xv_get((Xv_opaque)font, FONT_DEFAULT_CHAR_HEIGHT);
 		text_rect.r_top =
 		    icon_rect->r_height - (text_rect.r_height + 2);
 
 		/* center the icon text */
-		text_rect.r_width = strlen(ptr)*(xv_get(font, FONT_DEFAULT_CHAR_WIDTH));
+		text_rect.r_width = strlen(ptr)*(xv_get((Xv_opaque)font, FONT_DEFAULT_CHAR_WIDTH));
 		if (text_rect.r_width > icon_rect->r_width)
 		    text_rect.r_width = icon_rect->r_width;
 		text_rect.r_left = (icon_rect->r_width-text_rect.r_width)/2;
@@ -455,7 +455,7 @@ textedit_main(argc, argv)
 	Menu_item		  menu_item;
         int                       num_cols = 0;
         int                       user_set_size = FALSE;
-	char			  **argscanner = argv;
+	char			  **argscanner = argv, *cwd;
 	Server_image		  icon_image;
 	Server_image		  mask_image;
 
@@ -515,7 +515,7 @@ setlocale(LC_ALL,"");
 
 	cmd_name = *argv;		/* Must be BEFORE calls on die() */
 	current_filename[0] = '\0';
-	(void) getwd(current_directory);
+	cwd = getcwd(current_directory,sizeof(current_directory));
 	    /* Error message is placed into current_directory by getwd */
 	checkpoint =
 	    defaults_get_integer_check("text.checkpointFrequency",
