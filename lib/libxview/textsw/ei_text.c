@@ -109,7 +109,7 @@ typedef ei_plain_text_object *Eipt_handle;
 #define ISCNTRL(c)		((128 <= c && c <= 159) || (iscntrl(c)))
 #else
 /* Linux: Allow 8-bit chars (do not treat them as control chars) */
-#define ISCNTRL(c)		(c < 32)
+#define ISCNTRL(c)		(((unsigned)(c)) < 32)
 #endif /* __linux__ */
 #endif
 
