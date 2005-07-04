@@ -6,10 +6,15 @@
  *	file for terms of the license.
  */
 
+#include <sys/param.h>
 #ifndef xview_base_DEFINED
 #define xview_base_DEFINED
 #include <string.h>
+#ifdef __STDC__
+#include <stdlib.h>
+#else
 #include <malloc.h>
+#endif
 
 #include <xview/xv_c_types.h>
 
@@ -53,7 +58,7 @@
  * the macro SUNOS41. This has to be fixed later to accomodate non-SUNOS41 and
  * non-SVR4 systems.
  */
-#if !defined(SUNOS41) && !defined(__linux__)
+#if !defined(SUNOS41) && !defined(__linux__) && !(defined(BSD) && (BSD>=199103))
 #define XV_OS_SVR4
 #define XV_USE_TTCOMPAT
 #define SYSV_WAIT 
@@ -63,7 +68,10 @@
 #define XV_OS_SVR4
 #undef XV_USE_TTCOMPAT
 #define SYSV_UCONTEXT 
-#define XV_USE_XVFCNTL 
+#define XV_USE_XVFCNTL
+#elif (defined(BSD) && (BSD >= 199103))
+#define XV_USE_TTCOMPAT
+#define XV_USE_XVFCNTL
 #endif
  
 /*

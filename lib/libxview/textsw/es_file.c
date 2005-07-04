@@ -85,14 +85,14 @@ static char     sccsid[] = "@(#)es_file.c 20.49 93/06/28";
 
 #include <string.h>
 #include <fcntl.h>
-#ifdef SVR4
+#include <sys/param.h>
+#if (defined(BSD4_4) || defined(SVR4))
 #include <stdlib.h>
 #include <dirent.h>
 #else
 #include <sys/dir.h>
 #endif /* SVR4 */
 #include <sys/errno.h>
-#include <sys/param.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/file.h>

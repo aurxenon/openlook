@@ -10,7 +10,12 @@ static char     sccsid[] = "@(#)p_drop.c 1.22 93/06/28";
  *	file for terms of the license.
  */
 
+#include <sys/param.h>
+#if (defined(BSD) && (BSD >= 199103))
+#include <stdlib.h>
+#else
 #include <malloc.h>
+#endif
 #include <xview_private/draw_impl.h>
 #include <xview_private/i18n_impl.h>
 #include <xview_private/panel_impl.h>

@@ -67,6 +67,10 @@ Xv_private char *xv_font_regular_cmdline();
 Xv_private char *xv_font_scale_cmdline();
 Xv_private char *xv_font_scale();
 
+static int font_setup_defaults();
+static int font_construct_name();
+static int font_init_create_attrs();
+
 /*
  * delimiters
  */

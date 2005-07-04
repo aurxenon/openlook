@@ -17,6 +17,7 @@ static char     sccsid[] = "@(#)getlogindr.c 20.18 93/06/28 Copyr 1984 Sun Micro
 
 #include <stdio.h>
 #include <pwd.h>
+#include <sys/param.h>
 #include <xview_private/i18n_impl.h>
 #include <xview/xv_error.h>
 

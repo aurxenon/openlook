@@ -44,7 +44,8 @@ static char	sccsid[] = "@(#)txt_once.c 20.131 93/06/28";
 #ifdef OW_I18N
 #include <xview_private/draw_impl.h>
 #endif
-#ifdef SVR4
+#include <sys/param.h>
+#if (defined(BSD4_4) || defined(SVR4))
 #include <dirent.h>
 #else
 #include <sys/dir.h>

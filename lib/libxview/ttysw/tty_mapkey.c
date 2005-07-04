@@ -34,7 +34,6 @@ static char     sccsid[] = "@(#)tty_mapkey.c 20.41 93/06/28";
 
 extern Notify_error win_post_event();
 extern char    *getenv();
-//extern char    *strcat();
 
 /* static routines	 */
 
@@ -507,7 +506,7 @@ ttysw_remove_caps(label, label_ptr)
  * have more time.
  */
 
-#if defined(i386) && !defined(__linux__)
+#if defined(i386) && !defined(__linux__) && !defined(__FreeBSD__)
 static void
 ttysw_arrow_keys_to_string(xv_id, str)
     unsigned        xv_id;

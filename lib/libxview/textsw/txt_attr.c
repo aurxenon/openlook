@@ -19,7 +19,8 @@ static char     sccsid[] = "@(#)txt_attr.c 20.127 93/04/28";
 #include <xview_private/primal.h>
 #include <xview_private/txt_impl.h>
 #include <xview_private/txt_18impl.h>
-#ifdef SVR4
+#include <sys/param.h>
+#if (defined(BSD4_4) || defined(SVR4))
 #include <dirent.h>
 #include <string.h>
 #else

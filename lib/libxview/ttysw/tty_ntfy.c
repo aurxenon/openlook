@@ -180,18 +180,18 @@ ttysw_sigwinch(ttysw)
      * SIGWINCHes on resize.
      */
     /* Notify process group that terminal has changed. */
-#ifdef __linux__
+#if defined(__linux__) || !(defined(BSD) && (BSD >= 199103))
     /* Under Linux, we can use this ioctl only on the master pty,
      * otherwise we'll get ENOTTY. It seems to return the right process
      * group nevertheless.
      */
     if (ioctl(ttysw->ttysw_pty, TIOCGPGRP, &pgrp) == -1) {
-#else
-    if (ioctl(ttysw->ttysw_tty, TIOCGPGRP, &pgrp) == -1) {
-#endif
 	perror(XV_MSG("ttysw_sigwinch, can't get tty process group"));
 	return;
     }
+#else
+    pgrp = tcgetpgrp(ttysw->ttysw_pty);
+#endif
     /*
      * Only killpg when pgrp is not tool's.  This is the case of haven't
      * completed ttysw_fork yet (or even tried to do it yet).
@@ -225,11 +225,11 @@ ttysw_sendsig(ttysw, textsw, sig)
 	return;
     }
     /* Send the signal to the process group of the controlling tty */
-#ifdef __linux__
+#ifdef __linux__ || !(defined(BSD) && (BSD >= 199103))
     /* See the comment in ttysw_sigwinch */
     if (ioctl(ttysw->ttysw_pty, TIOCGPGRP, &control_pg) >= 0) {
 #else
-    if (ioctl(ttysw->ttysw_tty, TIOCGPGRP, &control_pg) >= 0) {
+    if ((control_pg = tcgetpgrp(ttysw->ttysw_pty)) >= 0) {
 #endif
 	/*
 	 * Flush our buffers of completed and partial commands. Be sure to do

@@ -10,7 +10,12 @@ static char     sccsid[] = "@(#)p_txt.c 20.217 93/06/28";
  *	file for terms of the license.
  */
 
+#include <sys/param.h>
+#if (defined(BSD) && (BSD >= 199103))
+#include <stdlib.h>
+#else
 #include <malloc.h>
+#endif
 #include <string.h>
 #include <ctype.h>
 #include <X11/X.h>

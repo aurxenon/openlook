@@ -23,7 +23,9 @@ static char     sccsid[] = "@(#)ntfyclient.c 20.18 93/06/28 Copyr 1985 Sun Micro
 /* Newsflash: As of libc-5.0.9, Linux has tsearch() & friends, so we define
  * HAVE_TSEARCH here.                  <martin-2.buck@student.uni-ulm.de>
  */
+#ifndef FreeBSD
 #define HAVE_TSEARCH
+#endif
 
 #include <xview_private/ntfy.h>
 #include <xview_private/ndis.h>	/* For ndis_default_prioritizer */

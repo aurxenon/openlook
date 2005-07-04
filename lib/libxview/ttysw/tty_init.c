@@ -14,6 +14,7 @@ static char     sccsid[] = "@(#)tty_init.c 20.71 93/06/28";
  * Ttysw initialization, destruction and error procedures
  */
 
+#include <sys/param.h>
 #include <sys/time.h>
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -89,8 +90,12 @@ static char     sccsid[] = "@(#)tty_init.c 20.71 93/06/28";
 #define jcsetpgrp(p)	setpgrp((p),(p))
 #endif
 
-
+#if (defined(BSD) && (BSD >= 199306))
+extern off_t   lseek();
+#else
 extern long     lseek();
+#endif
+
 char           *textsw_checkpoint_undo();
 
 /* static */ void ttysw_parseargs();
@@ -160,6 +165,8 @@ ttysw_lookup_boldstyle(str)
 	return defaults_lookup(str, bold_style);
     }
 }
+
+static int ttyinit();
 
 static int ttyinit();
 
@@ -565,6 +572,10 @@ ttysw_fork_it(ttysw0, argv, wfd)
     (void) dup2(ttysw->ttysw_tty, 1);
     (void) dup2(ttysw->ttysw_tty, 2);
     (void) close(ttysw->ttysw_tty);
+
+#if (defined(BSD) && (BSD >= 199103))
+    (void) ioctl(0, TIOCSCTTY, NULL);
+#endif
 
     if (*argv == (char *) NULL || strcmp("-c", *argv) == 0) {
 	/* Process arg list */
@@ -1021,7 +1032,11 @@ updateutmp(username, ttyslotuse, ttyfd)
     struct utmpx     utmp;
 #endif
     struct passwd  *passwdent;
+#if !(defined(BSD) && (BSD >= 199103))
     extern struct passwd *getpwuid();
+#else
+    struct passwd *getpwuid __P((uid_t));
+#endif
     int             f;
     char           *ttyn;
     extern char    *ttyname();
@@ -1073,13 +1088,22 @@ updateutmp(username, ttyslotuse, ttyfd)
 		XV_MSG("Add tty[qrs][0-f] to /etc/ttys file.\n"));
 	return (0);
     }
+#if !(defined(BSD) && (BSD >= 199103))
     if ((f = open("/etc/utmp", 1)) >= 0) {
+#else
+    if ((f = open(_PATH_UTMP, 1)) >= 0) {
+#endif
 	(void) lseek(f, (long) (ttyslotuse * sizeof(utmp)), 0);
 	(void) write(f, (char *) &utmp, sizeof(utmp));
 	(void) close(f);
     } else {
 	(void) fprintf(stderr, 
-	XV_MSG("make sure that you can write /etc/utmp!\n"));
+#if !(defined(BSD) && (BSD >= 199103))
+       XV_MSG("make sure that you can write /etc/utmp!\n"));
+#else
+       XV_MSG("make sure that you can write "));
+           (void) fprintf(stderr, "%s!\n", _PATH_UTMP);
+#endif
 	return (0);
     }
     return (ttyslotuse);

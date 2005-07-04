@@ -14,6 +14,7 @@
  * terminal emulation for teletype based programs.
  */
 
+#include <sys/param.h>
 #include <xview_private/portable.h>	/* tty and pty configuration info */
 
 #ifdef	XV_USE_TERMIOS
@@ -210,7 +211,13 @@ typedef Ttysw_view_object* 	Ttysw_view_handle;
  * Access functions for tty characteristics.
  */
 #ifdef	XV_USE_TERMIOS
-#define	tty_gettabs(t)		((t)->termios.c_oflag & XTABS)
+#if (defined(BSD) && (BSD >= 199103))
+#include <sys/ioctl.h>
+#include <sys/ioctl_compat.h>
+#define tty_gettabs(t)         ((t)->termios.c_oflag & OXTABS)
+#else   
+#define        tty_gettabs(t)          ((t)->termios.c_oflag & XTABS)
+#endif
 #if !defined(__linux__) || defined(VDSUSP)
 #define	tty_getdsuspc(t)	((int) ((t)->termios.c_cc[VDSUSP]))
 #else

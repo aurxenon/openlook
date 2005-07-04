@@ -1230,7 +1230,7 @@ Selection_requestor  sel;
 }
 
 
-XID 
+Pkg_private XID 
 SelGetOwnerXID( selReq )
 Sel_req_info  *selReq;
 {

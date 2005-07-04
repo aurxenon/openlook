@@ -18,10 +18,10 @@ static char     sccsid[] = "@(#)cim_change.c 20.19 93/06/28";
 #include <sys/types.h>
 #include <string.h>
 #include <pixrect/pixrect.h>
-#include <xview_private/ttyansi.h>
 #include <xview_private/charimage.h>
 #include <xview_private/charscreen.h>
 #include <xview_private/tty_impl.h>
+#include <xview_private/ttyansi.h>
 
 char            boldify;
 

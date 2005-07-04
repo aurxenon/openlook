@@ -122,7 +122,9 @@ xv_expand_name(name)
     }
     (void) close(pivec[0]);
 #ifndef SVR4
+#if !(defined(BSD) && (BSD >= 199103))
     while (wait((union wait *) & status) != pid);
+#endif
 #else /* SVR4 */
     while (wait( & status) != pid);
 #endif /* SVR4 */

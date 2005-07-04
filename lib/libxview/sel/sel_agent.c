@@ -31,12 +31,13 @@ static char     sccsid[] = "@(#)sel_agent.c 1.81 93/06/29";
 #include <xview/sel_compat.h>
 #include <X11/Xatom.h>
 #include <stdio.h>
+#include <sys/param.h>
 /*
  * The following header file provides fd_set compatibility with SunOS for
  * Ultrix
  */
 #include <xview_private/ultrix_cpt.h>
-#if defined(SVR4) || defined(__linux__)
+#if defined(SVR4) || defined(__linux__) || defined(BSD4_4)
 #include <stdlib.h>
 #include <unistd.h>
 #endif /* SVR4 */
@@ -314,7 +315,11 @@ seln_do_request_from_file(attr, context, fd, max_length, agent)
     struct stat     stat_buf;
     int             count, size;
     char           *destp;
+#if (defined(BSD) && (BSD >= 199306))
+    extern off_t    lseek();
+#else
     extern long     lseek();
+#endif
 
     if (fstat(fd, &stat_buf) != 0) {
 	perror(XV_MSG("Agent couldn't reply about a file"));

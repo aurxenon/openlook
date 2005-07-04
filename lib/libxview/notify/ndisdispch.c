@@ -30,8 +30,14 @@ int             dtablesize_cache = 0;
 #define GETDTABLESIZE() \
 (dtablesize_cache?dtablesize_cache:(dtablesize_cache=(int)sysconf(_SC_OPEN_MAX)))
 #else
+#ifdef __FreeBSD__
+#define GETDTABLESIZE()   \
+    (dtablesize_cache ? dtablesize_cache :                     \
+    (dtablesize_cache = MIN(getdtablesize(), FD_SETSIZE)))
+#else
 #define GETDTABLESIZE() \
  (dtablesize_cache?dtablesize_cache:(dtablesize_cache=getdtablesize()))
+#endif
 #endif /* SVR4 */
 
 pkg_private_data u_int ndis_flags = 0;

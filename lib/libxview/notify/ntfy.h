@@ -35,6 +35,11 @@ extern int sigisemptyset(const sigset_t *);
 #include <sys/rusage.h>
 #endif
 #include <sys/resource.h>
+#if (defined(BSD) && (BSD >= 199103))
+#include "wait.h"
+#include <sys/signal.h>
+#endif
+
 #include <xview/notify.h>
 
 /*
@@ -167,7 +172,7 @@ typedef struct ntfy_condition {
  */
 typedef	struct ntfy_wait3_data {
 	int	pid;			/* Process waiting for */
-#if !defined(SVR4) && !defined(__linux__)
+#if !defined(SVR4) && !defined(__linux__) && !(defined(BSD) && (BSD >= 199103))
 	union	wait status;		/* Return value from wait3 */
 #else /* SVR4 */
 	int 	status;		/* Return value from wait3 */
@@ -210,7 +215,12 @@ extern	sigset_t ntfy_sigs_delayed;/* Bit mask of signals received while in
 #define sigisempty(s)   (!(((s)->__sigbits[0]) | ((s)->__sigbits[1])   \
                         | ((s)->__sigbits[2]) | ((s)->__sigbits[3])))
 #else
-#define sigisempty(s)   (!(*(s)))
+static int
+sigisempty (sigset_t *s) {
+       sigset_t n;      
+       bzero(&n, sizeof(sigset_t));
+       return (! memcmp(&n, s, sizeof(sigset_t)));
+}
 #endif
 #endif
 

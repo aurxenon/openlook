@@ -30,9 +30,7 @@
 #include <X11/Xutil.h>
 #include <X11/Xatom.h>
 #include <X11/Xresource.h>
-#ifdef OW_I18N_L4
 #include <sys/param.h>
-#endif
 
 #include "i18n.h"
 #include "ollocale.h"
@@ -90,7 +88,7 @@ GetUserDefaults(dpy)
 #ifdef SVR4
 	    if (sysinfo(SI_HOSTNAME, hostname, sizeof(hostname)) != -1) {
 #else
-#ifdef __linux__
+#if defined (__linux__) || defined (BSD4_4)
 	    if (0 == gethostname(hostname, sizeof(hostname))) {
 #else
 	    if (0 == gethostname(hostname, sizeof(hostname), &namelen)) {

@@ -12,6 +12,7 @@ static char     sccsid[] = "@(#)om_set.c 20.96 93/06/28";
 
 /* --------------------------------------------------------------------- */
 #include <sys/types.h>
+#include <ctype.h>
 #include <xview_private/om_impl.h>
 #include <xview_private/draw_impl.h>
 #include <xview_private/fm_impl.h>

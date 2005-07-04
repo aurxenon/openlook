@@ -26,7 +26,7 @@ extern char    *sys_errlist[];
 extern int      errno;
 #endif
 
-#ifndef __linux__
+#if !(defined( __linux__) || defined(BSD))
 /* Global already defined in xv_init.c */
 Xv_private_data char *xv_app_name;
 #else

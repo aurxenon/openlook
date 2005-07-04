@@ -22,7 +22,7 @@ static char     sccsid[] = "@(#)es_attr.c 20.22 93/06/28";
 
 Pkg_private int
 #ifdef ANSI_FUNC_PROTO
-es_set(register Es_handle esh, ...)
+es_set(Es_handle esh, ...)
 #else
 es_set(esh, va_alist)
     register Es_handle esh;

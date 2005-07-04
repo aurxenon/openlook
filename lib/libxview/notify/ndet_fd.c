@@ -27,8 +27,14 @@ extern int      dtablesize_cache;
 #define GETDTABLESIZE() \
 (dtablesize_cache?dtablesize_cache:(dtablesize_cache=(int)sysconf(_SC_OPEN_MAX)))
 #else
+#ifdef __FreeBSD__
+#define GETDTABLESIZE() \
+    (dtablesize_cache ? dtablesize_cache : \
+    (dtablesize_cache = MIN(getdtablesize(), FD_SETSIZE)))
+#else
 #define GETDTABLESIZE() \
     (dtablesize_cache?dtablesize_cache:(dtablesize_cache=getdtablesize()))
+#endif
 #endif /* SVR4 */
 
 static int      ndet_fd_table_size;	/* Number of descriptor slots

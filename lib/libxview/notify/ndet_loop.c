@@ -14,6 +14,7 @@ static char     sccsid[] = "@(#)ndet_loop.c 20.36 93/06/28 Copyr 1985 Sun Micro"
  * Ndet_loop.c - Notification loop.
  */
 
+#include <sys/param.h>
 #include <xview_private/i18n_impl.h>
 #include <xview_private/ntfy.h>
 #include <xview_private/ndet.h>
@@ -21,7 +22,11 @@ static char     sccsid[] = "@(#)ndet_loop.c 20.36 93/06/28 Copyr 1985 Sun Micro"
 #include <xview_private/ndis.h>	/* For ndis_dispatch */
 #ifndef __linux__
 #ifndef SVR4
+#ifndef __FreeBSD__
 #include <syscall.h>
+#else
+#include <sys/syscall.h>
+#endif
 #else /* SVR4 */
 #include <sys/syscall.h>
 #include <sys/poll.h>
@@ -232,7 +237,7 @@ notify_start()
 	     * will return with an EINTR when a signal arrives while IN
 	     * select, not ON THE WAY into select).
 	     */
-#ifndef SVR4
+#if !defined(SVR4) && !(defined(BSD) && (BSD >= 199103))
 #ifndef __linux__
 	    nfds = syscall(SYS_select,
 			   FD_SETSIZE, &ibits, &obits, &ebits,

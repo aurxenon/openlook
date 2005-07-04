@@ -18,14 +18,19 @@ static char     sccsid[] = "@(#)txt_file.c 20.81 93/06/28";
 #include <xview_private/txt_impl.h>
 #include <xview_private/ev_impl.h>
 #include <xview_private/txt_18impl.h>
-#if defined(SVR4) || defined(__linux__)
+#include <sys/param.h>
+#if defined(SVR4) || defined(__linux__) || defined(BSD4_4)
 #include <dirent.h>
 #include <string.h>
 #include <unistd.h>
 #ifdef __linux__
 #include <sys/types.h>
 #include <fcntl.h>
-#endif
+#else
+#ifdef BSD4_4
+#include <sys/file.h>
+#endif /* BSD */
+#endif /* linux */
 #else
 #include <sys/dir.h>
 #include <sys/file.h>
@@ -37,7 +42,6 @@ static char     sccsid[] = "@(#)txt_file.c 20.81 93/06/28";
  */
 #undef MIN
 #undef MAX
-#include <sys/param.h>
 #include <xview/notice.h>
 #include <xview/frame.h>
 #include <errno.h>
@@ -47,13 +51,13 @@ static char     sccsid[] = "@(#)txt_file.c 20.81 93/06/28";
 	if ((unsigned)(to_test) != 0) (flags) |= (flag);	\
 	else (flags) &= ~(flag)
 
-#if defined(SVR4) || defined(__linux__)
+#if defined(SVR4) || defined(__linux__) || defined(BSD4_4)
 extern char    *getcwd();
 #else
 extern char    *getwd();
 #endif /* SVR4 */
 
-#if defined(__linux__) && defined(__GLIBC__)
+#if (defined(__linux__) && defined(__GLIBC__)) || (defined(BSD) && (BSD >= 199306))
 /* martin.buck@bigfoot.com */
 #include <errno.h>
 #else
@@ -368,7 +372,7 @@ textsw_full_pathname(name)
     }
 
 #ifdef		OW_I18N
-#if defined(SVR4) || defined(__linux__)
+#if defined(SVR4) || defined(__linux__) || defined(BSD4_4)
     if (getcwd(pathname_mb, MAXPATHLEN) == 0)
 #else
     if (getwd(pathname_mb) == 0)
@@ -378,7 +382,7 @@ textsw_full_pathname(name)
 
 #else		/* OW_I18N */
 
-#if defined(SVR4) || defined(__linux__)
+#if defined(SVR4) || defined(__linux__) || defined(BSD4_4)
     if (getcwd(pathname, MAXPATHLEN) == 0)
 #else
     if (getwd(pathname) == 0)
@@ -1552,7 +1556,7 @@ textsw_reset_2(abstract, locx, locy, preserve_memory, cmd_is_undo_all_edit)
     int             cmd_is_undo_all_edit;	/* This is for doing an "Undo
 						 * All edit" */
 {
-#ifndef SVR4
+#if !(defined(BSD4_4) && defined(SVR4))
     pkg_private Es_status textsw_checkpoint_internal();
 #else /* SVR4 */
     static Es_status textsw_checkpoint_internal();
@@ -2400,7 +2404,7 @@ Error:
     return (result);
 }
 
-#ifndef SVR4
+#if !(defined(BSD4_4) && defined(SVR4))
 Pkg_private     Es_status
 #else /* SVR4 */
 static     Es_status

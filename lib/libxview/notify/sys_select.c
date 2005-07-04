@@ -16,7 +16,11 @@ static char     sccsid[] = "@(#)sys_select.c 20.17 93/06/28 Copyr 1985 Sun Micro
 
 #ifndef SVR4
 #ifndef __linux__
+#ifndef __FreeBSD__
 #include <syscall.h>
+#else
+#include <sys/syscall.h>
+#endif
 #else
 #include "linux_select.h"
 #endif

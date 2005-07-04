@@ -204,10 +204,18 @@ xv_free_filter_table(table)
 {
     int             i;
     for (i = 0; table[i] != NULL; i++) {
+#ifndef __FreeBSD__
 	cfree((char *) table[i]->call);
+#else
+	free((char *) table[i]->call);
+#endif
 	free((char *) table[i]);
     }
+#ifndef __FreeBSD__
     cfree((char *) table);
+#else
+    free((char *) table);
+#endif
 }
 
 static struct CharAction

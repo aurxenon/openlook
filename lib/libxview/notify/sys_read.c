@@ -14,7 +14,7 @@ static char     sccsid[] = "@(#)sys_read.c 20.13 93/06/28 Copyr 1985 Sun Micro";
  * Sys_read.c - Real system call to read.
  */
 
-#ifndef SVR4
+#if !(defined(SVR4) || defined(__FreeBSD__))
 #ifndef __linux__
 #include <syscall.h>
 #else

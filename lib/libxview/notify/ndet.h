@@ -17,6 +17,11 @@
 #ifndef	NDET_DEFINED
 #define	NDET_DEFINED
 
+#include <sys/param.h>
+#if (defined(BSD) && (BSD >= 199103))
+#include <signal.h>
+#endif
+
 /*
 ********************** Detector Loop Notes ****************************
 Here is some notes on the detector loop:

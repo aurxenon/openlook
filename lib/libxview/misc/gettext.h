@@ -2,7 +2,11 @@
 
 #define DEFAULT_DOMAIN	"default"
 #ifndef __linux__
+#ifdef __FreeBSD__
+#define DEFAULT_BINDING "/usr/lib/share/locale\n"
+#else
 #define DEFAULT_BINDING "/usr/lib/locale\n"
+#endif
 #else
 #define DEFAULT_BINDING "/usr/openwin/lib/locale\n"
 #endif

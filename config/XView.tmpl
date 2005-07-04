@@ -416,7 +416,7 @@ XCOMM # rules to those supplied with X Version 11 release 5.
 #ifdef __linux__
 #define SharedXViewRev 3.2.4
 #else
-#if SystemV4
+#if SystemV4 || UseElfFormat
 # define SharedXViewRev 3
 #else
 # define SharedXViewRev 3.2

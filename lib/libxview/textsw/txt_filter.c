@@ -17,7 +17,8 @@ static char     sccsid[] = "@(#)txt_filter.c 20.48 93/06/28";
 #include <sys/types.h>
 #include <sys/file.h>
 #include <unistd.h>
-#ifdef SVR4
+#include <sys/param.h>
+#if (defined(BSD4_4) || defined(SVR4))
 #include <dirent.h>
 #else
 #include <sys/dir.h>
@@ -32,7 +33,7 @@ static char     sccsid[] = "@(#)txt_filter.c 20.48 93/06/28";
 #include <string.h>
 
 #if defined(sparc) && !defined(linux)
-#ifdef SVR4
+#if (defined(BSD4_4) || defined(SVR4))
 #include <unistd.h>
 #else
 #include <vfork.h>
@@ -43,7 +44,9 @@ static char     sccsid[] = "@(#)txt_filter.c 20.48 93/06/28";
 #endif
 #include <sys/errno.h>
 #include <sys/ioctl.h>
+#ifndef SUNOS41
 #include <xview_private/ultrix_cpt.h>
+#endif
 
 #define FAIL		-1
 #define	INPUT		0
@@ -103,6 +106,8 @@ interpret_filter_reply(view, buffer, buffer_length, delta)
     return (REPLY_OKAY);
 }
 
+static int talk_to_filter();
+static int start_filter();
 /*
  * Ignores SIGPIPE so that write(2) to nonexistent or dead filter does not
  * cause parent (containing textsw) to terminate.
