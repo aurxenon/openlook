@@ -7,7 +7,7 @@ XCOMM # Imakefile for contrib directory.
 #define IHaveSubdirs 
 #define PassCDebugFlags 'CDEBUGFLAGS=$(CDEBUGFLAGS)'
 
-SUBDIRS = clock cmdtool olwm olwmslave props textedit
+SUBDIRS = clock cmdtool olvwm-4.1 olwmslave props textedit
 
 DIRS_TO_CREATE = $(SRC_DEST) 
 
