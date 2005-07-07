@@ -65,7 +65,7 @@ chmod a+rx imake
 rm -f make
 
 if [ "x$1" = xall ]; then
-  set -- libs instlibs clients contrib olvwm instclients instcontrib instolvwm instfinish
+  set -- libs instlibs clients contrib instclients instcontrib instfinish
 fi
 
 while [ $# -gt 0 ]; do
