@@ -1,32 +1,7 @@
 #
-# @(#)Makefile	2.5 91/10/15 Copyright 1990 Sun Microsystems
-#
-# This file is a product of Sun Microsystems, Inc. and is provided for
-# unrestricted use provided that this legend is included on all tape
-# media and as a part of the software program in whole or part.  Users
-# may copy or modify this file without charge, but are not authorized to
-# license or distribute it to anyone else except as part of a product
-# or program developed by the user.
-# 
-# THIS FILE IS PROVIDED AS IS WITH NO WARRANTIES OF ANY KIND INCLUDING THE
-# WARRANTIES OF DESIGN, MERCHANTIBILITY AND FITNESS FOR A PARTICULAR
-# PURPOSE, OR ARISING FROM A COURSE OF DEALING, USAGE OR TRADE PRACTICE.
-# 
-# This file is provided with no support and without any obligation on the
-# part of Sun Microsystems, Inc. to assist in its use, correction,
-# modification or enhancement.
-# 
-# SUN MICROSYSTEMS, INC. SHALL HAVE NO LIABILITY WITH RESPECT TO THE
-# INFRINGEMENT OF COPYRIGHTS, TRADE SECRETS OR ANY PATENTS BY THIS FILE
-# OR ANY PART THEREOF.
-# 
-# In no event will Sun Microsystems, Inc. be liable for any lost revenue
-# or profits or other special, indirect and consequential damages, even
-# if Sun has been advised of the possibility of such damages.
-# 
-# Sun Microsystems, Inc.
-# 2550 Garcia Avenue
-# Mountain View, California  94043
+# makefile.linux
+# to build libguide; please look at the original Makefile from
+# SUN for copyright!
 #
 
 SOURCES.c = \
@@ -38,70 +13,46 @@ SOURCES.c = \
 SOURCES.h = \
 	guide.h \
 	gio.h \
-	guide_actions.h
+	guide_actions.h \
+	c_varieties.h
 
 SOURCES = \
-	$(SOURCES.G) \
 	$(SOURCES.h) \
 	$(SOURCES.c)
 
-TARGETS.c = \
-	$(SOURCES.G:%.G=%_ui.c) \
-	$(STUBS.G:%.G=%_stubs.c)
-
-TARGETS.h = \
-	$(SOURCES.G:%.G=%_ui.h) \
-	$(SOURCES.l:%.l=%.h) \
-	$(SOURCES.y:%.y=%.h)
-
-TARGETS.other =	\
-	$(SOURCES.G:%.G=%.info)
-
-TARGETS = \
-	$(TARGETS.other) \
-	$(TARGETS.h) \
-	$(TARGETS.c)
-
 OBJECTS = \
-	$(SOURCES.c:%.c=%.o) \
-	$(TARGETS.c:%.c=%.o)
+	guide.o \
+        gio.o \
+        gio_path.o \
+        guide_actions.o
 
 LIBRARY = libguide.a
 
 PROJECTDIR = $(GUIDEHOME)
-DESTDIR = $(PROJECTDIR)
+DESTDIR = $(OPENWINHOME)
 
 # Compiler flags.
 
-CPPFLAGS += -I$(PROJECTDIR)/src/libguide -I$(OPENWINHOME)/include
-
-# Make information.
-
-.KEEP_STATE:
-.PRECIOUS: $(LIBRARY)
+CPPFLAGS += -I. -I$(OPENWINHOME)/include
 
 # Standard targets.
 
-all:	 $(SOURCES) $(TARGETS) $(LIBRARY) $(PROGRAM)
-objects: $(SOURCES.c) $(TARGETS.c) $(TARGETS.h) $(OBJECTS)
-sources: $(SOURCES)
-targets: $(SOURCES) $(TARGETS)
+all:	 $(LIBRARY)
 
-$(LIBRARY): $(LIBRARY)($(OBJECTS))
+$(OBJECTS): $(SOURCES)
+   
+$(LIBRARY): $(OBJECTS)
 	ar rv $@ $?
 	ranlib $@
 	rm -f $?
 
-$(LIBRARY)(%.o): %.c
-	$(COMPILE.c) $< $(OUTPUT_OPTION)
-
 install: all
-	@-sccs check
 	install -d $(DESTDIR)/etc
-	install -m 444 $(TARGETS.other) $(DESTDIR)/etc
 	install -d $(DESTDIR)/lib
 	install -m 664 $(LIBRARY) $(DESTDIR)/lib
+	install -d $(DESTDIR)/include
+	install -m 644 $(SOURCES.h) $(DESTDIR)/include
 	(cd $(DESTDIR)/lib ; ranlib -t $(LIBRARY) ; chmod 444 $(LIBRARY))
 
 clean:
-	$(RM) $(TARGETS) $(OBJECTS) $(SOURCES.G:%.G=%_stubs.c) core
+	$(RM) $(OBJECTS) core
