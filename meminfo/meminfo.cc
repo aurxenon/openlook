@@ -12,14 +12,14 @@
  * GNU General Public License for more details.
  */
 
-#include <uit/BaseWindow.h>
-#include <uit/ComponentDisplay.h>
-#include <uit/TextItem.h>
-#include <uit/Notifier.h>
-#include <uit/Gauge.h>
-#include <uit/NumericInput.h>
-#include <uit/UIObject.h>
-
+#include <BaseWindow.h>
+#include <ComponentDisplay.h>
+#include <TextItem.h>
+#include <Notifier.h>
+#include <Gauge.h>
+#include <NumericInput.h>
+#include <UIObject.h>
+#include <Image.h>
 #include <xview/notify.h>
 
 #include <stdio.h>
@@ -30,7 +30,7 @@
 #define VERSION "v1.1"
 
 struct meminfo {
-  int meminfofd;
+  FILE* meminfofile;
   int total;
   int used;
   int free;
@@ -90,18 +90,26 @@ TextItem t_uptime;
 NumericInput n_time("Update freq. ");
 /**************************************************/
 void freqHandler(UIObject *);
-Notify_value update(void);
+Notify_value update(...);
 void updateTextValues(struct meminfo *);
 void roundMeg(int, int &, int &);
 void periodicUpdate(void);
 struct loadinfo *readLoadinfo(void);
 struct meminfo *readMeminfo(void);
+static unsigned short icon_bits[] = {
+#include "perfmeter.icon"
+} ;
+static unsigned short icon_mask_bits[] = {
+#include "perfmeter_mask.icon"
+} ;
 /**************************************************/
 main (int argc, char **argv) {
-  char iconfile[128];
 
-  sprintf(iconfile, "%s/include/images/perfmeter.icon",
-          getenv("OPENWINHOME"));
+/*  sprintf(iconfile, "%s/include/images/perfmeter.icon", 
+          getenv("OPENWINHOME")); */
+
+  Image iconfile ( 64, 64, icon_bits, 1 );
+  Image iconfile_mask ( 64, 64, icon_mask_bits, 1 );
 
   if (chdir("/proc")) {
     perror("chdir() to /proc failed");
@@ -114,6 +122,7 @@ main (int argc, char **argv) {
   w.setDisplayFooter(FALSE);
   w.setResizable(FALSE);
   w.setIcon(iconfile);
+  w.setIconMask(iconfile_mask);
   w.setIconLabel("Meminfo");
   w.show(TRUE);
 
@@ -307,7 +316,7 @@ void freqHandler(UIObject *obj) {
   notify_set_itimer_func(frame, update, ITIMER_REAL, &timer, NULL);
 } 
 /**************************************************/
-Notify_value update(void) {
+Notify_value update(...) {
 /* Called to refresh the data */
 
   struct meminfo *m = readMeminfo();
@@ -471,77 +480,45 @@ struct meminfo *readMeminfo(void) {
 /* Read /proc/meminfo and return the new values */
   static struct meminfo mem = { 0 };
   char buf[4097];
-  char *tok, *nextline;
+  char *p, *p1;
   int cnt;
 
-  if (mem.meminfofd <= 0)
-    mem.meminfofd = open("meminfo", O_RDONLY);
+  if (mem.meminfofile == NULL)
+    mem.meminfofile = fopen("meminfo", "r");
   else
-    lseek(mem.meminfofd, 0, SEEK_SET);
-  if (mem.meminfofd <= 0) {
+    fseek(mem.meminfofile, 0, SEEK_SET);
+  if (!mem.meminfofile) {
     fprintf(stderr, "Cannot open /proc/meminfo\n");
     exit(1);
   }
-  cnt = read(mem.meminfofd, buf, 4096);
-  if (cnt <= 0) {
-    perror("Read failure on /proc/meminfo");
-    exit(1);
+  bzero(buf,sizeof(buf));
+  while(fgets(buf, 4096, mem.meminfofile)) {
+    if (!(p = index(buf,':'))) {
+      fprintf(stderr, "Unknown format on /proc/meminfo\n");
+      exit(1);
+    }
+    *(p++) = '\0';
+    if (!(p1 = strstr(p," kB")))
+      continue;
+    *(p1) = '\0';
+    if (!strcmp(buf,"MemTotal"))
+      mem.total = atoi(p) * 1024; 
+    else if (!strcmp(buf,"MemFree"))
+      mem.free = atoi(p) * 1024; 
+    else if (!strcmp(buf,"MemShared"))
+      mem.shared = atoi(p) * 1024; 
+    else if (!strcmp(buf,"Buffers"))
+      mem.buffers = atoi(p) * 1024; 
+    else if (!strcmp(buf,"Cached"))
+/*      mem.cached = atoi(p) * 1024; */
+    ;
+    else if (!strcmp(buf,"SwapTotal"))
+      mem.swaptotal = atoi(p) * 1024;
+    else if (!strcmp(buf,"SwapFree"))
+      mem.swapfree = atoi(p) * 1024;
   }
-  buf[cnt] = '\0';
-
-// Skip header line
-  if ((tok = strtok(buf, "\r\n")) == NULL) {
-BadFormat:
-    fprintf(stderr, "Unknown format on /proc/meminfo\n");
-    exit(1);
-  }
-  
-// Read meminfo
-  if ((tok = strtok(NULL, "\r\n")) == NULL)
-    goto BadFormat;
-  nextline = tok + strlen(tok) + 1;
-
-  tok = strtok(tok, " \t\r\n");
-  if ((tok == NULL) || strcmp(tok, "Mem:"))
-    goto BadFormat;
-
-  if ((tok = strtok(NULL, " \t\r\n")) != NULL)
-    mem.total = atoi(tok);
-  else
-    goto BadFormat;
-  if ((tok = strtok(NULL, " \t\r\n")) != NULL)
-    mem.used = atoi(tok);
-  else
-    goto BadFormat;
-  if ((tok = strtok(NULL, " \t\r\n")) != NULL)
-    mem.free = atoi(tok);
-  else
-    goto BadFormat;
-  if ((tok = strtok(NULL, " \t\r\n")) != NULL)
-    mem.shared = atoi(tok);
-  else
-    goto BadFormat;
-  if ((tok = strtok(NULL, " \t\r\n")) != NULL)
-    mem.buffers = atoi(tok);
-  else
-    goto BadFormat;
-
-// Read swap information
-  tok = strtok(nextline, " \t\r\n");
-  if ((tok == NULL) || strcmp(tok, "Swap:"))
-    goto BadFormat;
-  if ((tok = strtok(NULL, " \t\r\n")) != NULL)
-    mem.swaptotal = atoi(tok);
-  else
-    goto BadFormat;
-  if ((tok = strtok(NULL, " \t\r\n")) != NULL)
-    mem.swapused = atoi(tok);
-  else
-    goto BadFormat;
-  if ((tok = strtok(NULL, " \t\r\n")) != NULL)
-    mem.swapfree = atoi(tok);
-  else
-    goto BadFormat;
+  mem.used = mem.total - mem.free;
+  mem.swapused = mem.swaptotal - mem.swapfree;
 
   mem.totmegs = (mem.total / (1024 * 1024)) + 1;
   mem.swapmegs = (mem.swaptotal / (1024 * 1024)) + 1;
