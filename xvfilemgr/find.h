@@ -6,8 +6,9 @@
  *	Purpose : finding a file
  *
  * $Log: find.h,v $
- * Revision 1.1  2005/07/13 18:31:02  arkenoi
- * Initial revision
+ * Revision 1.1.1.1  2005/07/13 18:31:02  arkenoi
+ * Initial import of 0.2g
+ *
  *
  * Revision 1.2  1996/06/21 18:26:13  root
  * clean up #includes.

@@ -6,8 +6,9 @@
  *	Purpose : properties
  *
  * $Log: properties.c,v $
- * Revision 1.1  2005/07/13 18:31:00  arkenoi
- * Initial revision
+ * Revision 1.1.1.1  2005/07/13 18:31:00  arkenoi
+ * Initial import of 0.2g
+ *
  *
  * Revision 1.13  1997/11/14 04:15:02  root
  * Moved the properties Panel_item to a Menu_item of edit_menu.

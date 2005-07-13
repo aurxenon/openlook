@@ -6,8 +6,9 @@
  *	Purpose : displays the about-panel
  *
  * $Log: about.c,v $
- * Revision 1.1  2005/07/13 18:31:15  arkenoi
- * Initial revision
+ * Revision 1.1.1.1  2005/07/13 18:31:15  arkenoi
+ * Initial import of 0.2g
+ *
  *
  * Revision 1.7  1998/12/20 18:23:39  root
  * Changes to (C) window.

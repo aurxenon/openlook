@@ -8,8 +8,9 @@
 	Purpose : handling of cd-roms and floppy disks
 *
 * $Log: removable.h,v $
-* Revision 1.1  2005/07/13 18:31:04  arkenoi
-* Initial revision
+* Revision 1.1.1.1  2005/07/13 18:31:04  arkenoi
+* Initial import of 0.2g
+*
 *
 * Revision 1.2  1996/08/17 08:45:45  root
 * rudimentary floppy and cdrom support.

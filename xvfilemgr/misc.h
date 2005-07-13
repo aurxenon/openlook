@@ -8,8 +8,9 @@
 	Purpose : miscellaneous things
 *
 * $Log: misc.h,v $
-* Revision 1.1  2005/07/13 18:31:00  arkenoi
-* Initial revision
+* Revision 1.1.1.1  2005/07/13 18:31:00  arkenoi
+* Initial import of 0.2g
+*
 *
 * Revision 1.2  1996/08/16 17:10:45  root
 * expandation of filename expressions.

@@ -6,8 +6,9 @@
  *	Purpose : global definitions
  *
  * $Log: global.h,v $
- * Revision 1.1  2005/07/13 18:31:13  arkenoi
- * Initial revision
+ * Revision 1.1.1.1  2005/07/13 18:31:13  arkenoi
+ * Initial import of 0.2g
+ *
  *
  * Revision 1.11  1998/12/20 16:21:37  root
  * GLIBC2 needs limits.h which libc5 supports, we're including it.

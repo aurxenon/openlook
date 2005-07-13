@@ -6,8 +6,9 @@
  *	Purpose : finding a file
  *
  * $Log: find.c,v $
- * Revision 1.1  2005/07/13 18:31:02  arkenoi
- * Initial revision
+ * Revision 1.1.1.1  2005/07/13 18:31:02  arkenoi
+ * Initial import of 0.2g
+ *
  *
  * Revision 1.10  1997/11/02 22:55:11  root
  * Minor size adjustments.

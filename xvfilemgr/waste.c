@@ -6,8 +6,9 @@
  *	Purpose : handling the wastebasket
  *
  * $Log: waste.c,v $
- * Revision 1.1  2005/07/13 18:31:03  arkenoi
- * Initial revision
+ * Revision 1.1.1.1  2005/07/13 18:31:03  arkenoi
+ * Initial import of 0.2g
+ *
  *
  * Revision 1.9  1996/11/23 11:07:54  root
  * update windows immediatly after emptying the waste basket.

@@ -6,8 +6,9 @@
  *	Purpose : main program
  *
  * $Log: xvfilemgr.c,v $
- * Revision 1.1  2005/07/13 18:31:15  arkenoi
- * Initial revision
+ * Revision 1.1.1.1  2005/07/13 18:31:15  arkenoi
+ * Initial import of 0.2g
+ *
  *
  * Revision 1.18  1999/01/02 12:59:39  root
  * Minor cosmetic change.

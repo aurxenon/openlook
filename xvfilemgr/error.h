@@ -6,8 +6,9 @@
  *	Purpose : handle errors
  *
  * $Log: error.h,v $
- * Revision 1.1  2005/07/13 18:31:03  arkenoi
- * Initial revision
+ * Revision 1.1.1.1  2005/07/13 18:31:03  arkenoi
+ * Initial import of 0.2g
+ *
  *
  * Revision 1.4  1996/08/22 14:03:12  root
  * removed unnecessary #include dependency.

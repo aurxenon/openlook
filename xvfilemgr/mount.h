@@ -8,8 +8,9 @@
 	Purpose : hamndling of mount points
 *
 * $Log: mount.h,v $
-* Revision 1.1  2005/07/13 18:31:00  arkenoi
-* Initial revision
+* Revision 1.1.1.1  2005/07/13 18:31:00  arkenoi
+* Initial import of 0.2g
+*
 *
 * Revision 1.3  1996/07/31 19:13:26  root
 * testing wether a mount point exists.

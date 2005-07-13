@@ -6,8 +6,9 @@
  *	Purpose : all tasks concerning a single file
  *
  * $Log: file.c,v $
- * Revision 1.1  2005/07/13 18:30:58  arkenoi
- * Initial revision
+ * Revision 1.1.1.1  2005/07/13 18:30:58  arkenoi
+ * Initial import of 0.2g
+ *
  *
  * Revision 1.36  1998/10/18 01:54:44  root
  * Fixes.

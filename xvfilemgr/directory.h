@@ -6,8 +6,9 @@
  *	Purpose : all tasks concerning directories, folder view
  *
  * $Log: directory.h,v $
- * Revision 1.1  2005/07/13 18:31:06  arkenoi
- * Initial revision
+ * Revision 1.1.1.1  2005/07/13 18:31:06  arkenoi
+ * Initial import of 0.2g
+ *
  *
  * Revision 1.1  1995/12/01  15:32:53  root
  * Initial revision

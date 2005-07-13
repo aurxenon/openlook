@@ -8,8 +8,9 @@
 	Purpose : cut, copy, paste and link
 *
 * $Log: edit.h,v $
-* Revision 1.1  2005/07/13 18:31:03  arkenoi
-* Initial revision
+* Revision 1.1.1.1  2005/07/13 18:31:03  arkenoi
+* Initial import of 0.2g
+*
 *
 * Revision 1.2  1996/05/26 15:11:47  root
 * prototype for edit_exit.

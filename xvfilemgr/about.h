@@ -6,8 +6,9 @@
  *	Purpose : displays the about-panel
  *
  * $Log: about.h,v $
- * Revision 1.1  2005/07/13 18:31:04  arkenoi
- * Initial revision
+ * Revision 1.1.1.1  2005/07/13 18:31:04  arkenoi
+ * Initial import of 0.2g
+ *
  *
  * Revision 1.2  1996/07/28 08:24:00  root
  * move the prototypes to about.c to keep the interface small.

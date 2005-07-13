@@ -6,8 +6,9 @@
  *	Purpose : display canvas, read directory
  *
  * $Log: workwindow.c,v $
- * Revision 1.1  2005/07/13 18:30:56  arkenoi
- * Initial revision
+ * Revision 1.1.1.1  2005/07/13 18:30:56  arkenoi
+ * Initial import of 0.2g
+ *
  *
  * Revision 1.33  2000/02/18 07:13:34  root
  * More fixes for xvfilemgr. New code for removeable devices.

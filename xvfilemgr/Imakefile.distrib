@@ -6,8 +6,9 @@
  *	Purpose : Imake file of xvfilemgr project
  *
  * $Log: Imakefile.distrib,v $
- * Revision 1.1  2005/07/13 18:31:06  arkenoi
- * Initial revision
+ * Revision 1.1.1.1  2005/07/13 18:31:06  arkenoi
+ * Initial import of 0.2g
+ *
  *
  * Revision 1.9  1996/07/11 07:38:55  root
  * Do not install files when doing a 'make' with no arguments.

@@ -6,8 +6,9 @@
 	Purpose : remote transfer of files
 *
 * $Log: remote.c,v $
-* Revision 1.1  2005/07/13 18:31:00  arkenoi
-* Initial revision
+* Revision 1.1.1.1  2005/07/13 18:31:00  arkenoi
+* Initial import of 0.2g
+*
 *
 * Revision 1.6  1996/10/08 16:22:58  root
 * eliminating all waitpid system calls.

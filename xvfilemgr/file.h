@@ -6,8 +6,9 @@
  *	Purpose : all tasks concerning a single file
  *
  * $Log: file.h,v $
- * Revision 1.1  2005/07/13 18:30:58  arkenoi
- * Initial revision
+ * Revision 1.1.1.1  2005/07/13 18:30:58  arkenoi
+ * Initial import of 0.2g
+ *
  *
  * Revision 1.15  1996/11/23 12:37:18  root
  * file_move handles name conflicts in target directory.
