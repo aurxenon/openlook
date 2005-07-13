@@ -112,7 +112,7 @@ XCOMM # XView.cf for XView release 3.0.  Specify site preferences here.
  *	the appropriate value.
  */
 #ifndef XVDestDir
-#define XVDestDir /usr/X11R6
+#define XVDestDir /usr/openwin
 #endif
 /*
  *	Command to add object modules to the library.
