@@ -1,0 +1,139 @@
+# Makefile.in generated automatically by automake 1.2 from Makefile.am
+
+# Copyright (C) 1994, 1995, 1996, 1997 Free Software Foundation, Inc.
+# This Makefile.in is free software; the Free Software Foundation
+# gives unlimited permission to copy, distribute and modify it.
+
+#
+
+
+SHELL = /bin/sh
+
+srcdir = @srcdir@
+top_srcdir = @top_srcdir@
+VPATH = @srcdir@
+prefix = @prefix@
+exec_prefix = @exec_prefix@
+
+bindir = @bindir@
+sbindir = @sbindir@
+libexecdir = @libexecdir@
+datadir = @datadir@
+sysconfdir = @sysconfdir@
+sharedstatedir = @sharedstatedir@
+localstatedir = @localstatedir@
+libdir = @libdir@
+infodir = @infodir@
+mandir = @mandir@
+includedir = @includedir@
+oldincludedir = /usr/include
+
+pkgdatadir = $(datadir)/@PACKAGE@
+pkglibdir = $(libdir)/@PACKAGE@
+pkgincludedir = $(includedir)/@PACKAGE@
+
+top_builddir = .
+DEFAULT_CP_CMD = @DEFAULT_CP_CMD@
+DEFAULT_EDITOR = @DEFAULT_EDITOR@
+DEFAULT_MAILER = @DEFAULT_MAILER@
+DEFAULT_MV_CMD = @DEFAULT_MV_CMD@
+DEFAULT_RM_CMD = @DEFAULT_RM_CMD@
+HAVE_SLINGSHOT = @HAVE_SLINGSHOT@
+X11_CFLAGS = @X11_CFLAGS@
+X11_LIBS = @X11_LIBS@
+HAVE_XVIEW = @HAVE_XVIEW@
+HAVE_XVIEW_PRIVATE_HEADERS = @HAVE_XVIEW_PRIVATE_HEADERS@
+PACKAGE = @PACKAGE@
+SLINGSHOT_CFLAGS = @SLINGSHOT_CFLAGS@
+SLINGSHOT_LIBS = @SLINGSHOT_LIBS@
+VERSION = @VERSION@
+XVIEW_CFLAGS = @XVIEW_CFLAGS@
+XVIEW_LIBS = @XVIEW_LIBS@
+xvdep = @xvdep@
+xvfilemgr_bindir = @xvfilemgr_bindir@
+xvfilemgr_libdir = @xvfilemgr_libdir@
+xvfilemgr_mandir = @xvfilemgr_mandir@
+
+COMPILE = $(CC) $(INCLUDES) $(CPPFLAGS)  $(DEFS) $(CFLAGS) $(X11_CFLAGS) $(SLINGSHOT_CFLAGS) $(XVIEW_CFLAGS)
+LINK    = $(CC) $(CFLAGS) $(LDFLAGS) $(SLINGSHOT_LIBS) $(XVIEW_LIBS) $(X11_LIBS) -o $@
+INSTALL = @INSTALL@
+INSTALL_PROGRAM = @INSTALL_PROGRAM@
+INSTALL_DATA    = @INSTALL_DATA@
+XV_LIBS	= @XV_LIBS@
+XV_LIBS_STATIC = @XV_LIBS_STATIC@
+
+NORMAL_INSTALL = true
+PRE_INSTALL = true
+POST_INSTALL = true
+NORMAL_UNINSTALL = true
+PRE_UNINSTALL = true
+POST_UNINSTALL = true
+CC = @CC@
+CFLAGS = @CFLAGS@
+CPPFLAGS = @CPPFLAGS@
+MKDEP = $(CC) -M $(DEFS) $(INCLUDES) $(CPPFLAGS) $(CFLAGS)
+
+SRC = $(sort $(wildcard *.c) )
+HDR = $(sort $(wildcard *.h) )
+MANS1 = $(sort $(wildcard *.1) )
+OBJ = $(SRC:.c=.o)
+PROGRAM = $(PACKAGE)
+
+# subdirectories in the distribution
+SUBDIRS = images16 images32
+
+all: $(PROGRAM) $(PROGRAM)-static
+
+$(PROGRAM): $(OBJ)
+	$(LINK) $(OBJ) $(XV_LIBS)
+
+$(PROGRAM)-static: $(OBJ)
+	$(LINK) $(OBJ) $(XV_LIBS_STATIC)
+
+install: install-icons install-man install-bin
+
+install-icons:
+	mkdirhier $(xvfilemgr_libdir)
+	list='$(SUBDIRS)'; for subdir in $$list; do \
+	(cd $$subdir && $(MAKE) install); \
+	done
+
+install-man:
+	mkdirhier $(xvfilemgr_mandir)/man1
+	man='$(MANS1)'; for manpage in $$man; do \
+	( $(INSTALL_DATA) $$manpage $(xvfilemgr_mandir)/man1/$$manpage ); \
+	echo $(xvfilemgr_mandir)/man1/$$manpage ; \
+	done
+
+install-bin:
+	mkdirhier $(xvfilemgr_bindir)
+	$(INSTALL_PROGRAM) $(PROGRAM) $(xvfilemgr_bindir)
+	$(INSTALL_DATA) filetype /etc/filetype
+
+clean:
+	list='$(SUBDIRS)'; for subdir in $$list; do \
+	(cd $$subdir && $(MAKE) clean); \
+	done
+	$(RM) -f $(OBJ) $(PROGRAM) $(PROGRAM)-static
+
+distclean: clean
+	list='$(SUBDIRS)'; for subdir in $$list; do \
+	(cd $$subdir && $(MAKE) distclean); \
+	done
+	$(RM) -f config.cache config.h config.status config.log Makefile
+
+.SUFFIXES: .c .o
+.c.o:
+	$(COMPILE) -c $<
+
+.deps/%.P: %.c
+	@echo "Computing dependencies for $<..."
+	@o='o'; \
+	test -n "$o" && o='$$o'; \
+	$(MKDEP) $< >$@.tmp \
+	  && sed "s,^\(.*\)\.o:,\1.$$o \1.l$$o $@:," < $@.tmp > $@ \
+	  && rm -f $@.tmp
+
+# Tell versions [3.59,3.63) of GNU make to not export all variables.
+# Otherwise a system limit (for SysV at least) may be exceeded.
+.NOEXPORT:

@@ -1,0 +1,39 @@
+Version 0.2a - 1997/03/23
+----------------------------------------------------------------------
+First public release.  Most of the intended functionality present.  
+
+
+Version 0.2b - 1997/05/12
+----------------------------------------------------------------------
+Drag and drop of multiple files works without forgetting all but the
+first file of the selection at the source directory of the drag and
+drop operation.
+
+Version 0.2c - 1997/05/27
+----------------------------------------------------------------------
+If one or more files are dragged onto the root window they are opened
+with the attached double click open method (in the filetype file).
+If a directory icon s dragged onto the root window a separate window
+is opened.
+
+Version 0.2d - unfinished
+----------------------------------------------------------------------
+When parsing the filetype file: the command to invoke on double click
+can contain spaces ("Alessandro Russo" russo@dragon.ian.pv.cnr.it).
+Added file extensions to the find window. Several nasty bugs may remain,
+and for now we will try it only with GNU fileutils because they support
+"-dp" ( --no-dereference --preserve) arguments.
+
+Version 0.2e - 1998/10/19
+----------------------------------------------------------------------
+BSD support in this version. More bug fixes. First release to GNU
+autoconf.
+
+Version 0.2f - 1999/01/
+----------------------------------------------------------------------
+Now supports GLIBC2.
+
+Version 0.2g - 2000/02
+----------------------------------------------------------------------
+I've now migrated to RH6.1. Marc Huguet Puig is contributing some
+new code and fresh air into this project. :)

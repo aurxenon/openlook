@@ -1,0 +1,76 @@
+Requirements:
+-------------
+To compile XVFilemgr from scratch you need the following:
+   GCC, libc, libm, imake
+   XView 3.2
+   SlingShot 2.1
+
+Installing the filetype file:
+-----------------------------
+The XVFilemgr distribution contains a file called "filetype".  This
+file is installed in the /etc directory.  XVFilemgr uses it to
+determine the type of a file.  It consists of lines with four fields
+separated by spaces each describing one filetype.  The fields are
+
+1) File matching pattern like "*.[ch]".
+2) Absolute path to a 16x16 xpm file (s.a. Installing the icons).
+   You can create such pixmaps using the pixmap
+   application.  Do not use transparent background pixels because they 
+   will be displayed as black (don't know why).  Some examples are in this
+   distribution as well.
+3) Absolute path to 32x32 xpm file.
+4) Action to take if you double click on the files icon. "-" indicates that 
+   no action is to take. "$FILE" is a placeholder for the files name.  This
+   field can contain spaces.
+
+You can also have a personal filetype file in your home directory.
+This is ".filetype" and has the same format as "/etc/filetype". 
+
+Installing the icons: 
+--------------------- 
+
+In the filetype file you have specified the paths' to the pixmap
+files.  Imake will automatically install all the icon files for you.
+All you have to do is specifying the paths IMAGES32 and IMAGES16 which
+point to the directories where the icon files lie.  Normally this is
+/usr/openwin/lib/pixmaps or /var/openwin/lib/pixmaps.  If you do not
+want all the icons to be installed delete the correspondnng line from
+the imakefile.
+
+The files in the icons directory are only needed during compilation.
+There is no need to copy them to any other location.
+
+Finishing installation:
+-----------------------
+After editing filetype all you have to do is to become root and to type
+  xmkmf
+  make xvfilemgr
+  make install
+  make install.man
+
+Maybe you want to take a look at the config.h file especially at the
+pathes to your cdrom and floppy device and mount point.  The paths'
+IMAGES32 and IMAGES16 should be the same as in the imakefile.
+
+If you want to see all the messages of the programs launched by
+XVFilemgr, which normally appear on text screen, you can use the
+script 'start.sh' provided by Christoph Spiel
+(Christoph.Spiel@Physik.TU-Muenschen.DE).
+
+If XVFilemgr doesn't work first check the filetype file.  If all paths
+are ok and you think you have encountered a bug send me a mail.  If
+XVFilemgr pops up and you notice some other bug use the Credits button
+in the File menu to send a bug report.
+
+There is a problem when using other window managers than ol(v)wm.
+Sometimes you can't select or change any item e.g. in the properties
+dialog.  If that occures put the following entry in your .Xdefaults
+file and do a 'xrdb .Xdefaults':
+
+OpenWindows.SetInput:	followmouse
+
+Of course this maybe is not what you want but it is the only
+possibility to work with XVFilemanager and a window manager other than
+ol(v)wm.  Therefore you should use ol(v)wm :-) 
+
+Christian Koch (root@obelix.shnet.org)

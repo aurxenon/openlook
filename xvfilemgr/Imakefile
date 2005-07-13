@@ -1,0 +1,126 @@
+/*
+ *      System  : XVFilemanager
+ *	File    : $RCSfile: Imakefile,v $
+ *	Author  : $Author: arkenoi $
+ *	Date    : $Date: 2005/07/13 18:30:58 $
+ *	Purpose : Imake file of xvfilemgr project
+ *
+ * $Log: Imakefile,v $
+ * Revision 1.1  2005/07/13 18:30:58  arkenoi
+ * Initial revision
+ *
+ * Revision 1.13  1996/10/20 15:47:03  root
+ * some more icons.
+ *
+ * Revision 1.12  1996/10/20 15:40:07  root
+ * new directory for pixmaps.
+ *
+ * Revision 1.11  1996/08/21 13:28:12  tycoon
+ * more icons files.
+ *
+ * Revision 1.10  1996/08/17 12:46:35  root
+ * automatic installation of icon files.
+ *
+ * Revision 1.9  1996/07/11 07:38:55  root
+ * Do not install files when doing a 'make' with no arguments.
+ *
+ * Revision 1.8  1996/05/19 18:02:59  root
+ * added edit.c.
+ *
+# Revision 1.7  1996/01/16  17:08:58  root
+# add -lm to extra libs because of reference from sspk library
+# to math library
+#
+# Revision 1.6  1995/12/11  20:22:31  root
+# giving up.  wrong comment leader.
+#
+ */
+
+#include <XView.tmpl>
+
+/* These are the paths' to the pixmap files.  They have to be the same as
+   in the config.h file */
+       IMAGES16 = /usr/openwin/lib/pixmaps
+       IMAGES32 = /usr/openwin/lib/pixmaps
+
+/* The following xpm files are installed automatically during make install.
+   If you don't need them all because of your filetype files you can
+   delete some of them. */
+       PIXMAP16 = images16/Shell_script16.xpm \
+                  images16/c16.xpm \
+                  images16/compress16.xpm \
+                  images16/dvi16.xpm \
+                  images16/execute16.xpm \
+                  images16/fifo16.xpm \
+                  images16/fig16.xpm \
+                  images16/folder16.xpm \
+                  images16/gif16.xpm \
+                  images16/gzip16.xpm \
+                  images16/h16.xpm \
+                  images16/hidden16.xpm \
+                  images16/imake16.xpm \
+                  images16/jpg16.xpm \
+                  images16/language16.xpm \
+                  images16/lex16.xpm \
+                  images16/link16.xpm \
+                  images16/linkdir16.xpm \
+                  images16/mail16.xpm \
+                  images16/make16.xpm \
+                  images16/o16.xpm \
+                  images16/postscript16.xpm \
+                  images16/regular16.xpm \
+                  images16/special16.xpm \
+                  images16/tex16.xpm \
+                  images16/unknown16.xpm \
+                  images16/xpm16.xpm \
+                  images16/yacc16.xpm \
+                  images16/zip16.xpm
+
+       PIXMAP32 = images32/Shell_script.xpm \
+                  images32/c.xpm \
+                  images32/compress.xpm \
+                  images32/dvi.xpm \
+                  images32/execute.xpm \
+                  images32/fifo.xpm \
+                  images32/fig.xpm \
+                  images32/folder.xpm \
+                  images32/gif.xpm \
+                  images32/gzip.xpm \
+                  images32/h.xpm \
+                  images32/hidden.xpm \
+                  images32/imake.xpm \
+                  images32/jpg.xpm \
+                  images32/lex.xpm \
+                  images32/link.xpm \
+                  images32/linkdir.xpm \
+                  images32/mail.xpm \
+                  images32/make.xpm \
+                  images32/o.xpm \
+                  images32/postscript.xpm \
+                  images32/regular.xpm \
+                  images32/special.xpm \
+                  images32/tex.xpm \
+                  images32/unknown.xpm \
+                  images32/xpm.xpm \
+                  images32/yacc.xpm \
+                  images32/zip.xpm
+
+        DEPLIBS = XViewClientDepLibs
+LOCAL_LIBRARIES = XViewClientLibs
+EXTRA_LIBRARIES = -L/lib -lXpm -lm -lsspkg
+
+           SRCS = xvfilemgr.c workwindow.c file.c directory.c find.c \
+                  waste.c properties.c select.c mount.c error.c edit.c \
+                  remote.c about.c misc.c removable.c
+           OBJS = xvfilemgr.o workwindow.o file.o directory.o find.o \
+                  waste.o properties.o select.o mount.o error.o edit.o \
+                  remote.o about.o misc.o removable.o
+
+ComplexProgramTarget(xvfilemgr)
+InstallNonExecFile(filetype,/etc)
+InstallGenManPageLong(filetype,/usr/openwin/man/man5,filetype,5)
+InstallMultiple($(PIXMAP32), $(IMAGES32))
+InstallMultiple($(PIXMAP16), $(IMAGES16))
+
+#include <XView.prog>
+        

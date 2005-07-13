@@ -1,0 +1,233 @@
+diff -u xvfilemgr-0.2f/removable.c xvfilemgr-0.2f.new/removable.c
+--- xvfilemgr-0.2f/removable.c	Sun Oct 18 04:28:50 1998
++++ xvfilemgr-0.2f.new/removable.c	Tue Feb  1 13:52:13 2000
+@@ -60,8 +60,12 @@
+ #include "error.h"
+ #include "properties.h"
+ 
++
++
+ static Notify_client client = (Notify_client) 10;
+ 
++
++
+ static Notify_value
+ remove_wait (Notify_client client, int pid, union wait *status, 
+ 	     struct rusage *rusage)
+@@ -73,33 +77,114 @@
+ } /* remove_wait */
+ 
+ 
++
++
++static Notify_value
++remove_wait_cdrom_mount (Notify_client client, int pid, union wait *status, 
++	     struct rusage *rusage)
++{
++  Applic_T      *app;
++  Properties_T  *props;
++
++  if ( mount_exists (CDROM_MOUNTPOINT) ) {
++    /* succesfully mounted, now open window */
++    props = get_properties ();
++    app = xvfmgr_new_frame (CDROM_WINDOW);
++    app->next = first_app->next;
++    (Applic_T *) first_app->next = app;
++    strcpy (app->path, CDROM_MOUNTPOINT);
++    dir_new (app->path, &props->current_folder);
++    change_directory (app, app->path);
++  }
++  else error_message_string( first_app->frame, "Can't mount CDROM!\n");
++
++  if (WIFEXITED(*status)) {
++    return NOTIFY_DONE;
++  } /* if */
++
++  return NOTIFY_IGNORED;
++} /* remove_wait_cdrom */
++
++
+ extern void
+ remove_check_for_cdrom (Menu menu, Menu_item menu_item)
+ {
+   Applic_T      *app;
+-  Applic_T      *app2;
+-  Properties_T  *props;
+-  int           error = 0;
+   int           pid;
+ 
+-  app2 = (Applic_T *) xv_get (menu, MENU_CLIENT_DATA); 
++  app = (Applic_T *) xv_get (menu, MENU_CLIENT_DATA); 
++
+   /* already mounted ? */
+   if (mount_exists (CDROM_MOUNTPOINT) == 0) {
++
+     /* no, try to mount */
+-  /* if (mount(CDROM_DEVICE, CDROM_MOUNTPOINT, "iso9660", 
+-	      MS_MGC_VAL | MS_RDONLY, (char *) 0) < 0)*/
+-    if ((pid = fork()) < 0)
+-      error_message (app2->frame);
+-    else
+-      if (pid == 0)
+- 	if (execlp ("mount", "mount", CDROM_MOUNTPOINT, (char *) 0) < 0) {
+-	  error_message (app2->frame);
+-	  error = 1;
+-	} /* if */
+-    notify_set_wait3_func(client, remove_wait, pid);
++    switch ( pid=fork()) {
++
++      case -1: /* Error on fork() */
++        error_message (app->frame);
++        return;
++    
++      case 0: /* Child */
++        execlp ("mount", "mount", CDROM_MOUNTPOINT, (char *) 0);
++        error_message (app->frame);
++	_exit( -1); /* The son must die here */
++      
++      default: /* Parent */
++        notify_set_wait3_func( client, remove_wait_cdrom_mount, pid);        
++    }
+   } /* if */
+-  if (error == 0) {
+-    /* succesfully mounted, now open window */
++
++} /* remove_check_for_cdrom */
++
++
++void eject_mount( char device[] )
++{
++  int pid;
++  int cdrom;
++ 
++  /* eject is a long operation, so can't be made by the main app */
++    switch ( pid=fork()) {
++
++      case -1: /* Error on fork() */
++        error_message ( first_app->frame);
++        return;
++    
++      case 0: /* Child */
++        cdrom = open (CDROM_DEVICE, O_RDONLY);
++        if( cdrom >= 0 ){
++#ifdef __FreeBSD__
++          if (ioctl (cdrom, CDIOCEJECT) < 0)
++#else
++          if (ioctl (cdrom, CDROMEJECT) < 0)
++#endif
++            error_message (first_app->frame);
++
++          close( cdrom);
++        } 
++	_exit( 0); /* The child must die here */
++      
++      default: /* Parent */
++        break;        
++    }
++
++}
++
++
++
++
++static Notify_value
++remove_wait_cdrom_umount (Notify_client client, int pid, union wait *status, 
++	     struct rusage *rusage)
++{
++  Applic_T      *app;
++  Properties_T  *props;
++  int cdrom;
++
++  if (mount_exists (CDROM_MOUNTPOINT) == 1) {
++
++    error_message_string( first_app->frame, "Can't umount CDROM!\nPlease check there isn't an application using it\n");
++    
++    /* RE-open! */
+     props = get_properties ();
+     app = xvfmgr_new_frame (CDROM_WINDOW);
+     app->next = first_app->next;
+@@ -107,46 +192,64 @@
+     strcpy (app->path, CDROM_MOUNTPOINT);
+     dir_new (app->path, &props->current_folder);
+     change_directory (app, app->path);
++  }
++  else eject_mount( CDROM_DEVICE);
++
++  if (WIFEXITED(*status)) {
++    return NOTIFY_DONE;
+   } /* if */
+-} /* remove_check_for_cdrom */
++
++  return NOTIFY_IGNORED;
++} /* remove_wait_cdrom_umount */
++
+ 
+ 
+ extern void
+ remove_cdrom_umount (Applic_T *app)
+ {
++  int pid;
++
+   if (mount_exists (CDROM_MOUNTPOINT) == 1) {
+-#ifdef __FreeBSD__   /* FreeBSD uses unmount, not umount */
+-    if (unmount (CDROM_DEVICE, MNT_FORCE))
++
++    /* yes, try to umount */
++    switch( pid=fork() ) {
++      
++      case -1: /* Error on fork() */
++        error_message( app->frame);
++        return;
++
++      case 0: /* Child */
++#ifdef __FreeBSD__
++        execlp( "unmount", "unmount", CDROM_MOUNTPOINT, (char *)0 );
+ #else
+-    if (umount (CDROM_DEVICE))
++        execlp( "umount", "umount", CDROM_MOUNTPOINT, (char *)0 );
+ #endif
+-	  error_message (app->frame);
++        error_message( app->frame);
++        _exit( -1); /* The son must die here */
++
++      default: /* Parent */ ;
++        notify_set_wait3_func( client, remove_wait_cdrom_umount, pid);
++    }
+   } /* if */
+ } /* remove_cdrom_umount */
+ 
+ 
++
++
+ extern void
+ remove_eject_cdrom (Panel_item item)
+ {
+   Applic_T *app;
+-  int      cdrom;
++  int      pid;
+ 
+   app = (Applic_T *) xv_get (item, XV_KEY_DATA, EJECT_APP);
+-  /* try to umount cdrom */
+-  remove_cdrom_umount (app);
+-  /* now eject the disc */
+-  if ((cdrom = open (CDROM_DEVICE, O_RDONLY)) != -1) {
+-#ifdef __FreeBSD__
+-    if (ioctl (cdrom, CDIOCEJECT) != 0)
+-#else
+-    if (ioctl (cdrom, CDROMEJECT) != 0)
+-#endif
+-      error_message (app->frame);
+-    else
+-      /* delete this application frame */
+-      ;
+-  } /* if */
++
++  /* Close the window */
++  xv_destroy_safe (app->frame);
++
+ } /* remove_eject_cdrom */
++
++
+ 
+ 
+ extern void

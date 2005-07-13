@@ -1,0 +1,77 @@
+*******************************************************************************
+
+This is the first public release of XVFilemanger (0.2a)
+
+*******************************************************************************
+
+XVFilemanager is a graphical file manager.  Is supports the Openlook
+standard defined by Sun Microsystems.  XVFilemanager looks much like
+the well-known filemgr on Solaris but is a complete independent
+implementation based on the freely available XView toolkit and the
+also freely available Slingshot extention.  Currently XVFilemanager
+supports Linux but there are only a few system dependent parts so
+porting to other xview platforms should be possible.
+
+Besides the normal file operations XVFilemanager provides the following
+features:
+
+o Easy usage.  The most common operations could be done with the mouse
+  and with drag and drop.
+
+o XVFilemanager provides drag and drop.  Files could be draged not
+  only between windows of the same XVFilemanager instance but also
+  between different instances and even between XVFilemanager and other
+  programs which supports the drag and drop protocol of XVFilemanager
+  such as a modified version of "textedit".  Developer who are
+  interested in the drag and drop protocol to make their programs
+  interoperable with XVFilemanager should send me an email.
+
+o Graphical representation of the directory hierarchy. 
+
+o Full color icons in Xpm format.
+
+o Freely configurable filetypes.  Files are associated with a filetype
+  through its extension or its content.  Every filetype has an icon and
+  an default action so every type of file could have an own icon and
+  standard action which is invoked after double clicking on the icon.
+
+o When using the waste basket previously deleted files could be
+  undeleted easily.
+
+o The representation of the files is highly configurable.  These
+  settings are kept for the last visited directories.
+
+Availability
+------------
+The complete source code with installation instruction is available at
+
+Primary-site:	http://www.info.polymtl.ca/ada2/coyote/www/xvfilemgr_main.html
+Alternate-site:	http://www.sts.tu-harburg.de/~c.koch/xvfilemgr-e.html
+Alternate-site:	http://www.sts.tu-harburg.de/~c.koch/xvfilemgr.html (german)
+
+The installation should be without any problems because there is an
+imake file.  If there are problems they are mostly due to an incomplete
+or incorrect xview or slingshot installation.
+
+
+This is the lsm-file
+--------------------
+Begin3
+Title:          XVFilemanager
+Version:        0.2b
+Entered-date:   12 MAY 97
+Description:    Source distribution of XVFilemgr with ELF binary.
+Keywords:       xvfilemgr, xvfilemanager, filemanager, xview, slingshot
+Author:         root@obelix.shnet.org <Christian Koch>, coyote@info.polymtl.ca <Vincent Cojot>
+Maintained-by:  root@obelix.shnet.org <Christian Koch>, coyote@info.polymtl.ca <Vincent Cojot>
+Primary-site:	http://www.info.polymtl.ca/ada2/coyote/www/xvfilemgr_main.html
+Alternate-site:	http://www.sts.tu-harburg.de/~c.koch/xvfilemgr-e.html
+Original-site:	http://www.info.polymtl.ca/ada2/coyote/www/xvfilemgr_main.html
+Platform:       Linux, X11R6, XView 3.2, Slingshot 2.1
+Copying-policy: GPL
+End
+
+
+-------------------------------------------------------------------------------
+Christian Koch - Norderstedt - Germany - EMail: root@obelix.shnet.org
+

@@ -1,0 +1,933 @@
+dnl Process this file with autoconf to produce a configure script.
+AC_INIT(xvfilemgr.c)
+AC_CONFIG_HEADER(config.h)
+
+dnl
+dnl DISTRIBUTION
+dnl
+PACKAGE=xvfilemgr
+VERSION="0.2e ALPHA"
+dnl
+dnl END DISTRIBUTION
+dnl
+dnl package, version: required for makefile
+AC_SUBST(PACKAGE)
+AC_SUBST(VERSION)
+dnl
+AC_DEFINE_UNQUOTED(VERSION, "$XVFILEMGR_VERSION")
+
+AC_PROG_INSTALL
+AC_ARG_PROGRAM
+
+dnl Checks for programs.
+AC_PROG_MAKE_SET
+AC_PROG_CC
+AC_PROG_INSTALL
+AC_SUBST(CC)
+AC_SUBST(CFLAGS)
+
+dnl
+dnl XView & SlingShot library checking
+dnl (c) 1995 Jakub Jelinek
+dnl
+
+dnl Set xview_includes, xview_libraries, and no_xview (initially yes).
+dnl Also sets xview_no_private_headers to yes if there are no xview_private
+dnl headers in the system.
+
+AC_DEFUN(AC_PATH_XVIEW,
+[
+no_xview=
+AC_ARG_WITH(xview-includes, [ --with-xview-includes=DIR  Specifies XView includes directory],
+[
+if test x$withval = xyes; then
+    AC_MSG_WARN(Usage is: --with-xview-includes=DIR)
+    xview_includes=NONE
+    no_xview=
+else
+    xview_includes=$withval
+fi
+],
+[
+xview_includes=NONE
+])dnl
+AC_ARG_WITH(xview-libraries, [ --with-xview-libraries=DIR  Specifies XView libraries directory],
+[
+if test x$withval = xyes; then
+    AC_MSG_WARN(Usage is: --with-xview-libraries=DIR)
+    xview_libraries=NONE
+    no_xview=
+else
+    xview_libraries=$withval
+fi
+],
+[
+xview_libraries=NONE
+])dnl
+
+if test "$no_xview" != yes; then
+AC_MSG_CHECKING(for XView)
+if test x$xview_libraries = xNONE; then 
+    if test x$xview_includes = xNONE; then
+AC_CACHE_VAL(ac_cv_path_xview,
+[
+    no_xview=yes
+AC_PATH_XVIEW_XMKMF
+    if test "x$no_xview" = xyes; then
+AC_PATH_XVIEW_DIRECT
+    fi
+    if test "x$no_xview" = xyes; then
+        ac_cv_path_xview="no_xview=yes"
+    else
+        ac_cv_path_xview="no_xview= ac_xview_includes=$ac_xview_includes ac_xview_libraries=$ac_xview_libraries ac_xview_no_private_headers=$ac_xview_no_private_headers"
+    fi
+])dnl
+        eval "$ac_cv_path_xview"
+    fi
+fi
+
+if test "x$no_xview" = xyes; then
+    AC_MSG_RESULT(no)
+else
+    if test "x$xview_includes" = x || test "x$xview_includes" = xNONE; then
+        xview_includes=$ac_xview_includes
+    fi
+    if test "x$xview_libraries" = x || test "x$xview_libraries" = xNONE; then
+        xview_libraries=$ac_xview_libraries
+    fi
+    xview_no_private_headers=$ac_xview_no_private_headers
+    ac_cv_path_xview="no_xview= ac_xview_includes=$xview_includes ac_xview_libraries=$xview_libraries ac_xview_no_private_headers=$ac_xview_no_private_headers" 
+    if test "x$xview_libraries" != x; then
+	ac_msg_xview="libraries $xview_libraries"
+    else
+    	ac_msg_xview=""
+    fi
+    if test "x$xview_includes" != x; then
+        if test "x$ac_msg_xview" != x; then
+	    ac_msg_xview="$ac_msg_xview, "
+	fi
+	ac_msg_xview="${ac_msg_xview}headers $xview_includes"
+    fi
+    if test "x$xview_no_private_headers" = xyes; then
+        if test "x$ac_msg_xview" != x; then
+	    ac_msg_xview="$ac_msg_xview, "
+	fi
+	ac_msg_xview="${ac_msg_xview}without xview_private headers"
+    fi	
+    AC_MSG_RESULT([$ac_msg_xview])
+fi
+fi
+])
+
+dnl Internal subroutine of AC_PATH_XVIEW
+dnl Set ac_xview_includes, ac_xview_libraries, and no_xview (initially yes).
+AC_DEFUN(AC_PATH_XVIEW_XMKMF,
+[rm -fr conftestdir
+if mkdir conftestdir; then
+  cd conftestdir
+  # Make sure to not put "make" in the Imakefile rules, since we grep it out.
+  cat > Imakefile <<'EOF'
+#include <XView.tmpl>
+acfindxv:
+	@echo 'ac_im_library_dest="${LIBRARY_DEST}"; ac_im_header_dest="${HEADER_DEST}"'
+EOF
+  if (xmkmf) >/dev/null 2>/dev/null && test -f Makefile; then
+    no_xview=
+    # GNU make sometimes prints "make[1]: Entering...", which would confuse us.
+    eval `make acfindxv 2>/dev/null | grep -v make`
+    # Screen out bogus values from the imake configuration.
+    if test -f "$ac_im_header_dest/xview/xview.h"; then
+        ac_xview_includes="$ac_im_header_dest"
+    else
+	no_xview=yes
+    fi
+    if test -d "$ac_im_library_dest"; then
+        ac_xview_libraries="$ac_im_library_dest"
+    else
+	no_xview=yes
+    fi
+  fi
+  if test "x$no_xview" != xyes; then
+    if test -f "$ac_xview_includes/xview_private/draw_impl.h"; then
+	ac_xview_no_private_headers=
+    else
+	ac_xview_no_private_headers=yes
+    fi
+  fi
+  cd ..
+  rm -fr conftestdir
+fi
+])
+
+dnl Internal subroutine of AC_PATH_XVIEW
+dnl Set ac_xview_includes, ac_xview_libraries, and no_xview (initially yes).
+AC_DEFUN(AC_PATH_XVIEW_DIRECT,
+[test -z "$xview_direct_test_library" && xview_direct_test_library=xview
+test -z "$xview_direct_test_function" && xview_direct_test_function=xv_unique_key
+test -z "$xview_direct_test_include" && xview_direct_test_include=xview/xview.h
+AC_TRY_CPP([#include <$xview_direct_test_include>],
+[no_xview= ac_xview_includes=],
+[  for ac_dir in               \
+    $OPENWINHOME/include    \
+    /usr/openwin/include      \
+    /usr/openwin/share/include \
+                              \
+    /usr/X11R6/include        \
+    /usr/X11R5/include        \
+    /usr/X11R4/include        \
+                              \
+    /usr/include/X11R6        \
+    /usr/include/X11R5        \
+    /usr/include/X11R4        \
+                              \
+    /usr/local/X11R6/include  \
+    /usr/local/X11R5/include  \
+    /usr/local/X11R4/include  \
+                              \
+    /usr/local/include/X11R6  \
+    /usr/local/include/X11R5  \
+    /usr/local/include/X11R4  \
+                              \
+    /usr/X11/include          \
+    /usr/include/X11          \
+    /usr/local/X11/include    \
+    /usr/local/include/X11    \
+                              \
+    /usr/X386/include         \
+    /usr/x386/include         \
+    /usr/XFree86/include/X11  \
+                              \
+    /usr/include              \
+    /usr/local/include        \
+    /usr/unsupported/include  \
+    /usr/athena/include       \
+    /usr/local/x11r5/include  \
+    /usr/lpp/Xamples/include  \
+    ; \
+  do
+    if test -r "$ac_dir/$xview_direct_test_include"; then
+      no_xview= ac_xview_includes=$ac_dir
+      break
+    fi
+  done])
+
+if test "x$no_xview" != xyes; then
+    if test "x$ac_xview_includes" != x; then
+        if test -f "$ac_xview_includes/xview_private/draw_impl.h"; then
+	    ac_xview_no_private_headers=
+        else
+	    ac_xview_no_private_headers=yes
+        fi
+    else
+AC_TRY_CPP([#include <xview_private/draw_impl.h>],
+[ac_xview_no_private_headers=],[ac_xview_no_private_headers=yes])
+    fi
+fi
+
+# Check for the libraries.
+# See if we find them without any special options.
+# Don't add to $LIBS permanently.
+ac_save_LIBS="$LIBS"
+ac_save_LDFLAGS="$LDFLAGS"
+LDFLAGS="$LDFLAGS $X_LIBS"
+LIBS="-l$xview_direct_test_library -lolgx $X_EXTRA_LIBS -lX11 $X_PRE_LIBS $LIBS"
+AC_TRY_LINK([#include <$xview_direct_test_include>
+], [${xview_direct_test_function}()],
+[LIBS="$ac_save_LIBS" LDFLAGS="$ac_save_LDFLAGS" no_xview= ac_xview_libraries=],
+[LIBS="$ac_save_LIBS" LDFLAGS="$ac_save_LDFLAGS"
+# First see if replacing the include by lib works.
+for ac_dir in `echo "$ac_xview_includes" | sed s/include/lib/` \
+    $OPENWINHOME/lib    \
+    $OPENWINHOME/share/lib \
+    /usr/openwin/lib      \
+    /usr/openwin/share/lib \
+                          \
+    /usr/X11R6/lib        \
+    /usr/X11R5/lib        \
+    /usr/X11R4/lib        \
+                          \
+    /usr/lib/X11R6        \
+    /usr/lib/X11R5        \
+    /usr/lib/X11R4        \
+                          \
+    /usr/local/X11R6/lib  \
+    /usr/local/X11R5/lib  \
+    /usr/local/X11R4/lib  \
+                          \
+    /usr/local/lib/X11R6  \
+    /usr/local/lib/X11R5  \
+    /usr/local/lib/X11R4  \
+                          \
+    /usr/X11/lib          \
+    /usr/lib/X11          \
+    /usr/local/X11/lib    \
+    /usr/local/lib/X11    \
+                          \
+    /usr/X386/lib         \
+    /usr/x386/lib         \
+    /usr/XFree86/lib/X11  \
+                          \
+    /usr/lib              \
+    /usr/local/lib        \
+    /usr/unsupported/lib  \
+    /usr/athena/lib       \
+    /usr/local/x11r5/lib  \
+    /usr/lpp/Xamples/lib  \
+    ; \
+do
+  for ac_extension in a so sl; do
+    if test -r $ac_dir/lib${xview_direct_test_library}.$ac_extension; then
+      no_xview= ac_xview_libraries=$ac_dir
+      break 2
+    fi
+  done
+done])])
+
+dnl Substitute XVIEW_LIBS and XVIEW_CFLAGS and 
+dnl HAVE_XVIEW, which is either yes or no.
+dnl Both contain X_LIBS resp. X_CFLAGS inside
+dnl Also substitutes HAVE_XVIEW_PRIVATE_HEADERS
+dnl if there are xview_private headers in the system
+AC_DEFUN(AC_PATH_XVIEW_XTRA,
+[AC_REQUIRE([AC_PATH_XVIEW])dnl
+if test "$no_xview" = yes; then 
+  # Not all programs may use this symbol, but it does not hurt to define it.
+  XVIEW_CFLAGS="$X_CFGLAGS $XVIEW_CFLAGS -DXVIEW_MISSING"
+else
+  if test -n "$xview_includes"; then
+    if test "$xview_includes" = "$x_includes"; then
+      XVIEW_CFLAGS="$X_CFLAGS $XVIEW_CFGLAGS"
+    else
+      XVIEW_CFLAGS="$X_CFLAGS $XVIEW_CFGLAGS -I$xview_includes"
+    fi
+  fi
+
+  # It would be nice to have a more robust check for the -R ld option than
+  # just checking for Solaris.
+  # It would also be nice to do this for all -L options, not just this one.
+  if test -n "$xview_libraries"; then
+    if test "$xview_libraries" = "$x_libraries"; then
+      XVIEW_LIBS="$X_LIBS $XVIEW_LIBS"
+    else
+      XVIEW_LIBS="$X_LIBS $XVIEW_LIBS -L$xview_libraries"
+      if test "`(uname) 2>/dev/null`" = SunOS &&
+        uname -r | grep '^5' >/dev/null; then
+        XVIEW_LIBS="$XVIEW_LIBS -R$xview_libraries"
+      fi
+    fi
+  fi
+fi
+if test "x$no_xview" = xyes; then
+  HAVE_XVIEW=no
+else
+  HAVE_XVIEW=yes
+fi
+if test "x$xview_no_private_headers" = xyes; then
+  HAVE_XVIEW_PRIVATE_HEADERS=no
+else
+  HAVE_XVIEW_PRIVATE_HEADERS=yes
+fi
+AC_SUBST(XVIEW_CFLAGS)dnl
+AC_SUBST(XVIEW_LIBS)dnl
+AC_SUBST(HAVE_XVIEW)dnl
+AC_SUBST(HAVE_XVIEW_PRIVATE_HEADERS)dnl
+])dnl
+
+dnl Set ss_includes, ss_libraries, and no_ss (initially yes).
+AC_DEFUN(AC_PATH_SLINGSHOT,
+[AC_REQUIRE([AC_PATH_XVIEW_XTRA])dnl
+AC_MSG_CHECKING(for SlingShot)
+
+AC_ARG_WITH(ss-includes, [ --with-ss-includes=DIR  Specifies SlingShot includes directory],
+[
+if test x$withval = xyes; then
+    AC_MSG_WARN(Usage is: --with-ss-includes=DIR)
+    ss_includes=NONE
+else
+    ss_includes=$withval
+fi
+],
+[
+ss_includes=NONE
+])dnl
+AC_ARG_WITH(ss-libraries, [ --with-ss-libraries=DIR  Specifies SlingShot libraries directory],
+[
+if test x$withval = xyes; then
+    AC_MSG_WARN(Usage is: --with-ss-libraries=DIR)
+    ss_libraries=NONE
+else
+    ss_libraries=$withval
+fi
+],
+[
+ss_libraries=NONE
+])dnl
+
+if test "x$with_ss" = xno; then
+    no_ss=yes
+else
+    if test "x$ss_includes" != xNONE && test "x$ss_libraries" != xNONE; then
+        no_ss=
+    else
+AC_CACHE_VAL(ac_cv_path_ss,
+[
+    no_ss=yes
+AC_PATH_SLINGSHOT_DIRECT
+AC_PATH_SLINGSHOT_XTRA
+    if test "x$no_ss" = xyes; then
+        ac_cv_path_ss="ac_noss=yes"
+    else
+        ac_cv_path_ss="ac_ss_includes=$ac_ss_includes ac_ss_libraries=$ac_ss_libraries"
+    fi
+])dnl
+        eval "$ac_cv_path_ss"
+    fi
+fi
+if test "x$no_ss" = xyes; then
+    AC_MSG_RESULT(no)
+else
+    if test "x$ss_includes" = x || test "x$ss_includes" = xNONE; then
+        ss_includes=$ac_ss_includes
+    fi
+    if test "x$ss_libraries" = x || test "x$ss_libraries" = xNONE; then
+        ss_libraries=$ac_ss_libraries
+    fi
+    ac_cv_path_ss="no_ss= ac_ss_includes=$ss_includes ac_ss_libraries=$ss_libraries" 
+    if test "x$ss_libraries" = x; then
+        if test "x$ss_includes" = x; then
+	    AC_MSG_RESULT(yes)
+	else
+    	    AC_MSG_RESULT([headers $ss_includes])
+	fi
+    else
+        if test "x$ss_includes" = x; then
+    	    AC_MSG_RESULT([libraries $ss_libraries])
+	else
+    	    AC_MSG_RESULT([libraries $ss_libraries, headers $ss_includes])
+	fi
+    fi
+fi
+])
+
+dnl Internal subroutine of AC_PATH_SLINGSHOT
+AC_DEFUN(AC_PATH_SLINGSHOT_DIRECT,
+[
+AC_TRY_CPP([#include <sspkg/rectobj.h>],
+[no_ss= ac_ss_includes=$xview_includes],
+[  for ac_dir in               \
+    $OPENWINHOME/include    \
+    /usr/openwin/include      \
+    /usr/openwin/share/include \
+                              \
+    /usr/X11R6/include        \
+    /usr/X11R5/include        \
+    /usr/X11R4/include        \
+                              \
+    /usr/include/X11R6        \
+    /usr/include/X11R5        \
+    /usr/include/X11R4        \
+                              \
+    /usr/local/X11R6/include  \
+    /usr/local/X11R5/include  \
+    /usr/local/X11R4/include  \
+                              \
+    /usr/local/include/X11R6  \
+    /usr/local/include/X11R5  \
+    /usr/local/include/X11R4  \
+                              \
+    /usr/X11/include          \
+    /usr/include/X11          \
+    /usr/local/X11/include    \
+    /usr/local/include/X11    \
+                              \
+    /usr/X386/include         \
+    /usr/x386/include         \
+    /usr/XFree86/include/X11  \
+                              \
+    /usr/include              \
+    /usr/local/include        \
+    /usr/unsupported/include  \
+    /usr/athena/include       \
+    /usr/local/x11r5/include  \
+    /usr/lpp/Xamples/include  \
+    ; \
+  do
+    if test -r "$ac_dir/sspkg/rectobj.h"; then
+      no_ss= ac_ss_includes=$ac_dir
+      break
+    fi
+  done])
+
+
+# Check for the libraries.
+# See if we find them without any special options.
+# Don't add to $LIBS permanently.
+ac_save_LIBS="$LIBS"
+ac_save_LDFLAGS="$LDFLAGS"
+LDFLAGS="$LDFLAGS $XVIEW_LIBS"
+LIBS="-lsspkg -lm -lxview -lolgx $X_EXTRA_LIBS -lX11 $X_PRE_LIBS $LIBS"
+AC_TRY_LINK([#include <sspkg/rectobj.h>
+], [rectobj_get_selected_list()],
+[LIBS="$ac_save_LIBS" LDFLAGS="$ac_save_LDFLAGS" no_ss= ac_ss_libraries=$xview_libraries],
+[LIBS="$ac_save_LIBS" LDFLAGS="$ac_save_LDFLAGS"
+# First see if replacing the include by lib works.
+for ac_dir in `echo "$ac_ss_includes" | sed s/include/lib/` \
+    $OPENWINHOME/lib    \
+    $OPENWINHOME/share/lib \
+    /usr/openwin/lib      \
+    /usr/openwin/share/lib \
+                          \
+    /usr/X11R6/lib        \
+    /usr/X11R5/lib        \
+    /usr/X11R4/lib        \
+                          \
+    /usr/lib/X11R6        \
+    /usr/lib/X11R5        \
+    /usr/lib/X11R4        \
+                          \
+    /usr/local/X11R6/lib  \
+    /usr/local/X11R5/lib  \
+    /usr/local/X11R4/lib  \
+                          \
+    /usr/local/lib/X11R6  \
+    /usr/local/lib/X11R5  \
+    /usr/local/lib/X11R4  \
+                          \
+    /usr/X11/lib          \
+    /usr/lib/X11          \
+    /usr/local/X11/lib    \
+    /usr/local/lib/X11    \
+                          \
+    /usr/X386/lib         \
+    /usr/x386/lib         \
+    /usr/XFree86/lib/X11  \
+                          \
+    /usr/lib              \
+    /usr/local/lib        \
+    /usr/unsupported/lib  \
+    /usr/athena/lib       \
+    /usr/local/x11r5/lib  \
+    /usr/lpp/Xamples/lib  \
+    ; \
+do
+  for ac_extension in a so sl; do
+    if test -r $ac_dir/libsspkg.$ac_extension; then
+      no_ss= ac_ss_libraries=$ac_dir
+      break 2
+    fi
+  done
+done])])
+
+dnl Substitute SLINGSHOT_LIBS and SLINGSHOT_CFLAGS and 
+dnl HAVE_SLINGSHOT, which is either yes or no.
+dnl Both contain XVIEW_LIBS resp. XVIEW_CFLAGS inside
+AC_DEFUN(AC_PATH_SLINGSHOT_XTRA,
+[AC_REQUIRE([AC_PATH_SLINGSHOT])dnl
+if test "$no_ss" = yes; then 
+  # Not all programs may use this symbol, but it does not hurt to define it.
+  SLINGSHOT_CFLAGS="$XVIEW_CFGLAGS $SLINGSHOT_CFLAGS -DSLINGSHOT_MISSING"
+else
+  if test -n "$ss_includes"; then
+    if test "x$ss_includes" = xNONE; then
+      SLINGSHOT_CFLAGS="$XVIEW_CFLAGS $SLINGSHOT_CFGLAGS"
+    else
+      SLINGSHOT_CFLAGS="$XVIEW_CFLAGS $SLINGSHOT_CFGLAGS -I$ss_includes"
+    fi
+  fi
+
+  # It would be nice to have a more robust check for the -R ld option than
+  # just checking for Solaris.
+  # It would also be nice to do this for all -L options, not just this one.
+  if test -n "$ss_libraries"; then
+    if test "x$ss_libraries" = xNONE; then
+      SLINGSHOT_LIBS="$XVIEW_LIBS $SLINGSHOT_LIBS"
+    else
+      SLINGSHOT_LIBS="$XVIEW_LIBS $SLINGSHOT_LIBS -L$ss_libraries"
+    fi
+    if test "`(uname) 2>/dev/null`" = SunOS &&
+      uname -r | grep '^5' >/dev/null; then
+      SLINGSHOT_LIBS="$SLINGSHOT_LIBS -R$ss_libraries"
+    fi
+  fi
+fi
+if test "x$no_ss" = xyes; then
+  HAVE_SLINGSHOT=no
+else
+  HAVE_SLINGSHOT=yes
+fi
+AC_SUBST(SLINGSHOT_CFLAGS)dnl
+AC_SUBST(SLINGSHOT_LIBS)dnl
+AC_SUBST(HAVE_SLINGSHOT)dnl
+])dnl
+
+dnl
+dnl XView library checking end
+dnl
+
+dnl Hope I can check for libXpm only in the X11 library directory
+AC_DEFUN(AC_LIB_XPM, [
+AC_MSG_CHECKING(for -lXpm)
+AC_CACHE_VAL(ac_cv_has_xpm, [
+    ac_cv_has_xpm=no
+    if test x$no_x = xyes; then
+	:
+    else
+        has_xpm_save_LIBS=$LIBS
+	LIBS="-lXpm $X_EXTRA_LIBS -lX11 $X_PRE_LIBS $LIBS"
+	has_xpm_save_LDFLAGS=$LDFLAGS
+	LDFLAGS="$LDFLAGS $X_LIBS"
+	has_xpm_save_CFLAGS=$CFLAGS
+	CFLAGS="$CFLAGS $X_CFLAGS"
+	AC_TRY_LINK([
+#include <X11/Xlib.h>
+#include <X11/xpm.h>
+], [XpmLibraryVersion();], ac_cv_has_xpm=yes)
+	CFLAGS="$has_xpm_save_CFLAGS"
+	LDFLAGS="$has_xpm_save_LDFLAGS"
+	LIBS="$has_xpm_save_LIBS"
+    fi
+])
+AC_MSG_RESULT($ac_cv_has_xpm)
+])
+
+xvers="XView"
+xvdep="xvdep"
+AC_SUBST(xvdep)
+AC_SUBST(ALL_LIBS)
+
+AC_PATH_X
+if test "$have_x" = "no" || test "$have_x" = "disabled"; then
+    AC_MSG_ERROR(No X found. You can't compile xvfilemgr without X. Exiting...)
+fi
+AC_PATH_XVIEW
+if test "$no_xview" = "yes"; then
+    AC_MSG_ERROR(No Xview found. You can't compile xvfilemgr without Xview. Exiting...)
+fi
+AC_PATH_SLINGSHOT
+if test "$no_ss" = "yes"; then
+    AC_MSG_ERROR(No SlingShot found. You can't compile xvfilemgr without SlingShot. Exiting...)
+fi
+AC_LIB_XPM
+
+xvfilemgr_bindir=
+AC_ARG_WITH(xvfilemgr-bindir, 
+        [ --with-xvfilemgr-bindir=DIR  Specifies directory for Xfilemgr binary],[
+    if test x$withval = xyes; then
+        AC_MSG_WARN(Usage is: --with-xvfilemgr-bindir=basedir)
+    else
+        if test x$withval = xno; then
+            AC_MSG_WARN(Usage is: --with-xvfilemgr-bindir=basedir)
+        else
+            xvfilemgr_bindir=$withval
+        fi
+    fi
+])
+if test x$xvfilemgr_bindir = x; then
+    xvfilemgr_bindir=`echo $xv_includes | sed s/include/bin/`
+    if test ! -x $xvfilemgr_bindir/openwin; then
+        if test ! -x $xvfilemgr_bindir/olwm; then
+            if test ! -x $xvfilemgr_bindir/olvwm; then
+                xvfilemgr_bindir=
+            fi    
+        fi
+    fi
+fi
+if test x$xvfilemgr_bindir = x; then
+    if test "$OPENWINHOME"; then
+        xvfilemgr_bindir=$OPENWINHOME/bin
+    else
+        AC_PATH_PROG(ac_my_xp, openwin)
+        if test x$ac_my_xp = x; then
+            AC_PATH_PROG(ac_my_xp, X)
+            if test x$ac_my_xp = x; then
+                xvfilemgr_bindir=""
+            else
+                xvfilemgr_bindir=`basename $ac_my_xp`
+            fi
+        else
+            xvfilemgr_bindir=`basename $ac_my_xp`
+        fi
+    fi
+    if test ! -x $xvfilemgr_bindir/openwin; then
+        if test ! -x $xvfilemgr_bindir/olwm; then
+            if test ! -x $xvfilemgr_bindir/olvwm; then
+                if test ! -x $xvfilemgr_bindir/X; then
+                    xvfilemgr_bindir=
+                fi
+            fi    
+        fi
+    fi
+fi
+if test x$xvfilemgr_bindir = x; then
+    xvfilemgr_bindir=$prefix/bin
+fi
+if test x$xvfilemgr_bindir = xNONE/bin; then
+    xvfilemgr_bindir=
+fi
+AC_SUBST(xvfilemgr_bindir)
+
+
+xvfilemgr_libdir=
+AC_ARG_WITH(xvfilemgr-libdir, 
+        [ --with-xvfilemgr-libdir=DIR  Specifies directory for Xfilemgr pixmaps],[
+    if test x$withval = xyes; then
+        AC_MSG_WARN(Usage is: --with-xvfilemgr-libdir=basedir)
+    else
+        if test x$withval = xno; then
+            AC_MSG_WARN(Usage is: --with-xvfilemgr-libdir=basedir)
+        else
+            xvfilemgr_libdir=$withval
+        fi
+    fi
+])
+if test x$xvfilemgr_libdir = x; then
+    xvfilemgr_libdir=`echo "$xv_includes/pixmaps" | sed s/include/lib/`
+    xvfilemgr_pardir=`dirname "$xvfilemgr_libdir"`
+    if test ! -d $xvfilemgr_pardir/bitmaps; then
+        if test ! -f $xvfilemgr_pardir/openwin-menu; then
+            if test ! -d $xvfilemgr_pardir/help; then
+                xvfilemgr_libdir=
+            fi    
+        fi
+    fi
+fi
+if test x$xvfilemgr_libdir = x; then
+    xvfilemgr_libdir=`echo "$xvfilemgr_bindir/pixmaps" | sed s/bin/lib/`
+    xvfilemgr_pardir=`dirname "$xvfilemgr_libdir"`
+    if test ! -d $xvfilemgr_pardir/bitmaps; then
+        if test ! -f $xvfilemgr_pardir/openwin-menu; then
+            if test ! -d $xvfilemgr_pardir/help; then
+                xvfilemgr_libdir=
+            fi    
+        fi
+    fi
+fi
+if test x$xvfilemgr_libdir = x; then
+    if test "$OPENWINHOME"; then
+        xvfilemgr_libdir=$OPENWINHOME/lib/pixmaps
+    fi
+    xvfilemgr_pardir=`dirname "$xvfilemgr_libdir"`
+    if test ! -d $xvfilemgr_pardir/bitmaps; then
+        if test ! -f $xvfilemgr_pardir/openwin-menu; then
+            if test ! -d $xvfilemgr_pardir/help; then
+                xvfilemgr_libdir=
+            fi    
+        fi
+    fi
+fi
+if test x$xvfilemgr_libdir = x; then
+    xvfilemgr_libdir=$prefix/lib/pixmaps
+fi
+if test x$xvfilemgr_libdir = xNONE/lib; then
+    xvfilemgr_libdir=
+fi
+AC_SUBST(xvfilemgr_libdir)
+AC_DEFINE_UNQUOTED(IMAGESDIR,"$xvfilemgr_libdir")
+
+##########
+xvfilemgr_mandir=
+AC_ARG_WITH(xvfilemgr-mandir, 
+        [ --with-xvfilemgr-mandir=DIR  Specifies directory for Xfilemgr man pages],[
+    if test x$withval = xyes; then
+        AC_MSG_WARN(Usage is: --with-xvfilemgr-mandir=basedir)
+    else
+        if test x$withval = xno; then
+            AC_MSG_WARN(Usage is: --with-xvfilemgr-mandir=basedir)
+        else
+            xvfilemgr_mandir=$withval
+        fi
+    fi
+])
+if test x$xvfilemgr_mandir = x; then
+    xvfilemgr_mandir=`echo "$xv_includes" | sed s/include/man/`
+    if test ! -d $xvfilemgr_mandir/man1; then
+        if test ! -f $xvfilemgr_mandir/man1/xview.1x; then
+            if test ! -d $xvfilemgr_mandir/cat1; then
+                xvfilemgr_mandir=
+            fi    
+        fi
+    fi
+fi
+if test x$xvfilemgr_mandir = x; then
+    if test "$OPENWINHOME"; then
+        xvfilemgr_mandir=$OPENWINHOME/man
+    fi
+    if test ! -d $xvfilemgr_mandir/man1; then
+        if test ! -f $xvfilemgr_mandir/man1/xview.1x; then
+            if test ! -d $xvfilemgr_mandir/cat1; then
+                xvfilemgr_mandir=
+            fi    
+        fi
+    fi
+fi
+if test x$xvfilemgr_mandir = x; then
+    xvfilemgr_mandir=$prefix/man
+fi
+if test x$xvfilemgr_mandir = xNONE/man; then
+    xvfilemgr_mandir=
+fi
+AC_SUBST(xvfilemgr_mandir)
+
+dnl if test "x$ss_libraries" = x; then
+dnl    ss_libraries=${xview_libraries}
+dnl fi
+dnl if test "x$ss_includes" = x; then
+dnl    ss_includes=${xview_includes}
+dnl fi
+
+dnl Stupid Hack ?????
+if test "x$LIBS" = x; then
+   XV_LIBS="-lsspkg -lxview -lolgx -lXpm $X_EXTRA_LIBS -lX11 $X_PRE_LIBS -lm"
+   XV_LIBS_STATIC="${ss_libraries}/libsspkg.a ${xview_libraries}/libxview.a"
+   XV_LIBS_STATIC="${XV_LIBS_STATIC} ${xview_libraries}/libolgx.a"
+   XV_LIBS_STATIC="${XV_LIBS_STATIC} -lXpm $X_EXTRA_LIBS -lX11 $X_PRE_LIBS -lm"
+fi
+AC_SUBST(XV_LIBS)
+AC_SUBST(XV_LIBS_STATIC)
+
+if test "x$X11_CFLAGS" = x; then
+   X11_CFLAGS="-I$x_includes"
+fi
+AC_SUBST(X11_CFLAGS)
+
+if test "x$X11_LIBS" = x; then
+   X11_LIBS="-L$x_libraries"
+fi
+AC_SUBST(X11_LIBS)
+
+if test "x$SLINGSHOT_CFLAGS" = x; then
+   SLINGSHOT_CFLAGS="-I$ss_includes"
+fi
+AC_SUBST(SLINGSHOT_CFLAGS)
+
+if test "x$SLINGSHOT_LIBS" = x; then
+   SLINGSHOT_LIBS="-L$ss_libraries"
+fi
+AC_SUBST(SLINGSHOT_LIBS)
+
+if test "x$HAVE_SLINGSHOT" = x; then
+   HAVE_SLINGSHOT="yes";
+fi
+AC_SUBST(HAVE_SLINGSHOT)
+
+AC_ARG_ENABLE(dialogsright, [ --enable-dialogsright	Force dialog sub-windows to show up on the right.],
+	dialogalwaysright=$enableval, dialogalwaysright=no)
+if test "$dialogalwaysright" = "yes"; then
+	AC_MSG_RESULT(Forcing use of right-edged dialog sub-windows)
+	AC_DEFINE(DIALOG_ALWAYS_RIGHT)
+else
+	AC_MSG_RESULT(Your window manager will decide where to position dialog sub-windows)
+fi
+
+AC_ARG_ENABLE(cdromdevice, [ --enable-cdromdevice=devicepath	Force CD-ROM device if not in fstab.],
+	[cdromdevice=$enableval], [cdromdevice="/dev/cdrom"])
+if test "$cdromdevice" != "/dev/cdrom"; then
+	AC_DEFINE_UNQUOTED(CDROM_DEVICE,"$cdromdevice")
+else
+	AC_DEFINE_UNQUOTED(CDROM_DEVICE,"$cdromdevice")
+fi
+AC_MSG_RESULT(Using $cdromdevice for CD-ROM device)
+
+AC_ARG_ENABLE(floppydevice, [ --enable-floppydevice=devicepath	Force CD-ROM device if not in fstab.],
+	[floppydevice=$enableval], [floppydevice="/dev/fd0"])
+if test "$floppydevice" != "/dev/fd0"; then
+	AC_DEFINE_UNQUOTED(FLOPPY_DEVICE,"$floppydevice")
+else
+	AC_DEFINE_UNQUOTED(FLOPPY_DEVICE,"$floppydevice")
+fi
+AC_MSG_RESULT(Using $floppydevice for Floppy device)
+
+dnl Check for various programs
+
+AC_PATH_PROG(DEFAULT_MV_CMD,mv,,,$PATH:/bin:/usr/bin)
+if test "x$DEFAULT_MV_CMD" != "x"; then
+	AC_DEFINE_UNQUOTED(DEFAULT_MV_CMD,"$DEFAULT_MV_CMD")
+else
+	AC_MSG_ERROR(Couldn't find "mv" command in \$PATH)
+fi
+
+AC_PATH_PROG(DEFAULT_CP_CMD,cp,,,$PATH:/bin:/usr/bin)
+if test "x$DEFAULT_CP_CMD" != "x"; then
+	AC_DEFINE_UNQUOTED(DEFAULT_CP_CMD,"$DEFAULT_CP_CMD")
+else
+	AC_MSG_ERROR(Couldn't find "cp" command in \$PATH)
+fi
+
+AC_PATH_PROG(DEFAULT_RM_CMD,rm,,,$PATH:/bin:/usr/bin)
+if test "x$DEFAULT_RM_CMD" != "x"; then
+	AC_DEFINE_UNQUOTED(DEFAULT_RM_CMD,"$DEFAULT_RM_CMD")
+else
+	AC_MSG_ERROR(Couldn't find "rm" command in \$PATH)
+fi
+
+AC_PATH_PROG(DEFAULT_EDITOR,textedit,,,/usr/openwin/bin:$PATH)
+if test "x$DEFAULT_EDITOR" != "x"; then
+	AC_DEFINE_UNQUOTED(DEFAULT_EDITOR,"$DEFAULT_EDITOR")
+else
+	AC_MSG_ERROR(Couldn't find "textedit" command in \$PATH or /usr/openwin/bin)
+fi
+
+AC_PATH_PROG(DEFAULT_MAILER,mail,,,/bin:/usr/bin:$PATH)
+if test "x$DEFAULT_MAILER" != "x"; then
+	AC_DEFINE_UNQUOTED(DEFAULT_MAILER,"$DEFAULT_MAILER")
+else
+	AC_MSG_ERROR(Couldn't find "mail" command in \$PATH or /usr/bin)
+fi
+
+dnl Checks for libraries.
+
+dnl Checks for header files.
+AC_HEADER_DIRENT
+AC_HEADER_STDC
+AC_HEADER_SYS_WAIT
+AC_CHECK_HEADERS( fcntl.h)
+AC_CHECK_HEADERS( limits.h)
+AC_CHECK_HEADERS( unistd.h)
+AC_CHECK_HEADERS( dirent.h)
+AC_CHECK_HEADERS( fnmatch.h)
+AC_CHECK_HEADERS( grp.h)
+AC_CHECK_HEADERS( limits.h)
+AC_CHECK_HEADERS( math.h)
+AC_CHECK_HEADERS( pwd.h)
+AC_CHECK_HEADERS( signal.h)
+AC_CHECK_HEADERS( string.h)
+AC_CHECK_HEADERS( sys/ioctl.h)
+
+dnl Checks for typedefs, structures, and compiler characteristics.
+AC_TYPE_UID_T
+AC_TYPE_PID_T
+AC_TYPE_SIZE_T
+AC_STRUCT_TM
+
+dnl Checks for library functions.
+AC_FUNC_FNMATCH
+AC_PROG_GCC_TRADITIONAL
+AC_FUNC_STRFTIME
+AC_CHECK_FUNCS( getcwd)
+AC_CHECK_FUNCS( mkdir)
+AC_CHECK_FUNCS( strdup)
+AC_CHECK_FUNCS( strerror)
+AC_CHECK_FUNCS( strstr)
+AC_CHECK_FUNCS( strcmp)
+AC_CHECK_FUNCS( execlp)
+
+AC_OUTPUT(Makefile images32/Makefile images16/Makefile)
+
+echo "
+Configuration:
+
+  Source code location:         ${srcdir}
+  Compiler:                     ${CC}
+  Compiler flags:               ${CFLAGS}
+  Libraries:			${XV_LIBS} ${LDFLAGS}
+  X11 versions:                 ${xvers}
+  X11 libs:                     ${x_libraries}
+  X11 includes:                 ${x_includes}
+  XView libs:                   ${xview_libraries}
+  XView includes:               ${xview_includes}
+  SlingShot libs:               ${ss_libraries}
+  SlingShot includes:           ${ss_includes}
+  XVfilemgr Binary Install Path:   ${xvfilemgr_bindir}
+  XVfilemgr Library Install Path:  ${xvfilemgr_libdir}
+  XVfilemgr Man Pages Install Path:  ${xvfilemgr_mandir}"
+
