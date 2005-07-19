@@ -1,3 +1,4 @@
+#include <XView.tmpl>
 EXTRA_INCLUDES  = -I$(OPENWINHOME)/include
 #
 # Use -DPAN_DND if you have XView 3.0 or greater (includes drag and drop)
@@ -6,8 +7,8 @@ EXTRA_INCLUDES  = -I$(OPENWINHOME)/include
 # Use -DBSD if compiling on BSD UNIX
 #
 DEFINES         = -DPAN_DND -DHAS_STDLIB -DSUNOS4
-LOCAL_LIBRARIES = -lxview -lolgx $(XLIB)
-LDOPTIONS       = -L$(OPENWINHOME)/lib
+LOCAL_LIBRARIES = -lxview -lolgx $(XLIB) -lutil
+LDOPTIONS       = -L$(OPENWINHOME)/lib -L/usr/X11R6/lib
 
 SRCS =  pan.c control.c event.c folder.c hidexp.c llm.c menu.c misc.c move.c \
 	note.c parser.c rmfolder.c noteaction.c search.c update.c win.c work.c\
@@ -19,3 +20,4 @@ OBJS =  pan.o control.o event.o folder.o hidexp.o llm.o menu.o misc.o move.o \
 ComplexProgramTarget(pan)
 
 $(OBJS) : pan.h
+#include <XView.prog>

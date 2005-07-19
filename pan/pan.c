@@ -33,13 +33,14 @@ contacted at:
 #include "pan.h"
 #include "patchlevel.h"
 #include <signal.h>
+#include <errno.h>
+#include <locale.h>
 
 #include <X11/X.h>
 #include <X11/Xutil.h>
 #include <X11/Xos.h>
 
 extern int errno;
-extern char *sys_errlist[];
 
 int  xverror(), xerror();
 
@@ -65,6 +66,7 @@ main(argc, argv)
     notecount = 0;
     *init_search_val = 0;
 
+    setlocale(LC_ALL,"");
     LLM_init(&subdir_rt, sizeof(struct SubDir));
     LLM_init(&freewin_rt, sizeof(struct FreeWin));
 
@@ -203,6 +205,8 @@ main(argc, argv)
         resources[RES_NOTEWIDTH].b, RESDEF_NOTEWIDTH);
     noteheight = defaults_get_integer(resources[RES_NOTEHEIGHT].a,
         resources[RES_NOTEHEIGHT].b, RESDEF_NOTEHEIGHT);
+    noteshavepin = (defaults_get_boolean(resources[RES_NOTESHAVEPIN].a,
+        resources[RES_NOTESHAVEPIN].b, RESDEF_NOTESHAVEPIN) == TRUE);
 
     setup_display();
 #ifdef PAN_DND
@@ -234,7 +238,8 @@ setup_display()
 
     main_frame = xv_create(NULL, FRAME,
                            XV_LABEL, PAN_VERSION,
-                           FRAME_NO_CONFIRM, TRUE,
+                           FRAME_NO_CONFIRM, TRUE,	
+			   FRAME_SHOW_RESIZE_CORNER, FALSE,
                            NULL);
     if(main_frame == NULL)
         {
@@ -276,14 +281,16 @@ setup_display()
                      MENU_NOTIFY_PROC, exposemenu,
                      MENU_STRINGS, CHOICE_ALL, NULL,
                      NULL);
+    rect = (Rect *) xv_get(item, PANEL_ITEM_RECT);
+    x+= rect->r_width + DEFPANELSPACING;
     item = (Panel_item) xv_create(main_panel, PANEL_BUTTON,
                      PANEL_LABEL_STRING, "Expose Notes", 
                      PANEL_ITEM_MENU, main_expose,
-                     XV_X, xv_col(main_panel, 0),
-                     XV_Y, xv_row(main_panel, 1),
+                     XV_X, x,
+                     XV_Y, xv_row(main_panel, 0),
                      NULL);
     rect = (Rect *) xv_get(item, PANEL_ITEM_RECT);
-    x = rect->r_width + DEFPANELSPACING;
+    x += rect->r_width + DEFPANELSPACING;
 
     main_print = xv_create(NULL, MENU,
                      MENU_NOTIFY_PROC, actionmenu,
@@ -331,7 +338,7 @@ setup_display()
                      PANEL_LABEL_STRING, "Action",
                      PANEL_ITEM_MENU, menu,
                      XV_X, x,
-                     XV_Y, xv_row(main_panel, 1),
+                     XV_Y, xv_row(main_panel, 0),
                      NULL);
 
     search_item = xv_create(main_panel, PANEL_TEXT,
@@ -341,7 +348,7 @@ setup_display()
                      PANEL_VALUE_STORED_LENGTH, MAXSEARCHLEN,
                      PANEL_NOTIFY_PROC, notesearch,
                      XV_X, xv_col(main_panel, 0),
-                     XV_Y, xv_row(main_panel, 2),
+                     XV_Y, xv_row(main_panel, 1),
                      NULL);
 
     rect = (Rect *) xv_get(search_item, PANEL_ITEM_RECT);
@@ -373,7 +380,7 @@ setup_display()
     search_button = (Panel_item) xv_create(main_panel, PANEL_ABBREV_MENU_BUTTON,
                      PANEL_ITEM_MENU, menu,
                      XV_X, x,
-                     XV_Y, xv_row(main_panel, 2),
+                     XV_Y, xv_row(main_panel, 1),
                      NULL);
 
     image = xv_create(NULL, SERVER_IMAGE, XV_WIDTH, 64, XV_HEIGHT, 64,
@@ -389,6 +396,9 @@ setup_display()
     xv_set(main_frame, FRAME_ICON, icon, NULL);
     window_fit(main_panel);
     window_fit(main_frame);
+    rect = (Rect *) xv_get(main_frame, FRAME_CURRENT_RECT);
+    if (notewidth == -1)
+        notewidth = rect->r_width;
 
     itv.it_interval.tv_sec = checkinterval;
     itv.it_interval.tv_usec = 0;

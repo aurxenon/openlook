@@ -31,7 +31,6 @@ contacted at:
 #include "pan.h"
 
 extern int errno;
-extern char *sys_errlist[];
 
 /*
     Routine called when hide notes button is selected.  Hides ALL notes.

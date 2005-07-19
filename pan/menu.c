@@ -32,7 +32,6 @@ contacted at:
 #include <xview/font.h>
 
 extern int errno;
-extern char *sys_errlist[];
 
 /*
     Routine to dynamically create a menu of all currently hidden notes

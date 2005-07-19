@@ -31,7 +31,6 @@ contacted at:
 #include "pan.h"
 
 extern int errno;
-extern char *sys_errlist[];
 
 /*
     Handle the window exit event of the mouse pointer.  Used to do auto-saves.

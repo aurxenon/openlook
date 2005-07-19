@@ -31,6 +31,7 @@ contacted at:
 #include "pan.h"
 
 #include <xview/font.h>
+#include <xview/cms.h>
 
 #ifdef PAN_DND
 #include <xview/dragdrop.h>
@@ -40,7 +41,6 @@ contacted at:
 #include <X11/Xutil.h>
 
 extern int errno;
-extern char *sys_errlist[];
 
 extern FILE *errfp;
 
@@ -173,15 +173,22 @@ buildnote(np, display, adjust)
     char title[MAXTITLELEN + 1];
     char fname[MAXBUFLEN];
     char buf [30];
+    Cms cms;
 
     strcpy(title, NOTITLE);
+
+    cms = (Cms) xv_create(XV_NULL, CMS,
+                CMS_CONTROL_CMS, TRUE,
+                CMS_SIZE, CMS_CONTROL_COLORS + 2,
+                CMS_NAMED_COLORS, "yellow", "black", 0,
+                NULL);
 
     if(get_win(np))
         {
         /* if size not specifically set, make sure panel items visible */
         if(adjust)
             {
-#ifndef PAN_DND
+/*#ifndef PAN_DND
             rect = (Rect *) xv_get(np->cdate, PANEL_ITEM_RECT);
             hx = rect->r_left + rect->r_width + DEFPANELSPACING;
 #else
@@ -192,6 +199,8 @@ buildnote(np, display, adjust)
             x = rect->r_left + rect->r_width + DEFPANELSPACING;
             if(hx > x) x = hx;
             np->rect.r_width = x;
+*/
+	    np->rect.r_width = notewidth;
             }
         frame_set_rect(np->frame, &np->rect);
 
@@ -227,11 +236,19 @@ buildnote(np, display, adjust)
         np->mapped = 1;
         return(1);
         }
-
-    np->frame = xv_create(main_frame, FRAME,
+    if (noteshavepin)
+        np->frame = xv_create(main_frame, FRAME_CMD,
+			      FRAME_CMD_DEFAULT_PIN_STATE, TRUE,
+			      FRAME_SHOW_RESIZE_CORNER, TRUE,
                               XV_LABEL, title,
                               FRAME_DONE_PROC, dismissed,
-                              NULL);
+                              NULL); 
+    else
+        np->frame = xv_create(main_frame, FRAME,
+			      FRAME_SHOW_RESIZE_CORNER, TRUE,
+                              XV_LABEL, title,
+                              FRAME_DONE_PROC, dismissed,
+                              NULL); 
     if(np->frame == NULL)
         {
         if(display)
@@ -263,9 +280,10 @@ buildnote(np, display, adjust)
         LOC_WINEXIT, NULL,
         NULL);
 
-    np->panel = (Panel) xv_create(np->frame, PANEL,
-                     WIN_RETAINED, FALSE, 
-                     NULL);
+    if (noteshavepin)
+    	np->panel = (Panel) xv_get(np->frame, FRAME_CMD_PANEL);
+    else
+	np->panel = (Panel) xv_create(np->frame, PANEL, NULL);
 
     if(np->panel == NULL)
         {
@@ -308,27 +326,27 @@ buildnote(np, display, adjust)
                  NULL);
 
 #ifdef PAN_DND
-    rect = (Rect *) xv_get(np->cdate, PANEL_ITEM_RECT);
-    x = rect->r_left + rect->r_width + 2 * DEFPANELSPACING;
+    rect = (Rect *) xv_get(np->title, PANEL_ITEM_RECT);
+    x = rect->r_left + rect->r_width + DEFPANELSPACING;
     np->drag_obj = xv_create(np->panel, DRAGDROP,
                  NULL);
     np->drag_tgt = xv_create(np->panel, PANEL_DROP_TARGET,
                  XV_X, x,
-                 XV_Y, xv_row(np->panel, 0),
+                 XV_Y, y = xv_row(np->panel, 0),
                  PANEL_DROP_DND, np->drag_obj,
                  PANEL_NOTIFY_PROC, drag_proc,
                  PANEL_DROP_FULL,   TRUE,
                  NULL);
     np->got_itms = 0;
+    rect = (Rect *) xv_get(np->drag_tgt, PANEL_ITEM_RECT);
+    x = rect->r_left + rect->r_width +  DEFPANELSPACING;
 #endif
-
     np->hide = xv_create(np->panel, PANEL_BUTTON,
-                     PANEL_NEXT_ROW, -1,
                      PANEL_LABEL_STRING, "Hide",
                      PANEL_NOTIFY_PROC, hidenote, 
                      PANEL_CLIENT_DATA, np,
-                     XV_X, xv_col(np->panel, 0),
-                     XV_Y, xv_row(np->panel, 1),
+                     XV_X, x,
+                     XV_Y, xv_row(np->panel, 0),
                      NULL);
     if(np->hide == NULL)
         {
@@ -377,7 +395,7 @@ buildnote(np, display, adjust)
     else *buf = 0;
     np->ctime = xv_create(np->panel, PANEL_MESSAGE,
              PANEL_LABEL_STRING, buf,
-             XV_X, hx,
+             XV_X, x,
              XV_Y, y,
              NULL);
 
@@ -408,6 +426,7 @@ buildnote(np, display, adjust)
             }
         }
 
+    xv_set(np->textsw, WIN_CMS, cms, WIN_BACKGROUND_COLOR, CMS_CONTROL_COLORS, 0);
 
     xv_set(xv_get(np->textsw, OPENWIN_NTH_VIEW, 0), 
         WIN_EVENT_PROC, dragdrop,
@@ -424,6 +443,7 @@ buildnote(np, display, adjust)
     /* if size not specifically set, make sure panel items visible */
     if(adjust)
         {
+/*
 #ifndef PAN_DND
         rect = (Rect *) xv_get(np->cdate, PANEL_ITEM_RECT);
         hx = rect->r_left + rect->r_width + DEFPANELSPACING;
@@ -434,7 +454,8 @@ buildnote(np, display, adjust)
         rect = (Rect *) xv_get(np->ctime, PANEL_ITEM_RECT);
         x = rect->r_left + rect->r_width + DEFPANELSPACING;
         if(hx > x) x = hx;
-        np->rect.r_width = x;
+*/
+        np->rect.r_width = notewidth;
         }
 
     frame_set_rect(np->frame, &np->rect);
@@ -469,6 +490,7 @@ buildnote(np, display, adjust)
     makename(fname, np);
     xv_set(np->textsw, TEXTSW_FILE, fname, TEXTSW_FIRST, 0, NULL);
     xv_set(np->frame, XV_SHOW, TRUE, NULL);
+    xv_set(np->frame, WIN_WIDTH, notewidth, NULL);
     np->mapped = 1;
 
     return(1);
@@ -513,7 +535,7 @@ newtitle(item, event)
         {
         strcpy(ntitle, NOTITLE);
         }
-    set_frame_title(np, ntitle);
+    set_frame_title(np, np->ntitle);
     strcpy(np->ntitle, ntitle);
     reseticon(np);
     adjust_sorted(np);
@@ -539,5 +561,6 @@ set_frame_title(np, title)
         xv_set(np->frame, XV_LABEL, t_title, NULL);
         }
     else
-        xv_set(np->frame, XV_LABEL, title, NULL);
+        sprintf(t_title, "%s", title);
+        xv_set(np->frame, XV_LABEL, t_title, NULL);
     }

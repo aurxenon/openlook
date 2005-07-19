@@ -31,7 +31,6 @@ contacted at:
 #include "pan.h"
 
 extern int errno;
-extern char *sys_errlist[];
 
 char *add_sorted(nr, title)
     struct LLM_root *nr;

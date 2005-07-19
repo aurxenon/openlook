@@ -31,7 +31,6 @@ contacted at:
 #include "pan.h"
 
 extern int errno;
-extern char *sys_errlist[];
 
 extern char *re_comp();
 
@@ -107,6 +106,9 @@ w_hidenote(np)
     struct Note *np;
     {
     np->state = Hidden;
+    if (noteshavepin)
+      xv_set(np->frame,FRAME_CMD_PIN_STATE,FALSE,NULL);
+    xv_set(np->frame,XV_SHOW, FALSE, NULL);
     update(np);
     updateinfo(np, FORCE);
     textsw_reset(np->textsw, 0, 0);
@@ -142,7 +144,7 @@ w_popupxy(x, y, width, height, spacing)
     screen_height = DisplayHeight(dpy, screen_num);
     screen_width = DisplayWidth(dpy, screen_num);
     frame_get_rect(main_frame, &rect);
-    rect.r_left += spacing;
+/*    rect.r_left += spacing;
     if((rect.r_left + width) > (screen_width - spacing))
         rect.r_left = screen_width - width - spacing;
     if((rect.r_top + rect.r_height + 2 * spacing + height) <
@@ -150,6 +152,8 @@ w_popupxy(x, y, width, height, spacing)
         rect.r_top += (rect.r_height + spacing);
     else
         rect.r_top -= (height + 2 * spacing);
+*/
+    rect.r_top += rect.r_height;
     *x = rect.r_left;
     *y = rect.r_top;
     }
@@ -503,7 +507,7 @@ w_newnote(sp, state, rect, title, textfile, display)
     /* get good pos for new note */
     if(rect == NULL)
         {
-        if(notewidth == -1 || noteheight == -1)
+        if(noteheight == -1)
             {
             w_popupxy(&x, &y, DEFWIDTH, DEFHEIGHT, DEFSPACING);
             adjust = TRUE; /* width will be adjusted */
@@ -573,6 +577,7 @@ w_newnote(sp, state, rect, title, textfile, display)
         {
         if(!buildnote(np, display, adjust)) return;
         xv_set(np->title, PANEL_VALUE, np->ntitle, NULL);
+        xv_set(np->frame, WIN_WIDTH, notewidth, NULL);
         set_frame_title(np, np->ntitle);
         reseticon(np);
         }

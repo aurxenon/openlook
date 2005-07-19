@@ -31,7 +31,6 @@ contacted at:
 #include "pan.h"
 
 extern int errno;
-extern char *sys_errlist[];
 
 get_win(np)
     struct Note *np;

@@ -54,6 +54,7 @@ extern char *getenv();
 #include <sys/time.h>
 #include <sys/resource.h>
 #include <sys/stat.h>
+#include <errno.h>
 #include <xview/xview.h>
 #include <xview/panel.h>
 #include <xview/openmenu.h>
@@ -132,7 +133,8 @@ struct resource resources [] = {
     {"pan.checkInterval",	"pan.checkinterval"},
     {"pan.searchMenu",		"pan.searchmenu"},
     {"pan.noteWidth",		"pan.notewidth"},
-    {"pan.noteHeight",		"pan.noteheight"}
+    {"pan.noteHeight",		"pan.noteheight"},
+    {"pan.noteshavepin",	"pan.noteshavepin"}
 };
 
 unsigned short mainicon [] = {
@@ -184,11 +186,12 @@ extern unsigned short myiconmask [];
 #define RES_SEARCHMENU    19
 #define RES_NOTEWIDTH     20
 #define RES_NOTEHEIGHT    21
+#define RES_NOTESHAVEPIN  22
 
 /* Resource default values (IDIR default is built dynamically) */
 #define RESDEF_NBEEP		TRUE
 #define RESDEF_CDESTROY		FALSE
-#define RESDEF_PCOMMAND		"/usr/ucb/lpr $FILE"
+#define RESDEF_PCOMMAND		"/usr/bin/lpr $FILE"
 #define RESDEF_ITRANSPARENT	FALSE
 #define RESDEF_FORDER      	"Miscellaneous"
 #define RESDEF_DSEARCH      	""
@@ -207,6 +210,7 @@ extern unsigned short myiconmask [];
 #define RESDEF_SEARCHMENU	"."
 #define RESDEF_NOTEWIDTH	-1
 #define RESDEF_NOTEHEIGHT	-1
+#define RESDEF_NOTESHAVEPIN	FALSE
 
 #ifndef public
 #define public extern
@@ -259,7 +263,7 @@ extern unsigned short myiconmask [];
 #define MAXTITLELEN     100
 #define MAXTITLEDISLEN  8
 #define MAXSEARCHLEN    MAXTITLELEN
-#define MAXSEARCHDISLEN 12
+#define MAXSEARCHDISLEN 32
 #define MAXBUFLEN       1024
 
 #define MAXSUBDIR      20  /* Max. len of sub dir name */
@@ -386,6 +390,7 @@ public int  checkinterval;
 public char searchmenu[2048];
 public int  notewidth;
 public int  noteheight;
+public int  noteshavepin;
 
 public int  notecount;
 

@@ -33,7 +33,6 @@ contacted at:
 #include <xview/font.h>
 
 extern int errno;
-extern char *sys_errlist[];
 
 /*
     Routine called when the action button on a note is selected.
@@ -95,6 +94,9 @@ noteaction(menu, mitem)
         (void) unlink(fname);
         put_win(np);
         LLM_delete(&np->sp->note_rt, (char *)np);
+	if (noteshavepin)
+	     xv_set(np->frame,FRAME_CMD_PIN_STATE,FALSE,NULL);
+	xv_set(np->frame,XV_SHOW, FALSE, NULL);
         refresh_popups();
         }
     }

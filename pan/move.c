@@ -33,7 +33,6 @@ contacted at:
 #include <X11/Xutil.h>
 
 extern int errno;
-extern char *sys_errlist[];
 
 int applymove();
 int movedone();
