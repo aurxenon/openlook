@@ -124,7 +124,6 @@ int sec_perpixel = 2, lastsec = 0, scrollback = 600, columns = 1,
     add_values, noadd = 0, delta = 0,
     no_reset = 0, draw_line = 0, no_smooth = 0, draw_one = 0;
 char *warnfontname=0;
-char fontname[]="fixed";
 char *host = 0;
 int defcol[NUMCOLS] =
   { 0x000000, 0xa0a0a0, 0xc0c0c0, 0xe0e0e0, 0xff0000, 0xffffff, 0x000000 };
@@ -163,6 +162,16 @@ struct opts
 struct statstime sx;
 int just_started = 1, do_clear = 0, diffdisk, min_spp;
 Notify_value update();
+
+int
+rstat(host, statp)
+        char *host;
+        struct statstime *statp;
+{
+        return (callrpc(host, RSTATPROG, RSTATVERS_TIME, RSTATPROC_STATS,
+                        xdr_void, (char *) NULL,
+                        xdr_statstime, (char *) statp));
+}
 
 do_alarm(t)
   int t;
@@ -1895,12 +1904,7 @@ next:
   win = xv_get(canvas_paint_window(ca), XV_XID);
   screen = xv_get(xv_get(fr, XV_SCREEN), SCREEN_NUMBER);
 
-  /* font = xv_get(fr, XV_FONT); */
-  font = xv_find(NULL, FONT, FONT_NAME, fontname, NULL);
-  if (!font) {
-     fprintf(stderr, "can't open font <%s>\n", fontname);
-     exit(-1);
-  }
+  font = xv_get(fr, XV_FONT);
   font_info =(XFontStruct *)xv_get(font, FONT_INFO);
 #if 0
   /* Returns -66+4 for the 5x7 :-( */
