@@ -92,11 +92,11 @@ noteaction(menu, mitem)
         (void) unlink(fname);
         makeinfoname(fname, np);
         (void) unlink(fname);
-        put_win(np);
-        LLM_delete(&np->sp->note_rt, (char *)np);
 	if (noteshavepin)
 	     xv_set(np->frame,FRAME_CMD_PIN_STATE,FALSE,NULL);
 	xv_set(np->frame,XV_SHOW, FALSE, NULL);
+        put_win(np);
+        LLM_delete(&np->sp->note_rt, (char *)np);
         refresh_popups();
         }
     }
