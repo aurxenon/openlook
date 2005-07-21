@@ -1,5 +1,5 @@
 /*
- * $Id: riseset.c,v 1.1.1.1 2005/07/21 14:22:40 arkenoi Exp $
+ * $Id: riseset.c,v 1.2 2005/07/21 14:32:56 arkenoi Exp $
  */
 /*
  * riseset.c
@@ -40,6 +40,7 @@
 
 
 #include <stdio.h>
+#include <time.h>
 #include <sys/time.h>
 #include <math.h>
 #include "riseset.h"

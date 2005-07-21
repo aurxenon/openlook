@@ -138,6 +138,7 @@
 */
 
 #include <stdio.h>
+#include <time.h>
 
 #include <X11/X.h>
 #include <X11/Xlib.h>
@@ -432,7 +433,7 @@ main (argc, argv)
 
 		pixmap = XCreatePixmap(display,
 			RootWindow (display, DefaultScreen(display)), 64, 64,
-			/*DefaultDepthOfScreen(display)*/8);
+			DefaultDepthOfScreen(DefaultScreenOfDisplay(display)));
 
 		for (i=0; i<64; i++)
 	    		for (j=0; j<64; j++) {
@@ -580,8 +581,8 @@ main (argc, argv)
 	icon = (Icon)xv_create(frame, ICON,
 			XV_HEIGHT,	78,
 			ICON_IMAGE, 	server_image,
-			WIN_BACKGROUND_COLOR, color_mode?1:0,
-			WIN_FOREGROUND_COLOR, color_mode?0:1,
+			WIN_BACKGROUND_COLOR, color_mode?1:0, 
+			WIN_FOREGROUND_COLOR, color_mode?0:1, 
 			NULL);
 
 	xv_set(frame, FRAME_ICON, icon, NULL);
