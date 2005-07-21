@@ -1,0 +1,23 @@
+Requirements:
+-------------
+To compile xvmoontool from scratch you need the following:
+   GCC, libc, libm, imake
+   XView 3.2
+
+Installation:
+-------------
+After editing config.h for your geographic coordinates type
+(Don't forget you need super-user privileges to install the binary)
+
+  xmkmf
+  make xvmoontool
+  make install
+  make install.man
+  make clean
+
+Enjoy this little tool !
+
+Send bug reports or suggestions or flames to: 
+
+Joerg Richter	(jrichter@is.in-berlin.de)
+	     	(richterj@t-online.de)

@@ -1,0 +1,19 @@
+#include <XView.tmpl>
+
+OPTIMIZE = -O2
+
+SYS_LIBRARIES = -lm
+LOCAL_LIBRARIES = $(XVIEWLIB) $(OLGXLIB) $(XLIB)
+CDEBUGFLAGS =   $(OPTIMIZE)
+
+SRCS = xvmoontool.c riseset.c
+
+OBJS = xvmoontool.o riseset.o
+
+MANPAGES = xvmoontool.1
+
+
+ComplexProgramTarget(xvmoontool)
+
+
+#include <XView.prog>
