@@ -1,5 +1,5 @@
 /*
- * $Id: riseset.c,v 1.1 2005/07/21 14:22:40 arkenoi Exp $
+ * $Id: riseset.c,v 1.1.1.1 2005/07/21 14:22:40 arkenoi Exp $
  */
 /*
  * riseset.c

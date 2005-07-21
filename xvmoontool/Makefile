@@ -251,7 +251,7 @@ CXXEXTRA_INCLUDES =
 
      ICONFIGFILES = $(IRULESRC)/Imake.tmpl $(IRULESRC)/Project.tmpl 			$(IRULESRC)/site.def $(IRULESRC)/$(MACROFILE) 			$(IRULESRC)/xfree86.cf $(IRULESRC)/xf86.rules $(IRULESRC)/xf86site.def $(IRULESRC)/host.def $(EXTRA_ICONFIGFILES)
 
-#   $RCSfile: Makefile,v $ $Revision: 1.1 $ $Date: 2005/07/21 14:22:40 $
+#   $RCSfile: Makefile,v $ $Revision: 1.1.1.1 $ $Date: 2005/07/21 14:22:40 $
 
 # ----------------------------------------------------------------------
 # X Window System Build Parameters and Rules
