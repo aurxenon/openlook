@@ -1,0 +1,23 @@
+- Thu Jan 13 12:04:03 MET 1994
+  Problem noticed by Tom Corson (corson%uranus.UUCP@infodyn.COM)
+  Options foreground/background are already used by XView.
+  Changed them to fgcolor/bgcolor
+- Fri Jan 14 14:21:55 MET 1994
+  By suggestion of Tom Corson
+  Dragging with shift pressed selects all windows.
+- Thu Feb 24 14:21:24 MET 1994
+  Introduced version.h
+  Bug found by Gerd Buettner (RRZE)
+  With small windows, the "Lost connection" message was not
+  cleared correctly.
+- Sun Jun 12 23:00:27 MET DST 1994
+  shift-scroll bug with inactive fields cured
+  deselected fields are now removed even if the window size isn't changed
+  "empty line" bug hopefully fixed
+  version message now more obvious
+  version is 1.3
+- ???
+  Silly SHIFT-select feature introduced:
+  to select/deselect all "windows" (i.e. cpu,disk,...), select one of them while
+  pressing SHIFT.
+  

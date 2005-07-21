@@ -1,0 +1,238 @@
+.TH PERF 1 "15 September 1993"
+.SH NAME
+perf \- report kernel statistics visually
+.SH SYNOPSIS
+.B perf
+.RI [ options "] [" host ]
+
+.SH DESCRIPTION
+.B perf
+is an XView program that reports kernel statistics for a given
+.I host
+(or for the localhost if no host is specified).  The program is
+a frontend to the rstatd(8) daemon.
+.PP
+The displayed window consists of one or more fields, each showing a specified
+parameter.  The name of the parameter and of its components are shown in the
+lower left corner of the field, the maximum value of the visible data in the
+lower right corner.
+
+.SH OPTIONS
+.TP
+.BI -sampletime " sec"
+Query the rstatd each 
+.I sec
+seconds for new data.  Default is 2.
+.TP
+.B -drawline
+Draw only a line instead of a filled block.
+.TP
+.B -nosmooth
+If the drawing is filled, do not smooth the data.
+.TP
+.B -drawone
+Show only the sum of multiple subvalues like e.\|g. usr, nice & sys.
+This is the default on monochrome displays.
+.TP
+.B -noadd
+Do not draw the subvalues on top of each other.  This means, that
+some subvalues may be completely hidden, if following ones are
+greater.  Use the drawline option in such cases.
+.TP
+.B -noreset
+Do not readjust the maximum value shown in the lower right corner.
+.TP
+.BI -scrollback " sampled-values"
+Set the scrollback buffer to
+.I sampled-values.
+Default is 200, i.\|e. 20 minutes if sampletime is 2.
+The total number of samples stored is field_width_in_pixels + scrollback.
+.TP
+.BI -columns " cols"
+Display the fields in
+.I cols
+columns.  Default is 1.
+.TP
+.B -delta
+Display (and store) the difference between the current and the last value, do not show the values per second.
+.TP
+.BI -warnfont " fontname"
+The text ``Lost connection'' will be drawn with this font.
+.TP
+.BI -col1 " ... " -col4 " color"
+.PD 0
+.TP
+.BI -foreground " color"
+.TP
+.BI -background " color"
+.TP
+.BI -warncol " color"
+.PD
+The first subvalue is drawn with the color col1, the second with col2 and so on.
+.I Color
+must be of the form 
+.I #rrggbb,
+where 
+.I rr
+is the red component,
+.I gg
+the green and
+.I bb
+the blue one
+(e.\|g. #ff0000 is red).
+The text ``Lost connection'' will be drawn with the warncol color.
+.sp
+Defaults:
+.br
+.ta 3n 15n 30n
+	col1	#000000	(black)
+.br
+.ta 3n 15n 30n
+	col2	#a0a0a0
+.br
+.ta 3n 15n 30n
+	col3	#c0c0c0
+.br
+.ta 3n 15n 30n
+	col3	#e0e0e0
+.br
+.ta 3n 15n 30n
+	col4	#ffffff	(white)
+.br
+.ta 3n 15n 30n
+	warncol	#ffffff	(white)
+.br
+foreground is black and background is white.
+.PP
+The following options specify, which statistic values are displayed:
+.TP
+.B -cpu
+Percent of cpu being used.
+.TP
+.B -disk
+Disk transfers per second.
+.TP
+.B -page
+Pages paged per second.
+.TP
+.B -swap
+Pages swapped per second.
+.TP
+.B -interrupts
+Number of device interrupts in a second.
+.TP
+.B -packets
+Network packets per second.
+.TP
+.B -errors
+Errors per second on receiving packets.
+.TP
+.B -collisions
+Collisions per second detected on the network.
+.TP
+.B -context
+Number of context switches per second.
+.TP
+.B -load
+Load average.
+.TP
+.B -a
+All of the above 10 options.
+
+.SH KEYBOARD ACCELERATORS
+.TP
+.B a
+Toggle the noadd option.
+.TP
+.B q
+Quit the program.
+.TP
+.B s
+Toggle solid drawing.
+.TP
+.B o
+Toggle smooth option.
+.TP
+.B 1
+Toggle the drawone option.
+.TP
+.B ?
+Bring up the properties window.
+.TP
+.B NL (NewLine)
+Restore all scrollback windows to the current values.
+.SH Mouse (Pointer device) Usage
+.TP
+.B Right Mouse Button
+You can bring up the
+.B properties window
+by clicking the right mouse button.
+Don't forget to select the ``Apply'' button after changing values.
+.br
+If you click the right mouse button over one of the displayed fields
+while pressing the
+.B SHIFT
+key, you can change values valid only for this field.  You can reset
+this settings by selecting the ``No special flags'' button.
+.TP
+.B Left Mouse Button
+If you click in a field with the left mouse button, the exact value of the 
+sample will be displayed in the properties window.
+If you drag the field, you can examine the sampled values in the
+scrollback history. If you press the SHIFT key while initiating the drag,
+each (visible) field will be scrolled.
+.TP
+.B Middle Mouse Button
+You can scroll more than one field at once by selecting all of them first with
+the middle mouse button.
+.SH X RESOURCES
+.TP
+Following X Resources are examined during startup:
+.ti +0.5i
+perf.sampletime
+.ti +0.5i
+perf.drawline
+.ti +0.5i
+perf.nosmooth
+.ti +0.5i
+perf.drawone
+.ti +0.5i
+perf.noreset
+.ti +0.5i
+perf.scrollback
+.ti +0.5i
+perf.columns
+.ti +0.5i
+perf.col1
+.ti +0.5i
+perf.col2
+.ti +0.5i
+perf.col3
+.ti +0.5i
+perf.col4
+.ti +0.5i
+perf.foreground
+.ti +0.5i
+perf.background
+.ti +0.5i
+perf.warncol
+.ti +0.5i
+perf.warnfont
+.ti +0.5i
+perf.delta
+.TP
+Note: Options take precedence over X Resources.
+.SH FEATURES/BUGS
+.PP
+The maximum scrollback is limited to 20,000 values, because if you begin
+to scroll back, the whole history will be drawn on a single
+pixmap and this can be a memory hog.  Besides, X limits the size
+of a pixmap to 2^15 pixels (if I'm right).
+.PP
+If the sampletime is changed while in "delta" mode, and then (after a while)
+delta mode is switched off, all values stored before the sampletime change
+are incorrect.
+
+.SH AUTHOR
+.PP
+Rudolf Koenig, 1993
