@@ -1,0 +1,58 @@
+# ---------------------------------------------------------------------
+# XVFilemgr filetype file
+# ---------------------------------------------------------------------
+#
+# The fields are as follow:
+# 
+# Pattern, File type, 32x32 XPM icon, 16x16 XPM icon, Command to execute.
+# ---------------------------------------------------------------------
+*.c,	-,	c.xpm,		c16.xpm,	-
+*.c.orig,-,	c.xpm,		c16.xpm,	-
+*.h,	-,	h.xpm,		h16.xpm,	-
+*.h.orig,-,	h.xpm,		h16.xpm,	-
+*.o,	-,	o.xpm,		o16.xpm,	-
+*.a,	-,	Code_lib.xpm,	regular16.xpm,	-
+*.asm,	-,	Code_asm.xpm,	regular16.xpm,	-
+*.*ps,	-,	postscript.xpm,	postscript16.xpm,	gv -antialias $FILE
+*.gif,	-,	gif.xpm,	gif16.xpm,	xv $FILE
+*.jpg,	-,	jpg.xpm,	jpg16.xpm,	xv $FILE
+*.xpm,	-,	Xpm.xpm,	xpm16.xpm,	pixmap -f $FILE
+*.xbm,	-,	Xbm.xpm,	regular16.xpm,	bitmap -f $FILE
+*.dvi,	-,	dvi.xpm,	regular16.xpm,	xdvi -f $FILE
+*.gz,	-,	zip.xpm,	zip16.xpm,	-
+*.tgz,	-,	zip.xpm,	zip16.xpm,	-
+*.Z,	-,	zip.xpm,	zip16.xpm,	-
+*.txt,	-,	ASCII.xpm,	regular16.xpm,	-
+*.exe,	-,	DOSwin.xpm,	regular16.xpm,	-
+*.pcf,	-,	Font.xpm,	regular16.xpm,	-
+*.bdf,	-,	Font.xpm,	regular16.xpm,	-
+*.pcf.Z,-,	Font.xpm,	regular16.xpm,	-
+*.frm,	-,	Frame_doc.xpm,	regular16.xpm,	-
+*.G,	-,	GILfile.xpm,	regular16.xpm,	-
+*.hlp,	-,	Help.xpm,	regular16.xpm,	-
+*.iff,	-,	IFF.xpm,	regular16.xpm,	-
+*.tif,	-,	TIFF.xpm,	regular16.xpm,	xv $FILE
+*.sh,	-,	Shell_script.xpm,	regular16.xpm,	-
+*.au,	-,	SunAudio_Alt.xpm,	regular16.xpm,	-
+*.ras,	-,	SunRaster.xpm,	regular16.xpm,	xv $FILE
+*.tex,	-,	tex.xpm,	regular16.xpm,	-
+gdb,	-,	Dbxtool.xpm,	regular16.xpm,	-
+dbxtool,-,	Dbxtool.xpm,	regular16.xpm,	-
+README*,-,	Info_doc.xpm,	regular16.xpm,	-
+iconedit,-,	Iconedit.xpm,	regular16.xpm,	-
+privtool,-,	Mailtool.xpm,	regular16.xpm,	-
+Makefile*,-,	Makefile.xpm,	regular16.xpm,	-
+Imakefile,-,	Makefile.xpm,	regular16.xpm,	-
+perf,	-,	Perfmeter.xpm,	regular16.xpm,	-
+fontedit,-,	Fontedit.xpm,	regular16.xpm,	-
+workman,-,	CDMgr.xpm,	regular16.xpm,	-
+calctool,-,	Calctool.xpm,	regular16.xpm,	-
+calentool,-,	CalendarMgr.xpm,	regular16.xpm,	-
+clock,	-,	Clock.xpm,	regular16.xpm,	-
+core,	-,	Corefile.xpm,	regular16.xpm,	-
+printtool,-,	Printtool.xpm,	regular16.xpm,	-
+tapetool,-,	Tapetool.xpm,	regular16.xpm,	-
+textedit,-,	Textedit.xpm,	regular16.xpm,	-
+pixmap,-,	pixmap.xpm,	regular16.xpm,	-
+-,mail text,	mail.xpm,	mail16.xpm,	-
+

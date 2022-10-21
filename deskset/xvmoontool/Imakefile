@@ -1,0 +1,18 @@
+#include <XView.tmpl>
+
+SYS_LIBRARIES = -lm -lutil
+LOCAL_LIBRARIES = $(XVIEWLIB) $(OLGXLIB) $(XLIB)
+CDEBUGFLAGS =   $(OPTIMIZE) -I/usr/openwin/include
+LDFLAGS += -L$(OPENWINHOME)/lib
+
+SRCS = xvmoontool.c riseset.c
+
+OBJS = xvmoontool.o riseset.o
+
+MANPAGES = xvmoontool.1
+
+
+ComplexProgramTarget(xvmoontool)
+
+
+#include <XView.prog>

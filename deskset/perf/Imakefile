@@ -1,0 +1,20 @@
+#include <XView.tmpl>
+
+SYS_LIBRARIES = -lutil -lrpcsvc 
+DEPLIBS = XViewClientDepLibs
+LOCAL_LIBRARIES = XViewClientLibs
+EXTRA_INCLUDES  = -I$(OPENWINHOME)/include
+LOCAL_LIBRARIES = -lxview -lolgx $(XLIB) -lutil
+LDOPTIONS       = -L$(OPENWINHOME)/lib -L/usr/X11R6/lib
+
+MAKEFILE_SIMPLE = Makefile.simple
+ICON            = icon.xbm
+SRCS            = perf.c
+ALLFILES        = $(MAKEFILE_SIMPLE) $(SRCS) $(ICON)
+
+PROGRAMS	= perf
+
+AllTarget($(PROGRAMS))
+SingleProgramTarget(perf,perf.o,$(LOCAL_LIBRARIES), /**/)
+
+#include <XView.prog>

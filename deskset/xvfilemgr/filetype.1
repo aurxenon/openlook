@@ -1,0 +1,85 @@
+.TH FILETYPE 5 "22 July 1996" "X Version 11"
+.SH NAME
+filetype - File describing the filetypes for XVFilemgr.
+
+.SH DESCRIPTION
+The
+.I filetype
+file at the moment comes with XVFilemgr and only makes sense with it.
+It consists of lines each describing one filetype.  Each line contains
+five fields separated by commas.  Lines beginning with # and blank
+lines are ignored.  The five fields are:
+.LP
+.TP
+.B File Pattern
+.br
+This is a file matching pattern.  It maybe contains the wild cards '*'
+to match any number of characters and '?' to match a single character
+or '[' and ']' to choose one character of a set.  If no pattern is set
+this field must contains a '-'
+.TP
+.B Magic
+.br
+This is a string representing the output from the file(1) command.
+Only one of the fields File Pattern and Magic should be specified.  If
+this field is not set it must contain a '-'.
+.TP
+.B Icon 16
+.br
+This is the absolute path name of a 16x16 xpm file.
+.TP
+.B Icon 32
+.br
+The absolute path name of a 32x32 xpm file.
+.TP
+.B Action
+.br
+In the XVFilemgr you can invoke actions by double clicking on icons.
+This is the command line which is executed when you do this.  Clearly
+this field sometimes contains spaces but it is the last so it doesn't
+matter.
+.PP
+$FILE is a placeholder for the name of the file you want the action to
+be applied on (the icon you clicked on). For example: pixmap -f $FILE
+invokes the pixmap command with the -f option and supplies the
+selected filename.
+
+.SH EXAMPLES
+*.c,-,/usr/openwin/lib/images/c.xpm,/usr/openwin/lib/images/c16.xpm,-
+
+This is an entry for files which are specified through the file
+pattern '*.c'.  Because the file pattern is given the magic field
+contains '-'.  Then follows the two absolute path names for the pixmap
+files.  There is no default action which should be taken when an icon
+of this file is double clicked.
+
+-,mail text,/usr/X11R6/lib/pixmaps/mail.xpm,
+/usr/X11R6/lib/pixmaps/mail16.xpm,texteditor $FILE
+
+This example demonstrates the use of the magic field.  If the output
+from the file(1) command gives 'mail text' the following pixmaps are
+used.  Double clicking this file invokes the texteditor program with
+the file name.
+
+.SH FILES
+.LP
+.TP
+.I /etc/filetype
+.br
+Default location of the filetype file.
+.TP
+.I ~/.filetype
+.br
+Personal filetype file.  It has the same format as /etc/filetype and
+is read after /etc/filetype.
+
+.SH SEE ALSO
+.I file
+(1),
+.I magic
+(5),
+.I xvfilemgr
+(1),
+.I pixmap
+(1x).
+

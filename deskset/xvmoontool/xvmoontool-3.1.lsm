@@ -1,0 +1,22 @@
+Begin3
+Title:           xvmoontool
+Version:         3.1
+Entered-date:    06MAY97
+Description:     XView application wich displays information about the moon
+                 in real time. When closed (iconic) it displays a graphical
+                 representation of what the moon would look like right now
+                 if you were to go outside.
+                 Ported from SunView (moontool) and OpenWindows (xmoontool)
+                 to XView/Linux with new features and better(?) look and feel
+Keywords:        xview linux science toys astronomy moon moontool xmoontool
+                 xvmoontool
+Author:          kelvin@formilab.ch        (John Walker)
+                 hitchens@cs.utexas.edu    (Ron Hitchens)
+Maintained-by:   jrichter@is.in-berlin.de  (Joerg Richter)
+                 richterj@t-online.de      (Joerg Richter)
+Primary-site:    sunsite.unc.edu /pub/Linux/science/astronomy
+Alternate-site:
+Original-site:
+Platforms:       Linux XView X11
+Copying-policy:  Public Domain  don't make money with this
+End

@@ -1,0 +1,13 @@
+CC = gcc
+#XHOME = /local/X11R5
+XHOME = /usr/openwin
+CFLAGS = -O2 -I$(XHOME)/include
+
+PO = perf.o
+LDFLAGS = -R$(XHOME)/lib -lxview -lolgx -lX11 -lrpcsvc #-lBSD
+
+perf:$(PO)
+	$(CC) -o $@ $(PO) $(LDFLAGS)
+
+clean:
+	-rm -f $(PO) perf

@@ -1,0 +1,12 @@
+1) You should have XView 3.0 or later 
+2) how to build perf:
+   	xmkmf; make
+  or
+  	vi Makefile.simple;make -f Makefile.simple
+3) start it with
+   	./perf
+   or
+	./perf -\?
+4) Press the right mouse button (Menu button) in the perf window.
+
+Bug reports to rfkoenig@informatik.uni-erlangen.de

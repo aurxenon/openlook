@@ -1,0 +1,338 @@
+.TH XVFILEMGR 1 "22 July 1996" "X Version 11"
+.SH NAME
+XVFilemgr - Openlook based file manager with drag and drop support.
+.SH SYNOPSIS
+.B xvfilemgr
+[
+.I generic-tool-arguments
+] 
+.SH DESCRIPTION
+.I XVFilemgr
+is a file manager which looks and acts much like Suns filemgr.
+.PP
+With
+.I XVFilemgr
+you can execute nearly all the operation usually done to a file by
+clicking, dragging and dropping icons or by invoking actions through
+menus.  
+.I XVFilemgr 
+works with full color icons (xpm files).  You can of
+course supply your own icons.
+
+.SH USAGE
+There are three areas within a 
+.I XVFilemgr 
+main window: 
+
+The path area where you can see in which directory you are in.
+Double clicking on a icon opens the directory or popups a window where
+this directory is already open.
+
+In the file area you can see all the files or all the files
+matching the view pattern respectively.  You can double click on a
+folder icon to open this directory or double click an file icon to
+invoke the specific open method.  Clicking only once on a file selects
+this file for further actions.  If you use the select button you can select
+more than one file or you can use the rubber band to select the files
+within a rectangular area.
+
+Most of the work is done through the menus, part three of 
+.I XVFilmgr's
+window.
+.LP
+.TP
+.B FILE MENU
+Operations dealing with files and all other this which do not fit in
+other menus.
+.TP
+.B Open
+.br
+Opens the specified file(s) in the Texteditor
+.TP
+.B Create Folder
+.br
+Creates a new and empty folder in the current directory.  The name is
+determined through the settings in the properties dialog and can be
+changed directly by clicking on the text of the icon.  Normally it is
+NewFolder.
+.TP
+.B Create Document
+.br 
+Creates a new and empty file with the name NewDocument or the name
+specified in the properties dialog respectively.  Like any other file
+the name can be changed through direct editing the text of the icon.
+.TP
+.B Duplicate
+.br
+A copy of the currently selected file(s) is made.  The name of the new
+document is
+.I
+name.1
+or
+.I
+name.n
+with n>2 if there already is a file with the new name.
+.TP
+.B Information
+.br
+Opens a dialog with nearly all the available information of the
+selected file.  Everything changeable in this dialog can be change by
+pressing Apply.  No changes are made if the dialog is dismissed or the
+Reset button is pressed before the Apply button.
+.TP
+.B Find
+.br
+This dialog is a front end to the find command.  See this man page for
+further explanation.
+.TP
+.B Remote Transfer
+.br
+In this dialog you can copy files between different hosts.  Because
+.I XVFilemgr 
+uses a rcp command you must have the permissions on the files to do
+that.
+.TP
+.B Command
+.br
+You can invoke commands which you can specify in the properties
+dialog.  The command is invoked on the selected file(s).  See the
+section about the properties for further details.  If no file is 
+selected, the action is not executed although the action may not
+need a file.
+.TP
+.B Check for CD-ROM
+.br
+.I XVFilemgr
+checks wether there is already a cd rom mounted.  If it is not
+.I XVFilemgr
+tries to do so.  Of course this could only be done by root unless
+there is a corresponding entry in the fstab file allowing mounting a
+cd rom by a normal user.  If the new application frame is destroyed and
+there is no other process accessing the cd rom
+.I XVfilemgr 
+umounts the cd rom.  This is also be done when ejecting the disc.
+.TP
+.B Check for Floppy
+.br
+.TP
+.B Credits
+.br
+See whom you have to owe this little program and send comments/bugs to
+us or someone else.
+.TP
+.B Quit
+.br
+Close all 
+.I XVFilemgr 
+windows and quit the program.  Closing one frame of 
+.I XVFilemgr 
+through the window manager when there are other will only close this
+frame.  Closing the last frame except the waste basket exits the whole
+application.
+.PP
+.TP
+.B VIEW MENU
+.TP.
+.B Open Folder View
+.br
+Opens a separate window showing all visited directories since program
+start in a tree structure.
+.TP
+.B Small Icons
+.br
+Displays the files with small (16x16 pixels) icons.
+.TP
+.B Large Icons
+.br
+Displays the files with large (32x32 pixels) icons.
+.TP
+.B Icon by Name
+.br
+Display all files with large icons sorted by name.
+.TP
+.B Icon by Type
+.br
+Display all files with large icons sorted by type.  Every line in the
+filetype file is a type.  Order is given by the order in the filetype
+file.
+.TP
+.B List by Name
+.br
+Displays all files with small icons sorted by name.
+.TP
+.B List by Type
+.br
+Displays all files with small icons sorted by type.
+.TP
+.B List by Size
+.br
+Displays all files with small icons sorted by size.
+.TP
+.B List by Date
+.br
+Displays all files with small icons sorted by date.
+.PP
+.TP
+.B EDIT MENU
+With the operations in the edit menu you can access the clipboard.
+The clipboard is not within 
+.I XVFilemgr 
+but within the server so be careful when clipping some thing in an
+application when there are files from
+.I XVFilemgr 
+in the clipboard too.  If they are cut in they
+get lost forever.
+.PP
+With the clipboard as well as with drag and drop you can move and copy
+files between two windows of 
+.I XVFilemgr 
+and between two instances of
+.I XVFilemgr.
+.TP
+.B Select All
+.br
+All files in the current directory are selected for further operation.
+.TP
+.B Cut
+.br
+The selected files are cut off the directory in the clipboard.
+.I XVFilemgr 
+copies the files in a hidden directory in your home directory.  They
+are deleted when the selection is lost e.g. when you mark something in
+another application.
+.TP
+.B Copy
+.br
+Copy the selected files in the clipboard.
+.TP
+.B Paste
+.br
+Paste the copied or cut files in the current directory.  
+.TP
+.B Link
+.br
+Link the copied files in the current directory.  This must of course
+be a different directory than the one you copied from.  You cannot link
+file previously cut.
+.TP
+.B Delete
+.br
+Delete the selected files.  The files are either copied to the waste
+basket or really destroyed.  Deleting files can also be done with drag
+and drop.  You can drag a single or more files onto a closed or open
+waste basket.
+.PP
+.TP
+.B PROPERTIES DIALOG
+There are six categories within this dialog which determine the
+behaviour of
+.I XVFilemgr.
+The settings are save to the .xvfmgrrc file with the Save As Default
+button and are loaded automatically at start up.
+.TP
+.B Current Folder Settings
+.br
+Most of the things presented here are self explanatory.  The changes
+made are bound to this directory.  If you visit it some time later
+again the same settings come into effect.
+.TP
+.B New Folder Settings
+.br
+Like Current Folder Setting but applicated to the next folder to open.  
+.I XVFilemgr
+considers the folder opened at start up time as a new folder.
+.TP
+.B Goto Menu Defaults
+.br
+Labels and directories which are displayed in the goto menu.
+.TP
+.B Custom Commands
+.br
+As mentioned in File Commands you can apply your own commands to
+selected files.
+.TP
+.B General Defaults
+.br
+If you select Open Folder Into Separate Window you get a new window
+for each open folder.  But there is still only one application
+process.  Exiting
+.I XVFilemgr
+means destroying all open frames.  If you want more instances of 
+.I XVFilemgr
+you have to start it more than once.
+.TP
+.B Advanced Settings
+.br
+Here you find some advanced topics.  Notice that a View Filter Pattern
+'*' does not match hidden files.  So it is not enough to select Show
+Hidden Files in the folder settings you also have to specify an empty
+View Filter Pattern.
+.PP
+.TP
+.B GOTO MENU
+The goto menu is a dynamic menu which presents the names of the last
+visited directories.  The default is 10 folders.  One special entry in
+this menu is
+.I Home.
+It takes you to your home directory.
+.PP
+You can also jump to a directory by specifying it in the text field
+right to the goto button an clicking once on the goto button using the
+left mouse button.
+.PP
+.TP
+.B DRAG AND DROP
+.I XVFilemgr 
+supports drag and drop not only between instances of 
+.I XVFilemgr 
+but also between
+.I XVFilemgr 
+and other programs.  Of course theses programs have to support the drag 
+and drop model of
+.I XVFilemgr.
+Currently there is a version of textedit available which supports this
+model.
+
+You can also drag files from 
+.I XVFilemgr 
+onto the root window.  The open method specified in the filetype file
+is then executed on this file or the default method if this entry is
+left blank.  If you drag a folder icon onto the root window this
+directory is opened in a new window.  A new window is also opened if
+you told
+.I XVFilemgr 
+in the properties dialog not to do so.
+
+.SH FILES
+.LP
+.TP
+.I ~/xvfmgrrc
+.br
+Properties file.  Contains all settings from the properties dialog.
+.TP
+.I ~/xvfilemgr/
+.br
+This directory is used during clipboard operations.  Do not
+remove/copy any files there.  It is absolutely no need to do this.
+.TP
+.I /etc/filetype
+.br
+Default location of the file which hold the description of the filetypes.
+.TP
+.I ~/.filetype
+.br
+Personal filetype file.  It has the same format as /etc/filetype and
+is read after /etc/filetype.
+
+.SH SEE ALSO
+.I filetype
+(5),
+.I textedit
+(1).
+
+.SH AUTHOR
+Christian Koch (root@obelix.shnet.org)
+Vincent S. Cojot (coyote@info.polymtl.ca)
+
+.SH BUGS
+

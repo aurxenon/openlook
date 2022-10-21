@@ -1,0 +1,27 @@
+This is a list of all people who helped making xvfilemgr what it is
+today.
+
+
+Thank you
+
+James B. Hiller: He has found the reason for the path panel bug which
+causes xvfilemgr to segfault every time one double clicks on an icon
+in the path panel.
+
+Vincent Cojot: Vincent has contributed a lot of code for xvfilemgr.
+Without this xvfilemgr would still be an very unfinished program.
+
+Christoph Spiel: Christoph has wrote the little start skript which
+comes together with xvfilemgr.
+
+Alessandro Russo: Alessandro found a bug in the parsing routine for
+filetype files. The command to invoke on double click can contain
+spaces now.
+
+Marc Huguet Puig: Marc fixed the code reading /etc/filetype and helped fix
+several seg faults. He also contributed new code for removeable devices
+and plans on improving many things in xvfilemgr. Marc is at
+http://www.fut.es/~mhp/http/mhp.asc
+
+Gabriel Somlo: Gabriel contributed some code that fixed a SIGSEV inside
+workwindow.c.

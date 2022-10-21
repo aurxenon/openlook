@@ -1,0 +1,16 @@
+Begin3
+Title:          XVFilemgr Xview File Manager for Linux
+Version:        0.2g
+Entered-date:   16 FEB 2000
+Description:    Source distribution of XVFilemgr with ELF binary.
+Keywords:       xvfilemgr, xvfilemanager, filemanager, xview, slingshot
+Author:         coyote@step.polymtl.ca <Vincent Cojot>
+Maintained-by:  coyote@step.polymtl.ca <Vincent Cojot>
+Primary-site:	http://step.polymtl.ca/~coyote/www/xvfilemgr_main.html
+Alternate-site:	ftp://step.polymtl.ca/pub/Xview/xvfilemgr
+Original-site:	http://step.polymtl.ca/~coyote/www/xvfilemgr_main.html
+Platform:       Linux, X11R6, XView 3.2, Slingshot 2.1
+Copying-policy: GPL
+End
+
+

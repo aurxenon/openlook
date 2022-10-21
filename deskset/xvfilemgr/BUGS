@@ -1,0 +1,14 @@
+o The find window does un-needed refreshes. It kills performance when
+  there is a large number of results. Have to cache the results and -then-
+  display them.. it kill interactivity, though. 
+
+o Problems with CD-ROM mounts: the Path panel looks for "/papers" instead
+  of "/cd-rom2/papers"
+
+o SIGSEV today with the use of the [Go To:] button and ".." on a CD-ROM
+  filesystem, this screws up a lot of things for Paths.
+
+o I've migrated to RH6.1 with a libc6-based Xview from a RH5.x install.
+  I've notived that compiling with -m486 SIGSEV's xvfilemgr on startup.
+  -O3 is fine but not -m486, don't optimize too much if you plan to compile
+  xvfilemgr yourself.
